@@ -11,6 +11,11 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <WinSock2.h>  // WinSock2는 Windows.h보다 먼저!
+#include <Windows.h>   // 그리고 나서 Windows.h
+
+#pragma comment(lib, "ws2_32.lib") // 반드시 포함 ? WinSock2 관련 링커 필요
+
 #include <iostream>
 using namespace std;
 
