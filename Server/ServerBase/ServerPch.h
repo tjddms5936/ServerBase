@@ -2,6 +2,8 @@
 // 해당 라이브러리를 참조하게 될 외부 서버에서 참조 할 pch
 
 #include "Types.h"
+#include "Defines.h"
+
 #include <vector>
 #include <list>
 #include <queue>

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "IocpCore.h"
+#include "Session.h"
 
 IocpCore::IocpCore() :
     m_IocpHandle(INVALID_HANDLE_VALUE)
@@ -26,7 +27,7 @@ bool IocpCore::Register(HANDLE handle, ULONG_PTR key)
 
 bool IocpCore::Dispatch(uint32_t timeoutMs)
 {
-    DWORD dwTestTransferred = 0;
+    DWORD dwTransferred = 0;
     ULONG_PTR completionkey = 0;
     OVERLAPPED* overlapped = nullptr;
 
@@ -34,27 +35,32 @@ bool IocpCore::Dispatch(uint32_t timeoutMs)
     // overlapped : 무슨 작업(Recv/Send)였는지 특정 가능
     BOOL result = ::GetQueuedCompletionStatus(
         m_IocpHandle,
-        &dwTestTransferred,
+        &dwTransferred,
         &completionkey,
         &overlapped,
         timeoutMs);
 
     if (result == FALSE || overlapped == nullptr)
+    {
+        // 예외 상황: 클라이언트가 정상적으로 종료했거나, I/O 실패
         return false;
+    }
 
     // 여기서 completionkey 또는 overlapped를 이용해 이벤트 처리
     // ex) static_cast<Session*>(completionkey)->OnRecv();
     auto* event = reinterpret_cast<IocpEvent*>(overlapped);
+    Session* session = event->GetOwner();
+
     switch (event->GetType())
     {
     case IocpEvent::Type::Recv:
     {
-        // TODO
+        session->OnRecv(dwTransferred);
     } 
     break;
     case IocpEvent::Type::Send:
     {
-        // TODO
+        session->OnSend(dwTransferred)
     }
     break;
     case IocpEvent::Type::Accept:

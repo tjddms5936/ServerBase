@@ -30,6 +30,9 @@
     <ClInclude Include="ServerPch.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
