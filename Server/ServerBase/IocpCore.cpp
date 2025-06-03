@@ -29,7 +29,7 @@ bool IocpCore::Dispatch(uint32_t timeoutMs)
 {
     DWORD dwTransferred = 0;
     ULONG_PTR completionkey = 0;
-    OVERLAPPED* overlapped = nullptr;
+    IocpEvent* pEvent = nullptr;
 
     // completionkey : 어떤 Session 객체인지 특정 가능
     // overlapped : 무슨 작업(Recv/Send)였는지 특정 가능
@@ -37,43 +37,60 @@ bool IocpCore::Dispatch(uint32_t timeoutMs)
         m_IocpHandle,
         &dwTransferred,
         &completionkey,
-        &overlapped,
+        reinterpret_cast<LPOVERLAPPED*>(&pEvent),
         timeoutMs);
 
-    if (result == FALSE || overlapped == nullptr)
-    {
-        // 예외 상황: 클라이언트가 정상적으로 종료했거나, I/O 실패
+    if (pEvent == nullptr)
         return false;
-    }
 
     // 여기서 completionkey 또는 overlapped를 이용해 이벤트 처리
     // ex) static_cast<Session*>(completionkey)->OnRecv();
-    auto* event = reinterpret_cast<IocpEvent*>(overlapped);
-    Session* session = event->GetOwner();
+   //  IocpEvent* event = reinterpret_cast<IocpEvent*>(overlapped);
+   //  Session* session = pEvent->GetOwner();
+    shared_ptr<IocpObject> pOwner = pEvent->GetOwner();
+    
+    // Accept라는건 리스너로부터 연결 통지 받았다는거.
+    if (pEvent->GetType() != IocpEvent::Type::Accept
+        && (!result || dwTransferred == 0))
+    {
+        // 예외 상황: 클라이언트가 정상적으로 종료했거나, I/O 실패
+        std::cout << "[IOCP] 클라이언트 연결 종료 감지됨\n";
 
-    switch (event->GetType())
-    {
-    case IocpEvent::Type::Recv:
-    {
-        session->OnRecv(dwTransferred);
-    } 
-    break;
-    case IocpEvent::Type::Send:
-    {
-        session->OnSend(dwTransferred)
+        delete pEvent;
     }
-    break;
-    case IocpEvent::Type::Accept:
-    {
-        // TODO
-    }
-    break;
-    default:
-        break;
-    }
+
+    pOwner->Dispatch(pEvent, dwTransferred);
+    //switch (pEvent->GetType())
+    //{
+    //case IocpEvent::Type::Recv:
+    //{
+    //    session->OnRecv(dwTransferred);
+    //} 
+    //break;
+    //case IocpEvent::Type::Send:
+    //{
+    //    session->OnSend(dwTransferred);
+    //}
+    //break;
+    //case IocpEvent::Type::Accept:
+    //{
+    //    // TODO
+    //    if (!Register(reinterpret_cast<HANDLE>(session->GetSocket()), 0))
+    //    {
+    //        cout << "register() failed" << std::endl;
+    //        delete session;
+    //        delete pEvent;
+    //    }
+
+    //    session->Start();
+    //}
+    //break;
+    //default:
+    //    break;
+    //}
 
     // TODO : 오브젝트 풀 활용해서 메모리 할당/해제 최적화 필요
-    delete event;
+    // delete pEvent;
 
     return true;
 }
@@ -81,4 +98,13 @@ bool IocpCore::Dispatch(uint32_t timeoutMs)
 HANDLE IocpCore::GetHandle() const
 {
     return m_IocpHandle;
+}
+
+void IocpEvent::Init()
+{
+    OVERLAPPED::hEvent = 0;
+    OVERLAPPED::Internal = 0;
+    OVERLAPPED::InternalHigh = 0;
+    OVERLAPPED::Offset = 0;
+    OVERLAPPED::OffsetHigh = 0;
 }

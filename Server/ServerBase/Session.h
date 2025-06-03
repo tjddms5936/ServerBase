@@ -1,12 +1,16 @@
 #pragma once
+#include "IocpCore.h"
 
-class Session
+class Session : public IocpObject
 {
 public:
 	Session(SOCKET socket);
 	virtual ~Session();
 	Session(const Session&) = delete;
 	Session& operator=(const Session&) = delete;
+
+	virtual HANDLE GetHandle() override { return reinterpret_cast<HANDLE>(m_socket); }
+	virtual void Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes = 0) override;
 
 public:
 	// 인터페이스

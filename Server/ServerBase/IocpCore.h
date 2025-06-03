@@ -1,26 +1,40 @@
 #pragma once
 
 class Session;
+class IocpEvent;
+
+class IocpObject : public enable_shared_from_this<IocpObject>
+{
+public:
+	virtual HANDLE GetHandle() abstract;
+	virtual void Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes = 0) abstract;
+};
+
 class IocpEvent : public OVERLAPPED
 {
 public:
 	enum class Type {Recv, Send, Accept};
 
-	IocpEvent(Type type, Session* owner) :
-		m_Type(type), m_Owner(owner) {}
+	IocpEvent(Type type, shared_ptr<IocpObject> owner, shared_ptr<Session> pPartsSession = nullptr) :
+		m_Type(type), m_Owner(owner), m_PartsSession(pPartsSession) {}
 
-	virtual ~IocpEvent() {}
+	~IocpEvent() = default; // 가상 상속을 써버리면... 메모리 구조에서 OVERLAPPED 앞에 가상함수 테이블이 붙어버려서 오동작 일어남
 	IocpEvent(const IocpEvent&) = delete;
 	IocpEvent& operator=(const IocpEvent&) = delete;
 
 public:
 	// 인터페이스
 	Type GetType() const { return m_Type; }
-	Session* GetOwner() const { return m_Owner; }
+	shared_ptr<IocpObject> GetOwner() const { return m_Owner; }
+	shared_ptr<Session> GetPartsSession() const { return m_PartsSession; }
+	void SetPartsSession(shared_ptr<Session> pSession) { m_PartsSession = pSession; }
+private:
+	void Init();
 
 private:
 	Type m_Type;
-	Session* m_Owner;
+	shared_ptr<IocpObject> m_Owner;
+	shared_ptr<Session> m_PartsSession;
 };
 
 class IocpCore

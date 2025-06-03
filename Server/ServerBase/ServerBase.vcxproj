@@ -154,6 +154,7 @@
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="IocpCore.h" />
+    <ClInclude Include="Listener.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ServerPch.h" />
     <ClInclude Include="Session.h" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="IocpCore.cpp" />
+    <ClCompile Include="Listener.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
