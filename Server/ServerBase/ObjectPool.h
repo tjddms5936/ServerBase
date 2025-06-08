@@ -14,6 +14,8 @@ class ObjectPool
 		PoolPage()
 		{
 			rawMemory = static_cast<char*>(::VirtualAlloc(nullptr, PAGE_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE));
+			assert(rawMemory && "VirtualAlloc failed");
+
 			for (uint32 i = 0; i < OBJECTS_PER_PAGE; ++i)
 			{
 				T* obj = reinterpret_cast<T*>(rawMemory + i * OBJECT_SIZE);
@@ -37,7 +39,7 @@ public:
 		static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
 	}
 
-	~ObjectPool() = default;
+	~ObjectPool() = default; // unique_ptr이 알아서 PoolPage 소멸자 호출
 	
 	T* Acquire()
 	{
@@ -62,7 +64,7 @@ public:
 private:
 	void AllocatePage()
 	{
-		auto* page = new PoolPage();
+		auto* page = make_unique<PoolPage>();
 		m_pages.push_back(page);
 		for (T* obj : page->objects)
 		{
@@ -73,6 +75,6 @@ private:
 private:
 	mutex m_mutex;
 	vector<T*> m_freeList;
-	vector<PoolPage*> m_pages;
+	vector<unique_ptr<PoolPage>> m_pages;
 };
 
