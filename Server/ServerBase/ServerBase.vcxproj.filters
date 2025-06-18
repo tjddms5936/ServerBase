@@ -42,6 +42,7 @@
     <ClInclude Include="ReadWriteLock.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CoreGlobal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -71,5 +72,6 @@
     <ClCompile Include="ReadWriteLock.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CoreGlobal.cpp" />
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
 
 #include "Types.h"
 #include "Defines.h"
+#include "CoreGlobal.h"
 
 #include <vector>
 #include <list>

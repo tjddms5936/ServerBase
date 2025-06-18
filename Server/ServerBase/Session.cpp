@@ -2,7 +2,7 @@
 #include "Session.h"
 
 Session::Session(SOCKET socket) :
-	m_socket(socket)
+	m_socket(INVALID_SOCKET)
 {
 	std::fill_n(m_recvBuffer, MAX_RECIEVE_BUFFER_SIZE, 0);
 }
@@ -29,6 +29,11 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	}
 
 	delete pIocpEvent;
+}
+
+void Session::Init(SOCKET socket)
+{
+	m_socket = socket;
 }
 
 void Session::Start()

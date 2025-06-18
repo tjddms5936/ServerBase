@@ -14,6 +14,7 @@ public:
 
 public:
 	// 인터페이스
+	void Init(SOCKET socket);
 	void Start(); // 초기 PostRecv
 	void PostRecv(); // 비동기 수신 요청
 	void OnRecv(DWORD numOfByptes); // 수신 완료 후 처리
