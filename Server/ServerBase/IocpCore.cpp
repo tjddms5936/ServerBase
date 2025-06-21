@@ -22,7 +22,15 @@ bool IocpCore::Register(HANDLE handle, ULONG_PTR key)
         Session* session = new Session(clientSocket);
         iocpCore->Register(clientSocket, reinterpret_cast<ULONG_PTR>(session));
     */
-    return ::CreateIoCompletionPort(handle, m_IocpHandle, key, 0) != nullptr;
+    HANDLE result = ::CreateIoCompletionPort(handle, m_IocpHandle, key, 0);
+    if (result == nullptr)
+    {
+        DWORD error = ::GetLastError();
+        std::cerr << "CreateIoCompletionPort failed. Error code: " << error << std::endl;
+        return false;
+    }
+    return true;
+    // return ::CreateIoCompletionPort(handle, m_IocpHandle, key, 0) != nullptr;
 }
 
 bool IocpCore::Dispatch(uint32_t timeoutMs)
@@ -57,41 +65,10 @@ bool IocpCore::Dispatch(uint32_t timeoutMs)
         std::cout << "[IOCP] 클라이언트 연결 종료 감지됨\n";
 
         delete pEvent;
+        return false;
     }
 
     pOwner->Dispatch(pEvent, dwTransferred);
-    //switch (pEvent->GetType())
-    //{
-    //case IocpEvent::Type::Recv:
-    //{
-    //    session->OnRecv(dwTransferred);
-    //} 
-    //break;
-    //case IocpEvent::Type::Send:
-    //{
-    //    session->OnSend(dwTransferred);
-    //}
-    //break;
-    //case IocpEvent::Type::Accept:
-    //{
-    //    // TODO
-    //    if (!Register(reinterpret_cast<HANDLE>(session->GetSocket()), 0))
-    //    {
-    //        cout << "register() failed" << std::endl;
-    //        delete session;
-    //        delete pEvent;
-    //    }
-
-    //    session->Start();
-    //}
-    //break;
-    //default:
-    //    break;
-    //}
-
-    // TODO : 오브젝트 풀 활용해서 메모리 할당/해제 최적화 필요
-    // delete pEvent;
-
     return true;
 }
 

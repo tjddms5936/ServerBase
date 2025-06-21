@@ -1,13 +1,17 @@
 #pragma once
 #include <memory>
 #include <cassert>
+#include <vector>
+#include <mutex>
+
+using namespace std;
 
 template<typename T>
 class ObjectPool
 {
-	constexpr uint64 PAGE_SIZE = 4096; // OS 기본 페이지 크기
-	constexpr uint64 OBJECT_SIZE = sizeof(T); // 풀링할 객체의 크기
-	constexpr uint64 OBJECTS_PER_PAGE = PAGE_SIZE / OBJECT_SIZE;
+	static constexpr uint64 PAGE_SIZE = 4096; // OS 기본 페이지 크기
+	static constexpr uint64 OBJECT_SIZE = sizeof(T); // 풀링할 객체의 크기
+	static constexpr uint64 OBJECTS_PER_PAGE = PAGE_SIZE / OBJECT_SIZE;
 
 	struct PoolPage
 	{

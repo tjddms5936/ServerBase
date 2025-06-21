@@ -14,7 +14,7 @@ public:
 
 public:
 	// 인터페이스
-	void Init(SOCKET socket);
+	// void Init(SOCKET socket);
 	void Start(); // 초기 PostRecv
 	void PostRecv(); // 비동기 수신 요청
 	void OnRecv(DWORD numOfByptes); // 수신 완료 후 처리
@@ -23,9 +23,11 @@ public:
 
 	SOCKET GetSocket() const { return m_socket; }
 
+	char* GetAcceptBuffer() { return m_acceptBuffer.get(); }
 
 private:
 	SOCKET m_socket;
 	char m_recvBuffer[MAX_RECIEVE_BUFFER_SIZE]; // 단순 테스트용
+	unique_ptr<char[]> m_acceptBuffer; // AcceptEx 전용 버퍼.
 };
 

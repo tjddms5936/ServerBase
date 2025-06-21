@@ -23,11 +23,11 @@ private:
 	void Init(IocpCore* core);
 	bool BindWindowsFunction(SOCKET socket, GUID guid, LPVOID* fn);
 
-	void PostAccept();
+	void PostAccept(IocpEvent* pAcceptEvent);
 
 private: 
 	SOCKET m_listenSocket;
 	IocpCore* m_core;
-	IocpEvent* m_listenerEvent;
+	vector<IocpEvent*> m_vlistenerEvent;
 };
 

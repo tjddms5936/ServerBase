@@ -2,9 +2,14 @@
 #include "Session.h"
 
 Session::Session(SOCKET socket) :
-	m_socket(INVALID_SOCKET)
+	m_socket(socket)
 {
 	std::fill_n(m_recvBuffer, MAX_RECIEVE_BUFFER_SIZE, 0);
+
+	// AcceptEx에 넘겨줄 버퍼 생성
+	const int addrLen = sizeof(SOCKADDR_IN) + 16;
+	const int bufferLen = addrLen * 2; // 로컬 + 리모트 주소
+	m_acceptBuffer = make_unique<char[]>(bufferLen);
 }
 
 Session::~Session()
@@ -31,10 +36,10 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	delete pIocpEvent;
 }
 
-void Session::Init(SOCKET socket)
-{
-	m_socket = socket;
-}
+//void Session::Init(SOCKET socket)
+//{
+//	m_socket = socket;
+//}
 
 void Session::Start()
 {
