@@ -43,6 +43,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="CoreGlobal.h" />
+    <ClInclude Include="IOCPWorkerPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -73,5 +74,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CoreGlobal.cpp" />
+    <ClCompile Include="IOCPWorkerPool.cpp" />
   </ItemGroup>
 </Project>

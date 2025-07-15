@@ -155,6 +155,7 @@
     <ClInclude Include="CoreGlobal.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="IocpCore.h" />
+    <ClInclude Include="IOCPWorkerPool.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="CoreGlobal.cpp" />
     <ClCompile Include="IocpCore.cpp" />
+    <ClCompile Include="IOCPWorkerPool.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="pch.cpp">

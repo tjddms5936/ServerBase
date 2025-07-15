@@ -1,8 +1,13 @@
 ﻿#include "pch.h"
 #include "IocpCore.h"
 #include "Listener.h"
+#include "IOCPWorkerPool.h"
 
 #define MAX_BUFFER_SIZE 1024
+bool g_running = true;
+
+void ServerControlLoop();
+
 
 int main()
 {
@@ -35,12 +40,34 @@ int main()
 	shared_ptr<Listener> listener = make_shared<Listener>();
 	listener->StartAccept(4000, &core);
 
-	// 이벤트 대기 및 처리
-	while (true)
+	// 이벤트 대기 및 처리. // 성능비교 대상
+	/*while (true)
 	{
 		core.Dispatch();
-	}
+	}*/
+
+	// 여기서 workerPool.Stop() 해줘야 하나?
+	IOCPWorkerPool workerPool(&core, thread::hardware_concurrency());
+	workerPool.Start();
+
+	ServerControlLoop();
+
+	workerPool.Stop(); // 해주면 장점이 있음.
 
 	// 윈도우 소켓 해제
 	WSACleanup();
+}
+
+void ServerControlLoop()
+{
+	while (g_running)
+	{
+		string command;
+		cin >> command;
+
+		if(command == "quit")
+		{
+			g_running = false;
+		}
+	}
 }
