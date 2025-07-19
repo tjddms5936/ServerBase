@@ -157,6 +157,7 @@
     <ClInclude Include="IocpCore.h" />
     <ClInclude Include="IOCPWorkerPool.h" />
     <ClInclude Include="Listener.h" />
+    <ClInclude Include="NetApp.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReadWriteLock.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IOCPWorkerPool.cpp" />
     <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="NetApp.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
