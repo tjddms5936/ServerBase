@@ -106,7 +106,7 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent)
 
 	// 음.. 세션을 미리 만들고 IOCP에 등록만 Dispatch에서 해주면 어떨까?
 	// 리스너 전용 세션을 재활용하면..?
-	shared_ptr<Session> session = make_shared<Session>(clientSocket);
+	shared_ptr<Session> session = make_shared<Session>(clientSocket, SessionType::Server);
 
 	// 3. Overlapped 이벤트 생성
 	// IocpEvent* pEvent = new IocpEvent(IocpEvent::Type::Accept, session);

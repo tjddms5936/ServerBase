@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Session.h"
 
-Session::Session(SOCKET socket) :
-	m_socket(socket)
+Session::Session(SOCKET socket, SessionType eSessionType) :
+	m_socket(socket), m_SessionType(eSessionType)
 {
 	std::fill_n(m_recvBuffer, MAX_RECIEVE_BUFFER_SIZE, 0);
 
@@ -93,11 +93,19 @@ void Session::OnRecv(DWORD numOfByptes)
 		return;
 	}
 
-	// 로그로 찍기만 해보자.
-	cout << "[OnRecv] Received: " << string(m_recvBuffer, numOfByptes) << endl;
+	std::string msg(m_recvBuffer, numOfByptes);
 
-	// 에코처리
-	PostSend(m_recvBuffer, numOfByptes);
+	// 서버 모드 세션이라면 에코처리
+	if (m_SessionType == SessionType::Server)
+	{
+		std::cout << "[Server] Received: " << msg << "\n";
+		PostSend(m_recvBuffer, numOfByptes);
+	}
+	else
+	{
+		// 클라이언트 모드 → 받은 메시지 단순 출력
+		std::cout << "[Client] Received: " << msg << "\n";
+	}
 
 	// 다음 수신 요청
 	PostRecv();

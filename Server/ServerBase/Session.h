@@ -1,10 +1,16 @@
 #pragma once
 #include "IocpCore.h"
 
+enum class SessionType
+{
+	Server,
+	Client
+};
+
 class Session : public IocpObject
 {
 public:
-	Session(SOCKET socket);
+	Session(SOCKET socket, SessionType eSessionType);
 	virtual ~Session();
 	Session(const Session&) = delete;
 	Session& operator=(const Session&) = delete;
@@ -29,5 +35,7 @@ private:
 	SOCKET m_socket;
 	char m_recvBuffer[MAX_RECIEVE_BUFFER_SIZE]; // 단순 테스트용
 	unique_ptr<char[]> m_acceptBuffer; // AcceptEx 전용 버퍼.
+
+	SessionType m_SessionType;
 };
 
