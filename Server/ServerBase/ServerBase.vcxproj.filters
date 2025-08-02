@@ -45,6 +45,7 @@
     <ClInclude Include="CoreGlobal.h" />
     <ClInclude Include="IOCPWorkerPool.h" />
     <ClInclude Include="NetApp.h" />
+    <ClInclude Include="RecvBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -77,5 +78,6 @@
     <ClCompile Include="CoreGlobal.cpp" />
     <ClCompile Include="IOCPWorkerPool.cpp" />
     <ClCompile Include="NetApp.cpp" />
+    <ClCompile Include="RecvBuffer.cpp" />
   </ItemGroup>
 </Project>

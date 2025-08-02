@@ -140,7 +140,16 @@ void ClientApp::Run()
 		if (input == "quit")
 			break;
 
-		m_session->PostSend(input.data(), static_cast<int>(input.size()));
+		// 1) 패킷 길이 계산 (헤더 2바이트 + payload)
+		uint16 packetSize = static_cast<uint16>(input.size() + sizeof(uint16));
+
+		// 2) 패킷 버퍼 생성
+		std::vector<char> packet(packetSize);
+		memcpy(packet.data(), &packetSize, sizeof(uint16));        // 헤더
+		memcpy(packet.data() + sizeof(uint16), input.data(), input.size()); // Payload
+
+		// 3) 전송
+		m_session->PostSend(packet.data(), static_cast<int>(packet.size()));
 	}
 }
 

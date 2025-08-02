@@ -1,5 +1,6 @@
 #pragma once
 #include "IocpCore.h"
+#include "RecvBuffer.h"
 
 enum class SessionType
 {
@@ -33,7 +34,8 @@ public:
 
 private:
 	SOCKET m_socket;
-	char m_recvBuffer[MAX_RECIEVE_BUFFER_SIZE]; // 단순 테스트용
+	// char m_recvBuffer[MAX_RECIEVE_BUFFER_SIZE]; // 단순 테스트용
+	RingRecvBuffer m_recvRingBuffer;
 	unique_ptr<char[]> m_acceptBuffer; // AcceptEx 전용 버퍼.
 
 	SessionType m_SessionType;

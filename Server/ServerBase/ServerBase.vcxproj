@@ -161,6 +161,7 @@
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReadWriteLock.h" />
+    <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="ServerPch.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="ThreadManager.h" />
@@ -181,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ReadWriteLock.cpp" />
+    <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="ServerPch.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
