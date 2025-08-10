@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "Session.h"
 
 Session::Session(SOCKET socket, SessionType eSessionType) :
@@ -6,9 +6,9 @@ Session::Session(SOCKET socket, SessionType eSessionType) :
 {
 	// std::fill_n(m_recvBuffer, MAX_RECIEVE_BUFFER_SIZE, 0);
 
-	// AcceptEx¿¡ ³Ñ°ÜÁÙ ¹öÆÛ »ı¼º
+	// AcceptExì— ë„˜ê²¨ì¤„ ë²„í¼ ìƒì„±
 	const int addrLen = sizeof(SOCKADDR_IN) + 16;
-	const int bufferLen = addrLen * 2; // ·ÎÄÃ + ¸®¸ğÆ® ÁÖ¼Ò
+	const int bufferLen = addrLen * 2; // ë¡œì»¬ + ë¦¬ëª¨íŠ¸ ì£¼ì†Œ
 	m_acceptBuffer = make_unique<char[]>(bufferLen);
 }
 
@@ -18,7 +18,7 @@ Session::~Session()
 	{
 		closesocket(m_socket);
 		m_socket = INVALID_SOCKET;
-		std::cout << "[Session] ¼Ò¸êÀÚ È£ÃâµÊ - ¼ÒÄÏ ´İÈû\n";
+		std::cout << "[Session] ì†Œë©¸ì í˜¸ì¶œë¨ - ì†Œì¼“ ë‹«í˜\n";
 	}
 }
 
@@ -28,7 +28,8 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	switch (eType)
 	{
 	case IocpEvent::Type::Recv: OnRecv(numOfBytes); break;
-	case IocpEvent::Type::Send: OnSend(numOfBytes); break;
+	// case IocpEvent::Type::Send: OnSend(numOfBytes); break;
+	case IocpEvent::Type::Send: OnSend2(numOfBytes); break; // í ê¸°ë°˜ ì†¡ì‹  ë°©ë²•
 	default:
 		break;
 	}
@@ -44,7 +45,7 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 void Session::Start()
 {
 	std::cout << "[Session] Start() called\n";
-	PostRecv(); // ÃÖÃÊ ¼ö½Å ¿äÃ» ½ÃÀÛ
+	PostRecv(); // ìµœì´ˆ ìˆ˜ì‹  ìš”ì²­ ì‹œì‘
 }
 
 void Session::PostRecv()
@@ -55,7 +56,7 @@ void Session::PostRecv()
 	WSABUF wsaBuf[2];
 	m_recvRingBuffer.GetRecvWsaBuf(wsaBuf);
 
-	// free space°¡ ¾ø´Â °æ¿ì ¼ö½Å ºÒ°¡
+	// free spaceê°€ ì—†ëŠ” ê²½ìš° ìˆ˜ì‹  ë¶ˆê°€
 	if (wsaBuf[0].len == 0 && wsaBuf[1].len == 0)
 	{
 		std::cerr << "[PostRecv] No free space in RecvBuffer\n";
@@ -99,9 +100,9 @@ void Session::PostRecv()
 	//// IocpEvent* event = new IocpEvent(IocpEvent::Type::Recv, this);
 	//IocpEvent* event = new IocpEvent(IocpEvent::Type::Recv, shared_from_this(), nullptr);
 
-	//// Ä¿³Î ¸ğµå¿¡ ÀÖ´Â TCP ¼ö½Å ¹öÆÛ·ÎºÎÅÍ µ¥ÀÌÅÍ¸¦ ²¨³»¿À´Â ºñµ¿±â ¿äÃ»À» °É¾îµÎ´Â ÇÔ¼ö
-	//// WSARecv()´Â "´©°¡ µ¥ÀÌÅÍ¸¦ º¸³»¸é ³ªÇÑÅ× ¾Ë·ÁÁà!" ÇÏ°í ¿äÃ»¸¸ ÇØµÎ´Â ÇÔ¼ö
-	//// Ä¿³ÎÀº ¼ö½Å ¹öÆÛ¿¡ µµÂøÇÑ µ¥ÀÌÅÍ¸¦ ¡æ À¯Àú ¸ğµå·Î ¾Ë¸² (IOCP ÀÌº¥Æ® ¹ß»ı)
+	//// ì»¤ë„ ëª¨ë“œì— ìˆëŠ” TCP ìˆ˜ì‹  ë²„í¼ë¡œë¶€í„° ë°ì´í„°ë¥¼ êº¼ë‚´ì˜¤ëŠ” ë¹„ë™ê¸° ìš”ì²­ì„ ê±¸ì–´ë‘ëŠ” í•¨ìˆ˜
+	//// WSARecv()ëŠ” "ëˆ„ê°€ ë°ì´í„°ë¥¼ ë³´ë‚´ë©´ ë‚˜í•œí…Œ ì•Œë ¤ì¤˜!" í•˜ê³  ìš”ì²­ë§Œ í•´ë‘ëŠ” í•¨ìˆ˜
+	//// ì»¤ë„ì€ ìˆ˜ì‹  ë²„í¼ì— ë„ì°©í•œ ë°ì´í„°ë¥¼ â†’ ìœ ì € ëª¨ë“œë¡œ ì•Œë¦¼ (IOCP ì´ë²¤íŠ¸ ë°œìƒ)
 	//int result = WSARecv(
 	//	m_socket,
 	//	&wsaBuf,
@@ -132,13 +133,13 @@ void Session::OnRecv(DWORD numOfByptes)
 		return;
 	}
 
-	// 1) RingBuffer¿¡ ¼ö½Å ¿Ï·áµÈ ¸¸Å­ Commit
+	// 1) RingBufferì— ìˆ˜ì‹  ì™„ë£Œëœ ë§Œí¼ Commit
 	m_recvRingBuffer.CommitWrite(numOfByptes);
 
-	// µğ¹ö±ë Âï¾îº¸±â
+	// ë””ë²„ê¹… ì°ì–´ë³´ê¸°
 	m_recvRingBuffer.DebugPrint();
 
-	// 2) ÆĞÅ¶ ´ÜÀ§ Ã³¸® (¿¹½Ã: [2¹ÙÀÌÆ® ±æÀÌ][Payload])
+	// 2) íŒ¨í‚· ë‹¨ìœ„ ì²˜ë¦¬ (ì˜ˆì‹œ: [2ë°”ì´íŠ¸ ê¸¸ì´][Payload])
 	while (true)
 	{
 		if (m_recvRingBuffer.GetUseSize() < sizeof(uint16))
@@ -148,7 +149,7 @@ void Session::OnRecv(DWORD numOfByptes)
 		if (!m_recvRingBuffer.PeekCopy((char*)&packetSize, sizeof(uint16)))
 			break;
 
-		// Windows¿¡¼­ Little-Endian ¡æ ±×´ë·Î »ç¿ë °¡´É
+		// Windowsì—ì„œ Little-Endian â†’ ê·¸ëŒ€ë¡œ ì‚¬ìš© ê°€ëŠ¥
 		if (packetSize < sizeof(uint16))
 		{
 			std::cerr << "[Error] Invalid packet size: " << packetSize << "\n";
@@ -166,7 +167,12 @@ void Session::OnRecv(DWORD numOfByptes)
 			std::cout << "[Server] Received packet size: " << packetSize
 				<< ", payload: "
 				<< std::string(packet.begin() + 2, packet.end()) << "\n";
-			PostSend(packet.data(), packetSize); // ¿¡ÄÚ
+			// PostSend(packet.data(), packetSize); // ì—ì½” ê¸°ë³¸ ë°©ë²•
+
+			// ì •ì±… í†µì¼. í—¤ë”ëŠ” SendPacketì´ ìƒì„±
+			const char* payload = packet.data() + sizeof(uint16);
+			int payloadLen = packetSize - sizeof(uint16);
+			SendPacket(payload, payloadLen);
 		}
 		else
 		{
@@ -176,7 +182,7 @@ void Session::OnRecv(DWORD numOfByptes)
 		}
 	}
 
-	// 3) ´ÙÀ½ Recv ¿äÃ»
+	// 3) ë‹¤ìŒ Recv ìš”ì²­
 	PostRecv();
 
 
@@ -189,7 +195,7 @@ void Session::OnRecv(DWORD numOfByptes)
 
 	//std::string msg(m_recvBuffer, numOfByptes);
 
-	//// ¼­¹ö ¸ğµå ¼¼¼ÇÀÌ¶ó¸é ¿¡ÄÚÃ³¸®
+	//// ì„œë²„ ëª¨ë“œ ì„¸ì…˜ì´ë¼ë©´ ì—ì½”ì²˜ë¦¬
 	//if (m_SessionType == SessionType::Server)
 	//{
 	//	std::cout << "[Server] Received: " << msg << "\n";
@@ -197,11 +203,11 @@ void Session::OnRecv(DWORD numOfByptes)
 	//}
 	//else
 	//{
-	//	// Å¬¶óÀÌ¾ğÆ® ¸ğµå ¡æ ¹ŞÀº ¸Ş½ÃÁö ´Ü¼ø Ãâ·Â
+	//	// í´ë¼ì´ì–¸íŠ¸ ëª¨ë“œ â†’ ë°›ì€ ë©”ì‹œì§€ ë‹¨ìˆœ ì¶œë ¥
 	//	std::cout << "[Client] Received: " << msg << "\n";
 	//}
 
-	//// ´ÙÀ½ ¼ö½Å ¿äÃ»
+	//// ë‹¤ìŒ ìˆ˜ì‹  ìš”ì²­
 	//PostRecv();
 }
 
@@ -210,15 +216,15 @@ void Session::PostSend(const char* data, int32 len)
 	std::cout << "[Session] PostSend() submitted\n";
 
 	WSABUF wsabuf;
-	wsabuf.buf = const_cast<char*>(data); // ÁÖÀÇ : ÀÓ½Ã ¹öÆÛ¶ó¸é ¾ÈÀüÇÑ º¹»ç ÇÊ¿ä
+	wsabuf.buf = const_cast<char*>(data); // ì£¼ì˜ : ì„ì‹œ ë²„í¼ë¼ë©´ ì•ˆì „í•œ ë³µì‚¬ í•„ìš”
 	wsabuf.len = len;
 
 	DWORD bytesSent = 0;
 	// IocpEvent* event = new IocpEvent(IocpEvent::Type::Send, this);
 	IocpEvent* event = new IocpEvent(IocpEvent::Type::Send, shared_from_this(), nullptr);
 
-	// Ä¿³Î¿¡ ¡°ÀÌ µ¥ÀÌÅÍ¸¦ Å¬¶óÀÌ¾ğÆ®¿¡°Ô º¸³»Áà¡± ¶ó°í ºñµ¿±â·Î ¿äÃ»
-	// Ä¿³ÎÀÌ ½ÇÁ¦·Î µ¥ÀÌÅÍ¸¦ ¼ÒÄÏ¿¡ ¹Ğ¾î³Ö´Â ½ÃÁ¡Àº ºñµ¿±âÀÌ¸ç ³ªÁß¿¡ IOCP·Î ¿Ï·á Åëº¸ÇØÁÜ (OnSend() È£Ãâ Æ®¸®°ÅµÊ)
+	// ì»¤ë„ì— â€œì´ ë°ì´í„°ë¥¼ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë³´ë‚´ì¤˜â€ ë¼ê³  ë¹„ë™ê¸°ë¡œ ìš”ì²­
+	// ì»¤ë„ì´ ì‹¤ì œë¡œ ë°ì´í„°ë¥¼ ì†Œì¼“ì— ë°€ì–´ë„£ëŠ” ì‹œì ì€ ë¹„ë™ê¸°ì´ë©° ë‚˜ì¤‘ì— IOCPë¡œ ì™„ë£Œ í†µë³´í•´ì¤Œ (OnSend() í˜¸ì¶œ íŠ¸ë¦¬ê±°ë¨)
 	int result = WSASend(
 		m_socket,
 		&wsabuf,
@@ -242,5 +248,88 @@ void Session::PostSend(const char* data, int32 len)
 void Session::OnSend(DWORD numOfBytes)
 {
 	std::cout << "[OnSend] Sent " << numOfBytes << " bytes to client." << std::endl;
-	// Àü¼Û ¿Ï·á ÈÄ µû·Î Ã³¸®ÇÒ ÀÏÀº ¾ÆÁ÷ ¾øÀ½
+	// ì „ì†¡ ì™„ë£Œ í›„ ë”°ë¡œ ì²˜ë¦¬í•  ì¼ì€ ì•„ì§ ì—†ìŒ
+}
+
+void Session::OnSend2(DWORD numOfBytes)
+{
+	/*
+		IOCPì—ì„œ WSASendëŠ” ì¼ë°˜ì ìœ¼ë¡œ ìš”ì²­í•œ ì „ì²´ WSABUF í•©ê³„ë¥¼ í•œ ë²ˆì— ì™„ë£Œí•˜ì§€ë§Œ, ë¶€ë¶„ ì™„ë£Œê°€ ì˜¬ ìˆ˜ë„ ìˆì–´.
+		ì§€ê¸ˆì€ numBytesë§Œí¼ pendingBytesë¥¼ ê¹ê³  ë‹¤ìŒ íë¥¼ ì§„í–‰í•˜ë¯€ë¡œ ëŒ€ë¶€ë¶„ì˜ ì¼€ì´ìŠ¤ì—ì„œ OK.
+		ë¶€ë¶„ ì™„ë£Œê¹Œì§€ ì—„ê²©íˆ ê´€ë¦¬í•˜ë ¤ë©´ IocpEventì— â€œì´ë²ˆ ìš”ì²­ ì´ ê¸¸ì´â€ë¥¼ ì €ì¥í•˜ê³ , numBytes < ìš”ì²­ê¸¸ì´ë©´ ë‚˜ë¨¸ì§€ êµ¬ê°„ìœ¼ë¡œ ì¬ì „ì†¡í•˜ëŠ” ë³´ê°•ì´ í•„ìš”. (í•„ìš” ì‹œ ë‚˜ì¤‘ì— í™•ì¥í•´ë„ ë¨)
+	*/
+	std::cout << "[OnSend] Sent " << numOfBytes << " bytes to client." << std::endl;
+	m_ullPendingBytes.fetch_sub(numOfBytes); // ëˆ„ì  ì „ì†¡ëŸ‰ ì°¨ê°
+
+	// ì´ë²¤íŠ¸ ì‚­ì œëŠ” Dispatch ìª½ì—ì„œ í•˜ë©´ ë™ì¼ ì •ì±… ìœ ì§€
+	postNextSend();
+}
+
+void Session::SendPacket(const char* payload, int len)
+{
+	// 1) í—¤ë” ë²„í¼ (2ë°”ì´íŠ¸)
+	shared_ptr<SendBuffer> hdr = m_SendPool.alloc(sizeof(uint16));
+	uint16 ui16PacketSize = static_cast<uint16>(len + sizeof(uint16));
+	memcpy(hdr->writable(), &ui16PacketSize, sizeof(uint16));
+	hdr->commit(sizeof(uint16));
+
+	// 2) payload ë³´ê´€ (ì´ë¯¸ í’€ ë²„í¼ë¼ë©´ ê·¸ shared_ptrì„ ê·¸ëŒ€ë¡œ keep2ì— ë„£ì)
+	shared_ptr<SendBuffer> body = m_SendPool.alloc(len);
+	memcpy(body->writable(), payload, len);
+	body->commit(len);
+
+	stSendItem stItem{};
+	stItem.bufs[0].buf = hdr->data();
+	stItem.bufs[0].len = static_cast<ULONG>(hdr->size());
+	stItem.bufs[1].buf = body->data();
+	stItem.bufs[1].len = static_cast<ULONG>(body->size());
+	stItem.bufCount = 2;
+
+	// ìˆ˜ëª… ë³´ì¥ : keeperì— ë³´ê´€
+	stItem.keep1 = hdr;
+	stItem.keep2 = body;
+
+	enqueueSend(move(stItem));
+}
+
+void Session::enqueueSend(stSendItem&& item)
+{
+	// ì—­ì••(ì˜ˆ: 1MB ì´ˆê³¼ì‹œ ë“œë/ëŒ€ê¸°) â€“ ì„ íƒ
+	m_ullPendingBytes += (item.bufs[0].len + item.bufs[1].len);
+	m_SendQueue.push_back(move(item));
+	if (!m_bSendInFlight)
+		postNextSend();
+}
+
+void Session::postNextSend()
+{
+	if (m_SendQueue.empty())
+	{
+		m_bSendInFlight.store(false);
+		return;
+	}
+
+	m_bSendInFlight.store(true);
+
+	IocpEvent* pEvent = new IocpEvent(IocpEvent::Type::Send, shared_from_this(), nullptr);
+	pEvent->m_stSendItem = move(m_SendQueue.front());
+	m_SendQueue.pop_front();
+
+	DWORD sent = 0;
+	int result = WSASend(
+		m_socket,
+		pEvent->m_stSendItem.bufs,
+		pEvent->m_stSendItem.bufCount,
+		&sent,
+		0,
+		pEvent,
+		nullptr
+	);
+
+	if (result == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
+	{
+		cerr << "[PostSend] WSASend Error: " << WSAGetLastError() << endl;
+		delete pEvent;
+		m_bSendInFlight.store(false);
+	}
 }

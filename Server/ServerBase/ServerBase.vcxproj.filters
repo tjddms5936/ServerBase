@@ -42,10 +42,19 @@
     <ClInclude Include="ReadWriteLock.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CoreGlobal.h" />
-    <ClInclude Include="IOCPWorkerPool.h" />
-    <ClInclude Include="NetApp.h" />
-    <ClInclude Include="RecvBuffer.h" />
+    <ClInclude Include="CoreGlobal.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPWorkerPool.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="NetApp.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="RecvBuffer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SendBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -75,9 +84,18 @@
     <ClCompile Include="ReadWriteLock.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="CoreGlobal.cpp" />
-    <ClCompile Include="IOCPWorkerPool.cpp" />
-    <ClCompile Include="NetApp.cpp" />
-    <ClCompile Include="RecvBuffer.cpp" />
+    <ClCompile Include="CoreGlobal.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPWorkerPool.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="NetApp.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="RecvBuffer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SendBuffer.cpp" />
   </ItemGroup>
 </Project>

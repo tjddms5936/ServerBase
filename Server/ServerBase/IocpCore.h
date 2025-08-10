@@ -3,6 +3,27 @@
 class Session;
 class IocpEvent;
 
+struct stSendItem
+{
+	/*
+		Gather I/O (WSABUF[2]) 적용
+			- 헤더(2바이트) 는 작은 SendBuffer에 작성.
+			
+			- 페이로드는 이미 있는 메모리(예: 다른 풀 버퍼, 패킷 빌더 결과 등)를 가리킴.
+			
+			- 두 버퍼의 수명을 I/O 완료까지 보장하기 위해 이벤트 컨텍스트에 shared_ptr 보관
+	*/
+	WSABUF bufs[2];
+	DWORD  bufCount = 0;
+
+	// 메모리 생존 보장용 keeper
+	shared_ptr<void> keep1;
+	shared_ptr<void> keep2;
+};
+
+/*--------------------
+		IocpObject
+--------------------*/
 class IocpObject : public enable_shared_from_this<IocpObject>
 {
 public:
@@ -10,6 +31,10 @@ public:
 	virtual void Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes = 0) abstract;
 };
 
+
+/*--------------------
+		IocpEvent
+--------------------*/
 class IocpEvent : public OVERLAPPED
 {
 public:
@@ -35,8 +60,16 @@ private:
 	Type m_Type;
 	shared_ptr<IocpObject> m_Owner;
 	shared_ptr<Session> m_PartsSession;
+
+public:
+	// IocpEvent 확장: SendItem 포함
+	stSendItem m_stSendItem; // ← 여기에 WSABUF들과 keeper가 붙는다
 };
 
+
+/*--------------------
+		IocpCore
+--------------------*/
 class IocpCore
 {
 public:

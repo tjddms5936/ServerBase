@@ -1,6 +1,7 @@
 #pragma once
 #include "IocpCore.h"
 #include "RecvBuffer.h"
+#include "SendBuffer.h"
 
 enum class SessionType
 {
@@ -27,10 +28,18 @@ public:
 	void OnRecv(DWORD numOfByptes); // 수신 완료 후 처리
 	void PostSend(const char* data, int32 len);
 	void OnSend(DWORD numOfBytes);
+	void OnSend2(DWORD numOfBytes);
 
 	SOCKET GetSocket() const { return m_socket; }
 
 	char* GetAcceptBuffer() { return m_acceptBuffer.get(); }
+
+	// 송신 큐 & 인플라이트 1개 정책 도입으로 개선
+	void SendPacket(const char* payload, int len);
+
+private:
+	void enqueueSend(stSendItem&& item);
+	void postNextSend();
 
 private:
 	SOCKET m_socket;
@@ -39,5 +48,10 @@ private:
 	unique_ptr<char[]> m_acceptBuffer; // AcceptEx 전용 버퍼.
 
 	SessionType m_SessionType;
+
+	SendBufferPool m_SendPool{ 64 * 1024 };
+	deque<stSendItem> m_SendQueue;
+	atomic<bool> m_bSendInFlight{ false };
+	atomic<ullong> m_ullPendingBytes{ 0 };
 };
 

@@ -144,12 +144,15 @@ void ClientApp::Run()
 		uint16 packetSize = static_cast<uint16>(input.size() + sizeof(uint16));
 
 		// 2) 패킷 버퍼 생성
-		std::vector<char> packet(packetSize);
-		memcpy(packet.data(), &packetSize, sizeof(uint16));        // 헤더
-		memcpy(packet.data() + sizeof(uint16), input.data(), input.size()); // Payload
+		// std::vector<char> packet(packetSize);
+		// memcpy(packet.data(), &packetSize, sizeof(uint16));        // 헤더
+		// memcpy(packet.data() + sizeof(uint16), input.data(), input.size()); // Payload
 
 		// 3) 전송
-		m_session->PostSend(packet.data(), static_cast<int>(packet.size()));
+		// m_session->PostSend(packet.data(), static_cast<int>(packet.size()));
+
+		// 위의 과정을 다음 함수 하나로 해결. 서버와 규칙 통일 하기 위함.
+		m_session->SendPacket(input.data(), (int)input.size());
 	}
 }
 
