@@ -292,6 +292,13 @@ void Session::SendPacket(const char* payload, int len)
 	enqueueSend(move(stItem));
 }
 
+bool Session::TryBindWorker(int32 _i32WorkerID)
+{
+	int32 expected = -1;
+
+	return m_i32BoundWorkerID.compare_exchange_strong(expected, _i32WorkerID);
+}
+
 void Session::enqueueSend(stSendItem&& item)
 {
 	// 역압(예: 1MB 초과시 드랍/대기) – 선택

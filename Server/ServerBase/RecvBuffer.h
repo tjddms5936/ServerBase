@@ -47,7 +47,7 @@ private:
 	ullong m_ullCapacity;
 	ullong m_ullReadPos;	// 다음 데이터를 읽을 위치. OnRead(numOfBytes)가 호출되면 앞으로 이동
 	ullong m_ullWritePos;	// 다음 데이터를 쓸 위치(0 ~ capacity-1). OnWrite(numOfBytes)가 호출되면 앞으로 이동
-
+    mutable mutex m_mutex;  // const 함수에서도 사용 가능한 동기화용 mutex
 	/*----------------------------------
 			RingBuffer의 상태 표현 
 		[읽은 데이터][읽을 데이터][쓸 수 있는 빈공간]

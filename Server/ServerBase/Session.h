@@ -37,6 +37,11 @@ public:
 	// 송신 큐 & 인플라이트 1개 정책 도입으로 개선
 	void SendPacket(const char* payload, int len);
 
+	// 세션 - 워커 고정
+	bool TryBindWorker(int32 _i32WorkerID);
+	int32 GetBoundWorkerID() const { return m_i32BoundWorkerID.load() };
+	bool IsMyWorker(int32 _i32WorkerID) const { return m_i32BoundWorkerID.load() == _i32WorkerID; }
+
 private:
 	void enqueueSend(stSendItem&& item);
 	void postNextSend();
@@ -53,5 +58,8 @@ private:
 	deque<stSendItem> m_SendQueue;
 	atomic<bool> m_bSendInFlight{ false };
 	atomic<ullong> m_ullPendingBytes{ 0 };
+
+	// -1 : 아직 미할당, 그 외 : 세션을 담당할 워커 ID
+	atomic<int32> m_i32BoundWorkerID{ -1 };
 };
 

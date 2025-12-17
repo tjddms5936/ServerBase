@@ -9,6 +9,7 @@ RingRecvBuffer::RingRecvBuffer(ullong bufferSize) :
 
 void RingRecvBuffer::GetRecvWsaBuf(WSABUF outBufs[2])
 {
+	lock_guard<mutex> lock(m_mutex);
 	ullong ullFreeSpace = GetFreeSize();
 
 	// RingBuffer가 꽉 차서 더 이상 수신 데이터를 쓸 공간이 없는 경우

@@ -84,6 +84,7 @@ public:
 	bool Initialize(); // I/O CP 핸들 생성
 	bool Register(HANDLE handle, ULONG_PTR key); // 소켓 핸들 등록
 	bool Dispatch(uint32_t timeoutMs = INFINITE); // 이벤트 대기 및 처리
+	bool Dequeue(DWORD& _dwTransferred, ULONG_PTR& completionkey, IocpEvent*& pEvent, uint32 timeoutMs = INFINITE);
 
 	HANDLE GetHandle() const;
 	
