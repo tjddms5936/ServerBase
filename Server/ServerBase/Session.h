@@ -39,7 +39,7 @@ public:
 
 	// 技记 - 况目 绊沥
 	bool TryBindWorker(int32 _i32WorkerID);
-	int32 GetBoundWorkerID() const { return m_i32BoundWorkerID.load() };
+	int32 GetBoundWorkerID() const { return m_i32BoundWorkerID.load(); };
 	bool IsMyWorker(int32 _i32WorkerID) const { return m_i32BoundWorkerID.load() == _i32WorkerID; }
 
 private:

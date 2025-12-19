@@ -35,7 +35,11 @@ bool ServerApp::Initialize()
 		return false;
 	}
 
-	m_workerpool = make_unique<IOCPWorkerPool>(m_core.get(), thread::hardware_concurrency());
+	uint32 hwThreadCnt = thread::hardware_concurrency();
+	uint32 ioThreadCnt = std::max<uint32>(2, hwThreadCnt / 2);
+	uint32 logicThreadCnt = std::max<uint32>(1, hwThreadCnt);
+
+	m_workerpool = make_unique<IOCPWorkerPool>(m_core.get(), static_cast<int32>(ioThreadCnt), static_cast<int32>(logicThreadCnt));
     return true;
 }
 
