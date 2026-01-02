@@ -4,7 +4,7 @@
 class IOCPWorkerPool
 {
 public:
-	IOCPWorkerPool(IocpCore* pCore, int32 i32IoThreadCnt,int32 i32ThreadCount);
+	IOCPWorkerPool(IocpCore* pCore, int32 i32IoThreadCnt,int32 i32LogicThreadCount);
 	~IOCPWorkerPool();
 
 	void Start();
@@ -40,7 +40,7 @@ private:
 	vector<thread> m_vLogicThreads;
 	atomic<bool> m_bRunning = false; // atomic<bool>은 값을 변경하는 건 1스레드여도, 읽는 스레드가 2개 이상이면 무조건 atomic이 맞다.
 
-	vector<stWorkerQueue> m_vWorkerQueues;
+	vector<unique_ptr<stWorkerQueue>> m_vWorkerQueues;
 	atomic<uint32> m_ui32LogicRoundRobin = 0;
 };
 

@@ -6,6 +6,9 @@ IOCPWorkerPool::IOCPWorkerPool(IocpCore* pCore, int32 i32IoThreadCnt, int32 i32L
 	m_pCore(pCore), m_i32IoThreadCount(i32IoThreadCnt), m_i32LogicThreadCount(i32LogicThreadCount)
 {
 	m_vWorkerQueues.resize(m_i32LogicThreadCount);
+
+	for (int i = 0; i < m_i32LogicThreadCount; ++i)
+		m_vWorkerQueues[i] = make_unique<stWorkerQueue>();
 }
 
 IOCPWorkerPool::~IOCPWorkerPool()
@@ -56,8 +59,9 @@ void IOCPWorkerPool::Stop()
 		::PostQueuedCompletionStatus(m_pCore->GetHandle(), 0, 0, nullptr);
 	}
 
-	for (auto& queue : m_vWorkerQueues)
+	for (auto& queuePtr : m_vWorkerQueues)
 	{
+		auto& queue = *queuePtr;
 		unique_lock<mutex> lock(queue.m_mutex);
 		queue.m_cv.notify_all();
 	}
@@ -133,7 +137,7 @@ void IOCPWorkerPool::LogicWorkerThreadLoop(int32 i32_LogicWorkerID)
 
 bool IOCPWorkerPool::WaitPopLocal(int32 _i32WorkerID, stIocpCompletion& outItem)
 {
-	stWorkerQueue& queue = m_vWorkerQueues[_i32WorkerID];
+	stWorkerQueue& queue = *m_vWorkerQueues[_i32WorkerID];
 	
 	unique_lock<mutex> lock(queue.m_mutex);
 	queue.m_cv.wait(lock, [this, &queue]()
@@ -160,7 +164,7 @@ void IOCPWorkerPool::EnqueueToWorker(int32 _i32WorkerID, IocpEvent* _pEvent, DWO
 		return;
 	}
 
-	stWorkerQueue& queue = m_vWorkerQueues[_i32WorkerID];
+	stWorkerQueue& queue = *m_vWorkerQueues[_i32WorkerID];
 	{
 		lock_guard<mutex> lock(queue.m_mutex);
 		queue.dqPending.push_back({ _pEvent, _dwNumOfBytes });

@@ -128,7 +128,7 @@ bool ClientApp::Initialize()
 
 	// 워커 스레드 풀 시작
 	std::cout << "[Client] Worker Thread Pool Start\n";
-	m_workerpool = make_unique<IOCPWorkerPool>(m_core.get(), 2);
+	m_workerpool = make_unique<IOCPWorkerPool>(m_core.get(), 2, 1);
     return true;
 }
 
