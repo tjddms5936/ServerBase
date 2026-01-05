@@ -19,6 +19,10 @@ struct stSendItem
 	// 메모리 생존 보장용 keeper
 	shared_ptr<void> keep1;
 	shared_ptr<void> keep2;
+
+	// 부분 전송 완료 대응
+	int32 i32TotalLen = 0;	// 총 보낼 길이
+	int32 i32SentLen = 0;	// 커널에 복사 된 길이
 };
 
 /*--------------------

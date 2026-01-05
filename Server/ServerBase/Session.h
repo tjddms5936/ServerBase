@@ -28,7 +28,7 @@ public:
 	void OnRecv(DWORD numOfByptes); // 수신 완료 후 처리
 	void PostSend(const char* data, int32 len);
 	void OnSend(DWORD numOfBytes);
-	void OnSend2(DWORD numOfBytes);
+	void OnSend2(DWORD numOfBytes, IocpEvent* pEvent);
 
 	SOCKET GetSocket() const { return m_socket; }
 
@@ -45,6 +45,7 @@ public:
 private:
 	void enqueueSend(stSendItem&& item);
 	void postNextSend();
+	void PartialSend(IocpEvent* pEvent); // 부분 완료 대응
 
 private:
 	SOCKET m_socket;

@@ -27,14 +27,18 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	IocpEvent::Type eType = pIocpEvent->GetType();
 	switch (eType)
 	{
-	case IocpEvent::Type::Recv: OnRecv(numOfBytes); break;
-	// case IocpEvent::Type::Send: OnSend(numOfBytes); break;
-	case IocpEvent::Type::Send: OnSend2(numOfBytes); break; // 큐 기반 송신 방법
+	case IocpEvent::Type::Recv: 
+		OnRecv(numOfBytes); 
+		delete pIocpEvent;  // Recv는 항상 완료
+		break;
+	case IocpEvent::Type::Send: 
+		OnSend2(numOfBytes, pIocpEvent);  // pEvent 전달 (부분 완료 처리용)
+		// Send는 OnSend2 내부에서 완료 여부에 따라 삭제 결정
+		break;
 	default:
+		delete pIocpEvent;
 		break;
 	}
-
-	delete pIocpEvent;
 }
 
 //void Session::Init(SOCKET socket)
@@ -251,18 +255,26 @@ void Session::OnSend(DWORD numOfBytes)
 	// 전송 완료 후 따로 처리할 일은 아직 없음
 }
 
-void Session::OnSend2(DWORD numOfBytes)
+void Session::OnSend2(DWORD numOfBytes, IocpEvent* pEvent)
 {
-	/*
-		IOCP에서 WSASend는 일반적으로 요청한 전체 WSABUF 합계를 한 번에 완료하지만, 부분 완료가 올 수도 있어.
-		지금은 numBytes만큼 pendingBytes를 깎고 다음 큐를 진행하므로 대부분의 케이스에서 OK.
-		부분 완료까지 엄격히 관리하려면 IocpEvent에 “이번 요청 총 길이”를 저장하고, numBytes < 요청길이면 나머지 구간으로 재전송하는 보강이 필요. (필요 시 나중에 확장해도 됨)
-	*/
-	std::cout << "[OnSend] Sent " << numOfBytes << " bytes to client." << std::endl;
+	std::cout << "[OnSend2] Sent " << numOfBytes << " bytes to client." << std::endl;
 	m_ullPendingBytes.fetch_sub(numOfBytes); // 누적 전송량 차감
 
-	// 이벤트 삭제는 Dispatch 쪽에서 하면 동일 정책 유지
-	postNextSend();
+	// 부분 완료 추적
+	pEvent->m_stSendItem.i32SentLen += numOfBytes;
+	
+	if (pEvent->m_stSendItem.i32SentLen < pEvent->m_stSendItem.i32TotalLen)
+	{
+		// 부분 완료: 나머지 데이터 재전송
+		PartialSend(pEvent);
+		// pEvent는 PartialSend에서 재사용되므로 삭제하지 않음
+	}
+	else
+	{
+		// 전체 완료: 이벤트 삭제 후 다음 전송
+		delete pEvent;
+		postNextSend();
+	}
 }
 
 void Session::SendPacket(const char* payload, int len)
@@ -322,6 +334,14 @@ void Session::postNextSend()
 	pEvent->m_stSendItem = move(m_SendQueue.front());
 	m_SendQueue.pop_front();
 
+	// 부분 완료 추적을 위한 초기화
+	pEvent->m_stSendItem.i32TotalLen = 0;
+	for (DWORD i = 0; i < pEvent->m_stSendItem.bufCount; ++i)
+	{
+		pEvent->m_stSendItem.i32TotalLen += pEvent->m_stSendItem.bufs[i].len;
+	}
+	pEvent->m_stSendItem.i32SentLen = 0;
+
 	DWORD sent = 0;
 	int result = WSASend(
 		m_socket,
@@ -333,10 +353,82 @@ void Session::postNextSend()
 		nullptr
 	);
 
-	if (result == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
+	if (result == SOCKET_ERROR)
 	{
-		cerr << "[PostSend] WSASend Error: " << WSAGetLastError() << endl;
+		int err = WSAGetLastError();
+		if (err != WSA_IO_PENDING)
+		{
+			cerr << "[PostSend] WSASend Error: " << WSAGetLastError() << endl;
+			delete pEvent;
+			m_bSendInFlight.store(false);
+		}
+	}
+}
+
+void Session::PartialSend(IocpEvent* pEvent)
+{
+	// 부분 완료 처리: 전송되지 않은 나머지 데이터로 재전송
+	
+	int32 remaining = pEvent->m_stSendItem.i32TotalLen - pEvent->m_stSendItem.i32SentLen;
+	if (remaining <= 0)
+	{
+		// 이미 전체 전송 완료 (이론적으로 도달하지 않아야 함)
 		delete pEvent;
-		m_bSendInFlight.store(false);
+		postNextSend();
+		return;
+	}
+
+	// 전송된 바이트 수를 기준으로 WSABUF 배열 재구성
+	WSABUF remainingBufs[2];
+	DWORD remainingBufCount = 0;
+	int32 offset = pEvent->m_stSendItem.i32SentLen;  // 전송된 바이트 수
+
+	// 첫 번째 버퍼에서 남은 부분 계산
+	if (offset < static_cast<int32>(pEvent->m_stSendItem.bufs[0].len))
+	{
+		// 첫 번째 버퍼의 일부만 전송됨
+		remainingBufs[0].buf = pEvent->m_stSendItem.bufs[0].buf + offset;
+		remainingBufs[0].len = pEvent->m_stSendItem.bufs[0].len - offset;
+		remainingBufCount = 1;
+		
+		// 두 번째 버퍼도 포함해야 하는지 확인
+		if (remaining > static_cast<int32>(remainingBufs[0].len) && pEvent->m_stSendItem.bufCount > 1)
+		{
+			remainingBufs[1] = pEvent->m_stSendItem.bufs[1];
+			remainingBufCount = 2;
+		}
+	}
+	else
+	{
+		// 첫 번째 버퍼는 완전히 전송됨, 두 번째 버퍼의 일부만 전송됨
+		offset -= pEvent->m_stSendItem.bufs[0].len;
+		remainingBufs[0].buf = pEvent->m_stSendItem.bufs[1].buf + offset;
+		remainingBufs[0].len = pEvent->m_stSendItem.bufs[1].len - offset;
+		remainingBufCount = 1;
+	}
+
+	// 나머지 데이터로 재전송
+	DWORD sent = 0;
+	int result = WSASend(
+		m_socket,
+		remainingBufs,
+		remainingBufCount,
+		&sent,
+		0,
+		pEvent,  // 동일한 IocpEvent 재사용
+		nullptr
+	);
+
+	if (result == SOCKET_ERROR)
+	{
+		int err = WSAGetLastError();
+		if (err != WSA_IO_PENDING)
+		{
+			std::cerr << "[PartialSend] WSASend Error: " << err << std::endl;
+			delete pEvent;
+			m_bSendInFlight.store(false);
+			postNextSend();
+		}
+		// WSA_IO_PENDING이면 정상: 비동기 대기 중
 	}
 }
