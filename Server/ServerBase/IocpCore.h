@@ -25,6 +25,15 @@ struct stSendItem
 	int32 i32SentLen = 0;	// 커널에 복사 된 길이
 };
 
+struct stIoData
+{
+	// Listener에서 하는 Accept에서 Race Condition 방지를 위한 구조체
+
+	void	SetIoThreadID(int32 _i32IoThreadID) { i32IoThreadID = _i32IoThreadID; };
+	int32	GetIoThreadID() { return i32IoThreadID; };
+	int32 i32IoThreadID = -1;	// -1:미할당 0:이상 그 외 : IO 스레드 ID 
+};
+
 /*--------------------
 		IocpObject
 --------------------*/
@@ -61,13 +70,14 @@ private:
 	void Init();
 
 private:
-	Type m_Type;
-	shared_ptr<IocpObject> m_Owner;
-	shared_ptr<Session> m_PartsSession;
+	Type					m_Type;
+	shared_ptr<IocpObject>	m_Owner;
+	shared_ptr<Session>		m_PartsSession;
 
 public:
 	// IocpEvent 확장: SendItem 포함
-	stSendItem m_stSendItem; // ← 여기에 WSABUF들과 keeper가 붙는다
+	stSendItem	m_stSendItem;	// ← 여기에 WSABUF들과 keeper가 붙는다
+	stIoData	m_stIoData;		// Accept에서 Race Condition 방지용
 };
 
 

@@ -29,15 +29,18 @@ bool ServerApp::Initialize()
 		return false;
 	}
 
-	if (!m_listener->StartAccept(4000, m_core.get()))
+
+	// IO 스레드 수 계산 (WorkerPool 생성 전에 필요)
+	uint32 hwThreadCnt = thread::hardware_concurrency();
+	uint32 ioThreadCnt = std::max<uint32>(2, hwThreadCnt / 2);
+	uint32 logicThreadCnt = std::max<uint32>(1, hwThreadCnt);
+
+	if (!m_listener->StartAccept(4000, m_core.get(), static_cast<int32>(ioThreadCnt)))
 	{
 		std::cerr << "[ServerApp] Listener accept start failed\n";
 		return false;
 	}
 
-	uint32 hwThreadCnt = thread::hardware_concurrency();
-	uint32 ioThreadCnt = std::max<uint32>(2, hwThreadCnt / 2);
-	uint32 logicThreadCnt = std::max<uint32>(1, hwThreadCnt);
 
 	m_workerpool = make_unique<IOCPWorkerPool>(m_core.get(), static_cast<int32>(ioThreadCnt), static_cast<int32>(logicThreadCnt));
     return true;

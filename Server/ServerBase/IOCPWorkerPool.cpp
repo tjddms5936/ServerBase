@@ -87,15 +87,19 @@ void IOCPWorkerPool::IoWorkerThreadLoop(int32 i32_IoWorkerID)
 	constexpr uint32 IocpPollTimeoutMs = 10; // 큐 확인을 위해 짧은 타임아웃 사용
 
 	while (m_bRunning)
-	{
-		stIocpCompletion completion;
-		
+	{	
 		DWORD bytes = 0;
 		ULONG_PTR completionKey = 0;
 		IocpEvent* pEvent = nullptr;
 
 		if (!m_pCore->Dequeue(bytes, completionKey, pEvent, IocpPollTimeoutMs))
 			continue;
+
+		// Accept이벤트인 경우 IO 스레드 ID 저장
+		if (pEvent && pEvent->GetType() == IocpEvent::Type::Accept)
+		{
+			pEvent->m_stIoData.SetIoThreadID(i32_IoWorkerID);
+		}
 
 		int32 targetWorker = SelectLogicWorker(pEvent);
 		EnqueueToWorker(targetWorker, pEvent, bytes);
