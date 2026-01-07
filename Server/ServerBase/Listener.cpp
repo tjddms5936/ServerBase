@@ -7,10 +7,12 @@ Listener::Listener() :
 	m_listenSocket(INVALID_SOCKET), m_core(nullptr)
 {
 	m_vThreadPools.clear();
+	m_AcceptScheduler.SetOwner(this);
 }
 
 Listener::~Listener()
 {
+	m_AcceptScheduler.EndRetry();
 	Close();
 }
 
@@ -120,10 +122,12 @@ bool Listener::StartAccept(uint16 port, IocpCore* core, int32 ioTHreadCount)
 	}
 
 	std::cout << "[Listener] Initial AcceptEx requests posted :" << endl;
+
+	m_AcceptScheduler.StartRetry();
 	return true;
 }
 
-void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
+void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID, int32 retryCount = 0)
 {
 	// 비동기 AcceptEX 사용
 
@@ -134,8 +138,11 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 		int err = WSAGetLastError();
 		std::cerr << "WSASocket failed: " << WSAGetLastError() << std::endl;
 
-		// 이벤트 반환 후 재시도
-		ReleaseAcceptEvent(ioThreadID, pAcceptEvent);
+		//// 이벤트 반환 후 재시도
+		//ReleaseAcceptEvent(ioThreadID, pAcceptEvent);
+
+		// 재시도 스케쥴링 (비동기)
+		m_AcceptScheduler.ScheduleRetry(ioThreadID, pAcceptEvent, err);
 		return;
 	}
 
@@ -174,8 +181,11 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 		// 일단 다시 Accept 걸어준다.
 		// PostAccept(pAcceptEvent);
 
-		// 이벤트 반환 후 재시도
-		ReleaseAcceptEvent(ioThreadID, pAcceptEvent);
+		// // 이벤트 반환 후 재시도
+		// ReleaseAcceptEvent(ioThreadID, pAcceptEvent);
+
+		// 재시도 스케쥴링 (비동기)
+		m_AcceptScheduler.ScheduleRetry(ioThreadID, pAcceptEvent, WSAGetLastError(), retryCount);
 	}
 
 }
@@ -268,5 +278,109 @@ void Listener::ReleaseAcceptEvent(int32 ioThreadID, IocpEvent* pEvent)
 
 		// 이벤트를 초기화 한 후 해당 IO 스레드의 풀에 반환
 		pool.m_freeEvents.push_back(pEvent); 
+	}
+}
+
+void AcceptRetryScheduler::RetryThreadLoop()
+{
+	while (m_bRetryRunning)
+	{
+		unique_lock<mutex> lock(m_retryMutex);
+
+		if (m_retryQeuue.empty())
+		{
+			// 큐가 비어있으면 대기
+			m_cvRetry.wait(lock);
+			continue;
+		}
+
+		// 다음 재시도 시간까지 대기
+		auto now = chrono::steady_clock::now();
+		auto nextRetry = m_retryQeuue.front().nextRetryTime;
+
+		if (now < nextRetry)
+		{
+			// 아직 시간 안됨. 대기
+			m_cvRetry.wait_until(lock, nextRetry);
+			continue;
+		}
+
+		// 자시도 시간 도달
+		stRetryItem item = m_retryQeuue.front();
+		m_retryQeuue.pop_front();
+		lock.unlock(); // 락 해제 (PostAccept 호출 전)
+
+		// 최대 재시도 횟수 체크
+		if (item.retryCount >= MAX_RETRY)
+		{
+			cerr << "[RetryThreadLoop] Max retry count exceeded for thread " << item.IoThreadID << endl;
+			if (pOwner)
+				pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
+			continue;
+		}
+
+		// 재시도
+		cout << "[RetryThread] Retrying (count : " << item.retryCount << ") for thread " << item.IoThreadID << endl;
+
+		// PostAccept 재호출 (재시도 횟수 전달 필요)
+		pOwner->PostAccept(item.pEvent, item.IoThreadID, item.retryCount + 1);
+	}
+}
+
+void AcceptRetryScheduler::ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, int32 errCode, int32 retryCount)
+{
+	// 영구적 에러 체크
+	if (errCode == WSAEINVAL || errCode == WSAEAFNOSUPPORT || errCode == WSAENOTSOCK)
+	{
+		cerr << "[ScheduleRetry] Permanet error : " << errCode << ", releasing event" << endl;
+		
+		if (pOwner)
+			pOwner->ReleaseAcceptEvent(ioThreadID, pEvent);
+		return;
+	}
+
+	lock_guard<mutex> lock(m_retryMutex);
+	{
+		// 이벤트에서 재시도 횟수 읽기 (또는 새로 생성)
+		stRetryItem item;
+		item.pEvent = pEvent;
+		item.IoThreadID = ioThreadID;
+		item.errCode = errCode;
+		item.retryCount = retryCount;
+		
+		// 지수 백오프 계산. 상한선 설정
+		int32 delayMs = min(BASE_DELAY_MS * (1 << item.retryCount), MAX_DELAY_MS);
+		item.nextRetryTime = chrono::steady_clock::now() + chrono::milliseconds(delayMs);
+
+		m_retryQeuue.push_back(item);
+		m_cvRetry.notify_one(); // 재시도 스레드 깨우기
+	}
+
+}
+
+void AcceptRetryScheduler::StartRetry()
+{
+	// 재시도 스레드 시작
+	m_bRetryRunning.store(true);
+	m_retryThread = thread([this()]{ this->RetryThreadLoop(); });
+}
+
+void AcceptRetryScheduler::EndRetry()
+{
+	// 재시도 스레드 종료
+	m_bRetryRunning.store(false);
+	{
+		lock_guard<mutex> lock(m_retryMutex);
+		m_cvRetry.notify_all();
+	}
+
+	if (m_retryThread.joinable())
+		m_retryThread.join();
+
+	// 남은 재시도 항목 정리
+	for (auto& item : m_retryQeuue)
+	{
+		if (pOwner)
+			pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
 	}
 }
