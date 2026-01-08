@@ -32,6 +32,7 @@ struct stIoData
 	void	SetIoThreadID(int32 _i32IoThreadID) { i32IoThreadID = _i32IoThreadID; };
 	int32	GetIoThreadID() { return i32IoThreadID; };
 	int32 i32IoThreadID = -1;	// -1:미할당 0:이상 그 외 : IO 스레드 ID 
+	int32 i32RetryCount = 0;	// 재시도 횟수
 };
 
 /*--------------------
@@ -54,7 +55,10 @@ public:
 	enum class Type {Recv, Send, Accept};
 
 	IocpEvent(Type type, shared_ptr<IocpObject> owner, shared_ptr<Session> pPartsSession = nullptr) :
-		m_Type(type), m_Owner(owner), m_PartsSession(pPartsSession) {}
+		m_Type(type), m_Owner(owner), m_PartsSession(pPartsSession) 
+	{
+		Init();
+	};
 
 	~IocpEvent() = default; // 가상 상속을 써버리면... 메모리 구조에서 OVERLAPPED 앞에 가상함수 테이블이 붙어버려서 오동작 일어남
 	IocpEvent(const IocpEvent&) = delete;

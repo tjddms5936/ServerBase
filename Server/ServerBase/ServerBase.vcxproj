@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Buffer.h" />
     <ClInclude Include="CoreGlobal.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="IocpCore.h" />
@@ -166,10 +165,10 @@
     <ClInclude Include="ServerPch.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="TimeMaker.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="CoreGlobal.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IOCPWorkerPool.cpp" />
@@ -188,6 +187,7 @@
     <ClCompile Include="ServerPch.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
+    <ClCompile Include="TimeMaker.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

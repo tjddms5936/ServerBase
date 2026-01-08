@@ -12,9 +12,6 @@
     <ClInclude Include="pch.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Buffer.h">
-      <Filter>Server</Filter>
-    </ClInclude>
     <ClInclude Include="IocpCore.h">
       <Filter>Server</Filter>
     </ClInclude>
@@ -54,14 +51,16 @@
     <ClInclude Include="RecvBuffer.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="SendBuffer.h" />
+    <ClInclude Include="SendBuffer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeMaker.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Buffer.cpp">
-      <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="IocpCore.cpp">
       <Filter>Server</Filter>
@@ -96,6 +95,11 @@
     <ClCompile Include="RecvBuffer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="SendBuffer.cpp" />
+    <ClCompile Include="SendBuffer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMaker.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -64,8 +64,10 @@ void Session::PostRecv()
 	if (wsaBuf[0].len == 0 && wsaBuf[1].len == 0)
 	{
 		std::cerr << "[PostRecv] No free space in RecvBuffer\n";
-		return;
+		m_bBufferFull.store(true);
 	}
+	else 
+		m_bBufferFull.store(false);
 
 	int bufCount = (wsaBuf[1].len > 0) ? 2 : 1;
 
@@ -132,10 +134,43 @@ void Session::OnRecv(DWORD numOfByptes)
 {
 	if (numOfByptes == 0)
 	{
-		std::cout << "[OnRecv] Client disconnected\n";
-		closesocket(m_socket);
+		int64 FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
+		bool bBufferFull = m_bBufferFull.load();
+
+		if (bBufferFull == true )
+		{
+			// 버퍼 가득 참. 재시도 필요
+			std::cout << "[OnRecv] Recv buffer Full" << endl;
+
+			if (FirstRetryTimeStampSec == 0)
+			{
+				m_i64RetryRecvTimestampSec.store(g_TimeMaker.GetTimeStamp_Sec());
+				FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
+			}
+
+			// 1분 이상동안 재시도 하면 그냥 연결 끊자
+			if(g_TimeMaker.GetTimeStamp_Sec() - FirstRetryTimeStampSec >= 60)
+			{
+				// 연결 종료
+				std::cout << "[OnRecv] Client disconnected\n";
+				closesocket(m_socket);
+			}
+			else
+				PostRecv();
+		}
+		else
+		{
+			// 연결 종료
+			std::cout << "[OnRecv] Client disconnected\n";
+			closesocket(m_socket);
+		}
+
 		return;
 	}
+
+	m_bBufferFull.store(false);
+	m_i64RetryRecvTimestampSec.store(0);
+
 
 	// 1) RingBuffer에 수신 완료된 만큼 Commit
 	m_recvRingBuffer.CommitWrite(numOfByptes);

@@ -21,3 +21,5 @@
 		__analysis_assume(expr);	\
 	}								\
 }
+
+#define MAX_RECEIVE_RETRY_MILSEC 30000

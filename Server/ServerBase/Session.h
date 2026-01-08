@@ -62,5 +62,8 @@ private:
 
 	// -1 : 아직 미할당, 그 외 : 세션을 담당할 워커 ID
 	atomic<int32> m_i32BoundWorkerID{ -1 };
+
+	atomic<bool>m_bBufferFull{ false };
+	atomic<int64> m_i64RetryRecvTimestampSec{ 0 }; // 첫 재시도 타임스탬프(초)
 };
 

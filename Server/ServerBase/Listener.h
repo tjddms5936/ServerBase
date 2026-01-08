@@ -4,6 +4,16 @@
 
 class AcceptRetryScheduler
 {
+private:
+	struct stRetryItem
+	{
+		IocpEvent* pEvent;
+		int32		IoThreadID;
+		int32		retryCount;
+		chrono::steady_clock::time_point nextRetryTime;
+		int errCode; // 에러 코드 저장
+	};
+
 public:
 	AcceptRetryScheduler() = default;
 	~AcceptRetryScheduler() = default;
@@ -12,21 +22,11 @@ public:
 
 public:
 	void RetryThreadLoop();
-	void ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, int32 errCode, int32 retryCount);
-	void SetOwner(Listener* pOwner) { pOwner = pOwner; }
+	void ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, int32 errCode);
+	void SetOwner(Listener* pOwner) { m_pOwner = pOwner; }
 	void StartRetry();
 	void EndRetry();
-	void ResetRetryCount(int32 ioThreadID);
 private:
-	struct stRetryItem
-	{
-		IocpEvent*	pEvent;
-		int32		IoThreadID;
-		int32		retryCount;
-		chrono::steady_clock::time_point nextRetryTime;
-		int errCode; // 에러 코드 저장
-	};
-
 	mutex m_retryMutex;
 	deque<stRetryItem> m_retryQeuue; // 재시도 대기 큐
 	thread m_retryThread; // 재시도 전용 스레드
@@ -37,7 +37,7 @@ private:
 	static constexpr int32 BASE_DELAY_MS = 100;
 	static constexpr int32 MAX_DELAY_MS = 5000;
 
-	Listener* pOwner = nullptr;
+	Listener* m_pOwner = nullptr;
 };
 
 class Listener : public IocpObject
@@ -70,7 +70,7 @@ public:
 	IocpEvent* AcquireAcceptEvent(int32 ioThreadID);
 	void ReleaseAcceptEvent(int32 ioThreadID, IocpEvent* pEvent);
 
-	void PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID, int32 retryCount = 0);
+	void PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID);
 private:
 	void Init(IocpCore* core, int32 ioThreadCount);
 	bool BindWindowsFunction(SOCKET socket, GUID guid, LPVOID* fn);

@@ -27,4 +27,6 @@
 #include <iostream>
 using namespace std;
 
+#include "TimeMaker.h"
+
 void HelloWorld();

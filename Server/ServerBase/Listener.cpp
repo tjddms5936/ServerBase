@@ -13,6 +13,20 @@ Listener::Listener() :
 Listener::~Listener()
 {
 	m_AcceptScheduler.EndRetry();
+
+	// 이벤트 풀 정리
+	for (auto& pool : m_vThreadPools)
+	{
+		if (pool)
+		{
+			for (IocpEvent* pEvent : pool->m_allEvents)
+			{
+				delete pEvent;
+			}
+		}
+	}
+	m_vThreadPools.clear();
+
 	Close();
 }
 
@@ -127,7 +141,7 @@ bool Listener::StartAccept(uint16 port, IocpCore* core, int32 ioTHreadCount)
 	return true;
 }
 
-void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID, int32 retryCount = 0)
+void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 {
 	// 비동기 AcceptEX 사용
 
@@ -185,9 +199,12 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID, int32 retry
 		// ReleaseAcceptEvent(ioThreadID, pAcceptEvent);
 
 		// 재시도 스케쥴링 (비동기)
-		m_AcceptScheduler.ScheduleRetry(ioThreadID, pAcceptEvent, WSAGetLastError(), retryCount);
+		m_AcceptScheduler.ScheduleRetry(ioThreadID, pAcceptEvent, WSAGetLastError());
+		return;
 	}
 
+	// 재시도 카운팅 초기화
+	pAcceptEvent->m_stIoData.i32RetryCount = 0;
 }
 
 void Listener::Close()
@@ -205,6 +222,12 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 	if (!pSession)
 	{
 		cerr << "[OnAccept] Session is null" << endl;
+
+		// 이벤트 풀에 반납
+		int32 ioThreadID = pIocpEvent->m_stIoData.GetIoThreadID();
+		if (ioThreadID < 0)
+			ioThreadID = 0;
+		ReleaseAcceptEvent(ioThreadID, pIocpEvent);
 		return;
 	}
 
@@ -220,7 +243,7 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 	if (!m_core->Register(reinterpret_cast<HANDLE>(pSession->GetSocket()), 0))
 	{
 		cout << "register() failed" << std::endl;
-		closesocket(m_listenSocket);
+		closesocket(pSession->GetSocket());
 		// PostAccept(pIocpEvent);
 		ReleaseAcceptEvent(ioThreadID, pIocpEvent); // 이벤트 반환
 		return;
@@ -246,7 +269,7 @@ IocpEvent* Listener::AcquireAcceptEvent(int32 ioThreadID)
 
 		if (pool.m_freeEvents.empty())
 		{
-			// 이벤트 부족
+			// 이벤트 부족.풀 고갈되면 재시도나 동적 확장 구조 고려해야 함. 일단은 Pass
 			std::cerr << "[AcquireAcceptEvent] No free events for thread ID: " << ioThreadID << endl;
 			return nullptr;
 		}
@@ -275,6 +298,7 @@ void Listener::ReleaseAcceptEvent(int32 ioThreadID, IocpEvent* pEvent)
 		// 이벤트 재사용을 위해 초기화
 		pEvent->SetPartsSession(nullptr);
 		pEvent->m_stIoData.SetIoThreadID(ioThreadID); // IO 스레드 ID 유지
+		pEvent->m_stIoData.i32RetryCount = 0; // 재시도 횟수 초기화
 
 		// 이벤트를 초기화 한 후 해당 IO 스레드의 풀에 반환
 		pool.m_freeEvents.push_back(pEvent); 
@@ -314,8 +338,8 @@ void AcceptRetryScheduler::RetryThreadLoop()
 		if (item.retryCount >= MAX_RETRY)
 		{
 			cerr << "[RetryThreadLoop] Max retry count exceeded for thread " << item.IoThreadID << endl;
-			if (pOwner)
-				pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
+			if (m_pOwner)
+				m_pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
 			continue;
 		}
 
@@ -323,19 +347,19 @@ void AcceptRetryScheduler::RetryThreadLoop()
 		cout << "[RetryThread] Retrying (count : " << item.retryCount << ") for thread " << item.IoThreadID << endl;
 
 		// PostAccept 재호출 (재시도 횟수 전달 필요)
-		pOwner->PostAccept(item.pEvent, item.IoThreadID, item.retryCount + 1);
+		m_pOwner->PostAccept(item.pEvent, item.IoThreadID);
 	}
 }
 
-void AcceptRetryScheduler::ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, int32 errCode, int32 retryCount)
+void AcceptRetryScheduler::ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, int32 errCode)
 {
 	// 영구적 에러 체크
 	if (errCode == WSAEINVAL || errCode == WSAEAFNOSUPPORT || errCode == WSAENOTSOCK)
 	{
 		cerr << "[ScheduleRetry] Permanet error : " << errCode << ", releasing event" << endl;
 		
-		if (pOwner)
-			pOwner->ReleaseAcceptEvent(ioThreadID, pEvent);
+		if (m_pOwner)
+			m_pOwner->ReleaseAcceptEvent(ioThreadID, pEvent);
 		return;
 	}
 
@@ -346,7 +370,7 @@ void AcceptRetryScheduler::ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, in
 		item.pEvent = pEvent;
 		item.IoThreadID = ioThreadID;
 		item.errCode = errCode;
-		item.retryCount = retryCount;
+		item.retryCount = ++pEvent->m_stIoData.i32RetryCount;
 		
 		// 지수 백오프 계산. 상한선 설정
 		int32 delayMs = min(BASE_DELAY_MS * (1 << item.retryCount), MAX_DELAY_MS);
@@ -362,7 +386,7 @@ void AcceptRetryScheduler::StartRetry()
 {
 	// 재시도 스레드 시작
 	m_bRetryRunning.store(true);
-	m_retryThread = thread([this()]{ this->RetryThreadLoop(); });
+	m_retryThread = thread([this]{ this->RetryThreadLoop(); });
 }
 
 void AcceptRetryScheduler::EndRetry()
@@ -380,7 +404,7 @@ void AcceptRetryScheduler::EndRetry()
 	// 남은 재시도 항목 정리
 	for (auto& item : m_retryQeuue)
 	{
-		if (pOwner)
-			pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
+		if (m_pOwner)
+			m_pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
 	}
 }
