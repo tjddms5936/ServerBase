@@ -2,6 +2,8 @@
 #include "IocpCore.h"
 #include "Session.h"
 
+class Listener;
+
 class AcceptRetryScheduler
 {
 private:

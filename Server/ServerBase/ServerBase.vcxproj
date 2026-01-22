@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -124,6 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -156,9 +157,12 @@
     <ClInclude Include="IocpCore.h" />
     <ClInclude Include="IOCPWorkerPool.h" />
     <ClInclude Include="Listener.h" />
+    <ClInclude Include="MemoryStream.h" />
     <ClInclude Include="NetApp.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Protocol.h" />
+    <ClInclude Include="ProtocolHeaderID.h" />
     <ClInclude Include="ReadWriteLock.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="SendBuffer.h" />
@@ -173,6 +177,7 @@
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IOCPWorkerPool.cpp" />
     <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="MemoryStream.cpp" />
     <ClCompile Include="NetApp.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="pch.cpp">

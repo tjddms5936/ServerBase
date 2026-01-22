@@ -57,6 +57,15 @@
     <ClInclude Include="TimeMaker.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="MemoryStream.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocol.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolHeaderID.h">
+      <Filter>Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -99,6 +108,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="TimeMaker.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryStream.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
