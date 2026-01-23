@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "Session.h"
+#include "MemoryStream.h"
 
 Session::Session(SOCKET socket, SessionType eSessionType) :
 	m_socket(socket), m_SessionType(eSessionType)
@@ -325,6 +326,45 @@ void Session::SendPacket(const char* payload, int len)
 	memcpy(body->writable(), payload, len);
 	body->commit(len);
 
+	stSendItem stItem{};
+	stItem.bufs[0].buf = hdr->data();
+	stItem.bufs[0].len = static_cast<ULONG>(hdr->size());
+	stItem.bufs[1].buf = body->data();
+	stItem.bufs[1].len = static_cast<ULONG>(body->size());
+	stItem.bufCount = 2;
+
+	// 수명 보장 : keeper에 보관
+	stItem.keep1 = hdr;
+	stItem.keep2 = body;
+
+	enqueueSend(move(stItem));
+}
+
+void Session::SendPacket(IIocpPacket* packet)
+{
+	if (packet == nullptr)
+		return;
+
+	// 1) Payload만 직렬화 (헤더 제외)
+	OutputMemoryStream payloadStream;
+	packet->SerializePayload(payloadStream);
+
+	// 2) 헤더 구성
+	PacketHeader header = packet->PkgHeader;
+	header.pkgSize = sizeof(PacketHeader) + payloadStream.GetBuffer().size();
+
+	// 3) 헤더 버퍼
+	shared_ptr<SendBuffer> hdr = m_SendPool.alloc(sizeof(PacketHeader));
+	memcpy(hdr->writable(), &header, sizeof(PacketHeader));
+	hdr->commit(sizeof(PacketHeader));
+
+	// 4) Payload 버퍼
+	const vector<char>& payloadData = payloadStream.GetBuffer();
+	shared_ptr<SendBuffer> body = m_SendPool.alloc(payloadData.size());
+	memcpy(body->writable(), payloadData.data(), payloadData.size());
+	body->commit(payloadData.size());
+
+	// 5) stSendItem 구성
 	stSendItem stItem{};
 	stItem.bufs[0].buf = hdr->data();
 	stItem.bufs[0].len = static_cast<ULONG>(hdr->size());

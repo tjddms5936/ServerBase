@@ -2,6 +2,7 @@
 #include "IocpCore.h"
 #include "RecvBuffer.h"
 #include "SendBuffer.h"
+#include "Protocol.h"
 
 enum class SessionType
 {
@@ -36,6 +37,7 @@ public:
 
 	// 송신 큐 & 인플라이트 1개 정책 도입으로 개선
 	void SendPacket(const char* payload, int len);
+	void SendPacket(IIocpPacket* packet);
 
 	// 세션 - 워커 고정
 	bool TryBindWorker(int32 _i32WorkerID);
@@ -66,4 +68,3 @@ private:
 	atomic<bool>m_bBufferFull{ false };
 	atomic<int64> m_i64RetryRecvTimestampSec{ 0 }; // 첫 재시도 타임스탬프(초)
 };
-
