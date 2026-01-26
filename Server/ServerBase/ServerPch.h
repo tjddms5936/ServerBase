@@ -29,5 +29,6 @@
 using namespace std;
 
 #include "TimeMaker.h"
+#include "Protocol.h"
 
 void HelloWorld();

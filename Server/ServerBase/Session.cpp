@@ -359,7 +359,7 @@ void Session::SendPacket(IIocpPacket* packet)
 	hdr->commit(sizeof(PacketHeader));
 
 	// 4) Payload 버퍼
-	const vector<char>& payloadData = payloadStream.GetBuffer();
+	const vector<uint8>& payloadData = payloadStream.GetBuffer();
 	shared_ptr<SendBuffer> body = m_SendPool.alloc(payloadData.size());
 	memcpy(body->writable(), payloadData.data(), payloadData.size());
 	body->commit(payloadData.size());

@@ -148,7 +148,7 @@ void ClientApp::Run()
 			break;
 
 		// 1) 패킷 길이 계산 (헤더 2바이트 + payload)
-		uint16 packetSize = static_cast<uint16>(input.size() + sizeof(uint16));
+		// uint16 packetSize = static_cast<uint16>(input.size() + sizeof(uint16));
 
 		// 2) 패킷 버퍼 생성
 		// std::vector<char> packet(packetSize);
@@ -159,7 +159,12 @@ void ClientApp::Run()
 		// m_session->PostSend(packet.data(), static_cast<int>(packet.size()));
 
 		// 위의 과정을 다음 함수 하나로 해결. 서버와 규칙 통일 하기 위함.
-		m_session->SendPacket(input.data(), (int)input.size());
+
+		CP_CHAT sendmsg;
+		sendmsg.data = "Hello my world";
+
+		// m_session->SendPacket(input.data(), (int)input.size());
+		m_session->SendPacket(&sendmsg);
 	}
 }
 
