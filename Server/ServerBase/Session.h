@@ -27,6 +27,7 @@ public:
 	void Start(); // 초기 PostRecv
 	void PostRecv(); // 비동기 수신 요청
 	void OnRecv(DWORD numOfByptes); // 수신 완료 후 처리
+	void OnRecv_v2(DWORD numOfByptes); // 수신 완료 후 처리
 	void PostSend(const char* data, int32 len);
 	void OnSend(DWORD numOfBytes);
 	void OnSend2(DWORD numOfBytes, IocpEvent* pEvent);
@@ -44,10 +45,21 @@ public:
 	int32 GetBoundWorkerID() const { return m_i32BoundWorkerID.load(); };
 	bool IsMyWorker(int32 _i32WorkerID) const { return m_i32BoundWorkerID.load() == _i32WorkerID; }
 
+	// 패킷 처리 가상 함수. 각 프로젝트에서 사용
+	virtual void OnPacketReceived(PACKET_NUMBER pkgID, int32 pkgSize, InputMemoryStream& stream) = 0;
+
+	// 더미 클라이언트 사용 임시 가상 함수
+	virtual void Run() = 0;
+
+protected:
+	// 패킷 파싱 헬퍼 함수
+	void ParsePackets();
+
 private:
 	void enqueueSend(stSendItem&& item);
 	void postNextSend();
 	void PartialSend(IocpEvent* pEvent); // 부분 완료 대응
+	void RetryRecv();
 
 private:
 	SOCKET m_socket;

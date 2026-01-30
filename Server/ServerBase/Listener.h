@@ -1,6 +1,7 @@
 #pragma once
 #include "IocpCore.h"
 #include "Session.h"
+#include <functional>
 
 class Listener;
 
@@ -56,6 +57,9 @@ private:
 		vector<IocpEvent*>	m_allEvents;	// 모든 이벤트 (정리용)
 	};
 
+	// 팩토리 함수 타입 정의
+	using SessionFactory = std::function<shared_ptr<Session>(SOCKET)>;
+
 public:
 	Listener();
 	~Listener();
@@ -73,6 +77,9 @@ public:
 	void ReleaseAcceptEvent(int32 ioThreadID, IocpEvent* pEvent);
 
 	void PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID);
+
+	void SetSessionFactory(SessionFactory factory) { m_SessionFactory = std::move(factory); }
+	
 private:
 	void Init(IocpCore* core, int32 ioThreadCount);
 	bool BindWindowsFunction(SOCKET socket, GUID guid, LPVOID* fn);
@@ -88,5 +95,7 @@ private:
 	int32 m_i32IoThreadCnt = 0;
 
 	AcceptRetryScheduler m_AcceptScheduler;
+
+	SessionFactory m_SessionFactory;
 };
 

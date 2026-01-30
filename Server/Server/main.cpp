@@ -1,14 +1,27 @@
 ﻿#include "pch.h"
 #include "NetApp.h"
+#include "ServerSession.h"
 // #include "IocpCore.h"
 // #include "Listener.h"
 // #include "IOCPWorkerPool.h"
 
-
+// Listener에 Session 팩토리 등록
+void SetupListener(shared_ptr<Listener> listener)
+{
+	listener->SetSessionFactory(
+		[](SOCKET socket) -> shared_ptr<Session>
+		{
+			return make_shared<ServerSession>(socket, SessionType::Server);
+		});
+}
 
 int main()
 {
 	ServerApp app;
+
+	// Listener 설정 
+	SetupListener(app.GetListener());
+
 	if (!app.Initialize())
 		return -1;
 

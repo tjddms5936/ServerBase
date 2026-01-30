@@ -29,7 +29,8 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	switch (eType)
 	{
 	case IocpEvent::Type::Recv: 
-		OnRecv(numOfBytes); 
+		// OnRecv(numOfBytes); 
+		OnRecv_v2(numOfBytes); 
 		delete pIocpEvent;  // Recv는 항상 완료
 		break;
 	case IocpEvent::Type::Send: 
@@ -135,37 +136,7 @@ void Session::OnRecv(DWORD numOfByptes)
 {
 	if (numOfByptes == 0)
 	{
-		int64 FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
-		bool bBufferFull = m_bBufferFull.load();
-
-		if (bBufferFull == true )
-		{
-			// 버퍼 가득 참. 재시도 필요
-			std::cout << "[OnRecv] Recv buffer Full" << endl;
-
-			if (FirstRetryTimeStampSec == 0)
-			{
-				m_i64RetryRecvTimestampSec.store(g_TimeMaker.GetTimeStamp_Sec());
-				FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
-			}
-
-			// 1분 이상동안 재시도 하면 그냥 연결 끊자
-			if(g_TimeMaker.GetTimeStamp_Sec() - FirstRetryTimeStampSec >= 60)
-			{
-				// 연결 종료
-				std::cout << "[OnRecv] Client disconnected\n";
-				closesocket(m_socket);
-			}
-			else
-				PostRecv();
-		}
-		else
-		{
-			// 연결 종료
-			std::cout << "[OnRecv] Client disconnected\n";
-			closesocket(m_socket);
-		}
-
+		RetryRecv();
 		return;
 	}
 
@@ -249,6 +220,31 @@ void Session::OnRecv(DWORD numOfByptes)
 
 	//// 다음 수신 요청
 	//PostRecv();
+}
+
+void Session::OnRecv_v2(DWORD numOfByptes)
+{
+	if (numOfByptes == 0)
+	{
+		RetryRecv();
+		return;
+	}
+
+	m_bBufferFull.store(false);
+	m_i64RetryRecvTimestampSec.store(0);
+
+
+	// 1) RingBuffer에 수신 완료된 만큼 Commit
+	m_recvRingBuffer.CommitWrite(numOfByptes);
+
+	// 디버깅 찍어보기
+	m_recvRingBuffer.DebugPrint();
+
+	// 2) 패킷 단위 처리
+	ParsePackets();
+
+	// 3) 다음 Recv 요청
+	PostRecv();
 }
 
 void Session::PostSend(const char* data, int32 len)
@@ -345,18 +341,27 @@ void Session::SendPacket(IIocpPacket* packet)
 	if (packet == nullptr)
 		return;
 
-	// 1) Payload만 직렬화 (헤더 제외)
+	// 0) Payload만 직렬화 (헤더 제외)
 	OutputMemoryStream payloadStream;
 	packet->SerializePayload(payloadStream);
 
-	// 2) 헤더 구성
-	PacketHeader header = packet->PkgHeader;
-	header.pkgSize = sizeof(PacketHeader) + payloadStream.GetBuffer().size();
+	if (payloadStream.GetBuffer().size() >= (std::numeric_limits<int32>::max() - sizeof(PacketHeader)))
+		throw std::length_error("payloadStream length over int32_Maximum");
+
+	// 1) 헤더 구성
+	PacketHeader header;
+	header.pkgID = packet->PkgHeader.pkgID;
+	header.pkgSize = static_cast<int32>(sizeof(PacketHeader)) + static_cast<int32>(payloadStream.GetBuffer().size());
+	
+	
+	// 2) Header만 직렬화
+	OutputMemoryStream headerStream;
+	headerStream.Serialize(header.pkgID, header.pkgSize);
 
 	// 3) 헤더 버퍼
-	shared_ptr<SendBuffer> hdr = m_SendPool.alloc(sizeof(PacketHeader));
-	memcpy(hdr->writable(), &header, sizeof(PacketHeader));
-	hdr->commit(sizeof(PacketHeader));
+	shared_ptr<SendBuffer> hdr = m_SendPool.alloc(headerStream.GetBuffer().size());
+	memcpy(hdr->writable(), headerStream.GetBuffer().data(), headerStream.GetBuffer().size());
+	hdr->commit(headerStream.GetBuffer().size());
 
 	// 4) Payload 버퍼
 	const vector<uint8>& payloadData = payloadStream.GetBuffer();
@@ -505,5 +510,105 @@ void Session::PartialSend(IocpEvent* pEvent)
 			postNextSend();
 		}
 		// WSA_IO_PENDING이면 정상: 비동기 대기 중
+	}
+}
+
+void Session::RetryRecv()
+{
+	int64 FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
+	bool bBufferFull = m_bBufferFull.load();
+
+	if (bBufferFull == true)
+	{
+		// 버퍼 가득 참. 재시도 필요
+		std::cout << "[OnRecv] Recv buffer Full" << endl;
+
+		if (FirstRetryTimeStampSec == 0)
+		{
+			m_i64RetryRecvTimestampSec.store(g_TimeMaker.GetTimeStamp_Sec());
+			FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
+		}
+
+		// 1분 이상동안 재시도 하면 그냥 연결 끊자
+		if (g_TimeMaker.GetTimeStamp_Sec() - FirstRetryTimeStampSec >= 60)
+		{
+			// 연결 종료
+			std::cout << "[OnRecv] Client disconnected\n";
+			closesocket(m_socket);
+		}
+		else
+			PostRecv();
+	}
+	else
+	{
+		// 연결 종료
+		std::cout << "[OnRecv] Client disconnected\n";
+		closesocket(m_socket);
+	}
+}
+
+void Session::ParsePackets()
+{
+	while (true)
+	{
+		if (m_recvRingBuffer.GetUseSize() < sizeof(PacketHeader))
+			break;
+
+		PacketHeader header;
+		if (!m_recvRingBuffer.PeekCopy(reinterpret_cast<char*>(&header), sizeof(PacketHeader)))
+			break;
+
+		// 헤더 정보 파싱
+		header.pkgID = ntohl(header.pkgID);
+		header.pkgSize = ntohl(header.pkgSize);
+		if (header.pkgSize < sizeof(PacketHeader))
+		{
+			std::cerr << "[Error] Invalid packet size: " << header.pkgSize << "\n";
+			break;
+		}
+
+		if (m_recvRingBuffer.GetUseSize() < header.pkgSize)
+			break;
+
+		// 패킷 읽기
+		std::vector<char> packet(header.pkgSize);
+		m_recvRingBuffer.Read(packet.data(), header.pkgSize);
+
+		// 역직렬화 스트림 생성
+		InputMemoryStream PacketStream(reinterpret_cast<uint8*>(packet.data()), packet.size());
+
+		// 헤더 역직렬화
+		PacketHeader parsedHeader;
+		PacketStream.DeSerialize(parsedHeader.pkgID, parsedHeader.pkgSize);
+
+		// 가상 함수 호출 (각 프로젝트에서 구현)
+		OnPacketReceived(static_cast<PACKET_NUMBER>(parsedHeader.pkgID), parsedHeader.pkgSize, PacketStream);
+
+		//if (parsedHeader.pkgID == static_cast<int32>(PACKET_HEADER::CP_CHAT))
+		//{
+		//	CP_CHAT pkg;
+		//	pkg.DeSerializePayload(PacketStream);
+
+
+		//	if (m_SessionType == SessionType::Server)
+		//	{
+		//		std::cout << "[Server] Received packet [ID,Size]: [" << parsedHeader.pkgID << "," << parsedHeader.pkgSize
+		//			<< "]\t payload: "
+		//			<< pkg.data << "\n";
+		//		// PostSend(packet.data(), packetSize); // 에코 기본 방법
+
+		//		// 정책 통일. 헤더는 SendPacket이 생성
+		//		CP_CHAT sendmsg;
+		//		sendmsg.data = "Hello my world";
+		//		SendPacket(&sendmsg);
+		//	}
+		//	else
+		//	{
+		//		std::cout << "[Client] Received packet [ID,Size]: [" << parsedHeader.pkgID << "," << parsedHeader.pkgSize
+		//			<< "]\t payload: "
+		//			<< pkg.data << "\n";
+		//	}
+		//}
+
 	}
 }

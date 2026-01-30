@@ -4,6 +4,7 @@
 #include "IOCPWorkerPool.h"
 #include "Session.h"
 #include <string>
+#include <functional>
 
 class ClientSession;
 
@@ -26,6 +27,8 @@ public:
 	virtual void Run() override;
 	virtual void Finalize() override;
 
+	shared_ptr<Listener> GetListener() { return m_listener; }
+
 private:
 	void ServerControlLoop();
 private:
@@ -37,6 +40,10 @@ private:
 
 class ClientApp : public NetAppBase
 {
+private:
+	// 팩토리 함수 타입 정의
+	using ClientSessionFactory = std::function<shared_ptr<Session>(SOCKET)>;
+
 public:
 	ClientApp(const string& ip, uint16_t ui16port);
 	~ClientApp();
@@ -44,6 +51,8 @@ public:
 	virtual bool Initialize() override;
 	virtual void Run() override;
 	virtual void Finalize() override;
+
+	void SetClientSessionFactory(ClientSessionFactory factory) { m_ClientSessionFactory = std::move(factory); }
 
 private:
 	bool ConnectToServer();
@@ -56,4 +65,6 @@ private:
 	std::unique_ptr<IocpCore> m_core;
 	std::unique_ptr<IOCPWorkerPool> m_workerpool;
 	std::shared_ptr<Session> m_session;
+
+	ClientSessionFactory m_ClientSessionFactory;
 };

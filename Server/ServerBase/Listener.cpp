@@ -98,13 +98,13 @@ bool Listener::StartAccept(uint16 port, IocpCore* core, int32 ioTHreadCount)
 	serverAddr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
 	serverAddr.sin_port = htons(port);
 
-	if (bind(m_listenSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+	if (::bind(m_listenSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
 	{
 		cout << "bind() failed" << endl;
 		return false;
 	}
 
-	if (listen(m_listenSocket, SOMAXCONN) == SOCKET_ERROR)
+	if (::listen(m_listenSocket, SOMAXCONN) == SOCKET_ERROR)
 	{
 		cout << "listen() failed" << endl;
 		return false;
@@ -165,9 +165,18 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 	//const int bufferLen = addrLen * 2; // 로컬 + 리모트 주소
 	//char* acceptBuffer = new char[bufferLen];
 
-	// 음.. 세션을 미리 만들고 IOCP에 등록만 Dispatch에서 해주면 어떨까?
-	// 리스너 전용 세션을 재활용하면..?
-	shared_ptr<Session> session = make_shared<Session>(clientSocket, SessionType::Server);
+	// 세션 팩토리 활용
+	shared_ptr<Session> session = nullptr;
+	if (m_SessionFactory)
+		session = m_SessionFactory(clientSocket);
+	
+	// session 할당 안되었으면 소켓 연결 끊기
+	if (session == nullptr)
+	{
+		std::cerr << "[Listener] Session nullptr. Closing socket" << endl;
+		closesocket(clientSocket);
+		return;
+	}
 
 	// 3. Overlapped 이벤트 생성
 	// IocpEvent* pEvent = new IocpEvent(IocpEvent::Type::Accept, session);

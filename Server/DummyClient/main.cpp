@@ -2,10 +2,23 @@
 #include <ws2tcpip.h> // inet_pton 필요
 #include <string>
 #include "NetApp.h"
+#include "ClientSession.h"
+
+void SetupListener(ClientApp& app)
+{
+    app.SetClientSessionFactory(
+        [](SOCKET socket) -> shared_ptr<Session>
+        {
+            return make_shared<ClientSession>(socket, SessionType::Client);
+        });
+}
 
 int main()
 {
     ClientApp app("127.0.0.1", 4000);
+
+   SetupListener(app);
+
     if (!app.Initialize())
         return -1;
 

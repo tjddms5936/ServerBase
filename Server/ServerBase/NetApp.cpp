@@ -117,7 +117,20 @@ bool ClientApp::Initialize()
 
 	// 세션 생성 및 IOCP 등록
 	std::cout << "[Client] Making Session and Register IOCP...\n";
-	m_session = make_shared<Session>(m_socket, SessionType::Client);
+
+	// 팩토리 활용해서 Session 등록
+	if (m_ClientSessionFactory != nullptr)
+		m_session = m_ClientSessionFactory(m_socket);
+
+	// session 할당 안되었으면 소켓 연결 끊기
+	if (m_session == nullptr)
+	{
+		std::cerr << "[Listener] Session nullptr. Closing socket" << endl;
+		closesocket(m_socket);
+		return false;
+	}
+		
+	
 	if (!m_core->Register(reinterpret_cast<HANDLE>(m_socket), 0))
 	{
 		std::cerr << "[ClientApp] IOCP Register failed\n";
@@ -140,32 +153,7 @@ void ClientApp::Run()
 	m_workerpool->Start();
 	std::cout << "[Client] Connected. Type message (quit to exit)\n";
 
-	std::string input;
-	while (true)
-	{
-		std::getline(std::cin, input);
-		if (input == "quit")
-			break;
-
-		// 1) 패킷 길이 계산 (헤더 2바이트 + payload)
-		// uint16 packetSize = static_cast<uint16>(input.size() + sizeof(uint16));
-
-		// 2) 패킷 버퍼 생성
-		// std::vector<char> packet(packetSize);
-		// memcpy(packet.data(), &packetSize, sizeof(uint16));        // 헤더
-		// memcpy(packet.data() + sizeof(uint16), input.data(), input.size()); // Payload
-
-		// 3) 전송
-		// m_session->PostSend(packet.data(), static_cast<int>(packet.size()));
-
-		// 위의 과정을 다음 함수 하나로 해결. 서버와 규칙 통일 하기 위함.
-
-		CP_CHAT sendmsg;
-		sendmsg.data = "Hello my world";
-
-		// m_session->SendPacket(input.data(), (int)input.size());
-		m_session->SendPacket(&sendmsg);
-	}
+	m_session->Run();
 }
 
 void ClientApp::Finalize()
