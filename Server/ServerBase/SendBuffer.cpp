@@ -13,7 +13,14 @@ SendBufferPool::SendBufferPool(ullong _slabSize) :
 
 shared_ptr<SendBuffer> SendBufferPool::alloc(ullong need)
 {
-	if (!m_CurSlab || m_ullCurUsed + need > m_ullSlabSize)
+	// 필요 사이즈가 m_ullSlabSize보다 큰 경우 처리
+	// 아얘 막을 것인가, 더 큰걸 줄 것인가는 선택.
+	if (need > m_ullSlabSize)
+	{
+		return make_shared<SendBuffer>(make_shared<stSlab>(need), 0, need);
+	}
+
+	if (!m_CurSlab || need > (m_ullSlabSize - m_ullCurUsed))
 	{
 		m_CurSlab = make_shared<stSlab>(m_ullSlabSize);
 		m_ullCurUsed = 0;

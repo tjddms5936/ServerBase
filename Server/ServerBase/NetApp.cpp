@@ -122,20 +122,25 @@ bool ClientApp::Initialize()
 	if (m_ClientSessionFactory != nullptr)
 		m_session = m_ClientSessionFactory(m_socket);
 
-	// session 할당 안되었으면 소켓 연결 끊기
-	if (m_session == nullptr)
-	{
-		std::cerr << "[Listener] Session nullptr. Closing socket" << endl;
-		closesocket(m_socket);
-		return false;
-	}
-		
-	
-	if (!m_core->Register(reinterpret_cast<HANDLE>(m_socket), 0))
-	{
-		std::cerr << "[ClientApp] IOCP Register failed\n";
-		return false;
-	}
+    // session 할당 안되었으면 소켓 연결 끊기
+    if (m_session == nullptr)
+    {
+        std::cerr << "[Listener] Session nullptr. Closing socket" << endl;
+        closesocket(m_socket);
+        m_socket = INVALID_SOCKET;
+        return false;
+    }
+
+    // Session이 생성되면 소켓 수명 관리는 Session이 맡는다.
+    SOCKET sessionSocket = m_session->GetSocket();
+    m_socket = INVALID_SOCKET;
+
+    if (!m_core->Register(reinterpret_cast<HANDLE>(sessionSocket), 0))
+    {
+        std::cerr << "[ClientApp] IOCP Register failed\n";
+        m_session->CloseSocket();
+        return false;
+    }
 	std::cout << "[Client] Complete making Session and Register IOCP\n";
 
 	// 세션 시작 (최초 수신 요청)
@@ -161,8 +166,11 @@ void ClientApp::Finalize()
 	if (m_workerpool)
 		m_workerpool->Stop();
 
-	if (m_socket != INVALID_SOCKET)
-		closesocket(m_socket);
+    if (m_socket != INVALID_SOCKET)
+    {
+        closesocket(m_socket);
+        m_socket = INVALID_SOCKET;
+    }
 
 	WSACleanup();
 }
@@ -182,3 +190,4 @@ bool ClientApp::ConnectToServer()
 	}
 	return true;
 }
+

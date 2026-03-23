@@ -35,6 +35,7 @@ public:
 	SOCKET GetSocket() const { return m_socket; }
 
 	char* GetAcceptBuffer() { return m_acceptBuffer.get(); }
+	void CloseSocket();
 
 	// 송신 큐 & 인플라이트 1개 정책 도입으로 개선
 	void SendPacket(const char* payload, int len);
@@ -63,6 +64,7 @@ private:
 
 private:
 	SOCKET m_socket;
+	mutable mutex m_socketCloseLock;
 	// char m_recvBuffer[MAX_RECIEVE_BUFFER_SIZE]; // 단순 테스트용
 	RingRecvBuffer m_recvRingBuffer;
 	unique_ptr<char[]> m_acceptBuffer; // AcceptEx 전용 버퍼.
@@ -80,3 +82,4 @@ private:
 	atomic<bool>m_bBufferFull{ false };
 	atomic<int64> m_i64RetryRecvTimestampSec{ 0 }; // 첫 재시도 타임스탬프(초)
 };
+

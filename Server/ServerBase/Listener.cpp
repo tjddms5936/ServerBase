@@ -175,6 +175,9 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 	{
 		std::cerr << "[Listener] Session nullptr. Closing socket" << endl;
 		closesocket(clientSocket);
+        // 세션 생성 실패 시에도 accept 슬롯은 유지되도록 같은 이벤트로 재시도한다.
+        pAcceptEvent->SetPartsSession(nullptr);
+        m_AcceptScheduler.ScheduleRetry(ioThreadID, pAcceptEvent, WSAENOBUFS);
 		return;
 	}
 
@@ -199,7 +202,7 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 	{
 		std::cerr << "AcceptEx failed: " << WSAGetLastError() << std::endl;
 		// delete[] acceptBuffer;
-		closesocket(clientSocket);
+        session->CloseSocket();
 
 		// 일단 다시 Accept 걸어준다.
 		// PostAccept(pAcceptEvent);
@@ -252,9 +255,10 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 	if (!m_core->Register(reinterpret_cast<HANDLE>(pSession->GetSocket()), 0))
 	{
 		cout << "register() failed" << std::endl;
-		closesocket(pSession->GetSocket());
+		pSession->CloseSocket();
 		// PostAccept(pIocpEvent);
-		ReleaseAcceptEvent(ioThreadID, pIocpEvent); // 이벤트 반환
+        pIocpEvent->SetPartsSession(nullptr);
+        PostAccept(pIocpEvent, ioThreadID);
 		return;
 	}
 

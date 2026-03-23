@@ -54,13 +54,14 @@ void RingRecvBuffer::GetRecvWsaBuf(WSABUF outBufs[2])
 				- outBufs[0] → writePos부터 끝까지 (연속 공간)
 				- outBufs[1] → 0부터 readPos 직전까지 (wrap-around 공간)
 		-----------------------------------*/
-		ullong ullTailSpace = m_ullCapacity - m_ullWritePos;
+		ullong ullTailSpace = min(ullFreeSpace, m_ullCapacity - m_ullWritePos);
+		ullong ullWrapSpace = ullFreeSpace - ullTailSpace;
 		outBufs[0].buf = &m_vRecvbuffer[m_ullWritePos];
 		outBufs[0].len = static_cast<ULONG>(ullTailSpace);
 
 		// wrap 공간 
 		outBufs[1].buf = &m_vRecvbuffer[0];
-		outBufs[1].len = static_cast<ULONG>(m_ullReadPos);
+		outBufs[1].len = static_cast<ULONG>(ullWrapSpace);
 	}
 	else
 	{
@@ -76,7 +77,7 @@ void RingRecvBuffer::GetRecvWsaBuf(WSABUF outBufs[2])
 				- outBufs[0] → writePos~readPos-1
 				- outBufs[1] → 필요 없음 (nullptr)
 		-----------------------------------*/
-		ullong ullFreeChunk = m_ullReadPos - m_ullWritePos;
+		ullong ullFreeChunk = ullFreeSpace;
 		outBufs[0].buf = &m_vRecvbuffer[m_ullWritePos];
 		outBufs[0].len = static_cast<ULONG>(ullFreeChunk);
 		outBufs[1].buf = nullptr;
