@@ -44,9 +44,9 @@ private:
 	// 문자열 Write
 	void Write(std::string_view value)
 	{
-		cout << "size : " << value.size() << "\tpivot size : " << std::numeric_limits<uint16_t>::max() << endl;
-		assert(value.size() <= std::numeric_limits<uint16_t>::max());	// Debug용
-		if (value.size() >= std::numeric_limits<uint16_t>::max())		// Release용
+		const size_t maxLen = std::numeric_limits<uint16_t>::max();
+		assert(value.size() <= maxLen);	// Debug용
+		if (value.size() > maxLen)		// Release용
 		{
 			throw std::length_error("string_view length over uint16_Maximum");
 		}

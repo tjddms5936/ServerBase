@@ -20,7 +20,7 @@ struct IIocpPacket
 {
 	virtual ~IIocpPacket() = default;
 	virtual void SerializePayload(OutputMemoryStream& stream) = 0; // 페이로드만 직렬화
-	virtual void DeSerializePayload(InputMemoryStream& stream) = 0; // 페이로드만 역직렬화
+	virtual bool DeSerializePayload(InputMemoryStream& stream) = 0; // 페이로드만 역직렬화
 
 	PacketHeader PkgHeader;
 };
@@ -41,9 +41,9 @@ struct CP_CHAT : IIocpPacket
 		stream.Serialize(data, data2);
 	}
 
-	void DeSerializePayload(InputMemoryStream& stream) override
+	bool DeSerializePayload(InputMemoryStream& stream) override
 	{
-		stream.DeSerialize(data, data2);
+		return stream.DeSerialize(data, data2);
 	}
 
 
@@ -66,9 +66,9 @@ struct SP_CHAT : IIocpPacket
 		stream.Serialize(data);
 	}
 
-	void DeSerializePayload(InputMemoryStream& stream) override
+	bool DeSerializePayload(InputMemoryStream& stream) override
 	{
-		stream.DeSerialize(data);
+		return stream.DeSerialize(data);
 	}
 
 

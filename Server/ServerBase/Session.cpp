@@ -271,6 +271,9 @@ void Session::OnRecv_v2(DWORD numOfByptes)
 	// 2) 패킷 단위 처리
 	ParsePackets();
 
+	if (m_socket == INVALID_SOCKET)
+		return;
+
 	// 3) 다음 Recv 요청
 	PostRecv();
 }
@@ -592,9 +595,16 @@ void Session::ParsePackets()
 		if (header.pkgSize < sizeof(PacketHeader))
 		{
 			std::cerr << "[Error] Invalid packet size: " << header.pkgSize << "\n";
-			break;
+			CloseSocket();
+			return;
 		}
 
+		if (static_cast<ullong>(header.pkgSize) > m_recvRingBuffer.GetUsableCapacity())
+		{
+            std::cerr << "[Error] Packet size exceeds recv buffer capacity: " << header.pkgSize << "\n";
+			CloseSocket();
+			return;
+		}
 		if (m_recvRingBuffer.GetUseSize() < header.pkgSize)
 			break;
 

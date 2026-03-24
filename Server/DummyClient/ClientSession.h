@@ -18,5 +18,5 @@ public:
 
 private:
 	// 패킷별 처리 함수
-	void HANDLE_SP_CHAT(InputMemoryStream& stream);
+	bool HANDLE_SP_CHAT(InputMemoryStream& stream);
 };

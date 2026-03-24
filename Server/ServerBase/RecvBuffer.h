@@ -29,6 +29,9 @@ public:
     // 남은 공간 크기 (쓸 수 있는 공간)
     ullong GetFreeSize() const;
 
+    // 링 버퍼가 한 번에 보관할 수 있는 최대 패킷 크기 (sentinel 1바이트 제외)
+    ullong GetUsableCapacity() const { return (m_ullCapacity == 0) ? 0 : (m_ullCapacity - 1); }
+
     // 데이터 미리 보기 (연속 구간 최대 outLen)
     char* Peek(ullong& outLen);
 
