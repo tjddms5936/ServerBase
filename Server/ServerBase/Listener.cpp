@@ -12,7 +12,7 @@ Listener::Listener() :
 
 Listener::~Listener()
 {
-	m_AcceptScheduler.EndRetry();
+	Close();
 
 	// 이벤트 풀 정리
 	for (auto& pool : m_vThreadPools)
@@ -26,8 +26,6 @@ Listener::~Listener()
 		}
 	}
 	m_vThreadPools.clear();
-
-	Close();
 }
 
 void Listener::Init(IocpCore* core, int32 ioThreadCount)
@@ -143,10 +141,16 @@ bool Listener::StartAccept(uint16 port, IocpCore* core, int32 ioTHreadCount)
 
 void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 {
+	if (m_bClosing.load())
+	{
+		ReleaseAcceptEvent(ioThreadID, pAcceptEvent);
+		return;
+	}
+
 	// 비동기 AcceptEX 사용
 
-	// 1. 클라이언트 소켓 생성 (OVERLAPPED 지원)
-	SOCKET clientSocket = ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
+    // 1. 클라이언트 소켓 생성 (OVERLAPPED 지원)
+    SOCKET clientSocket = ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 	if (clientSocket == INVALID_SOCKET)
 	{
 		int err = WSAGetLastError();
@@ -221,28 +225,53 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 
 void Listener::Close()
 {
-	if(m_listenSocket != INVALID_SOCKET)
+	if (m_bClosing.exchange(true))
+		return;
+
+	m_AcceptScheduler.EndRetry();
+
+	if (m_listenSocket != INVALID_SOCKET)
 	{
 		closesocket(m_listenSocket);
 		m_listenSocket = INVALID_SOCKET;
 	}
 }
 
+bool Listener::WaitForAllAcceptEventsReturned(uint32 timeoutMs)
+{
+	auto deadline = chrono::steady_clock::now() + chrono::milliseconds(timeoutMs);
+
+	while (true)
+	{
+		size_t totalEventCount = 0;
+		size_t freeEventCount = 0;
+
+		for (auto& pool : m_vThreadPools)
+		{
+			if (!pool)
+				continue;
+
+			lock_guard<mutex> lock(pool->m_mutex);
+			totalEventCount += pool->m_allEvents.size();
+			freeEventCount += pool->m_freeEvents.size();
+		}
+
+		if (freeEventCount == totalEventCount)
+			return true;
+
+		if (chrono::steady_clock::now() >= deadline)
+		{
+			std::cerr << "[Listener] Timed out waiting for accept events. Free="
+				<< freeEventCount << ", Total=" << totalEventCount << endl;
+			return false;
+		}
+
+		std::this_thread::sleep_for(chrono::milliseconds(10));
+	}
+}
+
 void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 {
-	shared_ptr<Session> pSession = pIocpEvent->GetPartsSession();
-	if (!pSession)
-	{
-		cerr << "[OnAccept] Session is null" << endl;
-
-		// 이벤트 풀에 반납
-		int32 ioThreadID = pIocpEvent->m_stIoData.GetIoThreadID();
-		if (ioThreadID < 0)
-			ioThreadID = 0;
-		ReleaseAcceptEvent(ioThreadID, pIocpEvent);
-		return;
-	}
-
 	// 스레드 ID 가져오기
 	int32 ioThreadID = pIocpEvent->m_stIoData.GetIoThreadID();
 	if (ioThreadID < 0)
@@ -252,13 +281,44 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 		ioThreadID = 0;
 	}
 
+	shared_ptr<Session> pSession = pIocpEvent->GetPartsSession();
+	if (!pSession)
+	{
+		cerr << "[OnAccept] Session is null" << endl;
+		ReleaseAcceptEvent(ioThreadID, pIocpEvent);
+		return;
+	}
+
+	if (!pIocpEvent->m_stIoData.bCompletionSuccess)
+	{
+		cerr << "[OnAccept] Accept completion failed. Error: " << pIocpEvent->m_stIoData.dwCompletionError << endl;
+		pSession->CloseSocket();
+
+		if (m_bClosing.load())
+		{
+			ReleaseAcceptEvent(ioThreadID, pIocpEvent);
+		}
+		else
+		{
+			pIocpEvent->SetPartsSession(nullptr);
+			PostAccept(pIocpEvent, ioThreadID);
+		}
+		return;
+	}
+
+	if (m_bClosing.load())
+	{
+		pSession->CloseSocket();
+		ReleaseAcceptEvent(ioThreadID, pIocpEvent);
+		return;
+	}
+
 	if (!m_core->Register(reinterpret_cast<HANDLE>(pSession->GetSocket()), 0))
 	{
 		cout << "register() failed" << std::endl;
 		pSession->CloseSocket();
-		// PostAccept(pIocpEvent);
-        pIocpEvent->SetPartsSession(nullptr);
-        PostAccept(pIocpEvent, ioThreadID);
+		pIocpEvent->SetPartsSession(nullptr);
+		PostAccept(pIocpEvent, ioThreadID);
 		return;
 	}
 
@@ -266,7 +326,6 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 
 	PostAccept(pIocpEvent, ioThreadID);
 }
-
 IocpEvent* Listener::AcquireAcceptEvent(int32 ioThreadID)
 {
 	// 범위 체크
@@ -310,9 +369,8 @@ void Listener::ReleaseAcceptEvent(int32 ioThreadID, IocpEvent* pEvent)
 
 		// 이벤트 재사용을 위해 초기화
 		pEvent->SetPartsSession(nullptr);
-		pEvent->m_stIoData.SetIoThreadID(ioThreadID); // IO 스레드 ID 유지
-		pEvent->m_stIoData.i32RetryCount = 0; // 재시도 횟수 초기화
-
+		pEvent->m_stIoData.SetIoThreadID(ioThreadID); // IO 스레드 ID 유지		pEvent->m_stIoData.bCompletionSuccess = true;
+		pEvent->m_stIoData.dwCompletionError = 0;
 		// 이벤트를 초기화 한 후 해당 IO 스레드의 풀에 반환
 		pool.m_freeEvents.push_back(pEvent); 
 	}
@@ -420,4 +478,5 @@ void AcceptRetryScheduler::EndRetry()
 		if (m_pOwner)
 			m_pOwner->ReleaseAcceptEvent(item.IoThreadID, item.pEvent);
 	}
+	m_retryQeuue.clear();
 }

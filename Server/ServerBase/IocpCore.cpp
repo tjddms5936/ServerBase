@@ -62,22 +62,15 @@ bool IocpCore::Dequeue(DWORD& _dwTransferred, ULONG_PTR& completionkey, IocpEven
         reinterpret_cast<LPOVERLAPPED*>(&pEvent),
         timeoutMs);
 
+    DWORD completionError = (result == TRUE) ? 0 : ::GetLastError();
+
     if (pEvent == nullptr)
         return false;
 
-    if (pEvent->GetType() != IocpEvent::Type::Accept
-        && (!result || _dwTransferred == 0))
-    {
-        // 예외 상황: 클라이언트가 정상적으로 종료했거나, I/O 실패
-        std::cout << "[IOCP] 클라이언트 연결 종료 감지됨\n";
-
-        delete pEvent;
-        return false;
-    }
-
+    pEvent->m_stIoData.bCompletionSuccess = (result == TRUE);
+    pEvent->m_stIoData.dwCompletionError = completionError;
     return true;
 }
-
 HANDLE IocpCore::GetHandle() const
 {
     return m_IocpHandle;

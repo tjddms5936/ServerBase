@@ -36,14 +36,33 @@ void Session::CloseSocket()
 void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 {
 	IocpEvent::Type eType = pIocpEvent->GetType();
+	const bool bCompletionSuccess = pIocpEvent->m_stIoData.bCompletionSuccess;
+	const DWORD dwCompletionError = pIocpEvent->m_stIoData.dwCompletionError;
+
 	switch (eType)
 	{
-	case IocpEvent::Type::Recv: 
-		// OnRecv(numOfBytes); 
-		OnRecv_v2(numOfBytes); 
+	case IocpEvent::Type::Recv:
+		if (!bCompletionSuccess)
+		{
+			std::cerr << "[OnRecv] IOCP completion failed: " << dwCompletionError << std::endl;
+			CloseSocket();
+			delete pIocpEvent;
+			break;
+		}
+
+		OnRecv_v2(numOfBytes);
 		delete pIocpEvent;  // Recv는 항상 완료
 		break;
-	case IocpEvent::Type::Send: 
+	case IocpEvent::Type::Send:
+		if (!bCompletionSuccess)
+		{
+			std::cerr << "[OnSend2] IOCP completion failed: " << dwCompletionError << std::endl;
+			m_bSendInFlight.store(false);
+			delete pIocpEvent;
+			CloseSocket();
+			break;
+		}
+
 		OnSend2(numOfBytes, pIocpEvent);  // pEvent 전달 (부분 완료 처리용)
 		// Send는 OnSend2 내부에서 완료 여부에 따라 삭제 결정
 		break;
@@ -52,7 +71,6 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 		break;
 	}
 }
-
 //void Session::Init(SOCKET socket)
 //{
 //	m_socket = socket;

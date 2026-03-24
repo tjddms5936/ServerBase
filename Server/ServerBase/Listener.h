@@ -69,6 +69,7 @@ public:
 
 	bool StartAccept(uint16 port, IocpCore* core, int32 ioTHreadCount);
 	void Close();
+	bool WaitForAllAcceptEventsReturned(uint32 timeoutMs = 1000);
 
 	void OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes);
 
@@ -92,8 +93,8 @@ private:
 	// IO Thread별로 이벤트 들고있게 수정
 	// vector<IocpEvent*> m_vlistenerEvent;
 	vector<unique_ptr<stThreadEventPool>> m_vThreadPools;
-	int32 m_i32IoThreadCnt = 0;
-
+    int32 m_i32IoThreadCnt = 0;
+	atomic<bool> m_bClosing{ false };
 	AcceptRetryScheduler m_AcceptScheduler;
 
 	SessionFactory m_SessionFactory;

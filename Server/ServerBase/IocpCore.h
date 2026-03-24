@@ -29,10 +29,12 @@ struct stIoData
 {
 	// Listener에서 하는 Accept에서 Race Condition 방지를 위한 구조체
 
-	void	SetIoThreadID(int32 _i32IoThreadID) { i32IoThreadID = _i32IoThreadID; };
+		void	SetIoThreadID(int32 _i32IoThreadID) { i32IoThreadID = _i32IoThreadID; };
 	int32	GetIoThreadID() { return i32IoThreadID; };
-	int32 i32IoThreadID = -1;	// -1:미할당 0:이상 그 외 : IO 스레드 ID 
+	int32 i32IoThreadID = -1;	// -1:미할당 0:이상 그 외 : IO 스레드 ID
 	int32 i32RetryCount = 0;	// 재시도 횟수
+	bool bCompletionSuccess = true;	// GQCS 성공 여부
+	DWORD dwCompletionError = 0;	// GQCS 실패 코드
 };
 
 /*--------------------

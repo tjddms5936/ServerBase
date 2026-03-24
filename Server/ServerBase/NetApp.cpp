@@ -55,12 +55,17 @@ void ServerApp::Run()
 
 void ServerApp::Finalize()
 {
+	if (m_listener)
+	{
+		m_listener->Close();
+		m_listener->WaitForAllAcceptEventsReturned(1000);
+	}
+
 	if (m_workerpool)
 		m_workerpool->Stop();
 
 	WSACleanup();
 }
-
 void ServerApp::ServerControlLoop()
 {
 	while (m_brunning)
