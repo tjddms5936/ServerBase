@@ -187,6 +187,7 @@ void Listener::PostAccept(IocpEvent* pAcceptEvent, int32 ioThreadID)
 
 	// 3. Overlapped 이벤트 생성
 	// IocpEvent* pEvent = new IocpEvent(IocpEvent::Type::Accept, session);
+	pAcceptEvent->ResetOverlapped();
 	pAcceptEvent->SetPartsSession(session);
 	pAcceptEvent->m_stIoData.SetIoThreadID(ioThreadID);
 
@@ -368,9 +369,10 @@ void Listener::ReleaseAcceptEvent(int32 ioThreadID, IocpEvent* pEvent)
 		lock_guard<mutex> lock(pool.m_mutex);
 
 		// 이벤트 재사용을 위해 초기화
+		pEvent->ResetOverlapped();
 		pEvent->SetPartsSession(nullptr);
-		pEvent->m_stIoData.SetIoThreadID(ioThreadID); // IO 스레드 ID 유지		pEvent->m_stIoData.bCompletionSuccess = true;
-		pEvent->m_stIoData.dwCompletionError = 0;
+		pEvent->m_stIoData.SetIoThreadID(ioThreadID); // IO 스레드 ID 유지
+		pEvent->m_stIoData.i32RetryCount = 0;
 		// 이벤트를 초기화 한 후 해당 IO 스레드의 풀에 반환
 		pool.m_freeEvents.push_back(pEvent); 
 	}
@@ -447,7 +449,13 @@ void AcceptRetryScheduler::ScheduleRetry(int32 ioThreadID, IocpEvent* pEvent, in
 		int32 delayMs = min(BASE_DELAY_MS * (1 << item.retryCount), MAX_DELAY_MS);
 		item.nextRetryTime = chrono::steady_clock::now() + chrono::milliseconds(delayMs);
 
-		m_retryQeuue.push_back(item);
+		auto insertPos = m_retryQeuue.begin();
+		while (insertPos != m_retryQeuue.end() && insertPos->nextRetryTime <= item.nextRetryTime)
+		{
+			++insertPos;
+		}
+
+		m_retryQeuue.insert(insertPos, item);
 		m_cvRetry.notify_one(); // 재시도 스레드 깨우기
 	}
 

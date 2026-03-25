@@ -84,3 +84,10 @@ void IocpEvent::Init()
     OVERLAPPED::Offset = 0;
     OVERLAPPED::OffsetHigh = 0;
 }
+
+void IocpEvent::ResetOverlapped()
+{
+    Init();
+    m_stIoData.bCompletionSuccess = true;
+    m_stIoData.dwCompletionError = 0;
+}

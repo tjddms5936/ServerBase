@@ -72,6 +72,7 @@ public:
 	shared_ptr<IocpObject> GetOwner() const { return m_Owner; }
 	shared_ptr<Session> GetPartsSession() const { return m_PartsSession; }
 	void SetPartsSession(shared_ptr<Session> pSession) { m_PartsSession = pSession; }
+	void ResetOverlapped();
 private:
 	void Init();
 

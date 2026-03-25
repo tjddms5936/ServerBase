@@ -140,6 +140,8 @@ public:
 		return (ReadDispatch(args) && ...);
 	}
 
+	ullong GetRemainingSize() const { return Remaining(); }
+
 private:
 	template<typename T, typename = std::enable_if_t<std::is_trivially_copyable_v<T>>>
 	bool ReadOne(T& value)

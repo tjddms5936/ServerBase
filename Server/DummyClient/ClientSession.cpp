@@ -46,6 +46,14 @@ bool ClientSession::HANDLE_SP_CHAT(InputMemoryStream& stream)
         return false;
     }
 
+    if (stream.GetRemainingSize() != 0)
+    {
+        cout << "] ... malformed payload" << endl;
+        std::cerr << "[ClientSession] SC_CHAT payload has trailing bytes: " << stream.GetRemainingSize() << endl;
+        CloseSocket();
+        return false;
+    }
+
     std::cout << "]\t payload: " << pkg.data << endl << endl;
     return true;
 }

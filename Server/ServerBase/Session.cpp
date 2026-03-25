@@ -90,19 +90,18 @@ void Session::PostRecv()
 	WSABUF wsaBuf[2];
 	m_recvRingBuffer.GetRecvWsaBuf(wsaBuf);
 
-	// free space가 없는 경우 수신 불가
+	// free space가 없는 경우에는 새 recv를 걸지 않는다.
 	if (wsaBuf[0].len == 0 && wsaBuf[1].len == 0)
 	{
 		std::cerr << "[PostRecv] No free space in RecvBuffer\n";
 		m_bBufferFull.store(true);
+		return;
 	}
-	else 
-		m_bBufferFull.store(false);
+	m_bBufferFull.store(false);
 
 	int bufCount = (wsaBuf[1].len > 0) ? 2 : 1;
 
 	DWORD bytesReceived = 0;
-	DWORD recvBytes = 0;
 	IocpEvent* event = new IocpEvent(IocpEvent::Type::Recv, shared_from_this(), nullptr);
 
 	int result = WSARecv(
@@ -122,6 +121,7 @@ void Session::PostRecv()
 		{
 			std::cerr << "[PostRecv] WSARecv Error: " << err << std::endl;
 			delete event;
+			CloseSocket();
 			return;
 		}
 	}
@@ -164,7 +164,8 @@ void Session::OnRecv(DWORD numOfByptes)
 {
 	if (numOfByptes == 0)
 	{
-		RetryRecv();
+		std::cout << "[OnRecv] Client disconnected\n";
+		CloseSocket();
 		return;
 	}
 
@@ -254,7 +255,8 @@ void Session::OnRecv_v2(DWORD numOfByptes)
 {
 	if (numOfByptes == 0)
 	{
-		RetryRecv();
+		std::cout << "[OnRecv] Client disconnected\n";
+		CloseSocket();
 		return;
 	}
 
@@ -304,10 +306,12 @@ void Session::PostSend(const char* data, int32 len)
 
 	if (result == SOCKET_ERROR)
 	{
-		if (WSAGetLastError() != WSA_IO_PENDING)
+		int err = WSAGetLastError();
+		if (err != WSA_IO_PENDING)
 		{
-			cerr << "[PostSend] WSASend Error: " << WSAGetLastError() << endl;
+			cerr << "[PostSend] WSASend Error: " << err << endl;
 			delete event;
+			CloseSocket();
 		}
 	}
 }
@@ -469,9 +473,11 @@ void Session::postNextSend()
 		int err = WSAGetLastError();
 		if (err != WSA_IO_PENDING)
 		{
-			cerr << "[PostSend] WSASend Error: " << WSAGetLastError() << endl;
+			cerr << "[PostSend] WSASend Error: " << err << endl;
 			delete pEvent;
 			m_bSendInFlight.store(false);
+			CloseSocket();
+			return;
 		}
 	}
 }
@@ -538,7 +544,8 @@ void Session::PartialSend(IocpEvent* pEvent)
 			std::cerr << "[PartialSend] WSASend Error: " << err << std::endl;
 			delete pEvent;
 			m_bSendInFlight.store(false);
-			postNextSend();
+			CloseSocket();
+			return;
 		}
 		// WSA_IO_PENDING이면 정상: 비동기 대기 중
 	}
@@ -617,10 +624,25 @@ void Session::ParsePackets()
 
 		// 헤더 역직렬화
 		PacketHeader parsedHeader;
-		PacketStream.DeSerialize(parsedHeader.pkgID, parsedHeader.pkgSize);
+		if (!PacketStream.DeSerialize(parsedHeader.pkgID, parsedHeader.pkgSize))
+		{
+			std::cerr << "[Error] Failed to deserialize packet header\n";
+			CloseSocket();
+			return;
+		}
 
 		// 가상 함수 호출 (각 프로젝트에서 구현)
 		OnPacketReceived(static_cast<PACKET_NUMBER>(parsedHeader.pkgID), parsedHeader.pkgSize, PacketStream);
+
+		if (m_socket == INVALID_SOCKET)
+			return;
+
+		if (PacketStream.GetRemainingSize() != 0)
+		{
+			std::cerr << "[Error] Packet payload has trailing bytes: " << PacketStream.GetRemainingSize() << "\n";
+			CloseSocket();
+			return;
+		}
 
 		//if (parsedHeader.pkgID == static_cast<int32>(PACKET_HEADER::CP_CHAT))
 		//{
