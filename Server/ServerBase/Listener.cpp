@@ -314,6 +314,24 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 		return;
 	}
 
+	SOCKET listenSocket = m_listenSocket;
+	if (::setsockopt(
+		pSession->GetSocket(),
+		SOL_SOCKET,
+		SO_UPDATE_ACCEPT_CONTEXT,
+		reinterpret_cast<const char*>(&listenSocket),
+		static_cast<int>(sizeof(listenSocket))) == SOCKET_ERROR)
+	{
+		cerr << "[OnAccept] SO_UPDATE_ACCEPT_CONTEXT failed. Error: " << WSAGetLastError() << endl;
+		pSession->CloseSocket();
+		pIocpEvent->SetPartsSession(nullptr);
+		if (m_bClosing.load())
+			ReleaseAcceptEvent(ioThreadID, pIocpEvent);
+		else
+			PostAccept(pIocpEvent, ioThreadID);
+		return;
+	}
+
 	if (!m_core->Register(reinterpret_cast<HANDLE>(pSession->GetSocket()), 0))
 	{
 		cout << "register() failed" << std::endl;
@@ -323,6 +341,8 @@ void Listener::OnAccept(IocpEvent* pIocpEvent, int32 numOfBytes)
 		return;
 	}
 
+
+	pSession->SetIocpCore(m_core);
 	pSession->Start();
 
 	PostAccept(pIocpEvent, ioThreadID);
@@ -488,3 +508,5 @@ void AcceptRetryScheduler::EndRetry()
 	}
 	m_retryQeuue.clear();
 }
+
+

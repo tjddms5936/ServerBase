@@ -1,6 +1,8 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "IOCPWorkerPool.h"
 #include "Session.h"
+
+thread_local int32 g_i32CurrentLogicWorkerID = -1;
 
 IOCPWorkerPool::IOCPWorkerPool(IocpCore* pCore, int32 i32IoThreadCnt, int32 i32LogicThreadCount) :
 	m_pCore(pCore), m_i32IoThreadCount(i32IoThreadCnt), m_i32LogicThreadCount(i32LogicThreadCount)
@@ -16,19 +18,17 @@ IOCPWorkerPool::~IOCPWorkerPool()
 	Stop();
 }
 
+int32 IOCPWorkerPool::GetCurrentLogicWorkerID()
+{
+	return g_i32CurrentLogicWorkerID;
+}
+
 void IOCPWorkerPool::Start()
 {
 	m_bRunning = true;
 
 	for (int i = 0; i < m_i32LogicThreadCount; ++i)
 	{
-		/*std::thread th([this]()
-			{
-				this->WorkerThreadLoop();
-			});
-		m_vThreads.emplace_back(th);*/
-
-		// 위처럼 한걸 다음처럼 간결화 할 수 있음.
 		m_vLogicThreads.emplace_back([this, i]()
 			{
 				this->LogicWorkerThreadLoop(i);
@@ -51,11 +51,8 @@ void IOCPWorkerPool::Stop()
 {
 	m_bRunning = false;
 
-	// IOCP 깨우기: dummy I/O를 발생시켜 GetQueuedCompletionStatus를 탈출하게 함
 	for (int i = 0; i < m_i32IoThreadCount; ++i)
 	{
-		// 이벤트를 발생시키면 → GQCS()가 리턴됨
-		// 그때 m_running이 false니까 → while문 탈출
 		::PostQueuedCompletionStatus(m_pCore->GetHandle(), 0, 0, nullptr);
 	}
 
@@ -84,7 +81,7 @@ void IOCPWorkerPool::Stop()
 
 void IOCPWorkerPool::IoWorkerThreadLoop(int32 i32_IoWorkerID)
 {
-	constexpr uint32 IocpPollTimeoutMs = 10; // 큐 확인을 위해 짧은 타임아웃 사용
+	constexpr uint32 IocpPollTimeoutMs = 10;
 
 	while (m_bRunning)
 	{	
@@ -95,7 +92,6 @@ void IOCPWorkerPool::IoWorkerThreadLoop(int32 i32_IoWorkerID)
 		if (!m_pCore->Dequeue(bytes, completionKey, pEvent, IocpPollTimeoutMs))
 			continue;
 
-		// Accept이벤트인 경우 IO 스레드 ID 저장
 		if (pEvent && pEvent->GetType() == IocpEvent::Type::Accept)
 		{
 			pEvent->m_stIoData.SetIoThreadID(i32_IoWorkerID);
@@ -110,7 +106,8 @@ void IOCPWorkerPool::IoWorkerThreadLoop(int32 i32_IoWorkerID)
 
 void IOCPWorkerPool::LogicWorkerThreadLoop(int32 i32_LogicWorkerID)
 {
-	constexpr uint32 IocpPollTimeoutMs = 10; // 큐 확인을 위해 짧은 타임아웃 사용
+	constexpr uint32 IocpPollTimeoutMs = 10;
+	g_i32CurrentLogicWorkerID = i32_LogicWorkerID;
 
 	while (m_bRunning)
 	{
@@ -119,23 +116,15 @@ void IOCPWorkerPool::LogicWorkerThreadLoop(int32 i32_LogicWorkerID)
 			continue;
 
 		DispatchOrForward(i32_LogicWorkerID, completion.pEvent, completion.dwBytes);
-
-		//// 내부적으로 GQCS() 대기 중
-		//bool success = m_pCore->Dispatch(); // 기존의 Dispatch 호출해줌
-		//if (!success)
-		//{
-		//	// 로그만 찍고 계속 루프
-		//	std::cout << "[IOCPWorker] Dispatch returned false.\n";
-		//}
 	}
 
-	// 남은 로컬 큐 정리
 	stIocpCompletion completion;
 	while (WaitPopLocal(i32_LogicWorkerID, completion))
 	{
 		DispatchOrForward(i32_LogicWorkerID, completion.pEvent, completion.dwBytes);
 	}
 
+	g_i32CurrentLogicWorkerID = -1;
 	std::cout << "[IOCPWorker] Logic thread Exit.\n";
 }
 
@@ -149,7 +138,6 @@ bool IOCPWorkerPool::WaitPopLocal(int32 _i32WorkerID, stIocpCompletion& outItem)
 			return !m_bRunning || !queue.dqPending.empty();
 		});
 
-
 	if (queue.dqPending.empty())
 		return false;
 
@@ -162,7 +150,6 @@ void IOCPWorkerPool::EnqueueToWorker(int32 _i32WorkerID, IocpEvent* _pEvent, DWO
 {
 	if (_i32WorkerID < 0 || _i32WorkerID >= m_i32LogicThreadCount)
 	{
-		// 잘못된 워커 번호면 현재 워커가 그냥 처리
 		shared_ptr<IocpObject> pOwner = _pEvent->GetOwner();
 		pOwner->Dispatch(_pEvent, _dwNumOfBytes);
 		return;

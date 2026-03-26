@@ -1,15 +1,13 @@
 #include "pch.h"
 #include "Session.h"
 #include "MemoryStream.h"
+#include "IOCPWorkerPool.h"
 
 Session::Session(SOCKET socket, SessionType eSessionType) :
 	m_socket(socket), m_SessionType(eSessionType)
 {
-	// std::fill_n(m_recvBuffer, MAX_RECIEVE_BUFFER_SIZE, 0);
-
-	// AcceptEx에 넘겨줄 버퍼 생성
 	const int addrLen = sizeof(SOCKADDR_IN) + 16;
-	const int bufferLen = addrLen * 2; // 로컬 + 리모트 주소
+	const int bufferLen = addrLen * 2;
 	m_acceptBuffer = make_unique<char[]>(bufferLen);
 }
 
@@ -51,7 +49,7 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 		}
 
 		OnRecv_v2(numOfBytes);
-		delete pIocpEvent;  // Recv는 항상 완료
+		delete pIocpEvent;
 		break;
 	case IocpEvent::Type::Send:
 		if (!bCompletionSuccess)
@@ -63,23 +61,23 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 			break;
 		}
 
-		OnSend2(numOfBytes, pIocpEvent);  // pEvent 전달 (부분 완료 처리용)
-		// Send는 OnSend2 내부에서 완료 여부에 따라 삭제 결정
+		OnSend2(numOfBytes, pIocpEvent);
+		break;
+	case IocpEvent::Type::DeferredSendPacket:
+		if (pIocpEvent->m_pDeferredPacket)
+			SendPacket(pIocpEvent->m_pDeferredPacket.get());
+		delete pIocpEvent;
 		break;
 	default:
 		delete pIocpEvent;
 		break;
 	}
 }
-//void Session::Init(SOCKET socket)
-//{
-//	m_socket = socket;
-//}
 
 void Session::Start()
 {
 	std::cout << "[Session] Start() called\n";
-	PostRecv(); // 최초 수신 요청 시작
+	PostRecv();
 }
 
 void Session::PostRecv()
@@ -90,7 +88,6 @@ void Session::PostRecv()
 	WSABUF wsaBuf[2];
 	m_recvRingBuffer.GetRecvWsaBuf(wsaBuf);
 
-	// free space가 없는 경우에는 새 recv를 걸지 않는다.
 	if (wsaBuf[0].len == 0 && wsaBuf[1].len == 0)
 	{
 		std::cerr << "[PostRecv] No free space in RecvBuffer\n";
@@ -125,39 +122,6 @@ void Session::PostRecv()
 			return;
 		}
 	}
-
-	//DWORD flags = 0;
-	//DWORD bytesReceived = 0;
-
-	//WSABUF wsaBuf;
-	//wsaBuf.buf = m_recvBuffer;
-	//wsaBuf.len = MAX_RECIEVE_BUFFER_SIZE;
-
-	//// IocpEvent* event = new IocpEvent(IocpEvent::Type::Recv, this);
-	//IocpEvent* event = new IocpEvent(IocpEvent::Type::Recv, shared_from_this(), nullptr);
-
-	//// 커널 모드에 있는 TCP 수신 버퍼로부터 데이터를 꺼내오는 비동기 요청을 걸어두는 함수
-	//// WSARecv()는 "누가 데이터를 보내면 나한테 알려줘!" 하고 요청만 해두는 함수
-	//// 커널은 수신 버퍼에 도착한 데이터를 → 유저 모드로 알림 (IOCP 이벤트 발생)
-	//int result = WSARecv(
-	//	m_socket,
-	//	&wsaBuf,
-	//	1,
-	//	&bytesReceived,
-	//	&flags,
-	//	event,
-	//	nullptr
-	//);
-
-	//if (result == SOCKET_ERROR)
-	//{
-	//	int err = WSAGetLastError();
-	//	if (err != WSA_IO_PENDING)
-	//	{
-	//		std::cerr << "[PostRecv] WSARecv Error: " << err << std::endl;
-	//		delete event;
-	//	}
-	//}
 }
 
 void Session::OnRecv(DWORD numOfByptes)
@@ -172,14 +136,9 @@ void Session::OnRecv(DWORD numOfByptes)
 	m_bBufferFull.store(false);
 	m_i64RetryRecvTimestampSec.store(0);
 
-
-	// 1) RingBuffer에 수신 완료된 만큼 Commit
 	m_recvRingBuffer.CommitWrite(numOfByptes);
-
-	// 디버깅 찍어보기
 	m_recvRingBuffer.DebugPrint();
 
-	// 2) 패킷 단위 처리 (예시: [2바이트 길이][Payload])
 	while (true)
 	{
 		if (m_recvRingBuffer.GetUseSize() < sizeof(uint16))
@@ -189,7 +148,6 @@ void Session::OnRecv(DWORD numOfByptes)
 		if (!m_recvRingBuffer.PeekCopy((char*)&packetSize, sizeof(uint16)))
 			break;
 
-		// Windows에서 Little-Endian → 그대로 사용 가능
 		if (packetSize < sizeof(uint16))
 		{
 			std::cerr << "[Error] Invalid packet size: " << packetSize << "\n";
@@ -207,9 +165,6 @@ void Session::OnRecv(DWORD numOfByptes)
 			std::cout << "[Server] Received packet size: " << packetSize
 				<< ", payload: "
 				<< std::string(packet.begin() + 2, packet.end()) << "\n";
-			// PostSend(packet.data(), packetSize); // 에코 기본 방법
-
-			// 정책 통일. 헤더는 SendPacket이 생성
 			const char* payload = packet.data() + sizeof(uint16);
 			int payloadLen = packetSize - sizeof(uint16);
 			SendPacket(payload, payloadLen);
@@ -222,33 +177,7 @@ void Session::OnRecv(DWORD numOfByptes)
 		}
 	}
 
-	// 3) 다음 Recv 요청
 	PostRecv();
-
-
-	//if (numOfByptes == 0)
-	//{
-	//	cout << "[OnRecv] Client disconnected" << endl;
-	//	closesocket(m_socket);
-	//	return;
-	//}
-
-	//std::string msg(m_recvBuffer, numOfByptes);
-
-	//// 서버 모드 세션이라면 에코처리
-	//if (m_SessionType == SessionType::Server)
-	//{
-	//	std::cout << "[Server] Received: " << msg << "\n";
-	//	PostSend(m_recvBuffer, numOfByptes);
-	//}
-	//else
-	//{
-	//	// 클라이언트 모드 → 받은 메시지 단순 출력
-	//	std::cout << "[Client] Received: " << msg << "\n";
-	//}
-
-	//// 다음 수신 요청
-	//PostRecv();
 }
 
 void Session::OnRecv_v2(DWORD numOfByptes)
@@ -263,20 +192,14 @@ void Session::OnRecv_v2(DWORD numOfByptes)
 	m_bBufferFull.store(false);
 	m_i64RetryRecvTimestampSec.store(0);
 
-
-	// 1) RingBuffer에 수신 완료된 만큼 Commit
 	m_recvRingBuffer.CommitWrite(numOfByptes);
-
-	// 디버깅 찍어보기
 	m_recvRingBuffer.DebugPrint();
 
-	// 2) 패킷 단위 처리
 	ParsePackets();
 
 	if (m_socket == INVALID_SOCKET)
 		return;
 
-	// 3) 다음 Recv 요청
 	PostRecv();
 }
 
@@ -285,15 +208,12 @@ void Session::PostSend(const char* data, int32 len)
 	std::cout << "[Session] PostSend() submitted\n";
 
 	WSABUF wsabuf;
-	wsabuf.buf = const_cast<char*>(data); // 주의 : 임시 버퍼라면 안전한 복사 필요
+	wsabuf.buf = const_cast<char*>(data);
 	wsabuf.len = len;
 
 	DWORD bytesSent = 0;
-	// IocpEvent* event = new IocpEvent(IocpEvent::Type::Send, this);
 	IocpEvent* event = new IocpEvent(IocpEvent::Type::Send, shared_from_this(), nullptr);
 
-	// 커널에 “이 데이터를 클라이언트에게 보내줘” 라고 비동기로 요청
-	// 커널이 실제로 데이터를 소켓에 밀어넣는 시점은 비동기이며 나중에 IOCP로 완료 통보해줌 (OnSend() 호출 트리거됨)
 	int result = WSASend(
 		m_socket,
 		&wsabuf,
@@ -319,26 +239,21 @@ void Session::PostSend(const char* data, int32 len)
 void Session::OnSend(DWORD numOfBytes)
 {
 	std::cout << "[OnSend] Sent " << numOfBytes << " bytes to client." << std::endl;
-	// 전송 완료 후 따로 처리할 일은 아직 없음
 }
 
 void Session::OnSend2(DWORD numOfBytes, IocpEvent* pEvent)
 {
 	std::cout << "[OnSend2] Sent " << numOfBytes << " bytes to client." << std::endl;
-	m_ullPendingBytes.fetch_sub(numOfBytes); // 누적 전송량 차감
+	m_ullPendingBytes.fetch_sub(numOfBytes);
 
-	// 부분 완료 추적
 	pEvent->m_stSendItem.i32SentLen += numOfBytes;
 	
 	if (pEvent->m_stSendItem.i32SentLen < pEvent->m_stSendItem.i32TotalLen)
 	{
-		// 부분 완료: 나머지 데이터 재전송
 		PartialSend(pEvent);
-		// pEvent는 PartialSend에서 재사용되므로 삭제하지 않음
 	}
 	else
 	{
-		// 전체 완료: 이벤트 삭제 후 다음 전송
 		delete pEvent;
 		postNextSend();
 	}
@@ -346,13 +261,20 @@ void Session::OnSend2(DWORD numOfBytes, IocpEvent* pEvent)
 
 void Session::SendPacket(const char* payload, int len)
 {
-	// 1) 헤더 버퍼 (2바이트)
+	const int32 currentWorkerID = IOCPWorkerPool::GetCurrentLogicWorkerID();
+	const int32 boundWorkerID = GetBoundWorkerID();
+	const bool bCanSendInline = (currentWorkerID != -1) && (boundWorkerID == -1 || currentWorkerID == boundWorkerID);
+	if (!bCanSendInline)
+	{
+		std::cerr << "[SendPacket(raw)] must be called from the owner worker\n";
+		return;
+	}
+
 	shared_ptr<SendBuffer> hdr = m_SendPool.alloc(sizeof(uint16));
 	uint16 ui16PacketSize = static_cast<uint16>(len + sizeof(uint16));
 	memcpy(hdr->writable(), &ui16PacketSize, sizeof(uint16));
 	hdr->commit(sizeof(uint16));
 
-	// 2) payload 보관 (이미 풀 버퍼라면 그 shared_ptr을 그대로 keep2에 넣자)
 	shared_ptr<SendBuffer> body = m_SendPool.alloc(len);
 	memcpy(body->writable(), payload, len);
 	body->commit(len);
@@ -363,12 +285,44 @@ void Session::SendPacket(const char* payload, int len)
 	stItem.bufs[1].buf = body->data();
 	stItem.bufs[1].len = static_cast<ULONG>(body->size());
 	stItem.bufCount = 2;
-
-	// 수명 보장 : keeper에 보관
 	stItem.keep1 = hdr;
 	stItem.keep2 = body;
 
 	enqueueSend(move(stItem));
+}
+
+bool Session::QueuePacketToWorker(const IIocpPacket& packet)
+{
+	// 1. DummyClient SendPacket용. <-- Race Condition 방지. 
+	// 2. 이 외 코드 작업에서 Session : WorkerThread가 1:1을 위반한 SendPacket이 들어간 경우. <-- 이 경우 별도로 서버를 다운 시키던지 해서 코드 수정 필요.
+	if (m_socket == INVALID_SOCKET)
+		return false;
+
+	if (m_pCore == nullptr)
+	{
+		std::cerr << "[QueuePacketToWorker] IocpCore is not assigned\n";
+		return false;
+	}
+
+	shared_ptr<IIocpPacket> clonedPacket = packet.Clone();
+	if (!clonedPacket)
+	{
+		std::cerr << "[QueuePacketToWorker] Packet clone failed\n";
+		return false;
+	}
+
+	IocpEvent* pEvent = new IocpEvent(IocpEvent::Type::DeferredSendPacket, shared_from_this(), nullptr);
+	pEvent->m_pDeferredPacket = move(clonedPacket);
+
+	if (!::PostQueuedCompletionStatus(m_pCore->GetHandle(), 0, 0, pEvent))
+	{
+		std::cerr << "[QueuePacketToWorker] PostQueuedCompletionStatus failed: " << GetLastError() << std::endl;
+		delete pEvent;
+		CloseSocket();
+		return false;
+	}
+
+	return true;
 }
 
 void Session::SendPacket(IIocpPacket* packet)
@@ -376,43 +330,44 @@ void Session::SendPacket(IIocpPacket* packet)
 	if (packet == nullptr)
 		return;
 
-	// 0) Payload만 직렬화 (헤더 제외)
+	const int32 currentWorkerID = IOCPWorkerPool::GetCurrentLogicWorkerID();
+	const int32 boundWorkerID = GetBoundWorkerID();
+	const bool bCanSendInline = (currentWorkerID != -1) && (boundWorkerID == -1 || currentWorkerID == boundWorkerID);
+	if (!bCanSendInline)
+	{
+		if (!QueuePacketToWorker(*packet))
+			std::cerr << "[SendPacket] Failed to marshal packet send to owner worker\n";
+		return;
+	}
+
 	OutputMemoryStream payloadStream;
 	packet->SerializePayload(payloadStream);
 
 	if (payloadStream.GetBuffer().size() >= (std::numeric_limits<int32>::max() - sizeof(PacketHeader)))
 		throw std::length_error("payloadStream length over int32_Maximum");
 
-	// 1) 헤더 구성
 	PacketHeader header;
 	header.pkgID = packet->PkgHeader.pkgID;
 	header.pkgSize = static_cast<int32>(sizeof(PacketHeader)) + static_cast<int32>(payloadStream.GetBuffer().size());
 	
-	
-	// 2) Header만 직렬화
 	OutputMemoryStream headerStream;
 	headerStream.Serialize(header.pkgID, header.pkgSize);
 
-	// 3) 헤더 버퍼
 	shared_ptr<SendBuffer> hdr = m_SendPool.alloc(headerStream.GetBuffer().size());
 	memcpy(hdr->writable(), headerStream.GetBuffer().data(), headerStream.GetBuffer().size());
 	hdr->commit(headerStream.GetBuffer().size());
 
-	// 4) Payload 버퍼
 	const vector<uint8>& payloadData = payloadStream.GetBuffer();
 	shared_ptr<SendBuffer> body = m_SendPool.alloc(payloadData.size());
 	memcpy(body->writable(), payloadData.data(), payloadData.size());
 	body->commit(payloadData.size());
 
-	// 5) stSendItem 구성
 	stSendItem stItem{};
 	stItem.bufs[0].buf = hdr->data();
 	stItem.bufs[0].len = static_cast<ULONG>(hdr->size());
 	stItem.bufs[1].buf = body->data();
 	stItem.bufs[1].len = static_cast<ULONG>(body->size());
 	stItem.bufCount = 2;
-
-	// 수명 보장 : keeper에 보관
 	stItem.keep1 = hdr;
 	stItem.keep2 = body;
 
@@ -422,13 +377,11 @@ void Session::SendPacket(IIocpPacket* packet)
 bool Session::TryBindWorker(int32 _i32WorkerID)
 {
 	int32 expected = -1;
-
 	return m_i32BoundWorkerID.compare_exchange_strong(expected, _i32WorkerID);
 }
 
 void Session::enqueueSend(stSendItem&& item)
 {
-	// 역압(예: 1MB 초과시 드랍/대기) ? 선택
 	m_ullPendingBytes += (item.bufs[0].len + item.bufs[1].len);
 	m_SendQueue.push_back(move(item));
 	if (!m_bSendInFlight)
@@ -449,7 +402,6 @@ void Session::postNextSend()
 	pEvent->m_stSendItem = move(m_SendQueue.front());
 	m_SendQueue.pop_front();
 
-	// 부분 완료 추적을 위한 초기화
 	pEvent->m_stSendItem.i32TotalLen = 0;
 	for (DWORD i = 0; i < pEvent->m_stSendItem.bufCount; ++i)
 	{
@@ -484,31 +436,24 @@ void Session::postNextSend()
 
 void Session::PartialSend(IocpEvent* pEvent)
 {
-	// 부분 완료 처리: 전송되지 않은 나머지 데이터로 재전송
-	
 	int32 remaining = pEvent->m_stSendItem.i32TotalLen - pEvent->m_stSendItem.i32SentLen;
 	if (remaining <= 0)
 	{
-		// 이미 전체 전송 완료 (이론적으로 도달하지 않아야 함)
 		delete pEvent;
 		postNextSend();
 		return;
 	}
 
-	// 전송된 바이트 수를 기준으로 WSABUF 배열 재구성
 	WSABUF remainingBufs[2];
 	DWORD remainingBufCount = 0;
-	int32 offset = pEvent->m_stSendItem.i32SentLen;  // 전송된 바이트 수
+	int32 offset = pEvent->m_stSendItem.i32SentLen;
 
-	// 첫 번째 버퍼에서 남은 부분 계산
 	if (offset < static_cast<int32>(pEvent->m_stSendItem.bufs[0].len))
 	{
-		// 첫 번째 버퍼의 일부만 전송됨
 		remainingBufs[0].buf = pEvent->m_stSendItem.bufs[0].buf + offset;
 		remainingBufs[0].len = pEvent->m_stSendItem.bufs[0].len - offset;
 		remainingBufCount = 1;
 		
-		// 두 번째 버퍼도 포함해야 하는지 확인
 		if (remaining > static_cast<int32>(remainingBufs[0].len) && pEvent->m_stSendItem.bufCount > 1)
 		{
 			remainingBufs[1] = pEvent->m_stSendItem.bufs[1];
@@ -517,14 +462,12 @@ void Session::PartialSend(IocpEvent* pEvent)
 	}
 	else
 	{
-		// 첫 번째 버퍼는 완전히 전송됨, 두 번째 버퍼의 일부만 전송됨
 		offset -= pEvent->m_stSendItem.bufs[0].len;
 		remainingBufs[0].buf = pEvent->m_stSendItem.bufs[1].buf + offset;
 		remainingBufs[0].len = pEvent->m_stSendItem.bufs[1].len - offset;
 		remainingBufCount = 1;
 	}
 
-	// 나머지 데이터로 재전송
 	DWORD sent = 0;
 	int result = WSASend(
 		m_socket,
@@ -532,7 +475,7 @@ void Session::PartialSend(IocpEvent* pEvent)
 		remainingBufCount,
 		&sent,
 		0,
-		pEvent,  // 동일한 IocpEvent 재사용
+		pEvent,
 		nullptr
 	);
 
@@ -547,7 +490,6 @@ void Session::PartialSend(IocpEvent* pEvent)
 			CloseSocket();
 			return;
 		}
-		// WSA_IO_PENDING이면 정상: 비동기 대기 중
 	}
 }
 
@@ -558,7 +500,6 @@ void Session::RetryRecv()
 
 	if (bBufferFull == true)
 	{
-		// 버퍼 가득 참. 재시도 필요
 		std::cout << "[OnRecv] Recv buffer Full" << endl;
 
 		if (FirstRetryTimeStampSec == 0)
@@ -567,10 +508,8 @@ void Session::RetryRecv()
 			FirstRetryTimeStampSec = m_i64RetryRecvTimestampSec.load();
 		}
 
-		// 1분 이상동안 재시도 하면 그냥 연결 끊자
 		if (g_TimeMaker.GetTimeStamp_Sec() - FirstRetryTimeStampSec >= 60)
 		{
-			// 연결 종료
 			std::cout << "[OnRecv] Client disconnected\n";
 			CloseSocket();
 		}
@@ -579,7 +518,6 @@ void Session::RetryRecv()
 	}
 	else
 	{
-		// 연결 종료
 		std::cout << "[OnRecv] Client disconnected\n";
 		CloseSocket();
 	}
@@ -596,7 +534,6 @@ void Session::ParsePackets()
 		if (!m_recvRingBuffer.PeekCopy(reinterpret_cast<char*>(&header), sizeof(PacketHeader)))
 			break;
 
-		// 헤더 정보 파싱
 		header.pkgID = ntohl(header.pkgID);
 		header.pkgSize = ntohl(header.pkgSize);
 		if (header.pkgSize < sizeof(PacketHeader))
@@ -615,14 +552,11 @@ void Session::ParsePackets()
 		if (m_recvRingBuffer.GetUseSize() < header.pkgSize)
 			break;
 
-		// 패킷 읽기
 		std::vector<char> packet(header.pkgSize);
 		m_recvRingBuffer.Read(packet.data(), header.pkgSize);
 
-		// 역직렬화 스트림 생성
 		InputMemoryStream PacketStream(reinterpret_cast<uint8*>(packet.data()), packet.size());
 
-		// 헤더 역직렬화
 		PacketHeader parsedHeader;
 		if (!PacketStream.DeSerialize(parsedHeader.pkgID, parsedHeader.pkgSize))
 		{
@@ -631,7 +565,6 @@ void Session::ParsePackets()
 			return;
 		}
 
-		// 가상 함수 호출 (각 프로젝트에서 구현)
 		OnPacketReceived(static_cast<PACKET_NUMBER>(parsedHeader.pkgID), parsedHeader.pkgSize, PacketStream);
 
 		if (m_socket == INVALID_SOCKET)
@@ -643,32 +576,6 @@ void Session::ParsePackets()
 			CloseSocket();
 			return;
 		}
-
-		//if (parsedHeader.pkgID == static_cast<int32>(PACKET_HEADER::CP_CHAT))
-		//{
-		//	CP_CHAT pkg;
-		//	pkg.DeSerializePayload(PacketStream);
-
-
-		//	if (m_SessionType == SessionType::Server)
-		//	{
-		//		std::cout << "[Server] Received packet [ID,Size]: [" << parsedHeader.pkgID << "," << parsedHeader.pkgSize
-		//			<< "]\t payload: "
-		//			<< pkg.data << "\n";
-		//		// PostSend(packet.data(), packetSize); // 에코 기본 방법
-
-		//		// 정책 통일. 헤더는 SendPacket이 생성
-		//		CP_CHAT sendmsg;
-		//		sendmsg.data = "Hello my world";
-		//		SendPacket(&sendmsg);
-		//	}
-		//	else
-		//	{
-		//		std::cout << "[Client] Received packet [ID,Size]: [" << parsedHeader.pkgID << "," << parsedHeader.pkgSize
-		//			<< "]\t payload: "
-		//			<< pkg.data << "\n";
-		//	}
-		//}
-
 	}
 }
+

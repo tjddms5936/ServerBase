@@ -31,7 +31,11 @@ void ClientSession::Run()
 
         CP_CHAT sendmsg;
         sendmsg.data = "Hellooo";
-        SendPacket(&sendmsg);
+        if (!QueuePacketToWorker(sendmsg))
+        {
+            std::cerr << "[ClientSession] Failed to queue send request" << std::endl;
+            break;
+        }
     }
 }
 

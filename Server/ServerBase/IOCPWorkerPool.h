@@ -9,6 +9,7 @@ public:
 
 	void Start();
 	void Stop();
+	static int32 GetCurrentLogicWorkerID();
 
 private:
 	struct stIocpCompletion
@@ -43,4 +44,3 @@ private:
 	vector<unique_ptr<stWorkerQueue>> m_vWorkerQueues;
 	atomic<uint32> m_ui32LogicRoundRobin = 0;
 };
-

@@ -2,6 +2,7 @@
 
 class Session;
 class IocpEvent;
+struct IIocpPacket;
 
 struct stSendItem
 {
@@ -54,7 +55,7 @@ public:
 class IocpEvent : public OVERLAPPED
 {
 public:
-	enum class Type {Recv, Send, Accept};
+	enum class Type {Recv, Send, Accept, DeferredSendPacket};
 
 	IocpEvent(Type type, shared_ptr<IocpObject> owner, shared_ptr<Session> pPartsSession = nullptr) :
 		m_Type(type), m_Owner(owner), m_PartsSession(pPartsSession) 
@@ -77,7 +78,7 @@ private:
 	void Init();
 
 private:
-	Type					m_Type;
+	Type				m_Type;
 	shared_ptr<IocpObject>	m_Owner;
 	shared_ptr<Session>		m_PartsSession;
 
@@ -85,6 +86,7 @@ public:
 	// IocpEvent 확장: SendItem 포함
 	stSendItem	m_stSendItem;	// ← 여기에 WSABUF들과 keeper가 붙는다
 	stIoData	m_stIoData;		// Accept에서 Race Condition 방지용
+	shared_ptr<IIocpPacket> m_pDeferredPacket;
 };
 
 
@@ -112,4 +114,3 @@ public:
 private:
 	HANDLE m_IocpHandle;
 };
-
