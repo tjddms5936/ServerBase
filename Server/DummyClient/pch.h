@@ -6,9 +6,9 @@
 
 // 전처리기 단계에서 실행
 #ifdef _DEBUG
-#pragma comment(lib, "Debug\\ServerBase.lib")
+#pragma comment(lib, "..\\LIB\\Debug\\ServerBase.lib")
 #else 
-#pragma comment(lib, "Release\\ServerBase.lib")
+#pragma comment(lib, "..\\LIB\\Release\\ServerBase.lib")
 #endif 
 
 // ----------------------------------------------

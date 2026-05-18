@@ -3,6 +3,7 @@
 #include "RecvBuffer.h"
 #include "SendBuffer.h"
 #include "Protocol.h"
+#include "../FeatureExtraction/INetworkEventObserver.h"
 
 enum class SessionType
 {
@@ -37,6 +38,8 @@ public:
 	char* GetAcceptBuffer() { return m_acceptBuffer.get(); }
 	void CloseSocket();
 	void SetIocpCore(IocpCore* pCore) { m_pCore = pCore; }
+	void SetNetworkEventObserver(shared_ptr<feature_extraction::INetworkEventObserver> observer) { m_NetworkEventObserver = observer; }
+	uint64 GetSessionId() const { return m_ullSessionId; }
 
 	// 송신 큐 & 인플라이트 1개 정책 도입으로 개선
 	void SendPacket(const char* payload, int len);
@@ -57,6 +60,8 @@ public:
 protected:
 	// 패킷 파싱 헬퍼 함수
 	void ParsePackets();
+	feature_extraction::NetworkEvent MakeNetworkEvent(feature_extraction::NetworkEventType type) const;
+	void NotifyNetworkEvent(const feature_extraction::NetworkEvent& event) const;
 
 private:
 	void enqueueSend(stSendItem&& item);
@@ -67,6 +72,8 @@ private:
 private:
 	SOCKET m_socket;
 	IocpCore* m_pCore = nullptr;
+	uint64 m_ullSessionId = 0;
+	shared_ptr<feature_extraction::INetworkEventObserver> m_NetworkEventObserver;
 	mutable mutex m_socketCloseLock;
 	RingRecvBuffer m_recvRingBuffer;
 	unique_ptr<char[]> m_acceptBuffer; // AcceptEx 전용 버퍼.

@@ -152,6 +152,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\FeatureExtraction\AiInferenceWorker.h" />
+    <ClInclude Include="..\FeatureExtraction\AsyncFeatureQueue.h" />
+    <ClInclude Include="..\FeatureExtraction\FeatureCollector.h" />
+    <ClInclude Include="..\FeatureExtraction\InferenceResult.h" />
+    <ClInclude Include="..\FeatureExtraction\InferenceResultStore.h" />
+    <ClInclude Include="..\FeatureExtraction\INetworkEventObserver.h" />
+    <ClInclude Include="..\FeatureExtraction\NetworkEvent.h" />
+    <ClInclude Include="..\FeatureExtraction\FeatureSnapshot.h" />
     <ClInclude Include="CoreGlobal.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="IocpCore.h" />
@@ -173,6 +181,18 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\FeatureExtraction\AiInferenceWorker.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\FeatureExtraction\AsyncFeatureQueue.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\FeatureExtraction\FeatureCollector.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\FeatureExtraction\InferenceResultStore.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="CoreGlobal.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IOCPWorkerPool.cpp" />

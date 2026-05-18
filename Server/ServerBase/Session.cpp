@@ -3,9 +3,16 @@
 #include "MemoryStream.h"
 #include "IOCPWorkerPool.h"
 
+namespace
+{
+	atomic<uint64> g_ullNextSessionId{ 1 };
+}
+
 Session::Session(SOCKET socket, SessionType eSessionType) :
 	m_socket(socket), m_SessionType(eSessionType)
 {
+	m_ullSessionId = g_ullNextSessionId.fetch_add(1);
+
 	const int addrLen = sizeof(SOCKADDR_IN) + 16;
 	const int bufferLen = addrLen * 2;
 	m_acceptBuffer = make_unique<char[]>(bufferLen);
@@ -28,6 +35,11 @@ void Session::CloseSocket()
 	}
 
 	closesocket(socketToClose);
+
+	// 인공지능 특징 추출 이벤트를 기록한다.
+	feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::SessionClosed);
+	event.socket_handle = static_cast<std::uintptr_t>(socketToClose);
+	NotifyNetworkEvent(event);
 	std::cout << "[Session] Socket closed\n";
 }
 
@@ -42,6 +54,12 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	case IocpEvent::Type::Recv:
 		if (!bCompletionSuccess)
 		{
+			// 인공지능 특징 추출 이벤트를 기록한다.
+			feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+			event.error_code = dwCompletionError;
+			event.error_message = "recv completion failed";
+			NotifyNetworkEvent(event);
+
 			std::cerr << "[OnRecv] IOCP completion failed: " << dwCompletionError << std::endl;
 			CloseSocket();
 			delete pIocpEvent;
@@ -54,6 +72,12 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 	case IocpEvent::Type::Send:
 		if (!bCompletionSuccess)
 		{
+			// 인공지능 특징 추출 이벤트를 기록한다.
+			feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+			event.error_code = dwCompletionError;
+			event.error_message = "send completion failed";
+			NotifyNetworkEvent(event);
+
 			std::cerr << "[OnSend2] IOCP completion failed: " << dwCompletionError << std::endl;
 			m_bSendInFlight.store(false);
 			delete pIocpEvent;
@@ -77,6 +101,9 @@ void Session::Dispatch(IocpEvent* pIocpEvent, int32 numOfBytes)
 void Session::Start()
 {
 	std::cout << "[Session] Start() called\n";
+
+	// 인공지능 특징 추출 이벤트를 기록한다.
+	NotifyNetworkEvent(MakeNetworkEvent(feature_extraction::NetworkEventType::SessionStarted));
 	PostRecv();
 }
 
@@ -137,6 +164,11 @@ void Session::OnRecv(DWORD numOfByptes)
 	m_i64RetryRecvTimestampSec.store(0);
 
 	m_recvRingBuffer.CommitWrite(numOfByptes);
+
+	// 인공지능 특징 추출 이벤트를 기록한다.
+	feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::RecvCompleted);
+	event.bytes_transferred = static_cast<uint32>(numOfByptes);
+	NotifyNetworkEvent(event);
 	m_recvRingBuffer.DebugPrint();
 
 	while (true)
@@ -193,6 +225,11 @@ void Session::OnRecv_v2(DWORD numOfByptes)
 	m_i64RetryRecvTimestampSec.store(0);
 
 	m_recvRingBuffer.CommitWrite(numOfByptes);
+
+	// 인공지능 특징 추출 이벤트를 기록한다.
+	feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::RecvCompleted);
+	event.bytes_transferred = static_cast<uint32>(numOfByptes);
+	NotifyNetworkEvent(event);
 	m_recvRingBuffer.DebugPrint();
 
 	ParsePackets();
@@ -245,6 +282,11 @@ void Session::OnSend2(DWORD numOfBytes, IocpEvent* pEvent)
 {
 	std::cout << "[OnSend2] Sent " << numOfBytes << " bytes to client." << std::endl;
 	m_ullPendingBytes.fetch_sub(numOfBytes);
+
+	// 인공지능 특징 추출 이벤트를 기록한다.
+	feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::SendCompleted);
+	event.bytes_transferred = static_cast<uint32>(numOfBytes);
+	NotifyNetworkEvent(event);
 
 	pEvent->m_stSendItem.i32SentLen += numOfBytes;
 	
@@ -538,6 +580,13 @@ void Session::ParsePackets()
 		header.pkgSize = ntohl(header.pkgSize);
 		if (header.pkgSize < sizeof(PacketHeader))
 		{
+			// 인공지능 특징 추출 이벤트를 기록한다.
+			feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+			event.packet_id = header.pkgID;
+			event.packet_size = header.pkgSize;
+			event.error_message = "invalid packet size";
+			NotifyNetworkEvent(event);
+
 			std::cerr << "[Error] Invalid packet size: " << header.pkgSize << "\n";
 			CloseSocket();
 			return;
@@ -545,6 +594,13 @@ void Session::ParsePackets()
 
 		if (static_cast<ullong>(header.pkgSize) > m_recvRingBuffer.GetUsableCapacity())
 		{
+			// 인공지능 특징 추출 이벤트를 기록한다.
+			feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+			event.packet_id = header.pkgID;
+			event.packet_size = header.pkgSize;
+			event.error_message = "packet size exceeds receive buffer capacity";
+			NotifyNetworkEvent(event);
+
             std::cerr << "[Error] Packet size exceeds recv buffer capacity: " << header.pkgSize << "\n";
 			CloseSocket();
 			return;
@@ -560,10 +616,23 @@ void Session::ParsePackets()
 		PacketHeader parsedHeader;
 		if (!PacketStream.DeSerialize(parsedHeader.pkgID, parsedHeader.pkgSize))
 		{
+			// 인공지능 특징 추출 이벤트를 기록한다.
+			feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+			event.packet_size = static_cast<int32>(packet.size());
+			event.error_message = "failed to deserialize packet header";
+			NotifyNetworkEvent(event);
+
 			std::cerr << "[Error] Failed to deserialize packet header\n";
 			CloseSocket();
 			return;
 		}
+
+		// 인공지능 특징 추출 이벤트를 기록한다.
+		feature_extraction::NetworkEvent packetEvent = MakeNetworkEvent(feature_extraction::NetworkEventType::PacketParsed);
+		packetEvent.packet_id = parsedHeader.pkgID;
+		packetEvent.packet_size = parsedHeader.pkgSize;
+		packetEvent.payload_size = parsedHeader.pkgSize - static_cast<int32>(sizeof(PacketHeader));
+		NotifyNetworkEvent(packetEvent);
 
 		OnPacketReceived(static_cast<PACKET_NUMBER>(parsedHeader.pkgID), parsedHeader.pkgSize, PacketStream);
 
@@ -572,6 +641,14 @@ void Session::ParsePackets()
 
 		if (PacketStream.GetRemainingSize() != 0)
 		{
+			// 인공지능 특징 추출 이벤트를 기록한다.
+			feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+			event.packet_id = parsedHeader.pkgID;
+			event.packet_size = parsedHeader.pkgSize;
+			event.payload_size = parsedHeader.pkgSize - static_cast<int32>(sizeof(PacketHeader));
+			event.error_message = "packet payload has trailing bytes";
+			NotifyNetworkEvent(event);
+
 			std::cerr << "[Error] Packet payload has trailing bytes: " << PacketStream.GetRemainingSize() << "\n";
 			CloseSocket();
 			return;
@@ -579,3 +656,33 @@ void Session::ParsePackets()
 	}
 }
 
+
+feature_extraction::NetworkEvent Session::MakeNetworkEvent(feature_extraction::NetworkEventType type) const
+{
+	feature_extraction::NetworkEvent event;
+	event.type = type;
+	event.session_id = m_ullSessionId;
+	event.socket_handle = static_cast<std::uintptr_t>(m_socket);
+	event.logic_worker_id = IOCPWorkerPool::GetCurrentLogicWorkerID();
+	return event;
+}
+
+void Session::NotifyNetworkEvent(const feature_extraction::NetworkEvent& event) const
+{
+	shared_ptr<feature_extraction::INetworkEventObserver> observer = m_NetworkEventObserver;
+	if (!observer)
+		return;
+
+	try
+	{
+		observer->OnNetworkEvent(event);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << "[Session] Network event observer failed: " << ex.what() << std::endl;
+	}
+	catch (...)
+	{
+		std::cerr << "[Session] Network event observer failed with unknown exception" << std::endl;
+	}
+}

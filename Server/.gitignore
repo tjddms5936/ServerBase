@@ -1,0 +1,3 @@
+.deps/
+.venv/
+e2e_logs/

@@ -170,6 +170,13 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="ServerSession.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServerBase\ServerBase.vcxproj">
+      <Project>{f0206019-49f2-40df-a16a-73c8a62d43de}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
