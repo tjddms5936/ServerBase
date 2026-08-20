@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-08-20T06:42:04.400952+00:00",
+  "dataset": {
+    "name": "UNSW-NB15",
+    "split": "official training/testing split",
+    "target": "label",
+    "label_map": {
+      "normal": 0,
+      "attack": 1
+    }
+  },
+  "model": {
+    "name": "LogisticRegression",
+    "solver": "lbfgs",
+    "max_iter": 1000,
+    "iterations_used": 219,
+    "converged": true,
+    "convergence_warnings": [],
+    "C": 1.0,
+    "class_weight": null,
+    "random_state": 42
+  },
+  "data": {
+    "train_rows": 175341,
+    "test_rows": 82332,
+    "feature_count": 194,
+    "dtype": "float32",
+    "train_label_distribution": {
+      "0": 56000,
+      "1": 119341
+    },
+    "test_label_distribution": {
+      "0": 37000,
+      "1": 45332
+    }
+  },
+  "metrics": {
+    "accuracy": 0.8096244473594714,
+    "precision": 0.7534525193135981,
+    "recall": 0.9724477190505603,
+    "f1": 0.8490562403697997,
+    "roc_auc": 0.9560052388265793,
+    "confusion_matrix": [
+      [
+        22575,
+        14425
+      ],
+      [
+        1249,
+        44083
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "normal(0)",
+      "attack(1)"
+    ],
+    "confusion_matrix_details": {
+      "true_negative": 22575,
+      "false_positive": 14425,
+      "false_negative": 1249,
+      "true_positive": 44083
+    }
+  },
+  "timing_seconds": {
+    "data_loading": 2.2909436002373695,
+    "training": 5.382284600287676,
+    "test_prediction_total": 0.11043559946119785,
+    "test_prediction_per_sample": 1.3413447925617968e-06
+  },
+  "artifacts": {
+    "model_path": "artifacts/baseline_logistic_regression.joblib",
+    "metrics_path": "reports/baseline_metrics.json",
+    "model_size_bytes": 3461
+  }
+}

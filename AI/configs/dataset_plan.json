@@ -1,0 +1,30 @@
+{
+  "primary_dataset": "UNSW-NB15",
+  "secondary_dataset": "CIC-IDS2017",
+  "baseline_scope": {
+    "task_type": "binary_classification",
+    "positive_label": "attack",
+    "negative_label": "normal",
+    "first_models": [
+      "logistic_regression",
+      "random_forest"
+    ]
+  },
+  "selected_dataset": {
+    "name": "UNSW-NB15",
+    "reason": "Official train/test CSV files are available, the feature set is manageable for baseline experiments, and the dataset includes both normal and multiple attack categories.",
+    "expected_files": [
+      "UNSW_NB15_training-set.csv",
+      "UNSW_NB15_testing-set.csv",
+      "UNSW_NB15_features.csv"
+    ],
+    "raw_data_dir": "data/raw/unsw_nb15",
+    "processed_data_dir": "data/processed/unsw_nb15"
+  },
+  "future_extension": {
+    "name": "CIC-IDS2017",
+    "reason": "Flow-based CSV data generated with CICFlowMeter can be used later for larger-scale flow experiments and comparison against the primary dataset.",
+    "raw_data_dir": "data/raw/cic_ids2017",
+    "processed_data_dir": "data/processed/cic_ids2017"
+  }
+}
