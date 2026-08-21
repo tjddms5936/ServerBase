@@ -1,0 +1,766 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-08-20T09:17:07.697651+00:00",
+  "analysis": "Logistic Regression misclassification analysis",
+  "model": {
+    "name": "LogisticRegression",
+    "path": "artifacts/baseline_logistic_regression.joblib",
+    "default_threshold": 0.5
+  },
+  "data": {
+    "dataset": "UNSW-NB15",
+    "split": "official testing split",
+    "test_rows": 82332,
+    "feature_count": 194,
+    "normal_rows": 37000,
+    "attack_rows": 45332
+  },
+  "overall": {
+    "matrix": [
+      [
+        22575,
+        14425
+      ],
+      [
+        1249,
+        44083
+      ]
+    ],
+    "labels": [
+      "normal(0)",
+      "attack(1)"
+    ],
+    "true_negative": 22575,
+    "false_positive": 14425,
+    "false_negative": 1249,
+    "true_positive": 44083,
+    "false_positive_rate": 0.3898648648648649,
+    "false_negative_rate": 0.02755228094943969,
+    "specificity": 0.6101351351351352,
+    "recall": 0.9724477190505603
+  },
+  "attack_category_performance": [
+    {
+      "attack_category": "Analysis",
+      "total": 677,
+      "detected": 619,
+      "false_negative": 58,
+      "recall": 0.914327917282127,
+      "false_negative_rate": 0.08567208271787297,
+      "mean_attack_probability": 0.9368855238797237,
+      "median_attack_probability": 0.9984901999767803
+    },
+    {
+      "attack_category": "Fuzzers",
+      "total": 6062,
+      "detected": 5668,
+      "false_negative": 394,
+      "recall": 0.9350049488617618,
+      "false_negative_rate": 0.06499505113823821,
+      "mean_attack_probability": 0.7655829901772914,
+      "median_attack_probability": 0.773238934983798
+    },
+    {
+      "attack_category": "Exploits",
+      "total": 11132,
+      "detected": 10474,
+      "false_negative": 658,
+      "recall": 0.9408911246855911,
+      "false_negative_rate": 0.059108875314408914,
+      "mean_attack_probability": 0.9136187006937446,
+      "median_attack_probability": 0.995064608885888
+    },
+    {
+      "attack_category": "DoS",
+      "total": 4089,
+      "detected": 3992,
+      "false_negative": 97,
+      "recall": 0.9762778185375397,
+      "false_negative_rate": 0.02372218146246026,
+      "mean_attack_probability": 0.9541509802423473,
+      "median_attack_probability": 0.9985452368867666
+    },
+    {
+      "attack_category": "Shellcode",
+      "total": 378,
+      "detected": 373,
+      "false_negative": 5,
+      "recall": 0.9867724867724867,
+      "false_negative_rate": 0.013227513227513227,
+      "mean_attack_probability": 0.8302446969769924,
+      "median_attack_probability": 0.8568584716706529
+    },
+    {
+      "attack_category": "Backdoor",
+      "total": 583,
+      "detected": 576,
+      "false_negative": 7,
+      "recall": 0.9879931389365352,
+      "false_negative_rate": 0.012006861063464836,
+      "mean_attack_probability": 0.9760089798768229,
+      "median_attack_probability": 0.9983198006203716
+    },
+    {
+      "attack_category": "Reconnaissance",
+      "total": 3496,
+      "detected": 3483,
+      "false_negative": 13,
+      "recall": 0.9962814645308925,
+      "false_negative_rate": 0.0037185354691075517,
+      "mean_attack_probability": 0.8687012954254929,
+      "median_attack_probability": 0.8830727241239681
+    },
+    {
+      "attack_category": "Generic",
+      "total": 18871,
+      "detected": 18854,
+      "false_negative": 17,
+      "recall": 0.9990991468390652,
+      "false_negative_rate": 0.0009008531609347676,
+      "mean_attack_probability": 0.9928844474007374,
+      "median_attack_probability": 0.9994436208878241
+    },
+    {
+      "attack_category": "Worms",
+      "total": 44,
+      "detected": 44,
+      "false_negative": 0,
+      "recall": 1.0,
+      "false_negative_rate": 0.0,
+      "mean_attack_probability": 0.9066397753720005,
+      "median_attack_probability": 0.9475533898513636
+    }
+  ],
+  "false_negative_analysis": {
+    "count": 1249,
+    "probability_summary": {
+      "min": 0.0007938783132198909,
+      "q1": 0.2593382494623854,
+      "median": 0.3349274963417755,
+      "q3": 0.41370732773623003,
+      "p90": 0.4697007394248948,
+      "max": 0.4997609943168097,
+      "mean": 0.32650750625368935
+    }
+  },
+  "false_positive_analysis": {
+    "count": 14425,
+    "rate_among_normal": 0.3898648648648649,
+    "probability_summary": {
+      "min": 0.5000565255397074,
+      "q1": 0.6687953395410188,
+      "median": 0.7366266062038528,
+      "q3": 0.8085498902980082,
+      "p90": 0.8692920508766819,
+      "max": 0.9999999999582574,
+      "mean": 0.7371564532207923
+    },
+    "probability_bins": [
+      {
+        "probability_range": "0.5-0.6",
+        "count": 1381,
+        "ratio": 0.095736568457539
+      },
+      {
+        "probability_range": "0.6-0.7",
+        "count": 3748,
+        "ratio": 0.2598266897746967
+      },
+      {
+        "probability_range": "0.7-0.8",
+        "count": 5339,
+        "ratio": 0.3701213171577123
+      },
+      {
+        "probability_range": "0.8-0.9",
+        "count": 3414,
+        "ratio": 0.23667244367417678
+      },
+      {
+        "probability_range": "0.9-1.0",
+        "count": 543,
+        "ratio": 0.03764298093587522
+      }
+    ],
+    "high_confidence_false_positive": {
+      "threshold": 0.9,
+      "count": 543,
+      "ratio": 0.03764298093587522
+    },
+    "top_numeric_feature_differences": [
+      {
+        "feature": "sttl",
+        "false_positive_mean": 224.315424610052,
+        "true_negative_mean": 60.42312292358804,
+        "false_positive_median": 254.0,
+        "true_negative_median": 31.0,
+        "standardized_mean_difference": 2.276386926027788,
+        "absolute_standardized_mean_difference": 2.276386926027788
+      },
+      {
+        "feature": "dttl",
+        "false_positive_mean": 202.3511958405546,
+        "true_negative_mean": 48.440221483942416,
+        "false_positive_median": 252.0,
+        "true_negative_median": 29.0,
+        "standardized_mean_difference": 1.7708653865580735,
+        "absolute_standardized_mean_difference": 1.7708653865580735
+      },
+      {
+        "feature": "dmean",
+        "false_positive_mean": 54.639514731369154,
+        "true_negative_mean": 249.52970099667775,
+        "false_positive_median": 45.0,
+        "true_negative_median": 89.0,
+        "standardized_mean_difference": -0.8397668530416024,
+        "absolute_standardized_mean_difference": 0.8397668530416024
+      },
+      {
+        "feature": "dload",
+        "false_positive_mean": 4215.515403042981,
+        "true_negative_mean": 2248632.9419999863,
+        "false_positive_median": 3015.726807,
+        "true_negative_median": 538748.1875,
+        "standardized_mean_difference": -0.7644374329621421,
+        "absolute_standardized_mean_difference": 0.7644374329621421
+      },
+      {
+        "feature": "ackdat",
+        "false_positive_mean": 0.06043657088388215,
+        "true_negative_mean": 0.01713825599114064,
+        "false_positive_median": 0.062562,
+        "true_negative_median": 0.000131,
+        "standardized_mean_difference": 0.6657706137999181,
+        "absolute_standardized_mean_difference": 0.6657706137999181
+      },
+      {
+        "feature": "tcprtt",
+        "false_positive_mean": 0.12812412811091856,
+        "true_negative_mean": 0.041110722569213734,
+        "false_positive_median": 0.138052,
+        "true_negative_median": 0.000634,
+        "standardized_mean_difference": 0.6294536537800264,
+        "absolute_standardized_mean_difference": 0.6294536537800264
+      },
+      {
+        "feature": "ct_srv_dst",
+        "false_positive_mean": 3.680415944540728,
+        "true_negative_mean": 6.758183831672204,
+        "false_positive_median": 3.0,
+        "true_negative_median": 5.0,
+        "standardized_mean_difference": -0.5969504428030292,
+        "absolute_standardized_mean_difference": 0.5969504428030292
+      },
+      {
+        "feature": "ct_dst_ltm",
+        "false_positive_mean": 2.1377469670710574,
+        "true_negative_mean": 4.109811738648948,
+        "false_positive_median": 1.0,
+        "true_negative_median": 3.0,
+        "standardized_mean_difference": -0.5734763611268002,
+        "absolute_standardized_mean_difference": 0.5734763611268002
+      },
+      {
+        "feature": "ct_src_ltm",
+        "false_positive_mean": 2.5945233968804158,
+        "true_negative_mean": 4.658028792912514,
+        "false_positive_median": 2.0,
+        "true_negative_median": 3.0,
+        "standardized_mean_difference": -0.5318892664134998,
+        "absolute_standardized_mean_difference": 0.5318892664134998
+      },
+      {
+        "feature": "ct_srv_src",
+        "false_positive_mean": 4.258370883882149,
+        "true_negative_mean": 7.087131782945736,
+        "false_positive_median": 4.0,
+        "true_negative_median": 5.0,
+        "standardized_mean_difference": -0.5229786542181224,
+        "absolute_standardized_mean_difference": 0.5229786542181224
+      },
+      {
+        "feature": "synack",
+        "false_positive_mean": 0.0676875572270364,
+        "true_negative_mean": 0.023972466578073087,
+        "false_positive_median": 0.072734,
+        "true_negative_median": 0.000496,
+        "standardized_mean_difference": 0.5011727459399425,
+        "absolute_standardized_mean_difference": 0.5011727459399425
+      },
+      {
+        "feature": "spkts",
+        "false_positive_mean": 12.25948006932409,
+        "true_negative_mean": 29.49745293466224,
+        "false_positive_median": 10.0,
+        "true_negative_median": 10.0,
+        "standardized_mean_difference": -0.4134213970276063,
+        "absolute_standardized_mean_difference": 0.4134213970276063
+      },
+      {
+        "feature": "dpkts",
+        "false_positive_mean": 7.231889081455806,
+        "true_negative_mean": 37.03419712070875,
+        "false_positive_median": 8.0,
+        "true_negative_median": 10.0,
+        "standardized_mean_difference": -0.403043788887951,
+        "absolute_standardized_mean_difference": 0.403043788887951
+      },
+      {
+        "feature": "dloss",
+        "false_positive_mean": 1.4450606585788561,
+        "true_negative_mean": 13.903344407530454,
+        "false_positive_median": 1.0,
+        "true_negative_median": 2.0,
+        "standardized_mean_difference": -0.36297766814213145,
+        "absolute_standardized_mean_difference": 0.36297766814213145
+      },
+      {
+        "feature": "dwin",
+        "false_positive_mean": 204.6497746967071,
+        "true_negative_mean": 164.89683277962348,
+        "false_positive_median": 255.0,
+        "true_negative_median": 255.0,
+        "standardized_mean_difference": 0.35446902591745655,
+        "absolute_standardized_mean_difference": 0.35446902591745655
+      }
+    ],
+    "categorical_feature_analysis": {
+      "proto": {
+        "unique_value_count": 5,
+        "minimum_support_for_rate_ranking": 20,
+        "top_by_false_positive_count": [
+          {
+            "value": "tcp",
+            "normal_count": 27848,
+            "false_positive": 11583,
+            "false_positive_rate": 0.41593651249640906
+          },
+          {
+            "value": "udp",
+            "normal_count": 8097,
+            "false_positive": 2841,
+            "false_positive_rate": 0.3508706928492034
+          },
+          {
+            "value": "ospf",
+            "normal_count": 38,
+            "false_positive": 1,
+            "false_positive_rate": 0.02631578947368421
+          },
+          {
+            "value": "arp",
+            "normal_count": 987,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "igmp",
+            "normal_count": 30,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          }
+        ],
+        "top_by_false_positive_rate": [
+          {
+            "value": "tcp",
+            "normal_count": 27848,
+            "false_positive": 11583,
+            "false_positive_rate": 0.41593651249640906
+          },
+          {
+            "value": "udp",
+            "normal_count": 8097,
+            "false_positive": 2841,
+            "false_positive_rate": 0.3508706928492034
+          },
+          {
+            "value": "ospf",
+            "normal_count": 38,
+            "false_positive": 1,
+            "false_positive_rate": 0.02631578947368421
+          },
+          {
+            "value": "arp",
+            "normal_count": 987,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "igmp",
+            "normal_count": 30,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          }
+        ]
+      },
+      "service": {
+        "unique_value_count": 8,
+        "minimum_support_for_rate_ranking": 20,
+        "top_by_false_positive_count": [
+          {
+            "value": "unknown",
+            "normal_count": 27375,
+            "false_positive": 11632,
+            "false_positive_rate": 0.42491324200913244
+          },
+          {
+            "value": "http",
+            "normal_count": 4013,
+            "false_positive": 2345,
+            "false_positive_rate": 0.5843508597059557
+          },
+          {
+            "value": "ftp",
+            "normal_count": 758,
+            "false_positive": 417,
+            "false_positive_rate": 0.5501319261213721
+          },
+          {
+            "value": "dns",
+            "normal_count": 3068,
+            "false_positive": 29,
+            "false_positive_rate": 0.009452411994784877
+          },
+          {
+            "value": "radius",
+            "normal_count": 2,
+            "false_positive": 2,
+            "false_positive_rate": 1.0
+          },
+          {
+            "value": "ftp-data",
+            "normal_count": 949,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "smtp",
+            "normal_count": 635,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "ssh",
+            "normal_count": 200,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          }
+        ],
+        "top_by_false_positive_rate": [
+          {
+            "value": "http",
+            "normal_count": 4013,
+            "false_positive": 2345,
+            "false_positive_rate": 0.5843508597059557
+          },
+          {
+            "value": "ftp",
+            "normal_count": 758,
+            "false_positive": 417,
+            "false_positive_rate": 0.5501319261213721
+          },
+          {
+            "value": "unknown",
+            "normal_count": 27375,
+            "false_positive": 11632,
+            "false_positive_rate": 0.42491324200913244
+          },
+          {
+            "value": "dns",
+            "normal_count": 3068,
+            "false_positive": 29,
+            "false_positive_rate": 0.009452411994784877
+          },
+          {
+            "value": "ftp-data",
+            "normal_count": 949,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "smtp",
+            "normal_count": 635,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "ssh",
+            "normal_count": 200,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          }
+        ]
+      },
+      "state": {
+        "unique_value_count": 6,
+        "minimum_support_for_rate_ranking": 20,
+        "top_by_false_positive_count": [
+          {
+            "value": "FIN",
+            "normal_count": 24172,
+            "false_positive": 11567,
+            "false_positive_rate": 0.478528876385901
+          },
+          {
+            "value": "INT",
+            "normal_count": 4485,
+            "false_positive": 2827,
+            "false_positive_rate": 0.6303232998885173
+          },
+          {
+            "value": "CON",
+            "normal_count": 6633,
+            "false_positive": 16,
+            "false_positive_rate": 0.0024121815166591285
+          },
+          {
+            "value": "REQ",
+            "normal_count": 1707,
+            "false_positive": 15,
+            "false_positive_rate": 0.008787346221441126
+          },
+          {
+            "value": "ACC",
+            "normal_count": 2,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          },
+          {
+            "value": "RST",
+            "normal_count": 1,
+            "false_positive": 0,
+            "false_positive_rate": 0.0
+          }
+        ],
+        "top_by_false_positive_rate": [
+          {
+            "value": "INT",
+            "normal_count": 4485,
+            "false_positive": 2827,
+            "false_positive_rate": 0.6303232998885173
+          },
+          {
+            "value": "FIN",
+            "normal_count": 24172,
+            "false_positive": 11567,
+            "false_positive_rate": 0.478528876385901
+          },
+          {
+            "value": "REQ",
+            "normal_count": 1707,
+            "false_positive": 15,
+            "false_positive_rate": 0.008787346221441126
+          },
+          {
+            "value": "CON",
+            "normal_count": 6633,
+            "false_positive": 16,
+            "false_positive_rate": 0.0024121815166591285
+          }
+        ]
+      }
+    }
+  },
+  "threshold_sensitivity_descriptive_only": [
+    {
+      "threshold": 0.3,
+      "precision": 0.7473223060649976,
+      "recall": 0.9896761669460866,
+      "f1": 0.8515920846580933,
+      "false_positive_rate": 0.40997297297297297,
+      "false_positive": 15169,
+      "false_negative": 468
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.7485934710103426,
+      "recall": 0.9803450101473573,
+      "f1": 0.8489369424439818,
+      "false_positive_rate": 0.40337837837837837,
+      "false_positive": 14925,
+      "false_negative": 891
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.7534525193135981,
+      "recall": 0.9724477190505603,
+      "f1": 0.8490562403697997,
+      "false_positive_rate": 0.3898648648648649,
+      "false_positive": 14425,
+      "false_negative": 1249
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.7689691817215728,
+      "recall": 0.9577340510015,
+      "f1": 0.8530336372209997,
+      "false_positive_rate": 0.3525405405405405,
+      "false_positive": 13044,
+      "false_negative": 1916
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.8183097490422954,
+      "recall": 0.9235859878231713,
+      "f1": 0.8677665395456806,
+      "false_positive_rate": 0.25124324324324326,
+      "false_positive": 9296,
+      "false_negative": 3464
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.9081945153357153,
+      "recall": 0.863518044648372,
+      "f1": 0.8852929868602574,
+      "false_positive_rate": 0.10694594594594595,
+      "false_positive": 3957,
+      "false_negative": 6187
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.9842695327211101,
+      "recall": 0.7494926321362393,
+      "f1": 0.8509849594870447,
+      "false_positive_rate": 0.014675675675675676,
+      "false_positive": 543,
+      "false_negative": 11356
+    }
+  ],
+  "threshold_selection_warning": "이 결과는 test 데이터의 설명용 분석이다. 최종 threshold는 train 내부 validation split에서 선택하고 test에는 한 번만 적용해야 한다.",
+  "model_coefficients": {
+    "positive_attack_direction": [
+      {
+        "feature": "numeric__dttl",
+        "coefficient": 10.418127070533691
+      },
+      {
+        "feature": "categorical__state_RST",
+        "coefficient": 5.089009090675311
+      },
+      {
+        "feature": "numeric__dpkts",
+        "coefficient": 4.477090404569841
+      },
+      {
+        "feature": "numeric__dmean",
+        "coefficient": 3.279144209629097
+      },
+      {
+        "feature": "categorical__service_dns",
+        "coefficient": 3.114203405618933
+      },
+      {
+        "feature": "categorical__service_smtp",
+        "coefficient": 2.954012591386288
+      },
+      {
+        "feature": "categorical__service_ftp-data",
+        "coefficient": 2.846360828073798
+      },
+      {
+        "feature": "categorical__proto_sctp",
+        "coefficient": 2.718318283784834
+      },
+      {
+        "feature": "categorical__state_INT",
+        "coefficient": 2.7146546846663577
+      },
+      {
+        "feature": "categorical__proto_unas",
+        "coefficient": 2.3790738215423204
+      },
+      {
+        "feature": "categorical__proto_swipe",
+        "coefficient": 1.5450113128032785
+      },
+      {
+        "feature": "categorical__proto_sun-nd",
+        "coefficient": 1.5039290336617748
+      },
+      {
+        "feature": "numeric__sttl",
+        "coefficient": 1.4768412707793397
+      },
+      {
+        "feature": "categorical__proto_mobile",
+        "coefficient": 1.4759723284188635
+      },
+      {
+        "feature": "numeric__ct_src_dport_ltm",
+        "coefficient": 1.3905332435044793
+      }
+    ],
+    "negative_normal_direction": [
+      {
+        "feature": "numeric__dload",
+        "coefficient": -17.198973756142134
+      },
+      {
+        "feature": "categorical__proto_igmp",
+        "coefficient": -8.085354148146324
+      },
+      {
+        "feature": "numeric__swin",
+        "coefficient": -5.323830236914141
+      },
+      {
+        "feature": "categorical__proto_tcp",
+        "coefficient": -5.0695022922388056
+      },
+      {
+        "feature": "categorical__proto_udp",
+        "coefficient": -4.778509221349314
+      },
+      {
+        "feature": "categorical__state_CON",
+        "coefficient": -4.341587376921485
+      },
+      {
+        "feature": "numeric__dwin",
+        "coefficient": -4.273605792962043
+      },
+      {
+        "feature": "categorical__proto_arp",
+        "coefficient": -3.9453530955835987
+      },
+      {
+        "feature": "categorical__service_ftp",
+        "coefficient": -3.6208301315082116
+      },
+      {
+        "feature": "categorical__service_unknown",
+        "coefficient": -3.088354670758845
+      },
+      {
+        "feature": "numeric__is_sm_ips_ports",
+        "coefficient": -2.5025008231963404
+      },
+      {
+        "feature": "numeric__dloss",
+        "coefficient": -2.3860563299933517
+      },
+      {
+        "feature": "categorical__service_http",
+        "coefficient": -2.3146769364892683
+      },
+      {
+        "feature": "numeric__dbytes",
+        "coefficient": -1.9468019410686868
+      },
+      {
+        "feature": "numeric__ct_srv_dst",
+        "coefficient": -1.6866917459980635
+      }
+    ],
+    "interpretation_caution": "양수 계수는 attack 방향, 음수 계수는 normal 방향에 기여한다. 상관관계가 있는 feature와 one-hot feature가 있으므로 계수를 인과관계로 해석하면 안 된다."
+  },
+  "next_experiment_hypotheses": [
+    "RandomForest가 비선형 feature 관계를 학습해 정상 트래픽 False Positive를 줄일 수 있는지 검증한다.",
+    "공격 유형별 Recall을 비교해 희소 공격 유형의 탐지 성능이 개선되는지 검증한다.",
+    "성능 개선과 함께 추론 지연시간 및 모델 크기 증가를 측정한다."
+  ],
+  "outputs": {
+    "json_report": "reports/logistic_error_analysis.json",
+    "markdown_report": "reports/logistic_error_analysis.md"
+  }
+}

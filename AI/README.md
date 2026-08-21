@@ -72,3 +72,9 @@ Logistic Regression baseline 학습:
 ```powershell
 python .\training\train_logistic_regression.py
 ```
+
+Logistic Regression 오분류 분석:
+
+```powershell
+python .\evaluation\analyze_logistic_errors.py
+```
