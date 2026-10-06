@@ -12,6 +12,7 @@
 - UNSW-NB15 baseline 학습용 전처리 스크립트
 - Logistic Regression과 RandomForest baseline 학습 및 오분류 비교
 - 같은 CPU 스레드 조건의 단일 요청/배치 추론 지연시간 비교
+- 원본 train의 중복 feature 그룹 분리와 validation 기반 설정·threshold 선정
 
 학습 로드맵:
 
@@ -91,3 +92,13 @@ python .\evaluation\compare_baselines.py
 결과는 `reports/random_forest_metrics.json`, `reports/baseline_comparison.json`, `reports/model_comparison.md`에 저장됩니다. 비교 보고서는 오탐 감소와 공격 누락 변화, 공격 유형별 Recall, 단일 요청 지연시간을 함께 보여줍니다.
 
 이 baseline은 UNSW-NB15 기반 오프라인 실험입니다. 운영 모델을 FastAPI에 연결하기 전에는 C++ 수집 feature와 학습 feature의 의미 및 가용성을 맞춰야 합니다.
+
+Validation 분리와 개선 실험:
+
+```powershell
+python .\training\run_validation_experiment.py
+```
+
+`configs/validation_experiment.json`의 고정 후보와 선택 규칙을 사용합니다. 공식 train을 중복 feature 그룹 단위로 약 80:20 분리하고 학습 부분에만 전처리기를 fit합니다. Validation에서 FPR 10% 이하인 조합의 Recall을 최대화하며, 공식 test는 이 실험에서 읽지 않습니다.
+
+결과는 `reports/validation_experiment.json`, `reports/validation_experiment.md`, `artifacts/validation_experiment/`에 저장됩니다. 기존 baseline 보고서와 산출물은 별도 경로에 유지됩니다.

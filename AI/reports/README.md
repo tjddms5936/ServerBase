@@ -10,6 +10,8 @@ preprocess_summary_unsw_nb15.json
 baseline_metrics.json
 random_forest_metrics.json
 baseline_comparison.json
+validation_experiment.json
+validation_experiment.md
 logistic_error_analysis.json
 logistic_error_analysis.md
 model_comparison.md
@@ -23,6 +25,8 @@ figures/
 - `baseline_metrics.json`: Logistic Regression baseline의 Accuracy, Precision, Recall, F1, ROC-AUC, Confusion Matrix와 실행 시간입니다.
 - `random_forest_metrics.json`: RandomForest 고정 설정의 평가 지표, 학습 시간, 중요도, 실행 환경, 파일 SHA-256입니다.
 - `baseline_comparison.json`: 두 모델의 재평가 지표, 공격 유형별 Recall, 변경된 오분류, 동일 조건 지연시간 및 주요 학습 배열 크기 비교입니다.
+- `validation_experiment.json`: 그룹 분리 크기, 전처리 학습 범위, 고정 후보별 threshold 지표, 공격 유형별 Recall 및 선정 결과입니다.
+- `validation_experiment.md`: 공식 train에서만 수행한 설정 선택의 근거와 중복 그룹 분리, 평가 해석 범위를 설명합니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

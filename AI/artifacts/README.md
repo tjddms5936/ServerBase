@@ -10,6 +10,7 @@ feature_schema_unsw_nb15.json
 label_map_unsw_nb15.json
 baseline_logistic_regression.joblib
 baseline_random_forest.joblib
+validation_experiment/
 ```
 
 각 파일의 역할:
@@ -19,6 +20,7 @@ baseline_random_forest.joblib
 - `label_map_unsw_nb15.json`: `normal=0`, `attack=1` 같은 label 의미를 기록합니다.
 - `baseline_logistic_regression.joblib`: 학습 완료된 Logistic Regression 이진 분류 모델입니다.
 - `baseline_random_forest.joblib`: 학습 완료된 RandomForest 이진 분류 모델입니다.
+- `validation_experiment/`: 학습 부분에만 fit한 전처리기, 후보 모델, 원본 row 위치, feature schema와 선정 threshold를 함께 저장합니다. 기존 baseline과 별도 경로입니다.
 
 평가 지표와 비교 보고서는 `reports/`에 저장합니다.
 
