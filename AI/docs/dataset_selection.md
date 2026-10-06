@@ -22,8 +22,11 @@ UNSW-NB15를 1차 데이터셋으로 선택한 이유는 공식 train/test CSV �
 4. Logistic Regression 기준 모델을 학습합니다.
 5. RandomForest 기준 모델을 학습합니다.
 6. 모델 산출물과 평가 지표를 저장합니다.
-7. 가장 적합한 기준 모델 산출물을 FastAPI inference 서버에 연결합니다.
-8. 이후 LSTM 같은 sequence 기반 모델과 비교합니다.
+7. Validation에서 설정과 threshold를 선정하고 C++ 운영 feature와 학습 입력의 의미·단위·관측 범위를 대조합니다.
+8. 현재 UNSW 입력과 애플리케이션 수집 입력은 비호환이므로, 운영용 데이터를 별도로 수집하고 해당 입력으로 모델을 학습한 뒤 FastAPI에 연결합니다.
+9. 실제 시간/세션 정보가 있는 데이터에서 LSTM 같은 sequence 기반 모델과 비교합니다. UNSW train/test의 임의 행을 시간 순서로 이어 붙이지 않습니다.
+
+공개 데이터 baseline은 오프라인 연구 실험으로 유지합니다. 현재 운영 입력 7개 또는 8개를 UNSW 모델의 42개 원본 입력에 억지로 맞추지 않습니다. 상세 결정과 수정 후보는 `feature_alignment.md`에 정리합니다.
 
 ## 필요한 원본 파일
 

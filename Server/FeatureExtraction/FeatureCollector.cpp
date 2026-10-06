@@ -13,6 +13,12 @@ void FeatureCollector::OnNetworkEvent(const NetworkEvent& event)
         std::lock_guard<std::mutex> lock(m_mutex);
 
         SessionState& state = GetOrCreateSessionLocked(event);
+        // close 시점의 값을 고정해 지연된 완료, 중복 close, 재시작 이벤트가 요약을 바꾸지 못하게 한다.
+        if (state.session.is_closed)
+        {
+            m_ignoredAfterCloseEventCount += 1;
+            return;
+        }
         UpdateCommonEventFieldsLocked(state, event);
 
         if (event.type == NetworkEventType::SessionStarted)
@@ -105,6 +111,12 @@ std::vector<SessionFeatureSnapshot> FeatureCollector::GetAllSessionSnapshots() c
     return snapshots;
 }
 
+std::uint64_t FeatureCollector::IgnoredAfterCloseEventCount() const
+{
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return m_ignoredAfterCloseEventCount;
+}
+
 void FeatureCollector::RemoveSession(std::uint64_t sessionId)
 {
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -115,6 +127,7 @@ void FeatureCollector::Clear()
 {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_sessions.clear();
+    m_ignoredAfterCloseEventCount = 0;
 }
 
 FeatureCollector::SessionState& FeatureCollector::GetOrCreateSessionLocked(const NetworkEvent& event)

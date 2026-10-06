@@ -6,6 +6,10 @@
 
 namespace feature_extraction
 {
+// 오류 계수와 종료 고정 정책이 바뀌었으므로 같은 입력 개수라도 의미 버전을 구분한다.
+constexpr char kMessageFeatureContractId[] = "server_application_message_v2";
+constexpr char kSessionSummaryFeatureContractId[] = "server_application_session_summary_v2";
+
 struct SessionFeatureSnapshot
 {
     std::uint64_t session_id = 0;           // 세션 고유 ID

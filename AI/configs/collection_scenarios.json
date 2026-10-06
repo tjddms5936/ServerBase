@@ -1,0 +1,20 @@
+{
+  "manifest_version": "v1",
+  "label_source": "independent_scenario_definition",
+  "scenarios": [
+    {
+      "scenario_id": "normal_chat",
+      "label": 0,
+      "label_name": "normal",
+      "description": "정상 채팅 프로토콜로만 구성한 통제된 실행",
+      "traffic_profile": "유효한 CS_CHAT 프레임을 송신하고 정상 응답 후 연결을 종료한다."
+    },
+    {
+      "scenario_id": "malformed_chat_payload",
+      "label": 1,
+      "label_name": "controlled_anomaly",
+      "description": "잘못된 채팅 payload로만 구성한 통제된 실행",
+      "traffic_profile": "유효한 CS_CHAT 헤더 뒤에 역직렬화가 불가능한 1바이트 본문을 송신한다. 실제 공격의 증거가 아니라 인위적인 프로토콜 이상이다."
+    }
+  ]
+}

@@ -285,6 +285,7 @@ std::string AiInferenceWorker::BuildMessageJson(const FeatureQueueItem& item) co
     out << std::fixed << std::setprecision(3);
     out << "{";
     out << "\"schema_version\":\"v1\",";
+    out << "\"feature_contract_id\":\"" << kMessageFeatureContractId << "\",";
     out << "\"event_type\":\"message\",";
     out << "\"queue_sequence_id\":" << item.queue_sequence_id << ",";
     out << "\"timestamp\":\"" << FormatTimestamp(message.message_wall_time) << "\",";
@@ -329,6 +330,7 @@ std::string AiInferenceWorker::BuildSessionJson(const FeatureQueueItem& item) co
     out << std::fixed << std::setprecision(3);
     out << "{";
     out << "\"schema_version\":\"v1\",";
+    out << "\"feature_contract_id\":\"" << kSessionSummaryFeatureContractId << "\",";
     out << "\"event_type\":\"session_summary\",";
     out << "\"queue_sequence_id\":" << item.queue_sequence_id << ",";
     out << "\"timestamp\":\"" << FormatTimestamp(timestamp) << "\",";

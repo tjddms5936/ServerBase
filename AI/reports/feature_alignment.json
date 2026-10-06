@@ -1,0 +1,700 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-10-06T07:37:08.996390+00:00",
+  "contract_path": "configs/operational_feature_schema.json",
+  "contract_sha256": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87",
+  "training_header_source": "data/raw/unsw_nb15/UNSW_NB15_training-set.csv",
+  "official_test_read": false,
+  "description_source": "data/raw/unsw_nb15/UNSW_NB15_features.csv",
+  "description_encoding": "cp1252",
+  "model_schema_source": "artifacts/validation_experiment/feature_schema.json",
+  "compatibility_gate_event_type": "message",
+  "model_schema_sha256": "77471e248b3ea7cf7f107b7c02034c0dd9f8dfcbd351e9aea5e4a8b303212b7f",
+  "code_evidence": [
+    {
+      "path": "../Server/ServerBase/Session.cpp",
+      "sha256": "962102e1972ed393b9d2444c13a303e7821995dbe947668fe5220fac62fcd323"
+    },
+    {
+      "path": "../Server/ServerBase/Protocol.h",
+      "sha256": "f34cca055b58e6f20591cefac6ca708563c350f97c3d7c6a16c35694d360bf11"
+    },
+    {
+      "path": "../Server/FeatureExtraction/FeatureCollector.cpp",
+      "sha256": "4388a89602752fa40848607ed58e11a8e7ee73a1eacfce345c2034b13c534325"
+    },
+    {
+      "path": "../Server/FeatureExtraction/FeatureSnapshot.h",
+      "sha256": "df50ccd33a8e3f161405959245e433b7dc57e988e4da353251caef92eb03a888"
+    },
+    {
+      "path": "../Server/FeatureExtraction/AiInferenceWorker.cpp",
+      "sha256": "bd1a4a7379c1165721815f754fa2667121dce8ae68909f68baa8de3f9a2d2470"
+    },
+    {
+      "path": "../Server/Server/ServerSession.cpp",
+      "sha256": "985cf01dff06a8dc29ee49e4ea569d472907f04d6bc487c77682b8b2b7fca4a4"
+    },
+    {
+      "path": "inference_api/schemas.py",
+      "sha256": "437b74dd4ac502d014a5ab79852e4669c7e42a3967b3b6ebb47fa374ca4c8d6d"
+    },
+    {
+      "path": "inference_api/feature_transformer.py",
+      "sha256": "a609e40cb4410da323dc73648733849298082cbbb41baed74ce9f1f00fc9850f"
+    },
+    {
+      "path": "inference_api/payload_validation.py",
+      "sha256": "91a8c78befef22df30f32112fce5bab0858fa4588f8675dd1a1eafa942caf3e3"
+    }
+  ],
+  "events": {
+    "message": {
+      "feature_contract_id": "server_application_message_v2",
+      "observation_scope": "session_prefix_at_frame_parsed",
+      "emission_point": "Session::ParsePackets에서 헤더 파싱 후, OnPacketReceived 호출 전",
+      "purpose": "실시간 애플리케이션 메시지 이상 탐지의 입력 후보",
+      "feature_order": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ],
+      "duplicate_feature_paths": {
+        "packet_size": "message.packet_size",
+        "payload_size": "message.payload_size",
+        "connection_duration_ms": "session.connection_duration_ms",
+        "message_interval_ms": "message.message_interval_ms",
+        "bytes_received_total": "session.bytes_received_total",
+        "bytes_sent_total": "session.bytes_sent_total",
+        "error_count_total": "session.error_count_total"
+      }
+    },
+    "session_summary": {
+      "feature_contract_id": "server_application_session_summary_v2",
+      "observation_scope": "session_snapshot_at_socket_close",
+      "emission_point": "Session::CloseSocket의 SessionClosed 이벤트 처리 시점",
+      "purpose": "종료 시점 세션 요약의 사후 이상 분석용 입력 후보",
+      "feature_order": [
+        "connection_duration_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "recv_event_count",
+        "send_event_count",
+        "request_count",
+        "error_count",
+        "avg_message_interval_ms"
+      ],
+      "duplicate_feature_paths": {
+        "connection_duration_ms": "session.connection_duration_ms",
+        "bytes_received_total": "session.bytes_received_total",
+        "bytes_sent_total": "session.bytes_sent_total",
+        "recv_event_count": "session.recv_event_count",
+        "send_event_count": "session.send_event_count",
+        "request_count": "session.request_count",
+        "error_count": "session.error_count",
+        "avg_message_interval_ms": "session.avg_message_interval_ms"
+      }
+    }
+  },
+  "feature_definitions": {
+    "packet_size": {
+      "dtype": "integer",
+      "unit": "byte",
+      "minimum": 0,
+      "meaning": "헤더를 포함한 수신 애플리케이션 프레임 크기. IP/TCP 패킷 크기가 아니다.",
+      "collection_point": "Session::ParsePackets -> FeatureCollector::HandlePacketParsedLocked"
+    },
+    "payload_size": {
+      "dtype": "integer",
+      "unit": "byte",
+      "minimum": 0,
+      "meaning": "packet_size에서 현재 PacketHeader 크기 8바이트를 제외한 값. 문자열 본문 크기와도 다를 수 있다.",
+      "collection_point": "Session::ParsePackets -> FeatureCollector::HandlePacketParsedLocked"
+    },
+    "connection_duration_ms": {
+      "dtype": "number",
+      "unit": "ms",
+      "minimum": 0,
+      "meaning": "SessionStarted부터 현재 이벤트까지 steady_clock으로 계산한 시간. TCP handshake 시간은 제외된다.",
+      "collection_point": "FeatureCollector::UpdateConnectionDurationLocked"
+    },
+    "message_interval_ms": {
+      "dtype": "number",
+      "unit": "ms",
+      "minimum": 0,
+      "meaning": "이전 PacketParsed와 현재 PacketParsed의 처리 시각 차이. 첫 메시지는 0이며 패킷 도착 간격이 아니다.",
+      "collection_point": "FeatureCollector::HandlePacketParsedLocked"
+    },
+    "bytes_received_total": {
+      "dtype": "integer",
+      "unit": "byte",
+      "minimum": 0,
+      "meaning": "현재까지 관측한 RecvCompleted의 바이트 합. 애플리케이션 스트림 바이트이며 TCP/IP 헤더 및 재전송을 직접 계수하지 않는다.",
+      "collection_point": "FeatureCollector::HandleRecvCompletedLocked"
+    },
+    "bytes_sent_total": {
+      "dtype": "integer",
+      "unit": "byte",
+      "minimum": 0,
+      "meaning": "현재까지 관측한 SendCompleted의 바이트 합. 원격 애플리케이션 수신이나 TCP ACK 확인을 뜻하지 않는다.",
+      "collection_point": "FeatureCollector::HandleSendCompletedLocked"
+    },
+    "error_count_total": {
+      "dtype": "integer",
+      "unit": "count",
+      "minimum": 0,
+      "meaning": "메시지 snapshot 이전까지 전달된 ProtocolError 이벤트 수. 활성 I/O 요청/완료 및 업무 payload 오류를 포함하되 현재 메시지의 이후 오류와 종료 후 이벤트는 반영하지 않는다.",
+      "collection_point": "FeatureCollector::HandleProtocolErrorLocked -> HandlePacketParsedLocked"
+    },
+    "recv_event_count": {
+      "dtype": "integer",
+      "unit": "count",
+      "minimum": 0,
+      "meaning": "양수 바이트를 수신해 관측한 RecvCompleted 횟수. TCP 패킷 수나 메시지 수가 아니다.",
+      "collection_point": "Session::OnRecv_v2 -> FeatureCollector::HandleRecvCompletedLocked"
+    },
+    "send_event_count": {
+      "dtype": "integer",
+      "unit": "count",
+      "minimum": 0,
+      "meaning": "관측한 SendCompleted 횟수. 부분 송신 완료도 각각 포함하며 TCP 패킷 수가 아니다.",
+      "collection_point": "Session::OnSend2 -> FeatureCollector::HandleSendCompletedLocked"
+    },
+    "request_count": {
+      "dtype": "integer",
+      "unit": "count",
+      "minimum": 0,
+      "meaning": "PacketParsed 이벤트 수. 완성된 프레임과 헤더가 파싱된 횟수이며 payload 검증 성공 횟수는 아니다.",
+      "collection_point": "FeatureCollector::HandlePacketParsedLocked"
+    },
+    "error_count": {
+      "dtype": "integer",
+      "unit": "count",
+      "minimum": 0,
+      "meaning": "종료 시점까지 전달된 ProtocolError 이벤트 수. I/O 요청/완료 실패, 잘못된 프레임/ID 및 CS_CHAT payload 실패를 포함하고 종료 후 이벤트는 제외한다.",
+      "collection_point": "FeatureCollector::HandleProtocolErrorLocked"
+    },
+    "avg_message_interval_ms": {
+      "dtype": "number",
+      "unit": "ms",
+      "minimum": 0,
+      "meaning": "메시지 간격 합 / (request_count - 1). 메시지가 0개 또는 1개이면 0이다.",
+      "collection_point": "FeatureCollector::HandlePacketParsedLocked"
+    }
+  },
+  "excluded_model_metadata": [
+    "schema_version",
+    "feature_contract_id",
+    "event_type",
+    "queue_sequence_id",
+    "timestamp",
+    "session.session_id",
+    "session.socket_handle",
+    "session.logic_worker_id",
+    "session.is_started",
+    "session.is_closed",
+    "message.request_index",
+    "message.packet_id",
+    "session.last_error_code",
+    "session.last_error_message"
+  ],
+  "known_limitations": [
+    "같은 수신 완료에 여러 메시지가 들어오면 누적 수신 바이트는 동일할 수 있고 파싱 간격은 네트워크 도착 간격과 다르다.",
+    "PacketParsed는 payload 및 업무 처리 검증보다 먼저 발생한다. 유효한 업무 요청 수라고 해석하면 안 된다.",
+    "오류 수는 명시적으로 계측한 ProtocolError 이벤트 수이며 모든 업무 예외나 네트워크 손실을 뜻하지 않는다.",
+    "종료 이후 모든 이벤트는 snapshot에 반영하지 않고 IgnoredAfterCloseEventCount 운영 통계로만 센다. 모든 I/O 완료를 기다린 최종 flow 레코드는 아니다.",
+    "큐 포화나 HTTP 실패로 snapshot이 유실될 수 있다. queue_sequence_id만으로 큐에 들어오기 전 유실을 모두 식별할 수 없다.",
+    "FastAPI는 v2 의미 버전, 엄격한 수치 범위, 반복 값, UTC 시각 및 프레임 크기 관계를 검증한다. 이 검증이 정상/공격 정답을 보장하지는 않는다.",
+    "RemoveSession/Clear는 I/O 이벤트가 더 오지 않는 시점에 관리자가 호출해야 한다. 삭제한 ID의 tombstone을 영구 보관하지는 않는다.",
+    "세션 식별자는 프로세스 재시작 시 다시 시작할 수 있다. 학습 데이터 수집 시 별도 run_id가 필요하다."
+  ],
+  "unsw_features": [
+    {
+      "name": "dur",
+      "dataset_description": "Record total duration",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "connection_duration_ms"
+      ],
+      "reason": "UNSW 기록 지속 시간과 세션 시작 이후 prefix/종료 시각은 경계가 다르다. 설명 CSV만으로 시간 단위와 추출 공식을 완전히 확정할 수 없어 단위 변환만으로 동등하게 취급하지 않는다."
+    },
+    {
+      "name": "proto",
+      "dataset_description": "Transaction protocol",
+      "status": "requires_transport_metadata",
+      "related_server_features": [],
+      "reason": "현재 수집 경로는 TCP이나 v1 입력에는 proto가 없다. TCP 상수 하나를 추가해도 나머지 입력의 호환성은 해결되지 않는다."
+    },
+    {
+      "name": "service",
+      "dataset_description": "http, ftp, smtp, ssh, dns, ftp-data ,irc  and (-) if not much used service",
+      "status": "requires_flow_protocol_extractor",
+      "related_server_features": [],
+      "reason": "응용 서비스 분류와 추출기별 연결 상태 정의가 필요하다. 자체 메시지 ID나 is_closed를 대입할 수 없다."
+    },
+    {
+      "name": "state",
+      "dataset_description": "Indicates to the state and its dependent protocol, e.g. ACC, CLO, CON, ECO, ECR, FIN, INT, MAS, PAR, REQ, RST, TST, TXD, URH, URN, and (-) (if not used state)",
+      "status": "requires_flow_protocol_extractor",
+      "related_server_features": [],
+      "reason": "응용 서비스 분류와 추출기별 연결 상태 정의가 필요하다. 자체 메시지 ID나 is_closed를 대입할 수 없다."
+    },
+    {
+      "name": "spkts",
+      "dataset_description": "Source to destination packet count",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "recv_event_count",
+        "send_event_count",
+        "request_count"
+      ],
+      "reason": "방향별 네트워크 패킷 수는 IOCP 완료 횟수나 파싱한 애플리케이션 프레임 수와 다르다."
+    },
+    {
+      "name": "dpkts",
+      "dataset_description": "Destination to source packet count",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "recv_event_count",
+        "send_event_count",
+        "request_count"
+      ],
+      "reason": "방향별 네트워크 패킷 수는 IOCP 완료 횟수나 파싱한 애플리케이션 프레임 수와 다르다."
+    },
+    {
+      "name": "sbytes",
+      "dataset_description": "Source to destination transaction bytes",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "bytes_received_total",
+        "bytes_sent_total"
+      ],
+      "reason": "거래/흐름 바이트와 애플리케이션 스트림 바이트는 계수 계층, source/destination 방향, 관측 경계가 다르거나 미확인이다."
+    },
+    {
+      "name": "dbytes",
+      "dataset_description": "Destination to source transaction bytes",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "bytes_received_total",
+        "bytes_sent_total"
+      ],
+      "reason": "거래/흐름 바이트와 애플리케이션 스트림 바이트는 계수 계층, source/destination 방향, 관측 경계가 다르거나 미확인이다."
+    },
+    {
+      "name": "rate",
+      "dataset_description": null,
+      "status": "not_equivalent",
+      "related_server_features": [
+        "connection_duration_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "request_count"
+      ],
+      "reason": "분모와 계수 대상을 일치시켜야 한다. 소켓 바이트율이나 메시지율을 계산해도 UNSW 흐름의 rate/load를 재현한 것이 아니다."
+    },
+    {
+      "name": "sttl",
+      "dataset_description": "Source to destination time to live value",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "dttl",
+      "dataset_description": "Destination to source time to live value",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "sload",
+      "dataset_description": "Source bits per second",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "connection_duration_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "request_count"
+      ],
+      "reason": "분모와 계수 대상을 일치시켜야 한다. 소켓 바이트율이나 메시지율을 계산해도 UNSW 흐름의 rate/load를 재현한 것이 아니다."
+    },
+    {
+      "name": "dload",
+      "dataset_description": "Destination bits per second",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "connection_duration_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "request_count"
+      ],
+      "reason": "분모와 계수 대상을 일치시켜야 한다. 소켓 바이트율이나 메시지율을 계산해도 UNSW 흐름의 rate/load를 재현한 것이 아니다."
+    },
+    {
+      "name": "sloss",
+      "dataset_description": "Source packets retransmitted or dropped",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "dloss",
+      "dataset_description": "Destination packets retransmitted or dropped",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "sinpkt",
+      "dataset_description": "Source interpacket arrival time (mSec)",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "message_interval_ms",
+        "avg_message_interval_ms"
+      ],
+      "reason": "방향별 패킷 간 도착 시간과 프레임 파싱 처리 간격은 다르며 송신 방향 파싱 간격도 수집하지 않는다."
+    },
+    {
+      "name": "dinpkt",
+      "dataset_description": "Destination interpacket arrival time (mSec)",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "message_interval_ms",
+        "avg_message_interval_ms"
+      ],
+      "reason": "방향별 패킷 간 도착 시간과 프레임 파싱 처리 간격은 다르며 송신 방향 파싱 간격도 수집하지 않는다."
+    },
+    {
+      "name": "sjit",
+      "dataset_description": "Source jitter (mSec)",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "djit",
+      "dataset_description": "Destination jitter (mSec)",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "swin",
+      "dataset_description": "Source TCP window advertisement value",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "stcpb",
+      "dataset_description": "Source TCP base sequence number",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "dtcpb",
+      "dataset_description": "Destination TCP base sequence number",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "dwin",
+      "dataset_description": "Destination TCP window advertisement value",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "tcprtt",
+      "dataset_description": "TCP connection setup round-trip time, the sum of ’synack’ and ’ackdat’.",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "synack",
+      "dataset_description": "TCP connection setup time, the time between the SYN and the SYN_ACK packets.",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "ackdat",
+      "dataset_description": "TCP connection setup time, the time between the SYN_ACK and the ACK packets.",
+      "status": "requires_network_telemetry",
+      "related_server_features": [],
+      "reason": "TCP/IP 헤더, 패킷 도착 시각, handshake 및 손실/재전송 추적이 필요하다. 현재 애플리케이션 observer 이벤트만으로 재구성할 수 없다."
+    },
+    {
+      "name": "smean",
+      "dataset_description": "Mean of the ?ow packet size transmitted by the src",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "packet_size",
+        "payload_size"
+      ],
+      "reason": "흐름의 방향별 평균 패킷 크기와 개별 애플리케이션 프레임 크기는 집계 및 계층이 다르다."
+    },
+    {
+      "name": "dmean",
+      "dataset_description": "Mean of the ?ow packet size transmitted by the dst",
+      "status": "not_equivalent",
+      "related_server_features": [
+        "packet_size",
+        "payload_size"
+      ],
+      "reason": "흐름의 방향별 평균 패킷 크기와 개별 애플리케이션 프레임 크기는 집계 및 계층이 다르다."
+    },
+    {
+      "name": "trans_depth",
+      "dataset_description": "Represents the pipelined depth into the connection of http request/response transaction",
+      "status": "requires_application_protocol_parser",
+      "related_server_features": [],
+      "reason": "HTTP/FTP 등 해당 프로토콜 의미를 분석해야 한다. 자체 채팅 프로토콜의 payload_size나 request_count로 대체할 수 없다."
+    },
+    {
+      "name": "response_body_len",
+      "dataset_description": "Actual uncompressed content size of the data transferred from the server’s http service.",
+      "status": "requires_application_protocol_parser",
+      "related_server_features": [],
+      "reason": "HTTP/FTP 등 해당 프로토콜 의미를 분석해야 한다. 자체 채팅 프로토콜의 payload_size나 request_count로 대체할 수 없다."
+    },
+    {
+      "name": "ct_srv_src",
+      "dataset_description": "No. of connections that contain the same service (14) and source address (1) in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "ct_state_ttl",
+      "dataset_description": "No. for each state (6) according to specific range of values for source/destination time to live (10) (11).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "ct_dst_ltm",
+      "dataset_description": "No. of connections of the same destination address (3) in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "ct_src_dport_ltm",
+      "dataset_description": "No of connections of the same source address (1) and the destination port (4) in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "ct_dst_sport_ltm",
+      "dataset_description": "No of connections of the same destination address (3) and the source port (2) in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "ct_dst_src_ltm",
+      "dataset_description": "No of connections of the same source (1) and the destination (3) address in in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "is_ftp_login",
+      "dataset_description": "If the ftp session is accessed by user and password then 1 else 0.",
+      "status": "requires_application_protocol_parser",
+      "related_server_features": [],
+      "reason": "HTTP/FTP 등 해당 프로토콜 의미를 분석해야 한다. 자체 채팅 프로토콜의 payload_size나 request_count로 대체할 수 없다."
+    },
+    {
+      "name": "ct_ftp_cmd",
+      "dataset_description": "No of flows that has a command in ftp session.",
+      "status": "requires_application_protocol_parser",
+      "related_server_features": [],
+      "reason": "HTTP/FTP 등 해당 프로토콜 의미를 분석해야 한다. 자체 채팅 프로토콜의 payload_size나 request_count로 대체할 수 없다."
+    },
+    {
+      "name": "ct_flw_http_mthd",
+      "dataset_description": "No. of flows that has methods such as Get and Post in http service.",
+      "status": "requires_application_protocol_parser",
+      "related_server_features": [],
+      "reason": "HTTP/FTP 등 해당 프로토콜 의미를 분석해야 한다. 자체 채팅 프로토콜의 payload_size나 request_count로 대체할 수 없다."
+    },
+    {
+      "name": "ct_src_ltm",
+      "dataset_description": "No. of connections of the same source address (1) in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "ct_srv_dst",
+      "dataset_description": "No. of connections that contain the same service (14) and destination address (3) in 100 connections according to the last time (26).",
+      "status": "requires_cross_flow_state",
+      "related_server_features": [],
+      "reason": "IP/port/service/state/TTL 정보와 여러 연결에 걸친 이력 집계 및 추출기 규칙이 필요하다. session 내부 counter와는 다른 값이다."
+    },
+    {
+      "name": "is_sm_ips_ports",
+      "dataset_description": "If source (1) and destination (3)IP addresses equal and port numbers (2)(4)  equal then, this variable takes value 1 else 0",
+      "status": "requires_endpoint_metadata",
+      "related_server_features": [],
+      "reason": "양 끝 IP와 port 비교가 필요하다. 현재 feature JSON에는 endpoint 정보가 없고 배포 train CSV에도 원본 endpoint가 없다."
+    }
+  ],
+  "alignment_status_counts": {
+    "not_equivalent": 12,
+    "requires_application_protocol_parser": 5,
+    "requires_cross_flow_state": 8,
+    "requires_endpoint_metadata": 1,
+    "requires_flow_protocol_extractor": 2,
+    "requires_network_telemetry": 13,
+    "requires_transport_metadata": 1
+  },
+  "model_schema_comparison": {
+    "message": {
+      "schema_compatible": false,
+      "reasons": [
+        "모델의 원본 입력 이름 또는 순서가 운영 입력과 다릅니다.",
+        "모델 schema의 feature_contract_id 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 wire_schema_version 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 capture_layer 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 observation_scope 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 event_type 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 feature_units 정의가 없거나 운영 명세와 다릅니다."
+      ],
+      "model_raw_feature_count": 42,
+      "operational_feature_count": 7,
+      "missing_model_inputs": [
+        "dur",
+        "proto",
+        "service",
+        "state",
+        "spkts",
+        "dpkts",
+        "sbytes",
+        "dbytes",
+        "rate",
+        "sttl",
+        "dttl",
+        "sload",
+        "dload",
+        "sloss",
+        "dloss",
+        "sinpkt",
+        "dinpkt",
+        "sjit",
+        "djit",
+        "swin",
+        "stcpb",
+        "dtcpb",
+        "dwin",
+        "tcprtt",
+        "synack",
+        "ackdat",
+        "smean",
+        "dmean",
+        "trans_depth",
+        "response_body_len",
+        "ct_srv_src",
+        "ct_state_ttl",
+        "ct_dst_ltm",
+        "ct_src_dport_ltm",
+        "ct_dst_sport_ltm",
+        "ct_dst_src_ltm",
+        "is_ftp_login",
+        "ct_ftp_cmd",
+        "ct_flw_http_mthd",
+        "ct_src_ltm",
+        "ct_srv_dst",
+        "is_sm_ips_ports"
+      ],
+      "extra_operational_inputs": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ]
+    },
+    "session_summary": {
+      "schema_compatible": false,
+      "reasons": [
+        "모델의 원본 입력 이름 또는 순서가 운영 입력과 다릅니다.",
+        "모델 schema의 feature_contract_id 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 wire_schema_version 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 capture_layer 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 observation_scope 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 event_type 정의가 없거나 운영 명세와 다릅니다.",
+        "모델 schema의 feature_units 정의가 없거나 운영 명세와 다릅니다."
+      ],
+      "model_raw_feature_count": 42,
+      "operational_feature_count": 8,
+      "missing_model_inputs": [
+        "dur",
+        "proto",
+        "service",
+        "state",
+        "spkts",
+        "dpkts",
+        "sbytes",
+        "dbytes",
+        "rate",
+        "sttl",
+        "dttl",
+        "sload",
+        "dload",
+        "sloss",
+        "dloss",
+        "sinpkt",
+        "dinpkt",
+        "sjit",
+        "djit",
+        "swin",
+        "stcpb",
+        "dtcpb",
+        "dwin",
+        "tcprtt",
+        "synack",
+        "ackdat",
+        "smean",
+        "dmean",
+        "trans_depth",
+        "response_body_len",
+        "ct_srv_src",
+        "ct_state_ttl",
+        "ct_dst_ltm",
+        "ct_src_dport_ltm",
+        "ct_dst_sport_ltm",
+        "ct_dst_src_ltm",
+        "is_ftp_login",
+        "ct_ftp_cmd",
+        "ct_flw_http_mthd",
+        "ct_src_ltm",
+        "ct_srv_dst",
+        "is_sm_ips_ports"
+      ],
+      "extra_operational_inputs": [
+        "connection_duration_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "recv_event_count",
+        "send_event_count",
+        "request_count",
+        "error_count",
+        "avg_message_interval_ms"
+      ]
+    }
+  }
+}

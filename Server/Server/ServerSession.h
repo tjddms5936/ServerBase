@@ -19,7 +19,7 @@ public:
 
 private:
 	// 패킷별 처리 함수
-	bool HANDLE_CP_CHAT(InputMemoryStream& stream);
+	bool HANDLE_CP_CHAT(InputMemoryStream& stream, int32 packetSize);
 
 };
 

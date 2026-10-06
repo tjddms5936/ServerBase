@@ -144,6 +144,8 @@ void Session::PostRecv()
 		if (err != WSA_IO_PENDING)
 		{
 			std::cerr << "[PostRecv] WSARecv Error: " << err << std::endl;
+			// 즉시 실패는 완료 이벤트가 오지 않으므로 닫기 전에 별도로 기록한다.
+			ReportProtocolError("recv submission failed", static_cast<uint32>(err));
 			delete event;
 			CloseSocket();
 			return;
@@ -267,6 +269,7 @@ void Session::PostSend(const char* data, int32 len)
 		if (err != WSA_IO_PENDING)
 		{
 			cerr << "[PostSend] WSASend Error: " << err << endl;
+			ReportProtocolError("send submission failed", static_cast<uint32>(err));
 			delete event;
 			CloseSocket();
 		}
@@ -358,7 +361,9 @@ bool Session::QueuePacketToWorker(const IIocpPacket& packet)
 
 	if (!::PostQueuedCompletionStatus(m_pCore->GetHandle(), 0, 0, pEvent))
 	{
-		std::cerr << "[QueuePacketToWorker] PostQueuedCompletionStatus failed: " << GetLastError() << std::endl;
+		const DWORD error = GetLastError();
+		ReportProtocolError("deferred send submission failed", error);
+		std::cerr << "[QueuePacketToWorker] PostQueuedCompletionStatus failed: " << error << std::endl;
 		delete pEvent;
 		CloseSocket();
 		return false;
@@ -468,6 +473,7 @@ void Session::postNextSend()
 		if (err != WSA_IO_PENDING)
 		{
 			cerr << "[PostSend] WSASend Error: " << err << endl;
+			ReportProtocolError("queued send submission failed", static_cast<uint32>(err));
 			delete pEvent;
 			m_bSendInFlight.store(false);
 			CloseSocket();
@@ -527,6 +533,7 @@ void Session::PartialSend(IocpEvent* pEvent)
 		if (err != WSA_IO_PENDING)
 		{
 			std::cerr << "[PartialSend] WSASend Error: " << err << std::endl;
+			ReportProtocolError("partial send submission failed", static_cast<uint32>(err));
 			delete pEvent;
 			m_bSendInFlight.store(false);
 			CloseSocket();
@@ -627,6 +634,14 @@ void Session::ParsePackets()
 			return;
 		}
 
+		// enum 변환으로 큰 ID가 기존 ID로 잘려 들어가지 않도록 먼저 범위를 확인한다.
+		if (parsedHeader.pkgID < 0 || parsedHeader.pkgID > std::numeric_limits<uint16>::max())
+		{
+			ReportProtocolError("packet id out of range", 0, parsedHeader.pkgID, parsedHeader.pkgSize);
+			CloseSocket();
+			return;
+		}
+
 		// 인공지능 특징 추출 이벤트를 기록한다.
 		feature_extraction::NetworkEvent packetEvent = MakeNetworkEvent(feature_extraction::NetworkEventType::PacketParsed);
 		packetEvent.packet_id = parsedHeader.pkgID;
@@ -656,6 +671,18 @@ void Session::ParsePackets()
 	}
 }
 
+
+void Session::ReportProtocolError(const std::string& message, uint32 errorCode, int32 packetId, int32 packetSize) const
+{
+	feature_extraction::NetworkEvent event = MakeNetworkEvent(feature_extraction::NetworkEventType::ProtocolError);
+	event.error_code = errorCode;
+	event.error_message = message;
+	event.packet_id = packetId;
+	event.packet_size = packetSize;
+	if (packetSize >= static_cast<int32>(sizeof(PacketHeader)))
+		event.payload_size = packetSize - static_cast<int32>(sizeof(PacketHeader));
+	NotifyNetworkEvent(event);
+}
 
 feature_extraction::NetworkEvent Session::MakeNetworkEvent(feature_extraction::NetworkEventType type) const
 {

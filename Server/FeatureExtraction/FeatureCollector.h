@@ -29,6 +29,7 @@ public:
     bool GetSessionSnapshot(std::uint64_t sessionId, SessionFeatureSnapshot& outSnapshot) const;
     bool GetLatestMessageSnapshot(std::uint64_t sessionId, MessageFeatureSnapshot& outSnapshot) const;
     std::vector<SessionFeatureSnapshot> GetAllSessionSnapshots() const;
+    std::uint64_t IgnoredAfterCloseEventCount() const;
 
     void RemoveSession(std::uint64_t sessionId);
     void Clear();
@@ -67,5 +68,6 @@ private:
     mutable std::mutex m_mutex;
     std::unordered_map<std::uint64_t, SessionState> m_sessions;
     std::shared_ptr<AsyncFeatureQueue> m_featureQueue;
+    std::uint64_t m_ignoredAfterCloseEventCount = 0; // 종료 이후 이벤트는 모델 입력과 분리한 운영 통계로만 센다.
 };
 }

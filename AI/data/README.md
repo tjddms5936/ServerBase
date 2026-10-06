@@ -11,6 +11,14 @@ data/
 
 대용량 데이터 파일은 Git에 올리지 않습니다. 이 폴더에는 작은 설명 문서와 `.gitkeep` 파일만 추적합니다.
 
+## raw/operational
+
+C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 위치입니다. 다운로드한 UNSW 데이터와 섞지 않습니다.
+
+각 `<run_id>/`에는 원본 message/session JSON을 담은 `features.jsonl`, 독립 정답·빌드·의미 버전의 `run_manifest.json`, 유실·저장·종료 통계의 `collection_summary.json`이 들어갑니다. 서버 재시작이나 시나리오 변경마다 새 run을 사용합니다. 정답은 모델의 예측이나 오류 수가 아니라 사전에 정의한 시나리오 manifest에서 가져옵니다.
+
+실제 학습 전에는 불완전 run과 `integration_test` 실행을 제외하고 run/session 단위 분리·분포·정답의 한계를 검토해야 합니다. 실행 방법과 상세 규칙은 `docs/operational_data_collection.md`에 있습니다.
+
 ## raw/unsw_nb15
 
 UNSW-NB15 원본 CSV 파일을 넣는 위치입니다.

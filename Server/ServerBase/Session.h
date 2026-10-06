@@ -62,6 +62,8 @@ protected:
 	void ParsePackets();
 	feature_extraction::NetworkEvent MakeNetworkEvent(feature_extraction::NetworkEventType type) const;
 	void NotifyNetworkEvent(const feature_extraction::NetworkEvent& event) const;
+	// 소켓 계층과 파생 프로토콜 처리기가 같은 형식으로 오류를 한 번 기록한다.
+	void ReportProtocolError(const std::string& message, uint32 errorCode = 0, int32 packetId = -1, int32 packetSize = 0) const;
 
 private:
 	void enqueueSend(stSendItem&& item);

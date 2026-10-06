@@ -1,0 +1,625 @@
+{
+  "generated_at_utc": "2026-10-06T07:56:17.593573+00:00",
+  "actual_model_inference": false,
+  "training_dataset": false,
+  "scenario_count": 8,
+  "scenarios": [
+    {
+      "scenario": "normal_chat",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 1,
+            "timestamp": "2026-10-06T07:56:17.193Z",
+            "session": {
+              "session_id": 40,
+              "socket_handle": 640,
+              "logic_worker_id": 1,
+              "connection_duration_ms": 0.208,
+              "bytes_received_total": 27,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 0,
+              "packet_size": 27,
+              "payload_size": 19,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 27,
+              "payload_size": 19,
+              "connection_duration_ms": 0.208,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 27,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          },
+          "response": {
+            "request_id": "1",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "message"
+          }
+        },
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 2,
+            "timestamp": "2026-10-06T07:56:17.193Z",
+            "session": {
+              "session_id": 40,
+              "socket_handle": 640,
+              "logic_worker_id": 1,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 0.522,
+              "bytes_received_total": 27,
+              "bytes_sent_total": 24,
+              "recv_event_count": 1,
+              "send_event_count": 1,
+              "request_count": 1,
+              "error_count": 0,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": ""
+            },
+            "features": {
+              "connection_duration_ms": 0.522,
+              "bytes_received_total": 27,
+              "bytes_sent_total": 24,
+              "recv_event_count": 1,
+              "send_event_count": 1,
+              "request_count": 1,
+              "error_count": 0,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "2",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "malformed_chat_payload",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 3,
+            "timestamp": "2026-10-06T07:56:17.261Z",
+            "session": {
+              "session_id": 41,
+              "socket_handle": 756,
+              "logic_worker_id": 3,
+              "connection_duration_ms": 0.424,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 0,
+              "packet_size": 9,
+              "payload_size": 1,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 9,
+              "payload_size": 1,
+              "connection_duration_ms": 0.424,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          },
+          "response": {
+            "request_id": "3",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "message"
+          }
+        },
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 4,
+            "timestamp": "2026-10-06T07:56:17.261Z",
+            "session": {
+              "session_id": 41,
+              "socket_handle": 756,
+              "logic_worker_id": 3,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 0.519,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "failed to deserialize CS_CHAT payload"
+            },
+            "features": {
+              "connection_duration_ms": 0.519,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "4",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "trailing_chat_payload",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 5,
+            "timestamp": "2026-10-06T07:56:17.315Z",
+            "session": {
+              "session_id": 42,
+              "socket_handle": 1176,
+              "logic_worker_id": 5,
+              "connection_duration_ms": 0.118,
+              "bytes_received_total": 28,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 0,
+              "packet_size": 28,
+              "payload_size": 20,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 28,
+              "payload_size": 20,
+              "connection_duration_ms": 0.118,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 28,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          },
+          "response": {
+            "request_id": "5",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "message"
+          }
+        },
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 6,
+            "timestamp": "2026-10-06T07:56:17.315Z",
+            "session": {
+              "session_id": 42,
+              "socket_handle": 1176,
+              "logic_worker_id": 5,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 0.202,
+              "bytes_received_total": 28,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "CS_CHAT payload has trailing bytes"
+            },
+            "features": {
+              "connection_duration_ms": 0.202,
+              "bytes_received_total": 28,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "6",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "unknown_id_empty_payload",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 7,
+            "timestamp": "2026-10-06T07:56:17.369Z",
+            "session": {
+              "session_id": 43,
+              "socket_handle": 1272,
+              "logic_worker_id": 7,
+              "connection_duration_ms": 0.12,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 999,
+              "packet_size": 8,
+              "payload_size": 0,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 8,
+              "payload_size": 0,
+              "connection_duration_ms": 0.12,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          },
+          "response": {
+            "request_id": "7",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "message"
+          }
+        },
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 8,
+            "timestamp": "2026-10-06T07:56:17.369Z",
+            "session": {
+              "session_id": 43,
+              "socket_handle": 1272,
+              "logic_worker_id": 7,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 0.219,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "unknown packet id"
+            },
+            "features": {
+              "connection_duration_ms": 0.219,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "8",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "unknown_id_with_payload",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 9,
+            "timestamp": "2026-10-06T07:56:17.417Z",
+            "session": {
+              "session_id": 44,
+              "socket_handle": 1308,
+              "logic_worker_id": 9,
+              "connection_duration_ms": 13.76,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 999,
+              "packet_size": 9,
+              "payload_size": 1,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 9,
+              "payload_size": 1,
+              "connection_duration_ms": 13.76,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          },
+          "response": {
+            "request_id": "9",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "message"
+          }
+        },
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 10,
+            "timestamp": "2026-10-06T07:56:17.418Z",
+            "session": {
+              "session_id": 44,
+              "socket_handle": 1308,
+              "logic_worker_id": 9,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 13.883,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "unknown packet id"
+            },
+            "features": {
+              "connection_duration_ms": 13.883,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "10",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "invalid_frame_size",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 11,
+            "timestamp": "2026-10-06T07:56:17.463Z",
+            "session": {
+              "session_id": 45,
+              "socket_handle": 1124,
+              "logic_worker_id": 11,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 14.022,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 0,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "invalid packet size"
+            },
+            "features": {
+              "connection_duration_ms": 14.022,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 0,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "11",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "oversized_frame",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 12,
+            "timestamp": "2026-10-06T07:56:17.508Z",
+            "session": {
+              "session_id": 46,
+              "socket_handle": 808,
+              "logic_worker_id": 13,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 13.939,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 0,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "packet size exceeds receive buffer capacity"
+            },
+            "features": {
+              "connection_duration_ms": 13.939,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 0,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "12",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "id_enum_truncation",
+      "passed": true,
+      "records": [
+        {
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 13,
+            "timestamp": "2026-10-06T07:56:17.553Z",
+            "session": {
+              "session_id": 47,
+              "socket_handle": 1528,
+              "logic_worker_id": 15,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 13.949,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 0,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "packet id out of range"
+            },
+            "features": {
+              "connection_duration_ms": 13.949,
+              "bytes_received_total": 8,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 0,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          },
+          "response": {
+            "request_id": "13",
+            "label": "normal",
+            "is_attack": false,
+            "confidence": 0.5,
+            "model_version": "dummy-v0",
+            "received_event_type": "session_summary"
+          }
+        }
+      ]
+    }
+  ],
+  "server_executable_sha256": "2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+  "contract_sha256": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87",
+  "server_graceful_shutdown": true,
+  "limitations": [
+    "즉시 I/O 요청 실패는 이 연동 테스트에서 강제로 유발하지 않았다.",
+    "종료 이후 이벤트 고정 및 동시성은 별도 C++ 단위 테스트로 확인한다."
+  ]
+}

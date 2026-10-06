@@ -1,0 +1,282 @@
+{
+  "generated_at_utc": "2026-10-06T07:56:11.546804+00:00",
+  "actual_model_inference": false,
+  "training_dataset": false,
+  "temporary_capture_removed": true,
+  "server_executable_sha256": "2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+  "scenario_count": 2,
+  "runs": [
+    {
+      "run_id": "e2e_normal_chat",
+      "scenario_id": "normal_chat",
+      "passed": true,
+      "independent_label": 0,
+      "summary": {
+        "attempted": 2,
+        "enqueued": 2,
+        "written": 2,
+        "flushed": 2,
+        "dropped_full": 0,
+        "dropped_closed": 0,
+        "dropped_failed": 0,
+        "failed_records": 0,
+        "queue_high_watermark": 1,
+        "shutdown_timed_out": false,
+        "shutdown_complete": true,
+        "write_error": null,
+        "summary_error": null,
+        "state": "closed",
+        "enabled": true,
+        "run_id": "e2e_normal_chat",
+        "scenario_id": "normal_chat",
+        "queue_capacity": 32,
+        "pending": 0,
+        "in_flight": 0,
+        "unfinished": 0,
+        "complete": true,
+        "finished_at_utc": "2026-10-06T07:56:09.510544+00:00"
+      },
+      "records": [
+        {
+          "record_schema_version": "v1",
+          "collection_sequence_id": 1,
+          "received_at_utc": "2026-10-06T07:56:09.206543+00:00",
+          "run_id": "e2e_normal_chat",
+          "scenario_id": "normal_chat",
+          "server_build_id": "sha256:2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+          "session_id": 40,
+          "request_index": 1,
+          "label_reference": "run_manifest.json:selected_scenario",
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 1,
+            "timestamp": "2026-10-06T07:56:09.196Z",
+            "session": {
+              "session_id": 40,
+              "socket_handle": 652,
+              "logic_worker_id": 1,
+              "connection_duration_ms": 0.202,
+              "bytes_received_total": 30,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 0,
+              "packet_size": 30,
+              "payload_size": 22,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 30,
+              "payload_size": 22,
+              "connection_duration_ms": 0.202,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 30,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          }
+        },
+        {
+          "record_schema_version": "v1",
+          "collection_sequence_id": 2,
+          "received_at_utc": "2026-10-06T07:56:09.209542+00:00",
+          "run_id": "e2e_normal_chat",
+          "scenario_id": "normal_chat",
+          "server_build_id": "sha256:2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+          "session_id": 40,
+          "request_index": null,
+          "label_reference": "run_manifest.json:selected_scenario",
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 2,
+            "timestamp": "2026-10-06T07:56:09.196Z",
+            "session": {
+              "session_id": 40,
+              "socket_handle": 652,
+              "logic_worker_id": 1,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 0.513,
+              "bytes_received_total": 30,
+              "bytes_sent_total": 24,
+              "recv_event_count": 1,
+              "send_event_count": 1,
+              "request_count": 1,
+              "error_count": 0,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": ""
+            },
+            "features": {
+              "connection_duration_ms": 0.513,
+              "bytes_received_total": 30,
+              "bytes_sent_total": 24,
+              "recv_event_count": 1,
+              "send_event_count": 1,
+              "request_count": 1,
+              "error_count": 0,
+              "avg_message_interval_ms": 0.0
+            }
+          }
+        }
+      ],
+      "source_manifest_sha256": "858c0ab2c4f6105e7397d93ff0d25867616dc7e0d9f260d89030d0189148018c",
+      "operational_contract_sha256": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87",
+      "server_graceful_shutdown": true,
+      "api_graceful_shutdown": true
+    },
+    {
+      "run_id": "e2e_malformed_chat_payload",
+      "scenario_id": "malformed_chat_payload",
+      "passed": true,
+      "independent_label": 1,
+      "summary": {
+        "attempted": 2,
+        "enqueued": 2,
+        "written": 2,
+        "flushed": 2,
+        "dropped_full": 0,
+        "dropped_closed": 0,
+        "dropped_failed": 0,
+        "failed_records": 0,
+        "queue_high_watermark": 1,
+        "shutdown_timed_out": false,
+        "shutdown_complete": true,
+        "write_error": null,
+        "summary_error": null,
+        "state": "closed",
+        "enabled": true,
+        "run_id": "e2e_malformed_chat_payload",
+        "scenario_id": "malformed_chat_payload",
+        "queue_capacity": 32,
+        "pending": 0,
+        "in_flight": 0,
+        "unfinished": 0,
+        "complete": true,
+        "finished_at_utc": "2026-10-06T07:56:11.475802+00:00"
+      },
+      "records": [
+        {
+          "record_schema_version": "v1",
+          "collection_sequence_id": 1,
+          "received_at_utc": "2026-10-06T07:56:11.157801+00:00",
+          "run_id": "e2e_malformed_chat_payload",
+          "scenario_id": "malformed_chat_payload",
+          "server_build_id": "sha256:2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+          "session_id": 40,
+          "request_index": 1,
+          "label_reference": "run_manifest.json:selected_scenario",
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_message_v2",
+            "event_type": "message",
+            "queue_sequence_id": 1,
+            "timestamp": "2026-10-06T07:56:11.146Z",
+            "session": {
+              "session_id": 40,
+              "socket_handle": 648,
+              "logic_worker_id": 1,
+              "connection_duration_ms": 14.576,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            },
+            "message": {
+              "request_index": 1,
+              "packet_id": 0,
+              "packet_size": 9,
+              "payload_size": 1,
+              "message_interval_ms": 0.0
+            },
+            "features": {
+              "packet_size": 9,
+              "payload_size": 1,
+              "connection_duration_ms": 14.576,
+              "message_interval_ms": 0.0,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "error_count_total": 0
+            }
+          }
+        },
+        {
+          "record_schema_version": "v1",
+          "collection_sequence_id": 2,
+          "received_at_utc": "2026-10-06T07:56:11.160800+00:00",
+          "run_id": "e2e_malformed_chat_payload",
+          "scenario_id": "malformed_chat_payload",
+          "server_build_id": "sha256:2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+          "session_id": 40,
+          "request_index": null,
+          "label_reference": "run_manifest.json:selected_scenario",
+          "payload": {
+            "schema_version": "v1",
+            "feature_contract_id": "server_application_session_summary_v2",
+            "event_type": "session_summary",
+            "queue_sequence_id": 2,
+            "timestamp": "2026-10-06T07:56:11.146Z",
+            "session": {
+              "session_id": 40,
+              "socket_handle": 648,
+              "logic_worker_id": 1,
+              "is_started": true,
+              "is_closed": true,
+              "connection_duration_ms": 14.794,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0,
+              "last_error_code": 0,
+              "last_error_message": "failed to deserialize CS_CHAT payload"
+            },
+            "features": {
+              "connection_duration_ms": 14.794,
+              "bytes_received_total": 9,
+              "bytes_sent_total": 0,
+              "recv_event_count": 1,
+              "send_event_count": 0,
+              "request_count": 1,
+              "error_count": 1,
+              "avg_message_interval_ms": 0.0
+            }
+          }
+        }
+      ],
+      "source_manifest_sha256": "858c0ab2c4f6105e7397d93ff0d25867616dc7e0d9f260d89030d0189148018c",
+      "operational_contract_sha256": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87",
+      "server_graceful_shutdown": true,
+      "api_graceful_shutdown": true
+    }
+  ],
+  "code_evidence": [
+    {
+      "path": "data_collection\\config.py",
+      "sha256": "6b40d3115469dc288ab464c50313f06b88870009c343ee67c43ced86552f4b31"
+    },
+    {
+      "path": "data_collection\\collector.py",
+      "sha256": "0c339c7aacbe9bac1962b50b08d895fa31b75181c9751f53b61194d68adcfa10"
+    },
+    {
+      "path": "inference_api\\main.py",
+      "sha256": "c9ea2617fd48b0881ded37a0b2683418290848da8b10261a1a08d635dbe20cda"
+    },
+    {
+      "path": "tests\\run_collection_e2e.py",
+      "sha256": "1f184d860f6eeb8868f3eb81ef59d82658c24122353c17f2d86a1cf55f9026b4"
+    }
+  ],
+  "limitations": [
+    "로컬의 통제된 프로토콜 테스트이며 실제 침입 탐지 성능이 아니다.",
+    "파일 저장 및 flush를 확인했으며 전원 차단 시 디스크 영속성을 보장하지 않는다."
+  ]
+}
