@@ -6,6 +6,7 @@
 
 ```text
 train_logistic_regression.py
+train_random_forest.py
 ```
 
 전처리된 UNSW-NB15 데이터를 불러와 Logistic Regression 기준 모델을 학습하고 평가합니다.
@@ -24,10 +25,26 @@ artifacts/baseline_logistic_regression.joblib
 reports/baseline_metrics.json
 ```
 
+RandomForest baseline 학습:
+
+```powershell
+python .\training\train_random_forest.py
+```
+
+동일한 전처리 train/test 데이터를 사용합니다. 트리 100개, `max_features=sqrt`, `max_depth=None`, `class_weight=None`, seed 42로 설정을 고정하고 최대 4개 작업 스레드로 학습합니다. test 결과를 보고 설정을 변경하지 않습니다.
+
+추가 생성 파일:
+
+```text
+artifacts/baseline_random_forest.joblib
+reports/random_forest_metrics.json
+```
+
+학습 설정, 평가 지표, feature 중요도, 실행 환경, 입력 파일과 모델의 SHA-256을 저장합니다. 공격 확률이 0.5 이상이면 공격으로 판정하며 두 baseline의 비교에도 같은 기준을 적용합니다.
+
 이후 추가할 스크립트:
 
 ```text
-train_random_forest.py
 train_lstm.py
 ```
 

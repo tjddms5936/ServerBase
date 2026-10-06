@@ -1,0 +1,878 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-10-06T05:03:06.188821+00:00",
+  "dataset": {
+    "name": "UNSW-NB15",
+    "split": "official training/testing split",
+    "target": "label",
+    "label_map": {
+      "normal": 0,
+      "attack": 1
+    }
+  },
+  "model": {
+    "name": "RandomForestClassifier",
+    "parameters": {
+      "n_estimators": 100,
+      "criterion": "gini",
+      "max_depth": null,
+      "min_samples_split": 2,
+      "min_samples_leaf": 1,
+      "max_features": "sqrt",
+      "bootstrap": true,
+      "class_weight": null,
+      "random_state": 42,
+      "n_jobs": 4
+    },
+    "threshold": 0.5,
+    "positive_rule": "attack_probability >= threshold"
+  },
+  "data": {
+    "train_rows": 175341,
+    "test_rows": 82332,
+    "feature_count": 194,
+    "dtype": "float32",
+    "train_label_distribution": {
+      "0": 56000,
+      "1": 119341
+    },
+    "test_label_distribution": {
+      "0": 37000,
+      "1": 45332
+    },
+    "input_sha256": {
+      "data/processed/unsw_nb15/X_train.csv": "ed2af1f582d8c26ebb88360e8f661ef6d0e30dcac1354ca110534e81982453b5",
+      "data/processed/unsw_nb15/y_train.csv": "47fdefa2d5e9a1b135cec9a4cb397d510bd97109662cc2c6093dc1715c8301dd",
+      "data/processed/unsw_nb15/X_test.csv": "be33f4e911b62d372fc2a76e9153a608066be289ddf42e80869d6c1bdebf13c5",
+      "data/processed/unsw_nb15/y_test.csv": "797cf217b30dd51856e6ed4e4d37d9310c789e54e47b0048363c445fcac6ddee",
+      "artifacts/feature_schema_unsw_nb15.json": "3adb74d75f3b3f6c3d8dbeb2f8a34b7de4870525866f5499dd5f9b98ba16816d",
+      "artifacts/preprocessor_unsw_nb15.joblib": "e3ed2fc25a8b3ad8a85be9cb50febd9a64148b5cfa6018da92c85ccba8cf1edb"
+    }
+  },
+  "metrics": {
+    "accuracy": 0.8696982947092261,
+    "precision": 0.8152926598148553,
+    "recall": 0.9869407923762463,
+    "f1": 0.8929426792272074,
+    "roc_auc": 0.9785758112520001,
+    "confusion_matrix": [
+      [
+        26864,
+        10136
+      ],
+      [
+        592,
+        44740
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "normal(0)",
+      "attack(1)"
+    ],
+    "confusion_matrix_details": {
+      "true_negative": 26864,
+      "false_positive": 10136,
+      "false_negative": 592,
+      "true_positive": 44740
+    },
+    "false_positive_rate": 0.27394594594594596,
+    "false_negative_rate": 0.01305920762375364
+  },
+  "timing_seconds": {
+    "data_loading": 2.7335761000867933,
+    "training": 5.886475899955258,
+    "test_predict_proba": 0.23539840010926127
+  },
+  "environment": {
+    "python": "3.12.4",
+    "scikit_learn": "1.8.0",
+    "numpy": "2.4.6",
+    "logical_cpu_count": 16,
+    "platform": "Windows-10-10.0.19045-SP0"
+  },
+  "feature_importances": [
+    {
+      "feature": "numeric__sttl",
+      "importance": 0.108379758211289
+    },
+    {
+      "feature": "numeric__ct_state_ttl",
+      "importance": 0.08095537801187483
+    },
+    {
+      "feature": "numeric__dload",
+      "importance": 0.056129398371827136
+    },
+    {
+      "feature": "numeric__rate",
+      "importance": 0.04451384464654657
+    },
+    {
+      "feature": "numeric__tcprtt",
+      "importance": 0.041928547433429345
+    },
+    {
+      "feature": "numeric__sload",
+      "importance": 0.04106667217467531
+    },
+    {
+      "feature": "numeric__dttl",
+      "importance": 0.037617018547693844
+    },
+    {
+      "feature": "numeric__sinpkt",
+      "importance": 0.03708603453226457
+    },
+    {
+      "feature": "numeric__sbytes",
+      "importance": 0.0338800488632538
+    },
+    {
+      "feature": "numeric__ackdat",
+      "importance": 0.033215295674687416
+    },
+    {
+      "feature": "numeric__dbytes",
+      "importance": 0.033064671204413094
+    },
+    {
+      "feature": "numeric__dpkts",
+      "importance": 0.03024265221070838
+    },
+    {
+      "feature": "numeric__dur",
+      "importance": 0.030074564838895132
+    },
+    {
+      "feature": "numeric__ct_srv_dst",
+      "importance": 0.029361580253544024
+    },
+    {
+      "feature": "numeric__smean",
+      "importance": 0.028317495803115652
+    },
+    {
+      "feature": "numeric__ct_dst_src_ltm",
+      "importance": 0.024502083016815064
+    },
+    {
+      "feature": "numeric__dmean",
+      "importance": 0.023906159653268567
+    },
+    {
+      "feature": "numeric__ct_srv_src",
+      "importance": 0.023373189657717
+    },
+    {
+      "feature": "categorical__state_INT",
+      "importance": 0.022807228664234035
+    },
+    {
+      "feature": "numeric__dinpkt",
+      "importance": 0.02239980823149647
+    },
+    {
+      "feature": "numeric__synack",
+      "importance": 0.022102818604602434
+    },
+    {
+      "feature": "numeric__djit",
+      "importance": 0.021856029630403485
+    },
+    {
+      "feature": "numeric__sjit",
+      "importance": 0.017430511008945857
+    },
+    {
+      "feature": "numeric__dloss",
+      "importance": 0.01180539628704699
+    },
+    {
+      "feature": "numeric__ct_dst_ltm",
+      "importance": 0.011668286409652461
+    },
+    {
+      "feature": "numeric__stcpb",
+      "importance": 0.011598002817788252
+    },
+    {
+      "feature": "numeric__ct_src_ltm",
+      "importance": 0.011375367614118394
+    },
+    {
+      "feature": "numeric__sloss",
+      "importance": 0.011228281593796947
+    },
+    {
+      "feature": "numeric__spkts",
+      "importance": 0.01094388620218919
+    },
+    {
+      "feature": "numeric__dtcpb",
+      "importance": 0.01027217566207408
+    },
+    {
+      "feature": "categorical__state_CON",
+      "importance": 0.009088344903794322
+    },
+    {
+      "feature": "numeric__ct_dst_sport_ltm",
+      "importance": 0.008646747590646903
+    },
+    {
+      "feature": "numeric__swin",
+      "importance": 0.008617413447520124
+    },
+    {
+      "feature": "numeric__ct_src_dport_ltm",
+      "importance": 0.007643466279790711
+    },
+    {
+      "feature": "numeric__is_sm_ips_ports",
+      "importance": 0.007016142152145872
+    },
+    {
+      "feature": "categorical__proto_arp",
+      "importance": 0.006001103269410342
+    },
+    {
+      "feature": "categorical__proto_tcp",
+      "importance": 0.005103849157061441
+    },
+    {
+      "feature": "categorical__service_unknown",
+      "importance": 0.003690480572418023
+    },
+    {
+      "feature": "numeric__dwin",
+      "importance": 0.0023684388394293425
+    },
+    {
+      "feature": "numeric__ct_flw_http_mthd",
+      "importance": 0.002225929552514294
+    },
+    {
+      "feature": "categorical__proto_udp",
+      "importance": 0.0021551503021315934
+    },
+    {
+      "feature": "categorical__service_dns",
+      "importance": 0.002031074489347065
+    },
+    {
+      "feature": "numeric__response_body_len",
+      "importance": 0.0018295660951720206
+    },
+    {
+      "feature": "numeric__trans_depth",
+      "importance": 0.0013878765943959633
+    },
+    {
+      "feature": "categorical__service_http",
+      "importance": 0.0013790032542152384
+    },
+    {
+      "feature": "categorical__state_FIN",
+      "importance": 0.0011864254755907652
+    },
+    {
+      "feature": "categorical__proto_unas",
+      "importance": 0.0010652961552462593
+    },
+    {
+      "feature": "categorical__proto_ospf",
+      "importance": 0.0010068437040187332
+    },
+    {
+      "feature": "categorical__state_REQ",
+      "importance": 0.0009838772503620574
+    },
+    {
+      "feature": "categorical__proto_sctp",
+      "importance": 0.0006425762720355441
+    },
+    {
+      "feature": "categorical__service_ftp",
+      "importance": 0.00033140496363798873
+    },
+    {
+      "feature": "categorical__service_ftp-data",
+      "importance": 0.0002986881897567823
+    },
+    {
+      "feature": "categorical__service_smtp",
+      "importance": 0.00029077108326244495
+    },
+    {
+      "feature": "numeric__ct_ftp_cmd",
+      "importance": 0.00022746027333280923
+    },
+    {
+      "feature": "numeric__is_ftp_login",
+      "importance": 0.00021688826235472327
+    },
+    {
+      "feature": "categorical__proto_igmp",
+      "importance": 0.00019731201173093057
+    },
+    {
+      "feature": "categorical__proto_sun-nd",
+      "importance": 0.0001824306434782335
+    },
+    {
+      "feature": "categorical__proto_mobile",
+      "importance": 0.00016464941551668093
+    },
+    {
+      "feature": "categorical__service_pop3",
+      "importance": 0.00011950914901478829
+    },
+    {
+      "feature": "categorical__proto_swipe",
+      "importance": 0.00011249059290533892
+    },
+    {
+      "feature": "categorical__state_RST",
+      "importance": 7.552465836304025e-05
+    },
+    {
+      "feature": "categorical__service_ssh",
+      "importance": 6.974182314187246e-05
+    },
+    {
+      "feature": "categorical__proto_icmp",
+      "importance": 6.297930417668965e-05
+    },
+    {
+      "feature": "categorical__proto_ipv6",
+      "importance": 5.9377172101851255e-05
+    },
+    {
+      "feature": "categorical__state_ECO",
+      "importance": 5.5691860547122506e-05
+    },
+    {
+      "feature": "categorical__service_dhcp",
+      "importance": 5.1352335000220136e-05
+    },
+    {
+      "feature": "categorical__proto_mux",
+      "importance": 4.015021735487876e-05
+    },
+    {
+      "feature": "categorical__proto_sep",
+      "importance": 3.775074344443532e-05
+    },
+    {
+      "feature": "categorical__proto_pim",
+      "importance": 2.9576409533638158e-05
+    },
+    {
+      "feature": "categorical__proto_cbt",
+      "importance": 2.6734491975838132e-05
+    },
+    {
+      "feature": "categorical__proto_st2",
+      "importance": 2.3599434477557653e-05
+    },
+    {
+      "feature": "categorical__service_radius",
+      "importance": 1.901311680702225e-05
+    },
+    {
+      "feature": "categorical__proto_rvd",
+      "importance": 1.2570332567513572e-05
+    },
+    {
+      "feature": "categorical__proto_rsvp",
+      "importance": 8.759159039957336e-06
+    },
+    {
+      "feature": "categorical__proto_any",
+      "importance": 8.607671417935312e-06
+    },
+    {
+      "feature": "categorical__proto_trunk-2",
+      "importance": 6.986395789424281e-06
+    },
+    {
+      "feature": "categorical__service_ssl",
+      "importance": 4.931715563294498e-06
+    },
+    {
+      "feature": "categorical__proto_compaq-peer",
+      "importance": 4.845378019334397e-06
+    },
+    {
+      "feature": "categorical__proto_visa",
+      "importance": 4.110446025207355e-06
+    },
+    {
+      "feature": "categorical__proto_xnet",
+      "importance": 4.103313798532333e-06
+    },
+    {
+      "feature": "categorical__proto_il",
+      "importance": 3.5631893029993163e-06
+    },
+    {
+      "feature": "categorical__proto_vrrp",
+      "importance": 3.5030444266077514e-06
+    },
+    {
+      "feature": "categorical__service_irc",
+      "importance": 3.376726901595025e-06
+    },
+    {
+      "feature": "categorical__service_snmp",
+      "importance": 3.2862721473890173e-06
+    },
+    {
+      "feature": "categorical__proto_igp",
+      "importance": 2.9119836917167293e-06
+    },
+    {
+      "feature": "categorical__state_URN",
+      "importance": 2.8439812595058507e-06
+    },
+    {
+      "feature": "categorical__proto_bna",
+      "importance": 2.72931019771209e-06
+    },
+    {
+      "feature": "categorical__proto_tp++",
+      "importance": 2.525959869499736e-06
+    },
+    {
+      "feature": "categorical__proto_leaf-2",
+      "importance": 2.422945457950138e-06
+    },
+    {
+      "feature": "categorical__proto_gre",
+      "importance": 2.3241014171573926e-06
+    },
+    {
+      "feature": "categorical__proto_netblt",
+      "importance": 2.3009373147718375e-06
+    },
+    {
+      "feature": "categorical__proto_ptp",
+      "importance": 2.183594817733567e-06
+    },
+    {
+      "feature": "categorical__proto_ipcv",
+      "importance": 2.130946485255896e-06
+    },
+    {
+      "feature": "categorical__state_no",
+      "importance": 2.1186433078868405e-06
+    },
+    {
+      "feature": "categorical__proto_ip",
+      "importance": 1.9067850974323084e-06
+    },
+    {
+      "feature": "categorical__proto_3pc",
+      "importance": 1.8359121850695943e-06
+    },
+    {
+      "feature": "categorical__proto_i-nlsp",
+      "importance": 1.795365593106552e-06
+    },
+    {
+      "feature": "categorical__proto_ipv6-frag",
+      "importance": 1.6053757349887464e-06
+    },
+    {
+      "feature": "categorical__proto_xtp",
+      "importance": 1.591785132559655e-06
+    },
+    {
+      "feature": "categorical__proto_pup",
+      "importance": 1.5040686732159548e-06
+    },
+    {
+      "feature": "categorical__proto_emcon",
+      "importance": 1.4904431630673797e-06
+    },
+    {
+      "feature": "categorical__state_PAR",
+      "importance": 1.466154031190637e-06
+    },
+    {
+      "feature": "categorical__proto_idpr-cmtp",
+      "importance": 1.2008656468191233e-06
+    },
+    {
+      "feature": "categorical__proto_narp",
+      "importance": 1.196903704995199e-06
+    },
+    {
+      "feature": "categorical__proto_iso-tp4",
+      "importance": 1.1964969052178111e-06
+    },
+    {
+      "feature": "categorical__proto_prm",
+      "importance": 1.1516819911648296e-06
+    },
+    {
+      "feature": "categorical__proto_rdp",
+      "importance": 1.0774212416411679e-06
+    },
+    {
+      "feature": "categorical__proto_ipv6-route",
+      "importance": 1.0645789216490557e-06
+    },
+    {
+      "feature": "categorical__proto_iatp",
+      "importance": 1.0186477191774782e-06
+    },
+    {
+      "feature": "categorical__proto_nvp",
+      "importance": 1.0027361800120614e-06
+    },
+    {
+      "feature": "categorical__proto_ax.25",
+      "importance": 9.811253396906977e-07
+    },
+    {
+      "feature": "categorical__proto_rtp",
+      "importance": 9.713999614278805e-07
+    },
+    {
+      "feature": "categorical__proto_nsfnet-igp",
+      "importance": 9.539694115473078e-07
+    },
+    {
+      "feature": "categorical__proto_mtp",
+      "importance": 9.443147538593392e-07
+    },
+    {
+      "feature": "categorical__proto_micp",
+      "importance": 8.844152874178279e-07
+    },
+    {
+      "feature": "categorical__proto_kryptolan",
+      "importance": 8.84290847659157e-07
+    },
+    {
+      "feature": "categorical__proto_egp",
+      "importance": 8.397276109832534e-07
+    },
+    {
+      "feature": "categorical__proto_sprite-rpc",
+      "importance": 7.723037336070446e-07
+    },
+    {
+      "feature": "categorical__proto_fire",
+      "importance": 7.683308269906749e-07
+    },
+    {
+      "feature": "categorical__proto_ggp",
+      "importance": 7.395074996321937e-07
+    },
+    {
+      "feature": "categorical__proto_merit-inp",
+      "importance": 6.656536637814687e-07
+    },
+    {
+      "feature": "categorical__proto_pgm",
+      "importance": 6.088551870587683e-07
+    },
+    {
+      "feature": "categorical__proto_iso-ip",
+      "importance": 5.813623343616324e-07
+    },
+    {
+      "feature": "categorical__proto_ipv6-opts",
+      "importance": 5.809885186452156e-07
+    },
+    {
+      "feature": "categorical__proto_trunk-1",
+      "importance": 5.668346262305913e-07
+    },
+    {
+      "feature": "categorical__proto_ddp",
+      "importance": 5.66729320146498e-07
+    },
+    {
+      "feature": "categorical__proto_dcn",
+      "importance": 5.46221285950733e-07
+    },
+    {
+      "feature": "categorical__proto_idpr",
+      "importance": 4.931331436955306e-07
+    },
+    {
+      "feature": "categorical__proto_ipnip",
+      "importance": 3.883949476200848e-07
+    },
+    {
+      "feature": "categorical__proto_sat-expak",
+      "importance": 3.7354485848922843e-07
+    },
+    {
+      "feature": "categorical__proto_chaos",
+      "importance": 3.48285963262875e-07
+    },
+    {
+      "feature": "categorical__proto_ttp",
+      "importance": 3.4217672710804413e-07
+    },
+    {
+      "feature": "categorical__proto_etherip",
+      "importance": 2.7876138064315897e-07
+    },
+    {
+      "feature": "categorical__proto_mfe-nsp",
+      "importance": 2.61516888332783e-07
+    },
+    {
+      "feature": "categorical__proto_skip",
+      "importance": 2.5878210584643945e-07
+    },
+    {
+      "feature": "categorical__proto_pvp",
+      "importance": 2.4697579039732604e-07
+    },
+    {
+      "feature": "categorical__proto_pipe",
+      "importance": 2.4069487826501875e-07
+    },
+    {
+      "feature": "categorical__proto_sps",
+      "importance": 2.369421512437249e-07
+    },
+    {
+      "feature": "categorical__proto_qnx",
+      "importance": 2.365244188462401e-07
+    },
+    {
+      "feature": "categorical__proto_wb-mon",
+      "importance": 2.1112490665086288e-07
+    },
+    {
+      "feature": "categorical__proto_wsn",
+      "importance": 1.943862076724442e-07
+    },
+    {
+      "feature": "categorical__proto_cftp",
+      "importance": 1.792633163190404e-07
+    },
+    {
+      "feature": "categorical__proto_irtp",
+      "importance": 1.6415406860139894e-07
+    },
+    {
+      "feature": "categorical__proto_scps",
+      "importance": 1.5668038347637687e-07
+    },
+    {
+      "feature": "categorical__proto_mhrp",
+      "importance": 1.563872756554721e-07
+    },
+    {
+      "feature": "categorical__proto_argus",
+      "importance": 1.4902769294703733e-07
+    },
+    {
+      "feature": "categorical__proto_encap",
+      "importance": 1.3869714409516548e-07
+    },
+    {
+      "feature": "categorical__proto_bbn-rcc",
+      "importance": 1.3062030666617488e-07
+    },
+    {
+      "feature": "categorical__proto_crtp",
+      "importance": 1.1116164399714721e-07
+    },
+    {
+      "feature": "categorical__proto_wb-expak",
+      "importance": 1.0159471114248598e-07
+    },
+    {
+      "feature": "categorical__proto_sm",
+      "importance": 9.498557315372554e-08
+    },
+    {
+      "feature": "categorical__proto_vmtp",
+      "importance": 9.016942765153003e-08
+    },
+    {
+      "feature": "categorical__proto_ifmp",
+      "importance": 8.783143280920027e-08
+    },
+    {
+      "feature": "categorical__proto_gmtp",
+      "importance": 8.524289391576119e-08
+    },
+    {
+      "feature": "categorical__proto_idrp",
+      "importance": 8.420369801657847e-08
+    },
+    {
+      "feature": "categorical__proto_snp",
+      "importance": 8.347898174916024e-08
+    },
+    {
+      "feature": "categorical__proto_fc",
+      "importance": 7.503169869118193e-08
+    },
+    {
+      "feature": "categorical__proto_smp",
+      "importance": 7.305271706039345e-08
+    },
+    {
+      "feature": "categorical__proto_aris",
+      "importance": 7.261526513573354e-08
+    },
+    {
+      "feature": "categorical__proto_cpnx",
+      "importance": 6.569367273824142e-08
+    },
+    {
+      "feature": "categorical__proto_iplt",
+      "importance": 6.496695420654702e-08
+    },
+    {
+      "feature": "categorical__proto_secure-vmtp",
+      "importance": 6.2367999972123e-08
+    },
+    {
+      "feature": "categorical__proto_ipcomp",
+      "importance": 5.47893738345945e-08
+    },
+    {
+      "feature": "categorical__proto_l2tp",
+      "importance": 4.362187182484795e-08
+    },
+    {
+      "feature": "categorical__proto_leaf-1",
+      "importance": 4.0474791795442546e-08
+    },
+    {
+      "feature": "categorical__proto_pri-enc",
+      "importance": 4.014355590674286e-08
+    },
+    {
+      "feature": "categorical__proto_ib",
+      "importance": 3.3269547338224025e-08
+    },
+    {
+      "feature": "categorical__proto_sat-mon",
+      "importance": 3.301247785124784e-08
+    },
+    {
+      "feature": "categorical__proto_ippc",
+      "importance": 3.0473578226395565e-08
+    },
+    {
+      "feature": "categorical__proto_xns-idp",
+      "importance": 3.01161310485369e-08
+    },
+    {
+      "feature": "categorical__proto_a/n",
+      "importance": 2.872311152162032e-08
+    },
+    {
+      "feature": "categorical__proto_eigrp",
+      "importance": 2.6538200282026052e-08
+    },
+    {
+      "feature": "categorical__proto_br-sat-mon",
+      "importance": 2.3492364447580944e-08
+    },
+    {
+      "feature": "categorical__proto_stp",
+      "importance": 2.345251812082054e-08
+    },
+    {
+      "feature": "categorical__proto_ddx",
+      "importance": 2.2570411563128515e-08
+    },
+    {
+      "feature": "categorical__proto_uti",
+      "importance": 2.2126366031461576e-08
+    },
+    {
+      "feature": "categorical__proto_cphb",
+      "importance": 2.0759217676763377e-08
+    },
+    {
+      "feature": "categorical__proto_vines",
+      "importance": 2.0002363954397764e-08
+    },
+    {
+      "feature": "categorical__proto_ipx-n-ip",
+      "importance": 1.9978498517636272e-08
+    },
+    {
+      "feature": "categorical__proto_sccopmce",
+      "importance": 1.7977996677901752e-08
+    },
+    {
+      "feature": "categorical__proto_hmp",
+      "importance": 1.743143585768331e-08
+    },
+    {
+      "feature": "categorical__proto_isis",
+      "importance": 1.7323797266935993e-08
+    },
+    {
+      "feature": "categorical__proto_ipv6-no",
+      "importance": 1.4594439496782285e-08
+    },
+    {
+      "feature": "categorical__proto_larp",
+      "importance": 1.3794204036943937e-08
+    },
+    {
+      "feature": "categorical__proto_crudp",
+      "importance": 1.3450994791041794e-08
+    },
+    {
+      "feature": "categorical__proto_sdrp",
+      "importance": 1.2133195795638228e-08
+    },
+    {
+      "feature": "categorical__proto_aes-sp3-d",
+      "importance": 1.0705885161869917e-08
+    },
+    {
+      "feature": "categorical__proto_tlsp",
+      "importance": 1.0057155617005566e-08
+    },
+    {
+      "feature": "categorical__proto_tcf",
+      "importance": 8.823918923767754e-09
+    },
+    {
+      "feature": "categorical__proto_srp",
+      "importance": 8.204776615358877e-09
+    },
+    {
+      "feature": "categorical__proto_zero",
+      "importance": 7.790656652124498e-09
+    },
+    {
+      "feature": "categorical__proto_ipip",
+      "importance": 4.8241526364705484e-09
+    },
+    {
+      "feature": "categorical__proto_dgp",
+      "importance": 3.128420649021916e-09
+    },
+    {
+      "feature": "categorical__proto_pnni",
+      "importance": 3.1008857903145703e-09
+    }
+  ],
+  "feature_importance_note": "불순도 감소 기반 중요도이며, 인과관계나 검증된 원인으로 해석하지 않습니다.",
+  "artifacts": {
+    "model_path": "artifacts/baseline_random_forest.joblib",
+    "metrics_path": "reports/random_forest_metrics.json",
+    "model_size_bytes": 21146165,
+    "model_sha256": "1622447ebf964d36ee7ddaf69330605cb2c0756645f4523069507f7bb79e11de"
+  }
+}
