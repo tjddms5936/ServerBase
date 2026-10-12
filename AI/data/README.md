@@ -25,6 +25,14 @@ C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 
 
 품질 검사에서 잘못된·누락된·중복된 레코드와 정답 혼입을 검출하고, 메시지 관측 불가·연동 테스트 run을 메시지 학습 후보에서 제외합니다. 구조와 재검사 명령은 `docs/traffic_generation.md`에 있습니다.
 
+## processed/operational_message
+
+검증된 운영 메시지의 고정 학습용 입력을 보관합니다. 기본 `v1/`에는 분할별 `X`, `y`, `metadata` CSV와 feature·label·분할·전체 데이터셋 manifest가 있습니다. 같은 행 위치가 같은 메시지이며 X에는 현재 원본 feature 7개만 들어갑니다. metadata나 종료 요약을 X에 합치지 않습니다.
+
+원본을 다시 검증하고 run 전체를 시간 순서의 반복 묶음으로 train·validation·test에 배치합니다. 식별자와 같은 feature 값의 분할 간 중복을 따로 확인합니다. 아직 정규화·scaler 학습을 하지 않은 데이터이며 전처리 fit은 다음 학습 단계에서 train으로만 수행합니다.
+
+저장 결과는 Git에서 제외하고 기존 경로를 덮어쓰지 않습니다. 실행·분할 정책·한계는 `docs/operational_dataset.md`에 있습니다.
+
 ## raw/unsw_nb15
 
 UNSW-NB15 원본 CSV 파일을 넣는 위치입니다.

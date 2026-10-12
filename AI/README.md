@@ -18,6 +18,7 @@
 - 오류 집계·종료 snapshot 고정 및 v2 의미 버전 기반 FastAPI strict 입력 검증
 - 독립 시나리오 정답과 run별 provenance를 보관하는 비동기 bounded JSONL 수집기
 - 정상·통제된 이상 트래픽 생성기, 다중 run 수집과 누락·중복·정답 분포 검증
+- 운영 메시지 입력·독립 정답·metadata 분리와 run/session 비중복 고정 train·validation·test
 
 학습 로드맵:
 
@@ -41,6 +42,7 @@ AI/
   reports/        실험 지표, 그래프, 모델 비교 보고서
   inference_api/  FastAPI 기반 실시간 inference 서버
   data_collection/ 비동기 운영 feature 저장과 실행·정답 이력 관리
+  data_preparation/ 검증된 운영 원본 추출과 학습 데이터셋·분할 구성
 ```
 
 FastAPI 실행:
@@ -168,4 +170,16 @@ python .\scripts\collect_operational_traffic.py
 
 원본은 `data/raw/operational_campaigns/<campaign_id>/`에 보관하고, 최신 품질 결과는 `reports/operational_data_quality.json`과 `.md`에 저장합니다. 송신 전 기대값과 실제 JSONL을 대조해 누락·중복·정답 출처·종료 통계를 검사합니다. 헤더 거부 시나리오는 메시지 관측 불가로 구분하고, 연동 테스트와 불완전 run은 메시지 학습 후보에서 제외합니다.
 
-시나리오·설정·저장 구조·재검사 방법은 `docs/traffic_generation.md`에 정리했습니다. 다음 작업은 운영 메시지 데이터셋 구성과 run/session 단위 train·validation·test 분리입니다. 아직 운영 모델 학습이나 실제 모델 추론 연결은 하지 않았습니다.
+시나리오·설정·저장 구조·재검사 방법은 `docs/traffic_generation.md`에 정리했습니다.
+
+운영 메시지 데이터셋 구성과 고정 분할:
+
+```powershell
+python .\scripts\prepare_operational_dataset.py
+```
+
+`configs/operational_dataset.json`의 원본을 재검증해 메시지 입력 7개, label, metadata를 별도 CSV로 저장합니다. 실제 수집 시각 순서의 반복 묶음으로 run 전체를 나누고 같은 세션이 분할 사이에 섞이지 않도록 검사합니다. 현재 train 126건, validation 138건, test 142건이며 각 분할은 run 6개·세션 24개입니다.
+
+결과는 `data/processed/operational_message/v1/`와 `reports/operational_dataset.json`, `.md`입니다. 기존 결과는 덮어쓰지 않으므로 재구성은 새 `--output-dir`로 실행합니다. 원본이 없는 checkout에서는 먼저 캠페인을 수집하고 `--campaign-dir`로 지정합니다.
+
+이번 단계에서는 scaler와 모델을 fit하지 않았습니다. 다음 작업은 train 전용 전처리와 운영 LR/RF baseline 학습 및 validation 선정입니다. 데이터셋 설명은 `docs/operational_dataset.md`, 최초 목표 기준 남은 7단계는 `docs/project_roadmap.md`에서 확인합니다.

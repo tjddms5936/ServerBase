@@ -1,0 +1,12 @@
+{
+  "config_version": "v1",
+  "dataset_id": "operational_message_v1",
+  "campaign_dirs": ["../data/raw/operational_campaigns/campaign_20261012T050123_b3017a53"],
+  "output_dir": "../data/processed/operational_message/v1",
+  "feature_contract_id": "server_application_message_v2",
+  "split_policy": "chronological_repeat_blocks",
+  "validation_blocks": 1,
+  "test_blocks": 1,
+  "require_all_scenarios_each_split": true,
+  "duplicate_feature_policy": "report"
+}

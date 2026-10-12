@@ -140,4 +140,6 @@ python .\tests\run_collection_e2e.py
 
 정상·통제된 이상 트래픽 생성기와 다중 run 품질 검사는 구현했으며 `docs/traffic_generation.md`에서 실행 방법과 한계를 확인한다. 기본 자동 수집은 `scripts/collect_operational_traffic.py`로 실행하고 원본을 별도 캠페인 디렉터리에 보관한다.
 
-다음 작업은 **운영 메시지 데이터셋 구성과 run/session 단위 train·validation·test 분리**다. `integration_test`, 불완전 run, 메시지 관측 불가 run을 제외하고 여러 수집 실행의 분포를 확인한 뒤 운영 LR/RF를 학습한다. 특히 오류 수 하나로 정답이 구분되는 단순한 사후 지름길과 종료 요약을 실시간 메시지 판단 입력에 섞는 누출을 점검해야 한다. 공개 UNSW 모델은 계속 별도 오프라인 연구 결과로 유지한다.
+운영 메시지 데이터셋 구성과 run/session 단위 train·validation·test 분리도 완료했으며 `docs/operational_dataset.md`에 정리했다. `integration_test`, 불완전 run, 메시지 관측 불가 run을 제외하고 같은 run의 세션을 한 분할에 보관한다.
+
+다음 작업은 **train 전용 전처리와 운영 LR/RF 학습·validation 선정**이다. 특히 오류 수 하나로 정답이 구분되는 단순한 사후 지름길과 종료 요약을 실시간 메시지 판단 입력에 섞는 누출을 점검해야 한다. 공개 UNSW 모델은 계속 별도 오프라인 연구 결과로 유지한다. 최초 목표 기준 남은 7단계는 `docs/project_roadmap.md`에 있다.

@@ -125,4 +125,6 @@ python -m unittest discover -s tests -p "test_*.py"
 
 초기 수집 규모는 파이프라인과 분할 실험을 준비하는 용도다. 품질 검증 통과가 충분한 학습 규모, 대표성 또는 탐지 가능성을 보장하지 않는다. 7개 숫자형 feature로 관측할 수 없는 본문 이상이 있고, 생성기 구현·세션 길이·크기·간격에만 적응하는 편향이 생길 수 있다.
 
-다음 작업은 **운영 데이터셋 구성과 run/session 단위 train·validation·test 분리**다. 종료 요약과 식별 메타데이터는 메시지 입력에서 제외하고 실제 수집된 7개 feature만 사용한다. 가능하면 후속 캠페인을 test로 보관하고, 시나리오별 coverage·분포·중복·관측 한계를 분석한 뒤 운영 LR/RF를 학습한다. 실제 FastAPI 모델 연결과 LSTM 비교는 그 이후에 진행한다.
+운영 데이터셋 구성과 run/session 단위 train·validation·test 분리는 구현했으며 `docs/operational_dataset.md`에서 실행 및 한계를 확인한다. 종료 요약과 식별 메타데이터를 메시지 입력에서 제외하고 실제 수집된 7개 feature만 저장했다.
+
+다음 작업은 train 전용 전처리와 운영 LR/RF 학습·validation 선정이다. 가능하면 후속 독립 캠페인을 확보해 추가 평가하고 시나리오별 coverage·분포·관측 한계를 분석한다. 실제 FastAPI 모델 연결과 LSTM 비교까지의 전체 단계는 `docs/project_roadmap.md`에 있다.

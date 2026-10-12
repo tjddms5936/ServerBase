@@ -2,6 +2,18 @@
 
 이 폴더는 데이터 확인, 전처리, 학습 실행처럼 반복해서 실행하는 Python 스크립트를 모아두는 곳입니다.
 
+## prepare_operational_dataset.py
+
+운영 캠페인을 다시 검증해 메시지의 입력 7개·독립 정답·metadata를 분리하고 시간 순서의 run 단위 train·validation·test를 만듭니다. 모델이나 전처리기를 fit하지 않습니다.
+
+```powershell
+python .\scripts\prepare_operational_dataset.py
+```
+
+설정은 `configs/operational_dataset.json`, 기본 결과는 `data/processed/operational_message/v1/`, 보고서는 `reports/operational_dataset.json`과 `.md`입니다. 기존 결과를 덮어쓰지 않으므로 재실행에는 새 `--output-dir`를 사용합니다. 새 캠페인이나 여러 캠페인은 `--campaign-dir`로 지정합니다. 잘못된 원본·부족한 분할·식별자 누출은 구성을 중단하고 종료 코드 2를 반환합니다.
+
+상세 정책과 CSV 행 대응 규칙은 `docs/operational_dataset.md`에 있습니다.
+
 ## collect_operational_traffic.py
 
 정상·통제된 이상 트래픽을 로컬 C++ 서버에 보내고, 시나리오별 새 run으로 실제 feature를 수집한 뒤 품질을 검사합니다. 두 서버와 클라이언트의 실행·종료를 자동으로 처리합니다.

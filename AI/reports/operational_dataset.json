@@ -1,0 +1,512 @@
+{
+  "report_version": "v1",
+  "generated_at_utc": "2026-10-12T05:40:22.099061+00:00",
+  "dataset_id": "operational_message_v1",
+  "status": "complete",
+  "output_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v1",
+  "feature_contract_id": "server_application_message_v2",
+  "feature_count": 7,
+  "feature_order": [
+    "packet_size",
+    "payload_size",
+    "connection_duration_ms",
+    "message_interval_ms",
+    "bytes_received_total",
+    "bytes_sent_total",
+    "error_count_total"
+  ],
+  "total_message_rows": 406,
+  "selected_runs": 18,
+  "splits": {
+    "train": {
+      "rows": 126,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 64,
+        "1": 62
+      },
+      "scenario_distribution": {
+        "controlled_burst_chat": 54,
+        "malformed_chat_payload": 4,
+        "malformed_length_chat": 4,
+        "normal_batched_chat": 17,
+        "normal_chat": 24,
+        "normal_fragmented_chat": 23
+      }
+    },
+    "validation": {
+      "rows": 138,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 74,
+        "1": 64
+      },
+      "scenario_distribution": {
+        "controlled_burst_chat": 56,
+        "malformed_chat_payload": 4,
+        "malformed_length_chat": 4,
+        "normal_batched_chat": 23,
+        "normal_chat": 27,
+        "normal_fragmented_chat": 24
+      }
+    },
+    "test": {
+      "rows": 142,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 76,
+        "1": 66
+      },
+      "scenario_distribution": {
+        "controlled_burst_chat": 58,
+        "malformed_chat_payload": 4,
+        "malformed_length_chat": 4,
+        "normal_batched_chat": 28,
+        "normal_chat": 24,
+        "normal_fragmented_chat": 24
+      }
+    }
+  },
+  "blocks": [
+    {
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:0",
+      "split": "train",
+      "start_at_utc": "2026-10-12T05:01:24.364350+00:00",
+      "end_at_utc": "2026-10-12T05:01:37.787970+00:00",
+      "run_ids": [
+        "campaign_20261012T050123_b3017a53_r00_controlled_burst_chat",
+        "campaign_20261012T050123_b3017a53_r00_malformed_chat_payload",
+        "campaign_20261012T050123_b3017a53_r00_malformed_length_chat",
+        "campaign_20261012T050123_b3017a53_r00_normal_batched_chat",
+        "campaign_20261012T050123_b3017a53_r00_normal_chat",
+        "campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat"
+      ]
+    },
+    {
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "start_at_utc": "2026-10-12T05:01:40.326020+00:00",
+      "end_at_utc": "2026-10-12T05:01:54.351464+00:00",
+      "run_ids": [
+        "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+        "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+        "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+        "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+        "campaign_20261012T050123_b3017a53_r01_normal_chat",
+        "campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat"
+      ]
+    },
+    {
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:2",
+      "split": "test",
+      "start_at_utc": "2026-10-12T05:01:57.329695+00:00",
+      "end_at_utc": "2026-10-12T05:02:10.530095+00:00",
+      "run_ids": [
+        "campaign_20261012T050123_b3017a53_r02_controlled_burst_chat",
+        "campaign_20261012T050123_b3017a53_r02_malformed_chat_payload",
+        "campaign_20261012T050123_b3017a53_r02_malformed_length_chat",
+        "campaign_20261012T050123_b3017a53_r02_normal_batched_chat",
+        "campaign_20261012T050123_b3017a53_r02_normal_chat",
+        "campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat"
+      ]
+    }
+  ],
+  "identity_overlaps": {
+    "train__validation": {
+      "runs": 0,
+      "sessions": 0,
+      "rows": 0
+    },
+    "train__test": {
+      "runs": 0,
+      "sessions": 0,
+      "rows": 0
+    },
+    "validation__test": {
+      "runs": 0,
+      "sessions": 0,
+      "rows": 0
+    }
+  },
+  "duplicate_features": {
+    "duplicate_feature_groups": 0,
+    "cross_split_feature_groups": 0,
+    "cross_split_feature_rows": 0,
+    "conflicting_label_feature_groups": 0,
+    "pairwise_shared_feature_groups": {
+      "train__validation": 0,
+      "train__test": 0,
+      "validation__test": 0
+    }
+  },
+  "excluded_sources": [
+    {
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r00_invalid_frame_size",
+      "scenario_id": "invalid_frame_size",
+      "reason": [
+        "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+      ]
+    },
+    {
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_invalid_frame_size",
+      "scenario_id": "invalid_frame_size",
+      "reason": [
+        "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+      ]
+    },
+    {
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r02_invalid_frame_size",
+      "scenario_id": "invalid_frame_size",
+      "reason": [
+        "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+      ]
+    }
+  ],
+  "source_quality": [
+    {
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "passed": true,
+      "passed_runs": 21,
+      "run_count": 21,
+      "validator_sha256": "98f90165c11911da422b0ecdcb5a02eedf0d9d92be62d2b8539b500023836c71",
+      "campaign_manifest_sha256": "206249190c7cf900e85e0ceeeef557bf208838147b9aaa95b15d875779e7c9ee"
+    }
+  ],
+  "training_feature_statistics": {
+    "packet_size": {
+      "minimum": 9,
+      "maximum": 526,
+      "unique_values": 5
+    },
+    "payload_size": {
+      "minimum": 1,
+      "maximum": 518,
+      "unique_values": 5
+    },
+    "connection_duration_ms": {
+      "minimum": 0.105,
+      "maximum": 234.632,
+      "unique_values": 126
+    },
+    "message_interval_ms": {
+      "minimum": 0.0,
+      "maximum": 51.536,
+      "unique_values": 92
+    },
+    "bytes_received_total": {
+      "minimum": 9,
+      "maximum": 4018,
+      "unique_values": 54
+    },
+    "bytes_sent_total": {
+      "minimum": 0,
+      "maximum": 288,
+      "unique_values": 10
+    },
+    "error_count_total": {
+      "minimum": 0,
+      "maximum": 0,
+      "unique_values": 1
+    }
+  },
+  "constant_training_features": [
+    "error_count_total"
+  ],
+  "preprocessing_fitted": false,
+  "model_training_performed": false,
+  "config_snapshot": {
+    "config_version": "v1",
+    "dataset_id": "operational_message_v1",
+    "campaign_dirs": [
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53"
+    ],
+    "output_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v1",
+    "feature_contract_id": "server_application_message_v2",
+    "split_policy": "chronological_repeat_blocks",
+    "validation_blocks": 1,
+    "test_blocks": 1,
+    "require_all_scenarios_each_split": true,
+    "duplicate_feature_policy": "report"
+  },
+  "source_file_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\campaign_manifest.json": "206249190c7cf900e85e0ceeeef557bf208838147b9aaa95b15d875779e7c9ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_normal_chat.json": "5bc027acb6915dbad887808b5c91aab3bcf9647c7ef97993e4bbee4115351794",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_chat\\features.jsonl": "f30cf3d011f8f200bc02d491ca42a4245baec0d038450c7b53ad99a9f4889203",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_chat\\run_manifest.json": "ab56cff3c0d51c06084f3b21d607209be4538707aaaab37d33bcfb6aa40fc68f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_chat\\collection_summary.json": "8b03f598b9996e9bd8e5a667cfe7f036163b122426c8cbb44d35c530cf02cd6b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_normal_chat_traffic.json": "b266a45a38d366e944aa3d6bf52f8f3c122dcda58119fe641863a7ec7ca975dc",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_normal_chat_runtime.json": "75a4295d1b009ddda498f3b822bdfdbb71586a073f36e271797bf8c8a9986063",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat.json": "84f2abd582c7fa7378a2ea2664ecc756e35ed0abad97bde7ae2b074480f5f812",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat\\features.jsonl": "0a36ba7650482a6dd5dc4dd817985a403a6feeab15a53646155fd8fe75d4c298",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat\\run_manifest.json": "67b9afef0d2891828802c6683c8248aff39168759829c009368e0f3fbd175029",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat\\collection_summary.json": "7ebc15f873a166d600fed310ce575e2d4d153ec57a56d72acbf283ae1c4940b8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat_traffic.json": "02a93f0c97fb26c24fe878dbae57d5936e658bd37520be76a926ce75c18a7fb9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat_runtime.json": "4d83f340654d59156e21d415749cbe84330ee1e6d3f00a8867b6fd8d1d3f09c3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_normal_batched_chat.json": "56e1f49afe89c96fac2fc81f16466788fd559cf01c3451f298e4200b3ec878e0",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_batched_chat\\features.jsonl": "4d606ae4027d36770f5a36226e8348bb0496401ab4fed04648dfad9d6ca57092",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_batched_chat\\run_manifest.json": "fabe6950d0b77de11228c77064723a061b71eb4a8c2c7e3966a97e81d5a61738",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_normal_batched_chat\\collection_summary.json": "c6a1ae78281d2be48589838a73f75c274ace048a3ee52e33ae8fc8d1d34cf7f2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_normal_batched_chat_traffic.json": "b5258f4b6f1194ae7fe624ed7e5ffc914f17b58b6f7e72c8e0b6b240db88f8c8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_normal_batched_chat_runtime.json": "d2c559acfcdc8eaef738971c8a1b3f6910ac9e7ee2204631f1252f3da0427905",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_controlled_burst_chat.json": "78a721415df30f1c62b869d14fbc4f3148fd4fafb37c61d5bfba3ea782ed1206",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_controlled_burst_chat\\features.jsonl": "d5bb7e55123bc92f8b5f0dc9f484a0b9cf99777935dd916b9b09a779eff46d2d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_controlled_burst_chat\\run_manifest.json": "65bbce53a2c532d4413768c460419ec47b8ad4ab32d424f8a6856efddfd2bf61",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_controlled_burst_chat\\collection_summary.json": "b6ab4beae0f46043ff203ca381119172e7f0e3c4181edd0cb86ffa13681821fe",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_controlled_burst_chat_traffic.json": "1faa3ac7753314abda5a3008c7c8ab9bde3d6946f35e96600c4536463eec3d52",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_controlled_burst_chat_runtime.json": "74a5ae45c011bc4276bdc321717c4df1b59d6d80302e2d6003957fd3327b159f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_malformed_chat_payload.json": "65ab48a0fbd00e8fb8a2bcf43660040abe39a138e2219da10d68947b0500cfeb",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_malformed_chat_payload\\features.jsonl": "e1281b3c0e2a7233ab33899b6c4684a748160376dd3ca0ed4e00f2d8a3c1b9d2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_malformed_chat_payload\\run_manifest.json": "5986493e56173dd0094340959cae024347edc654c602cb6ff098c5abb1fd169c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_malformed_chat_payload\\collection_summary.json": "e82328c7c257e3d422c8086c49e82d018ea98f7751e55a1910809313a4fe4684",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_malformed_chat_payload_traffic.json": "50350873aa79e9fbe758c97533e5e9683fc0590a8cfedeabd98f846f01b5b871",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_malformed_chat_payload_runtime.json": "6742652e13fbf0fe98f0568c07fd20d5f1e89de1f481ede3851e0c011658a5b7",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_malformed_length_chat.json": "e561a23d4139f3398ffbf426abbf61b674dd0ccac3ad6791575ed25c13b507d6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_malformed_length_chat\\features.jsonl": "06889454499bdc5e4ad4a5ba0ae6989fe64675bd01d0616201fb1a92f0cd63ce",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_malformed_length_chat\\run_manifest.json": "a843dc0049987b6e53489bdd9f803e824bb4acd91e223e6c0fa9ebb3885184f3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_malformed_length_chat\\collection_summary.json": "d88da50e158c55770066e059b5772d0adce634e458a2b95daada2b19ef3168eb",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_malformed_length_chat_traffic.json": "c3e0ee2c586bdf387028fd7eca898165a862a8473726c4ab8da91bf12a2301db",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_malformed_length_chat_runtime.json": "04848787abdbd2acd9409b6f50e967bdf41423a9579e669f41d2a5818dfcdd09",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r00_invalid_frame_size.json": "cd5c9c40108fdd069372a01cf3c17e4052d0a855e12f3b602dbbb60b3d610efa",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_invalid_frame_size\\features.jsonl": "d44528402c24c59ad82b875e8026d39220a509991795127e04eede50a4744dec",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_invalid_frame_size\\run_manifest.json": "60a33568a9ed7f88c634326083ffa041c3eba9bc9937dd4a284cc8ec375b1725",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r00_invalid_frame_size\\collection_summary.json": "5f4f2d3a95f3140100159c6affa116ceb46538056bed67017cb89bf3061d09bb",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_invalid_frame_size_traffic.json": "c618e695469af89bfa1185c724bf9c48a491cbbaffc8f8aab66d99d27236c632",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r00_invalid_frame_size_runtime.json": "aeb2f1a1b381621c0b8596405871c2536ca153bb79fd78d5c0010d9c7111f50d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_normal_chat.json": "5b83b91889308d9d2dec0eca4feb5a666b9c4b8c0f8ce72dde298769b3675977",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_chat\\features.jsonl": "276fb5e49bff7ecac3eb6e4d4580a408bd0e5dba85eef1700342e711f159adb6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_chat\\run_manifest.json": "45a64054c10fe2982fab51b376d5019cd0ecd45209282d3215814fc21a164c1d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_chat\\collection_summary.json": "f19ddbc531b4ed73c2557784649ba1838cd68bcf0dc93c14a3d8d9f5db4338ca",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_normal_chat_traffic.json": "aa80e8ae43f9b2304acf8217ba693b64cf08012c88f76703fb8e7c8521e05df0",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_normal_chat_runtime.json": "d9318a7f32535e2046e8109270c075d3ee71b0169faf56bf0642fa998926cd24",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat.json": "30608cdefe7be1c86c21aef4abb5e49c92808c21a148d0159995b81b2bf0d6b9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat\\features.jsonl": "211f003006817837e428937c752fd4b606f90f13ed64a6f2634d1280e8f23fd7",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat\\run_manifest.json": "8a0140a18ac005ef0601a027e6bd7fa19bb4d0e4a8a88509902e77da65d6c093",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat\\collection_summary.json": "44436521df8774677d7877442a2e3a1881aba5edd29c0a6f277b4a1935f75718",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat_traffic.json": "39711b1e4a1ed22e49952b836b119aaeb484c2a401cf39c8c42cce02d0d5c524",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat_runtime.json": "a4fdbd8dbb5f2c496c6f740f5f5a31acd6059ce36b149f222351f1c699da6397",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_normal_batched_chat.json": "4ec1c265128b88b925daf169104a54ae8130ecd66fffb3f30c049581c8d3ebdf",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_batched_chat\\features.jsonl": "08c1561324f7ecb8b7d455a2e42245b6514905babe4c8bf503ce52816ec39636",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_batched_chat\\run_manifest.json": "74e194f89fcfbc602943a1eb1b7a55a41d537362e198c3d573d1b49f53f8c807",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_normal_batched_chat\\collection_summary.json": "0106f2cf97d37d3773950e05d27d9fd957aff4c0a6fe068cff6966b23f8c0a29",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_normal_batched_chat_traffic.json": "a4b0cc5981c2865ffd95777c8ee17ec4e67a809e4613df42d532fc5a1533746f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_normal_batched_chat_runtime.json": "06b8b257e9fc34faa0cb37767ff405883cd1d72295a7937517cfc7a02970d5e6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_controlled_burst_chat.json": "f4c04c40842d20807532e0ebf311479989ea4608404ef9e565b287dbb669c7b2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_controlled_burst_chat\\features.jsonl": "5af747e7e74892f7a93405f1a4112ef337cb03d732071f03b79c66604add2917",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_controlled_burst_chat\\run_manifest.json": "12e8daf62d4142484d2f8f71160b9fc8f6f7897298ea65623dec213c8700f62c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_controlled_burst_chat\\collection_summary.json": "b0b13ad91616aac7ea0ccb81be847c16e9125658735542fb9b6b62051379de4d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_controlled_burst_chat_traffic.json": "f64383a1cb44c39a23995de8bc2c9c7a10bcd58d3fc462843bf5838451fb0855",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_controlled_burst_chat_runtime.json": "069a4184a69fddc0684b876073dd2326256b359145bbac08a7e1289a514cdd9c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_malformed_chat_payload.json": "869c6801e23489415eba62313c9245bfb4f9aa35bc954cde02d6f693da29d184",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_malformed_chat_payload\\features.jsonl": "d2acaf64a870abc54dd37359595c1a90c43b299bdbe0257d9f130a7f1e8c633c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_malformed_chat_payload\\run_manifest.json": "cdb01e6b0532d10bedc74497b4f2993ce995cbf798d4967ecc3a8a8d0cbeb0fd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_malformed_chat_payload\\collection_summary.json": "544571f663ff5d81f38d6c62fbabb768aadbd4323c9a726f0c17bf02f9b46b3d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_malformed_chat_payload_traffic.json": "5b37efe9a51455c12e24c53781707419d4ccc4a99d7043b71274fb253b37d682",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_malformed_chat_payload_runtime.json": "d5a7ae7942a0940d67c1aaa4ca630a815d1b5d1c4ab0068ad8eea1da09ac6a74",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_malformed_length_chat.json": "9884973442022f6a940f18ef19553b63eaf0cbe706b1b3b2e510e4f613698875",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_malformed_length_chat\\features.jsonl": "6629f22a88b8749d9244ee450bd3bd6feabd6d066bd186e6ae3e0c44451244cf",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_malformed_length_chat\\run_manifest.json": "fff7e8d106636e4c449649bfc1068340dda7c61acb0e4d15a9528db1b4b9fc99",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_malformed_length_chat\\collection_summary.json": "0abe7ad6c96df39ba25f0ab4af74f35a6d752564f6579ed2b893c98328e54986",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_malformed_length_chat_traffic.json": "c5232e70878a3e0c28c73af23cc2b5569e2aceaa9a1591093f8697ce716f881b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_malformed_length_chat_runtime.json": "3ca3938383149e46f1e7372a9d14afb57b06a95a99cc6854ac49e16e1c82dddb",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r01_invalid_frame_size.json": "52801ec2b1a28a0a334965dae188cc8a9951e8799eb413712f3848f559058a40",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_invalid_frame_size\\features.jsonl": "e88e8020c905c3a9b26f0515a966f4a8adc326535dc0059c385e75937a4bd441",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_invalid_frame_size\\run_manifest.json": "1b6b4251da6ff4f89078ef7082517fb6dc55ff293d8c5b394d9918cc4698b6df",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r01_invalid_frame_size\\collection_summary.json": "6cefceb24845f9067ed68270a23560bae30c1cacc19e35fc2f2e1194518fd874",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_invalid_frame_size_traffic.json": "5b5e47eea9bca7874f24d5fc9b1ff42ee7e6eccb8f8f25d7e14f20d595e1bdd1",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r01_invalid_frame_size_runtime.json": "355ab4b78656161bb9be07d83f283e5e6056b922bd845aa89e576ff991cd3128",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_normal_chat.json": "306a16e2514262a3bc33d5152e897df97b7cb257fa7f0740eee001a66d32ba45",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_chat\\features.jsonl": "ae242c94ed53fb89b00d10ee0f892f5df89bf5765c2ab1e4f9ac28c0e7828378",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_chat\\run_manifest.json": "7797205056f1452b3eec10d8545ccf48a2491a64d5122937c79f3e8489dd5954",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_chat\\collection_summary.json": "578dff3591badf91cc4f2eb9a876114c55faaea4476b45d183f0a2f37ac3ff33",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_normal_chat_traffic.json": "cf50b79580a91ba488568037cf2a929af6e618a1a4c4d24d98a914b16139ef19",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_normal_chat_runtime.json": "2574870ba2af3eb410ce57b0ad9ab83ba427fdeb9236bb697e61c5006ed3cc9a",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat.json": "d25730efbdff0bad93733d01fc402a33dff6e05c0e885509c85af39d8776cdd3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat\\features.jsonl": "4def115eac9086c36dd763c903139a1affb14af2362c714cbfb6b82cb71f4bf9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat\\run_manifest.json": "ad34f51cbd3f805c6566a3aca280270985c2ce4f468a7482f1f1cadd1bdf57fa",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat\\collection_summary.json": "77a6cd5d0521d34d596af917f0681fbfb3137aaac6d68fc2591c0ca1f3a62f94",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat_traffic.json": "45d8b49bf7dfcf4f4c96fe1a6036458b31816e3bf8fd095a69ae08d55215f039",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_normal_fragmented_chat_runtime.json": "f37be66a32b5dd47ac9c3b10d2e7482d2af962818d63bbf1255110fa895a1eb9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_normal_batched_chat.json": "f92475c544f70d768c5e6267c45dee769fd3caff52df42002a95c5459e08112c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_batched_chat\\features.jsonl": "3064a26f8d15797d2fa1e52b846bac4a540f8191c7f35399ef2b77ea6cf9b416",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_batched_chat\\run_manifest.json": "d3563953d08a2a1869fa7af054b3a1e742b0e8e5087402decdb0c3ac406f0dac",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_normal_batched_chat\\collection_summary.json": "3b72fc4cddad2d00b5556090a4fc3f942896704220c1b176cebadf94145e26a4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_normal_batched_chat_traffic.json": "3f036546fe3069ba535e38158c10892e6d8bde71ea372c933f5f0611a9581e56",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_normal_batched_chat_runtime.json": "436dea575f1248731dda91717e65185b0d00c8ae664c6dad83529fbf3b491f7f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_controlled_burst_chat.json": "5dca02ac92385259537bc2d84d1a3ea67b8badf8c837d7d27ddaa58e37a90ab8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_controlled_burst_chat\\features.jsonl": "ea39d7747b4e1cef364be1db4840c5b992de656157e6bb9b0a4a3f5f2b4f29da",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_controlled_burst_chat\\run_manifest.json": "f128f3e905ee644a6ae3e2ddfdf1564a6f5f966c5ba046eb8bd540f2421e5b48",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_controlled_burst_chat\\collection_summary.json": "c481e9c1586c11f5b1dc13854a20f4903e7e019d247a402f95fb1448cbcb35b8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_controlled_burst_chat_traffic.json": "d84052e75772445d2992fe1f4e0fef5da9fc1732be28d4c73967c1113f4fd0c2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_controlled_burst_chat_runtime.json": "aff2b71c518e069977298c52d8b204b6903f7f815e6427e93c6a101d450553af",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_malformed_chat_payload.json": "5f0b89d54a64097e4682f3b708304af91dae1a5ea49c9649cc7b70eef2161c2a",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_malformed_chat_payload\\features.jsonl": "da56afd15add79a0ed6e67ff3d20cc2e46cd755eef87f751f53fc58777c910a6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_malformed_chat_payload\\run_manifest.json": "6d5f89511714c5bad6f6ce17fbf15e314dedf552a7404315d52ebc709398b85d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_malformed_chat_payload\\collection_summary.json": "ecc0f601800787b6879b4c6c81ed6b9e56c9a64c818fa9981efa913402331fea",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_malformed_chat_payload_traffic.json": "4714cedf58f28edd1ff6cfc001f3c4920ad35ff2b0c3a352d2d2a25f761a27b8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_malformed_chat_payload_runtime.json": "f771704ae8764639096ab4135ff2aadee40c5e12359286cf22f06fae94c48fa9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_malformed_length_chat.json": "f94606f8dd017ae2ce5849721c29d47711c4b02701fbb79b94dfbdd841df2503",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_malformed_length_chat\\features.jsonl": "713b61ec2a8c1fbaaa990c24cc26cc8300cf3db2865f4a229021cd5913f9d265",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_malformed_length_chat\\run_manifest.json": "7ff4bd616b76a021161eb1bb6c82e6237f49c6f58ee5fba54cfad21b04775a69",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_malformed_length_chat\\collection_summary.json": "3e937f4e6bbcf567b8fe42741c0df7405cd3df54a13230cb74cc584668292bc1",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_malformed_length_chat_traffic.json": "a830097e5131949ebf0c1c72408066a29422a016b91bb910973c95e17fcf59e3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_malformed_length_chat_runtime.json": "ca658ee1f96f54a94771458355eeb9896f261cc27be3e0e40b71bcf407d5bcdb",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\expectations\\campaign_20261012T050123_b3017a53_r02_invalid_frame_size.json": "2a1ee2412f84131b05e3f953eb375b4ac125074f6a14151ac1850e12b2586efb",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_invalid_frame_size\\features.jsonl": "730b2c77942a9fbe9f7f14cb025b5961812ca10f85da31f67116e9c74187a435",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_invalid_frame_size\\run_manifest.json": "baf7302ceb0df5385d06b790e05c370c4ca5fe5eaa2fa8531bb4cb695379541a",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\runs\\campaign_20261012T050123_b3017a53_r02_invalid_frame_size\\collection_summary.json": "2a36a11f590674f63cc7c081ab1b9c417119037fa3e1d691fb89f3d147420166",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_invalid_frame_size_traffic.json": "88af35829665fef37c2ff97dae142958979f77cf01b932355f9cef229859165d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_campaigns\\campaign_20261012T050123_b3017a53\\outcomes\\campaign_20261012T050123_b3017a53_r02_invalid_frame_size_runtime.json": "88e9a09e521a22d615d638f313c216456c33ccfa0414179da902efc955c276dd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_feature_schema.json": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87"
+  },
+  "contract_sha256": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87",
+  "producer_sha256": "361fb216c245777d7ee8e4e5572a309ae1242ae629195a47a17e20f7a65f5bbc",
+  "output_files": {
+    "X_train.csv": {
+      "rows": 126,
+      "columns": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ],
+      "sha256": "c8801a650b0ac8fd6c928633bb70d4b2210bb17de6931e5070d7ef4ec0b16399"
+    },
+    "y_train.csv": {
+      "rows": 126,
+      "columns": [
+        "label"
+      ],
+      "sha256": "6f2abc1a213ab0a3583b4b779850ec7bb16a0c8a112d9512f5e5d308c32a85d0"
+    },
+    "metadata_train.csv": {
+      "rows": 126,
+      "columns": [
+        "row_id",
+        "campaign_id",
+        "run_id",
+        "scenario_id",
+        "repeat_index",
+        "session_id",
+        "request_index",
+        "queue_sequence_id",
+        "collection_sequence_id",
+        "timestamp",
+        "received_at_utc",
+        "source_line",
+        "block_id",
+        "split",
+        "feature_hash"
+      ],
+      "sha256": "3a8626dcec91322c4dc77f687a2bbd5294a2e1b619543042c7f89c2fa1c37142"
+    },
+    "X_validation.csv": {
+      "rows": 138,
+      "columns": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ],
+      "sha256": "fdb64efa38bc7381d3e182cffe17aa536226ff7432e3f50824844fe69e40cecf"
+    },
+    "y_validation.csv": {
+      "rows": 138,
+      "columns": [
+        "label"
+      ],
+      "sha256": "7799a9300cfa2d2910779fe86a5f98ba69fcb3b6a22a58659de8c61f892f0d8c"
+    },
+    "metadata_validation.csv": {
+      "rows": 138,
+      "columns": [
+        "row_id",
+        "campaign_id",
+        "run_id",
+        "scenario_id",
+        "repeat_index",
+        "session_id",
+        "request_index",
+        "queue_sequence_id",
+        "collection_sequence_id",
+        "timestamp",
+        "received_at_utc",
+        "source_line",
+        "block_id",
+        "split",
+        "feature_hash"
+      ],
+      "sha256": "b8c79fc1b953301b3e41b4212eb4b107dc98d52f3ef7d59709580b466acdd379"
+    },
+    "X_test.csv": {
+      "rows": 142,
+      "columns": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ],
+      "sha256": "7077ea334ddc62d389716603c00be19b8084353797228574af75af0bee4e4ea7"
+    },
+    "y_test.csv": {
+      "rows": 142,
+      "columns": [
+        "label"
+      ],
+      "sha256": "6561f18c7a9ff0c2672774ff04ed41668e3bfd2385faeb16753b6e04fbd66254"
+    },
+    "metadata_test.csv": {
+      "rows": 142,
+      "columns": [
+        "row_id",
+        "campaign_id",
+        "run_id",
+        "scenario_id",
+        "repeat_index",
+        "session_id",
+        "request_index",
+        "queue_sequence_id",
+        "collection_sequence_id",
+        "timestamp",
+        "received_at_utc",
+        "source_line",
+        "block_id",
+        "split",
+        "feature_hash"
+      ],
+      "sha256": "f9171ac835d5b4c0f7cbb100cf25f64ea007ac5d8eff76fe1873b1296723d68a"
+    },
+    "feature_schema.json": {
+      "sha256": "fc2bc80380a166bc0aba4000dd9d78a2561b90575dc93a5f93a27a8dc38830f6"
+    },
+    "label_map.json": {
+      "sha256": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4"
+    },
+    "split_manifest.json": {
+      "sha256": "3d23924aea2490677b9ce0b66fb335c9930eadba41b0e6ad5f2628cbf8d31774"
+    }
+  },
+  "limitations": [
+    "정답은 통제된 시나리오 의도이며 실제 침입 탐지 정답이 아니다.",
+    "초기 3개 반복 묶음은 비율보다 독립성을 우선해 1:1:1로 분리한다. 충분한 데이터 규모를 보장하지 않는다.",
+    "run/session 비중복은 같은 시나리오·생성기·서버에 대한 편향이나 분포 이동을 해결하지 않는다.",
+    "동일 feature 벡터는 별도로 보고한다. 같은 feature를 가진 서로 다른 실행을 자동 삭제하거나 정답을 바꾸지 않는다.",
+    "종료 요약은 원본 품질 확인에만 사용하며 메시지 입력이나 정답 생성에 사용하지 않는다.",
+    "test는 최종 평가용이다. 모델 설정·threshold 선택 및 전처리 fit에는 사용하지 않는다.",
+    "추후 LSTM 창은 분할 완료 후 각 split의 run/session 내부에서만 구성해야 한다."
+  ]
+}
