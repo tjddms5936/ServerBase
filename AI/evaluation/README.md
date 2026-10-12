@@ -8,7 +8,20 @@
 analyze_logistic_errors.py
 compare_baselines.py
 audit_feature_alignment.py
+audit_operational_data.py
 ```
+
+## audit_operational_data.py
+
+보관한 자동 트래픽 수집 캠페인의 사전 기대값, 실제 JSONL, 독립 정답, 송수신 결과와 정상 종료 통계를 대조합니다. 누락·중복·의미 버전 혼입·정답 출처 불일치를 검출하고 run/세션/메시지 단위 분포를 보고합니다. 학습이나 모델 성능 평가를 수행하지 않습니다.
+
+```powershell
+python .\evaluation\audit_operational_data.py --campaign-dir "원본_캠페인_절대_경로"
+```
+
+최신 결과는 `reports/operational_data_quality.json`과 `.md`에 저장하며 검사 실패 시 종료 코드 2를 반환합니다. 메시지 관측 불가·연동 테스트·불완전 run의 학습 후보 제외 규칙은 `docs/traffic_generation.md`에서 확인합니다.
+
+## 오프라인 Baseline 평가
 
 저장된 Logistic Regression baseline과 UNSW-NB15 test 데이터를 이용해 공격 유형별 Recall, False Negative, False Positive 특성을 분석합니다.
 

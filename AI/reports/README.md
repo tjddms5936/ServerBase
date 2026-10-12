@@ -16,6 +16,8 @@ feature_alignment.json
 feature_alignment.md
 runtime_hardening_e2e.json
 data_collection_e2e.json
+operational_data_quality.json
+operational_data_quality.md
 logistic_error_analysis.json
 logistic_error_analysis.md
 model_comparison.md
@@ -35,6 +37,8 @@ figures/
 - `feature_alignment.md`: 메시지 7개와 종료 요약 8개의 단위·관측 범위, UNSW 대응 불가 사유와 수집 한계를 정리한 보고서입니다. 운영 성능 평가 결과가 아닙니다.
 - `runtime_hardening_e2e.json`: 실제 C++ 서버/FastAPI에서 정상 메시지와 잘못된 payload/ID/크기 8개 시나리오의 v2 JSON, dummy 응답 및 오류 1회 집계 결과입니다. 학습 데이터나 탐지 성능 지표가 아닙니다.
 - `data_collection_e2e.json`: 독립된 정상/비정상 두 run에서 실제 C++ feature의 JSONL 보관, 독립 정답 참조, 서버·API 정상 종료와 최종 flush를 검증한 보고서입니다. 임시 원본은 제거하며 학습 데이터로 사용하지 않습니다.
+- `operational_data_quality.json`: 보관한 다중 run 캠페인의 사전 기대값 대조, 원본 누락·중복·정답 출처·실행 종료 검사, 시나리오·run·세션·메시지 정답 분포와 메시지 학습 후보입니다. 실제 모델 성능이 아닙니다.
+- `operational_data_quality.md`: 해당 캠페인의 결과, 제외 사유·관측 불가 범위와 다음 데이터셋 분리 작업을 설명하는 한글 보고서입니다. 최신 보고서가 참조하는 실제 원본은 raw 캠페인 디렉터리에 보관합니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

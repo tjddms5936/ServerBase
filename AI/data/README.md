@@ -19,6 +19,12 @@ C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 
 
 실제 학습 전에는 불완전 run과 `integration_test` 실행을 제외하고 run/session 단위 분리·분포·정답의 한계를 검토해야 합니다. 실행 방법과 상세 규칙은 `docs/operational_data_collection.md`에 있습니다.
 
+## raw/operational_campaigns
+
+자동 트래픽 생성기의 여러 실행을 캠페인별로 보관하는 위치입니다. 사전 기대값·실행 설정·클라이언트 송수신 결과·프로세스 로그와 각 run의 실제 JSONL 원본, 독립 정답 manifest, 수집 종료 통계를 함께 보관합니다. 실행 후 원본을 자동 삭제하지 않으며 Git에는 올리지 않습니다.
+
+품질 검사에서 잘못된·누락된·중복된 레코드와 정답 혼입을 검출하고, 메시지 관측 불가·연동 테스트 run을 메시지 학습 후보에서 제외합니다. 구조와 재검사 명령은 `docs/traffic_generation.md`에 있습니다.
+
 ## raw/unsw_nb15
 
 UNSW-NB15 원본 CSV 파일을 넣는 위치입니다.

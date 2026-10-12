@@ -17,6 +17,7 @@
 - FastAPI 입력 순서·타입 일치 검사와 모델 schema 호환성 검사
 - 오류 집계·종료 snapshot 고정 및 v2 의미 버전 기반 FastAPI strict 입력 검증
 - 독립 시나리오 정답과 run별 provenance를 보관하는 비동기 bounded JSONL 수집기
+- 정상·통제된 이상 트래픽 생성기, 다중 run 수집과 누락·중복·정답 분포 검증
 
 학습 로드맵:
 
@@ -155,4 +156,16 @@ python .\scripts\run_collection_api.py --scenario-id normal_chat
 python .\tests\run_collection_e2e.py
 ```
 
-보고서는 `reports/data_collection_e2e.json`이며 임시 테스트 원본은 제거합니다. 실제 모델 추론이나 학습용 데이터 생성은 아닙니다. 실행·저장 형식·유실 통계·한계는 `docs/operational_data_collection.md`에서 확인합니다. 다음 작업은 정상/통제된 이상 트래픽 생성기와 여러 run의 수집 계획·데이터 품질 검증입니다.
+보고서는 `reports/data_collection_e2e.json`이며 임시 테스트 원본은 제거합니다. 실제 모델 추론이나 학습용 데이터 생성은 아닙니다. 실행·저장 형식·유실 통계·한계는 `docs/operational_data_collection.md`에서 확인합니다.
+
+정상·통제된 이상 트래픽 자동 생성과 다중 run 수집:
+
+```powershell
+python .\scripts\collect_operational_traffic.py
+```
+
+기존 4000/8000 포트의 서버와 클라이언트를 먼저 종료합니다. 이 도구가 C++ 서버, 수집 API, 로컬 클라이언트를 직접 실행하고 종료합니다. 기본 계획은 정상 3종과 통제된 이상 4종을 각각 3번 실행하는 21개 run입니다. 외부 주소로 연결하거나 무제한 요청을 보내지 않습니다.
+
+원본은 `data/raw/operational_campaigns/<campaign_id>/`에 보관하고, 최신 품질 결과는 `reports/operational_data_quality.json`과 `.md`에 저장합니다. 송신 전 기대값과 실제 JSONL을 대조해 누락·중복·정답 출처·종료 통계를 검사합니다. 헤더 거부 시나리오는 메시지 관측 불가로 구분하고, 연동 테스트와 불완전 run은 메시지 학습 후보에서 제외합니다.
+
+시나리오·설정·저장 구조·재검사 방법은 `docs/traffic_generation.md`에 정리했습니다. 다음 작업은 운영 메시지 데이터셋 구성과 run/session 단위 train·validation·test 분리입니다. 아직 운영 모델 학습이나 실제 모델 추론 연결은 하지 않았습니다.

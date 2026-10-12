@@ -2,6 +2,18 @@
 
 이 폴더는 데이터 확인, 전처리, 학습 실행처럼 반복해서 실행하는 Python 스크립트를 모아두는 곳입니다.
 
+## collect_operational_traffic.py
+
+정상·통제된 이상 트래픽을 로컬 C++ 서버에 보내고, 시나리오별 새 run으로 실제 feature를 수집한 뒤 품질을 검사합니다. 두 서버와 클라이언트의 실행·종료를 자동으로 처리합니다.
+
+```powershell
+python .\scripts\collect_operational_traffic.py
+```
+
+기본 계획은 7개 시나리오 × 3회입니다. 원본은 `data/raw/operational_campaigns/<campaign_id>/`, 최신 검증 보고서는 `reports/operational_data_quality.json`과 `.md`에 저장합니다. 이미 사용 중인 4000/8000 포트는 건드리지 않으며 외부 주소로 연결하지 않습니다. `--repeats 1 --dataset-purpose integration_test`는 학습 후보에서 제외되는 빠른 검사입니다.
+
+실행 전에 작성한 기대값, 실제 응답, JSONL 누락·중복, 독립 정답과 종료 통계를 함께 검증합니다. 상세 시나리오와 한계는 `docs/traffic_generation.md`에서 확인합니다.
+
 ## run_collection_api.py
 
 독립 시나리오 manifest와 C++ 실행 파일 SHA-256을 이용해 새 run을 구성하고, JSONL 수집이 켜진 단일 worker FastAPI를 실행합니다. 이 스크립트가 C++ 서버나 트래픽 발생기를 대신 실행하지는 않습니다.
