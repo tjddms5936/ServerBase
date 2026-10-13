@@ -29,14 +29,14 @@ from inference_api.payload_validation import OPERATIONAL_CONTRACT
 
 
 def make_campaign(directory: Path, campaign_id: str = "fixture", repeats: int = 3,
-                  purpose: str = "controlled_experiment", offset_seconds: int = 0) -> Path:
+                  purpose: str = "controlled_experiment", offset_seconds: int = 0, seed: int = 42) -> Path:
     # 실제 서버를 실행하지 않는 단위 테스트 원본이다. 임시 폴더 밖에는 저장하지 않는다.
     executable = directory / "fixture_server.exe"
     executable.write_bytes(b"unit-test-only")
     profiles = [TrafficProfile(scenario_id=name, sessions=1, concurrency=1,
                                messages_min=2, messages_max=2, text_sizes=[16])
                 for name in ("normal_chat", "malformed_length_chat", "invalid_frame_size")]
-    plan = CampaignPlan(plan_version="v1", seed=42, repeats=repeats, profiles=profiles)
+    plan = CampaignPlan(plan_version="v1", seed=seed, repeats=repeats, profiles=profiles)
     root = prepare_campaign(plan, campaign_id, directory, executable,
                             AI_ROOT / "configs" / "collection_scenarios.json", purpose)
     campaign = read_json(root / "campaign_manifest.json")

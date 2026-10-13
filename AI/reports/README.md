@@ -20,6 +20,29 @@ operational_data_quality.json
 operational_data_quality.md
 operational_dataset.json
 operational_dataset.md
+operational_logistic_regression.json
+operational_logistic_regression.md
+operational_random_forest.json
+operational_random_forest.md
+operational_baseline_comparison.json
+operational_baseline_comparison.md
+operational_validation_experiment.json
+operational_validation_experiment.md
+operational_error_analysis.json
+operational_error_analysis.md
+operational_error_analysis.csv
+operational_augmentation_collection.json
+operational_augmentation_collection.md
+operational_dataset_v2.json
+operational_dataset_v2.md
+operational_frozen_baseline_audit.json
+operational_frozen_baseline_audit.md
+operational_frozen_baseline_audit.predictions.csv
+operational_frozen_baseline_audit.errors.csv
+operational_augmentation_validation.json
+operational_augmentation_validation.md
+operational_augmentation_comparison.json
+operational_augmentation_comparison.md
 logistic_error_analysis.json
 logistic_error_analysis.md
 model_comparison.md
@@ -43,6 +66,24 @@ figures/
 - `operational_data_quality.md`: 해당 캠페인의 결과, 제외 사유·관측 불가 범위와 다음 데이터셋 분리 작업을 설명하는 한글 보고서입니다. 최신 보고서가 참조하는 실제 원본은 raw 캠페인 디렉터리에 보관합니다.
 - `operational_dataset.json`: 운영 메시지의 고정 run/session 분할, 정답·시나리오 분포, 식별자 및 feature 중복, 제외 원본, train 전용 진단, 원본·출력·생성 코드 해시입니다. 전처리나 모델 학습 결과는 아닙니다.
 - `operational_dataset.md`: train·validation·test의 실제 크기·분할 원칙·제외 사유와 해석 한계를 정리한 한글 보고서입니다. test 성능 지표를 포함하지 않습니다.
+- `operational_logistic_regression.json`: 운영 train 전용 scaler/LR 학습 조건, 가중치·기본값, 실제 반복·수렴 상태, train/validation 지표, 시나리오별 FP/FN과 입력·코드·산출물 해시입니다. test CSV는 읽지 않고 threshold=0.5를 고정했습니다.
+- `operational_logistic_regression.md`: 초기 운영 LR의 실제 결과·오탐·누락·한계와 다음 RF 비교 작업을 정리합니다. 최종 모델 선정이나 실제 침입 탐지 성능 보고서가 아닙니다.
+- `operational_random_forest.json`: 운영 train 전용 RF 초기 학습 조건, 실제 트리 수·깊이·노드 수, 불순도 감소 중요도, train/validation 지표·시나리오별 FP/FN과 해시입니다. threshold=0.5를 고정하고 test는 읽지 않습니다.
+- `operational_random_forest.md`: 해당 RF 실험 결과·한계와 LR 비교 및 후속 validation 선정 작업을 설명합니다.
+- `operational_baseline_comparison.json`: 두 모델의 입력·분할·산출물·보고서 검증 후 같은 validation 재예측 지표, 시나리오별 Recall/FPR, 수정·신규 FP/FN과 예측이 달라진 row_id·확률을 보관합니다.
+- `operational_baseline_comparison.md`: RF에서 오탐이 줄었지만 누락이 증가한 실제 초기 결과를 설명합니다. 최종 모델 선정이나 지연시간·메모리 benchmark가 아닙니다.
+- `operational_validation_experiment.json`: 학습 전에 고정한 6개 후보·7개 threshold·FPR/Recall 제약, 전체 42개 조합 지표·시나리오별 결과·탈락 이유, 후보 수렴·임시 baseline 선정·해시를 보관합니다. Test는 읽지 않고 Validation 합산 재학습도 하지 않습니다.
+- `operational_validation_experiment.md`: 실제 선정 LR C=1·threshold=0.7의 근거와 오탐 감소·누락 증가, malformed 시나리오 Recall 0 및 다음 관측 한계 분석을 설명합니다. 최종 모델 확정이나 독립적인 최종 성능 평가가 아닙니다.
+- `operational_error_analysis.json`: 선정 모델의 Validation 오분류·세션 prefix·입력 범위, LR 기여도·가까운 반대 정답 Train 예시, 본문 정보 구성 반례·source 해시와 독립 보강 설계입니다. 재학습·Test 평가·새 수집은 하지 않았습니다.
+- `operational_error_analysis.md`: FP 3건·FN 24건의 위치와 두 malformed 시나리오의 서로 다른 관측 한계를 설명합니다. 원인 확정이나 독립 성능 평가가 아닙니다.
+- `operational_error_analysis.csv`: 오분류 27건의 row_id·run/session·메시지·원본 행 번호·입력 7개·정답·예측·확률·threshold입니다. 추적용 파생 보고서이며 새 학습 데이터가 아닙니다.
+- `operational_augmentation_collection.json/.md`: 독립 캠페인 6개의 사전 역할·계획·기준 모델 해시, 실제 run·누락·중복·종료·정답 분포, 제어 coverage와 Train/Validation 송신·파싱 관측을 보관합니다. 모델 학습·예측·Test 성능 평가는 하지 않습니다.
+- `operational_dataset_v2.json/.md`: 사전 캠페인 단위 Train/Validation/Test 분할의 크기, 식별자 중복, feature 값 중복, 헤더 거부 제외 사유, 원본·출력 SHA-256입니다. v1 데이터셋 보고서를 덮어쓰지 않습니다.
+- `operational_frozen_baseline_audit.json/.md`: 기존 LR·threshold 0.7로 새 Validation 513건만 예측한 전체·시나리오·run 지표, 세션 첫 양성·burst prefix·헤더 거부 coverage와 입력·모델 보존 해시입니다. 재학습·Train 예측·Test 접근·threshold 변경은 하지 않았습니다.
+- `operational_frozen_baseline_audit.predictions.csv`: 새 Validation 전체의 식별자·입력 7개·정답·확률·예측·0.7 threshold·오류 종류입니다. 정답은 기존 독립 시나리오 정의를 유지합니다.
+- `operational_frozen_baseline_audit.errors.csv`: 정상 오탐 92건·이상 누락 46건, 총 138건의 추적 자료입니다. 이 파일을 새 정답이나 추가 학습 데이터로 자동 사용하지 않습니다.
+- `operational_augmentation_validation.json/.md`: 새 Train 1,538건 전용 LR/RF 후보 6개 직접 학습·수렴/트리 기록과 학습 전 고정한 42개 조합·제약·선정 근거입니다. Validation 513건에서 RF leaf=5·threshold=0.3을 선정했습니다. Test는 읽지 않습니다.
+- `operational_augmentation_comparison.json/.md`: 같은 Validation 행에서 기존 LR 0.7, 보강 LR/RF 0.7, 모델별 제약 충족 최적 정책을 구분한 지표·수정/신규 오분류·모든 변경 row_id·burst prefix·입력/모델 보존 근거입니다. 이미 진단한 Validation의 개발 비교이며 최종 성능·배포 결과가 아닙니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

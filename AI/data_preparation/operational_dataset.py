@@ -9,7 +9,7 @@ from itertools import combinations
 from pathlib import Path
 from typing import Annotated, Literal
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
 from data_collection.config import StrictModel
 from data_collection.quality import CollectedRecord, audit_campaign, inside_path, parse_json, read_json
@@ -28,16 +28,26 @@ METADATA_COLUMNS = [
 
 
 class DatasetConfig(StrictModel):
-    config_version: Literal["v1"] = "v1"
+    config_version: Literal["v1", "v2"] = "v1"
     dataset_id: Annotated[str, Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$")]
     campaign_dirs: Annotated[list[Path], Field(min_length=1)]
     output_dir: Path
     feature_contract_id: Literal["server_application_message_v2"] = "server_application_message_v2"
-    split_policy: Literal["chronological_repeat_blocks"] = "chronological_repeat_blocks"
+    split_policy: Literal["chronological_repeat_blocks", "preassigned_campaign_holdout"] = "chronological_repeat_blocks"
+    campaign_registry: Path | None = None
     validation_blocks: Annotated[int, Field(ge=1, strict=True)] = 1
     test_blocks: Annotated[int, Field(ge=1, strict=True)] = 1
     require_all_scenarios_each_split: bool = Field(default=True, strict=True)
     duplicate_feature_policy: Literal["report", "error"] = "report"
+
+    @model_validator(mode="after")
+    def validate_policy(self) -> DatasetConfig:
+        if self.split_policy == "preassigned_campaign_holdout":
+            if self.config_version != "v2" or self.campaign_registry is None:
+                raise ValueError("캠페인 사전 분리에는 v2 설정과 송신 전 역할 registry가 필요합니다.")
+        elif self.campaign_registry is not None:
+            raise ValueError("반복 묶음 정책에 캠페인 역할 registry를 섞지 않습니다.")
+        return self
 
 
 def load_config(path: Path) -> DatasetConfig:
@@ -45,6 +55,8 @@ def load_config(path: Path) -> DatasetConfig:
     values = read_json(path)
     values["campaign_dirs"] = [(path.parent / Path(item)).resolve() for item in values["campaign_dirs"]]
     values["output_dir"] = (path.parent / Path(values["output_dir"])).resolve()
+    if values.get("campaign_registry") is not None:
+        values["campaign_registry"] = (path.parent / Path(values["campaign_registry"])).resolve()
     return DatasetConfig.model_validate(values)
 
 
@@ -86,12 +98,31 @@ def load_runs(config: DatasetConfig) -> tuple[list[dict], list[dict], dict[str, 
     runs, excluded, evidence, quality = [], [], {}, []
     campaign_ids, run_ids = set(), set()
     current_contract_hash = file_hash(CONTRACT_FILE)
+    registry = read_json(config.campaign_registry) if config.campaign_registry is not None else None
+    if registry is not None:
+        entries = registry["campaigns"]
+        if (registry.get("assignment_version") != "v1" or registry.get("prepared_before_collection") is not True or
+                registry.get("split_policy") != config.split_policy or
+                len({entry["campaign_id"] for entry in entries}) != len(entries) or
+                len({entry["slot_id"] for entry in entries}) != len(entries) or
+                len({entry["seed"] for entry in entries}) != len(entries) or
+                {Path(entry["campaign_dir"]).resolve() for entry in entries} != set(roots) or
+                {entry["split"] for entry in entries} != set(SPLITS)):
+            raise ValueError("사전 캠페인 역할·seed·원본 집합이 registry와 다릅니다.")
+        evidence[str(config.campaign_registry.resolve())] = file_hash(config.campaign_registry)
     for root in roots:
         campaign = read_json(root / "campaign_manifest.json")
         campaign_id = campaign["campaign_id"]
         if campaign_id in campaign_ids:
             raise ValueError("서로 다른 입력 경로의 campaign_id가 중복되었습니다.")
         campaign_ids.add(campaign_id)
+        if registry is not None:
+            entry = next((entry for entry in registry["campaigns"] if entry["campaign_id"] == campaign_id), None)
+            if (entry is None or Path(entry["campaign_dir"]).resolve() != root or
+                    campaign["plan_snapshot"] != entry["plan_snapshot"] or
+                    campaign["plan_snapshot"]["seed"] != entry["seed"] or
+                    utc_time(registry["locked_at_utc"]) > utc_time(campaign["created_at_utc"])):
+                raise ValueError("캠페인 원본·계획·생성 시각이 송신 전 역할 고정과 다릅니다.")
         evidence.update(snapshot_inputs(root, campaign))
         if campaign["dataset_purpose"] == "integration_test":
             excluded.append({"campaign_id": campaign_id, "reason": "integration_test 캠페인은 학습에 사용하지 않습니다.",
@@ -108,6 +139,8 @@ def load_runs(config: DatasetConfig) -> tuple[list[dict], list[dict], dict[str, 
                         "campaign_manifest_sha256": checked["campaign_manifest_sha256"]})
         if checked["campaign_issues"]:
             raise ValueError(f"캠페인 식별/계획 검증이 실패했습니다: {checked['campaign_issues']}")
+        if registry is not None and not checked["passed"]:
+            raise ValueError("캠페인 holdout은 일부 통과 run만 골라 승인하지 않습니다. 실패 캠페인을 격리하세요.")
         checked_runs = {result["run_id"]: result for result in checked["runs"]}
         for entry in campaign["runs"]:
             result = checked_runs[entry["run_id"]]
@@ -156,13 +189,17 @@ def load_runs(config: DatasetConfig) -> tuple[list[dict], list[dict], dict[str, 
 def split_runs(runs: list[dict], config: DatasetConfig) -> tuple[dict[str, list[dict]], list[dict]]:
     groups = defaultdict(list)
     for run in runs:
-        groups[(run["campaign_id"], run["repeat_index"])].append(run)
+        groups[(run["campaign_id"], "campaign" if config.split_policy == "preassigned_campaign_holdout" else run["repeat_index"])].append(run)
     blocks = [{"key": key, "runs": group, "start": min(run["start"] for run in group),
                "end": max(run["end"] for run in group)} for key, group in groups.items()]
     blocks.sort(key=lambda block: (block["start"], block["key"]))
-    if len(blocks) < config.validation_blocks + config.test_blocks + 1:
+    preassigned = config.split_policy == "preassigned_campaign_holdout"
+    roles = {entry["campaign_id"]: entry["split"] for entry in read_json(config.campaign_registry)["campaigns"]} if preassigned else {}
+    if preassigned and set(roles) != {run["campaign_id"] for run in runs}:
+        raise ValueError("메시지 원본에 사전 배정한 캠페인이 모두 필요합니다.")
+    if not preassigned and len(blocks) < config.validation_blocks + config.test_blocks + 1:
         raise ValueError("train·validation·test를 만들 독립 반복 묶음이 부족합니다. 최소 3개가 필요합니다.")
-    for previous, current in zip(blocks, blocks[1:]):
+    for previous, current in (zip(blocks, blocks[1:]) if not preassigned else []):
         if previous["end"] > current["start"]:
             raise ValueError("반복 묶음의 시간 범위가 겹칩니다. 순차 수집한 독립 캠페인이 필요합니다.")
     train_end = len(blocks) - config.validation_blocks - config.test_blocks
@@ -170,8 +207,8 @@ def split_runs(runs: list[dict], config: DatasetConfig) -> tuple[dict[str, list[
     assigned = {name: [] for name in SPLITS}
     manifest = []
     for index, block in enumerate(blocks):
-        split = "train" if index < train_end else "validation" if index < validation_end else "test"
-        block_id = f"{block['key'][0]}:repeat:{block['key'][1]}"
+        split = roles[block["key"][0]] if preassigned else ("train" if index < train_end else "validation" if index < validation_end else "test")
+        block_id = f"{block['key'][0]}:campaign" if preassigned else f"{block['key'][0]}:repeat:{block['key'][1]}"
         manifest.append({"block_id": block_id, "split": split, "start_at_utc": block["start"].isoformat(),
                          "end_at_utc": block["end"].isoformat(), "run_ids": sorted(run["run_id"] for run in block["runs"])})
         for run in sorted(block["runs"], key=lambda run: (run["start"], run["run_id"])):
@@ -187,7 +224,7 @@ def split_runs(runs: list[dict], config: DatasetConfig) -> tuple[dict[str, list[
     return assigned, manifest
 
 
-def validate_partitions(assigned: dict[str, list[dict]]) -> dict:
+def validate_partitions(assigned: dict[str, list[dict]], require_campaign_disjoint: bool = False) -> dict:
     overlaps = {}
     for left, right in combinations(SPLITS, 2):
         pair = f"{left}__{right}"
@@ -198,6 +235,8 @@ def validate_partitions(assigned: dict[str, list[dict]]) -> dict:
             ("rows", lambda row: row["metadata"]["row_id"]),
         ]:
             overlaps[pair][name] = len({key(row) for row in assigned[left]} & {key(row) for row in assigned[right]})
+        if require_campaign_disjoint:
+            overlaps[pair]["campaigns"] = len({row["metadata"]["campaign_id"] for row in assigned[left]} & {row["metadata"]["campaign_id"] for row in assigned[right]})
     if any(count for checks in overlaps.values() for count in checks.values()):
         raise ValueError("분할 사이에 같은 run/session/메시지 식별자가 존재합니다.")
     for rows in assigned.values():
@@ -228,6 +267,7 @@ def duplicate_report(assigned: dict[str, list[dict]]) -> dict:
 
 def split_summary(rows: list[dict]) -> dict:
     return {
+        "campaigns": len({row["metadata"]["campaign_id"] for row in rows}),
         "rows": len(rows), "runs": len({row["metadata"]["run_id"] for row in rows}),
         "sessions": len({(row["metadata"]["run_id"], row["metadata"]["session_id"]) for row in rows}),
         "label_distribution": {str(label): sum(row["label"] == label for row in rows) for label in (0, 1)},
@@ -262,7 +302,7 @@ def build_dataset(config: DatasetConfig) -> dict:
     runs, excluded, evidence, quality = load_runs(config)
     evidence[str(CONTRACT_FILE)] = contract_hash
     assigned, blocks = split_runs(runs, config)
-    overlaps = validate_partitions(assigned)
+    overlaps = validate_partitions(assigned, config.split_policy == "preassigned_campaign_holdout")
     duplicates = duplicate_report(assigned)
     if config.duplicate_feature_policy == "error" and duplicates["cross_split_feature_groups"]:
         raise ValueError("분할 사이에 같은 feature 벡터가 있습니다. 중복 정책에 따라 중단합니다.")
@@ -332,7 +372,7 @@ def build_dataset(config: DatasetConfig) -> dict:
         "output_files": outputs,
         "limitations": [
             "정답은 통제된 시나리오 의도이며 실제 침입 탐지 정답이 아니다.",
-            "초기 3개 반복 묶음은 비율보다 독립성을 우선해 1:1:1로 분리한다. 충분한 데이터 규모를 보장하지 않는다.",
+            "분할은 사전 정책을 따른다. 독립 묶음·캠페인 수가 작고 충분한 데이터 규모를 보장하지 않는다.",
             "run/session 비중복은 같은 시나리오·생성기·서버에 대한 편향이나 분포 이동을 해결하지 않는다.",
             "동일 feature 벡터는 별도로 보고한다. 같은 feature를 가진 서로 다른 실행을 자동 삭제하거나 정답을 바꾸지 않는다.",
             "종료 요약은 원본 품질 확인에만 사용하며 메시지 입력이나 정답 생성에 사용하지 않는다.",
@@ -358,7 +398,9 @@ def save_report(report: dict, prefix: Path) -> None:
     for split in SPLITS:
         values = report["splits"][split]
         lines.append(f"| {split} | {values['runs']} | {values['sessions']} | {values['rows']} | {values['label_distribution']['0']} | {values['label_distribution']['1']} |")
-    lines += ["", "행을 무작위로 섞지 않는다. 실제 수집 시작·종료 시각으로 정렬한 반복 묶음의 앞부분은 train, 마지막 지정 묶음은 validation/test로 고정한다.", "", "## 분할 사이 식별자 중복", "", "| 비교 | run 중복 | 세션 중복 | 메시지 중복 |", "| --- | ---: | ---: | ---: |"]
+    policy = report["config_snapshot"]["split_policy"]
+    explanation = "송신 전에 역할을 고정한 캠페인 전체를 Train/Validation/Test에 배치한다. 반복·run·세션·메시지를 다른 분할로 옮기지 않는다." if policy == "preassigned_campaign_holdout" else "실제 수집 시각으로 정렬한 반복 묶음을 Train/Validation/Test로 나눈다."
+    lines += ["", explanation, "", "## 분할 사이 식별자 중복", "", "| 비교 | run 중복 | 세션 중복 | 메시지 중복 |", "| --- | ---: | ---: | ---: |"]
     for pair, values in report["identity_overlaps"].items():
         lines.append(f"| {pair} | {values['runs']} | {values['sessions']} | {values['rows']} |")
     duplicates = report["duplicate_features"]

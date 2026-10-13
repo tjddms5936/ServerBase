@@ -1,0 +1,5537 @@
+{
+  "report_version": "v1",
+  "generated_at_utc": "2026-10-13T05:14:06.447431+00:00",
+  "experiment_id": "operational_validation_v1",
+  "dataset_id": "operational_message_v1",
+  "feature_contract_id": "server_application_message_v2",
+  "feature_order": [
+    "packet_size",
+    "payload_size",
+    "connection_duration_ms",
+    "message_interval_ms",
+    "bytes_received_total",
+    "bytes_sent_total",
+    "error_count_total"
+  ],
+  "protocol": {
+    "config_version": "v1",
+    "experiment_id": "operational_validation_v1",
+    "dataset_id": "operational_message_v1",
+    "dataset_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v1",
+    "artifact_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1",
+    "report_prefix": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_validation_experiment",
+    "thresholds": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "selection_rule": {
+      "max_false_positive_rate": 0.1,
+      "min_recall": 0.5,
+      "primary_metric": "recall",
+      "tie_breakers": [
+        "f1_desc",
+        "false_positive_rate_asc",
+        "candidate_id_asc",
+        "threshold_asc"
+      ]
+    },
+    "common_parameters": {
+      "random_state": 42,
+      "lr_max_iter": 1000,
+      "lr_tol": 0.0001,
+      "rf_n_estimators": 100
+    },
+    "candidates": [
+      {
+        "id": "lr_c_0_1",
+        "kind": "logistic_regression",
+        "C": 0.1
+      },
+      {
+        "id": "lr_c_1",
+        "kind": "logistic_regression",
+        "C": 1.0
+      },
+      {
+        "id": "lr_c_10",
+        "kind": "logistic_regression",
+        "C": 10.0
+      },
+      {
+        "id": "rf_leaf_1",
+        "kind": "random_forest",
+        "min_samples_leaf": 1,
+        "max_depth": null
+      },
+      {
+        "id": "rf_leaf_5",
+        "kind": "random_forest",
+        "min_samples_leaf": 5,
+        "max_depth": null
+      },
+      {
+        "id": "rf_leaf_10",
+        "kind": "random_forest",
+        "min_samples_leaf": 10,
+        "max_depth": null
+      }
+    ]
+  },
+  "protocol_sha256": "c025c37919577be6da6e4044c8a4d567c561ed272de3be19e3ea2e9dbc643055",
+  "input_sha256": {
+    "dataset_manifest.json": "edcd424e6aaca6071524933d2ce5830034c2b780ca07ae34b6ddf87b20911bfd",
+    "feature_schema.json": "fc2bc80380a166bc0aba4000dd9d78a2561b90575dc93a5f93a27a8dc38830f6",
+    "label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "split_manifest.json": "3d23924aea2490677b9ce0b66fb335c9930eadba41b0e6ad5f2628cbf8d31774",
+    "X_train.csv": "c8801a650b0ac8fd6c928633bb70d4b2210bb17de6931e5070d7ef4ec0b16399",
+    "y_train.csv": "6f2abc1a213ab0a3583b4b779850ec7bb16a0c8a112d9512f5e5d308c32a85d0",
+    "metadata_train.csv": "3a8626dcec91322c4dc77f687a2bbd5294a2e1b619543042c7f89c2fa1c37142",
+    "X_validation.csv": "fdb64efa38bc7381d3e182cffe17aa536226ff7432e3f50824844fe69e40cecf",
+    "y_validation.csv": "7799a9300cfa2d2910779fe86a5f98ba69fcb3b6a22a58659de8c61f892f0d8c",
+    "metadata_validation.csv": "b8c79fc1b953301b3e41b4212eb4b107dc98d52f3ef7d59709580b466acdd379"
+  },
+  "fit_scope": "train_only",
+  "selection_split": "validation",
+  "test_files_read": false,
+  "test_evaluated": false,
+  "refit_with_validation": false,
+  "final_model_selected": false,
+  "deployment_ready": false,
+  "dataset_splits": {
+    "train": {
+      "rows": 126,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 64,
+        "1": 62
+      }
+    },
+    "validation": {
+      "rows": 138,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 74,
+        "1": 64
+      }
+    }
+  },
+  "candidates": [
+    {
+      "id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "specification": {
+        "id": "lr_c_0_1",
+        "kind": "logistic_regression",
+        "C": 0.1
+      },
+      "training_acceptable": true,
+      "training": {
+        "fit_seconds": 0.0041338000446558,
+        "convergence": {
+          "max_iter": 1000,
+          "iterations_used": 7,
+          "converged": true,
+          "warnings": []
+        }
+      },
+      "train_metrics": {
+        "rows": 126,
+        "accuracy": 0.8253968253968254,
+        "precision": 0.8333333333333334,
+        "recall": 0.8064516129032258,
+        "f1": 0.819672131147541,
+        "roc_auc": 0.9450604838709677,
+        "average_precision": 0.949270499653803,
+        "log_loss": 0.34724296209576194,
+        "false_positive_rate": 0.15625,
+        "false_negative_rate": 0.1935483870967742,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              54,
+              10
+            ],
+            [
+              12,
+              50
+            ]
+          ],
+          "tn": 54,
+          "fp": 10,
+          "fn": 12,
+          "tp": 50
+        }
+      },
+      "default_validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.782608695652174,
+        "precision": 0.7236842105263158,
+        "recall": 0.859375,
+        "f1": 0.7857142857142857,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.28378378378378377,
+        "false_negative_rate": 0.140625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              53,
+              21
+            ],
+            [
+              9,
+              55
+            ]
+          ],
+          "tn": 53,
+          "fp": 21,
+          "fn": 9,
+          "tp": 55
+        }
+      },
+      "best_feasible_trial": {
+        "candidate_id": "lr_c_0_1",
+        "kind": "logistic_regression",
+        "threshold": 0.7,
+        "training_acceptable": true,
+        "eligible": true,
+        "rejection_reasons": [],
+        "metrics": {
+          "rows": 138,
+          "accuracy": 0.7971014492753623,
+          "precision": 0.9285714285714286,
+          "recall": 0.609375,
+          "f1": 0.7358490566037735,
+          "roc_auc": 0.8923141891891891,
+          "average_precision": 0.8855265677528921,
+          "log_loss": 0.39697870923471296,
+          "false_positive_rate": 0.04054054054054054,
+          "false_negative_rate": 0.390625,
+          "confusion_matrix": {
+            "label_order": [
+              0,
+              1
+            ],
+            "rows": "actual",
+            "columns": "predicted",
+            "values": [
+              [
+                71,
+                3
+              ],
+              [
+                25,
+                39
+              ]
+            ],
+            "tn": 71,
+            "fp": 3,
+            "fn": 25,
+            "tp": 39
+          }
+        },
+        "validation_by_scenario": {
+          "controlled_burst_chat": {
+            "rows": 56,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 56,
+            "fp": 0,
+            "fn": 17,
+            "recall": 0.6964285714285714,
+            "false_positive_rate": null
+          },
+          "malformed_chat_payload": {
+            "rows": 4,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 4,
+            "fp": 0,
+            "fn": 4,
+            "recall": 0.0,
+            "false_positive_rate": null
+          },
+          "malformed_length_chat": {
+            "rows": 4,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 4,
+            "fp": 0,
+            "fn": 4,
+            "recall": 0.0,
+            "false_positive_rate": null
+          },
+          "normal_batched_chat": {
+            "rows": 23,
+            "normal_rows": 23,
+            "controlled_anomaly_rows": 0,
+            "fp": 3,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.13043478260869565
+          },
+          "normal_chat": {
+            "rows": 27,
+            "normal_rows": 27,
+            "controlled_anomaly_rows": 0,
+            "fp": 0,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.0
+          },
+          "normal_fragmented_chat": {
+            "rows": 24,
+            "normal_rows": 24,
+            "controlled_anomaly_rows": 0,
+            "fp": 0,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.0
+          }
+        }
+      },
+      "pipeline_path": "candidates/lr_c_0_1/pipeline.joblib",
+      "pipeline_sha256": "b46f16775b3fcc1e2f612d4bebb2220764ccc70041a0d3a02743688ba3fccbc0",
+      "candidate_report_path": "candidate_reports/lr_c_0_1.json"
+    },
+    {
+      "id": "lr_c_1",
+      "kind": "logistic_regression",
+      "specification": {
+        "id": "lr_c_1",
+        "kind": "logistic_regression",
+        "C": 1.0
+      },
+      "training_acceptable": true,
+      "training": {
+        "fit_seconds": 0.0040917000733315945,
+        "convergence": {
+          "max_iter": 1000,
+          "iterations_used": 12,
+          "converged": true,
+          "warnings": []
+        }
+      },
+      "train_metrics": {
+        "rows": 126,
+        "accuracy": 0.873015873015873,
+        "precision": 0.8194444444444444,
+        "recall": 0.9516129032258065,
+        "f1": 0.8805970149253731,
+        "roc_auc": 0.959929435483871,
+        "average_precision": 0.9633486540806371,
+        "log_loss": 0.26751619339775606,
+        "false_positive_rate": 0.203125,
+        "false_negative_rate": 0.04838709677419355,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              51,
+              13
+            ],
+            [
+              3,
+              59
+            ]
+          ],
+          "tn": 51,
+          "fp": 13,
+          "fn": 3,
+          "tp": 59
+        }
+      },
+      "default_validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.7608695652173914,
+        "precision": 0.7066666666666667,
+        "recall": 0.828125,
+        "f1": 0.762589928057554,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.2972972972972973,
+        "false_negative_rate": 0.171875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              52,
+              22
+            ],
+            [
+              11,
+              53
+            ]
+          ],
+          "tn": 52,
+          "fp": 22,
+          "fn": 11,
+          "tp": 53
+        }
+      },
+      "best_feasible_trial": {
+        "candidate_id": "lr_c_1",
+        "kind": "logistic_regression",
+        "threshold": 0.7,
+        "training_acceptable": true,
+        "eligible": true,
+        "rejection_reasons": [],
+        "metrics": {
+          "rows": 138,
+          "accuracy": 0.8043478260869565,
+          "precision": 0.9302325581395349,
+          "recall": 0.625,
+          "f1": 0.7476635514018691,
+          "roc_auc": 0.8855574324324323,
+          "average_precision": 0.8815743142941475,
+          "log_loss": 0.3518424311007014,
+          "false_positive_rate": 0.04054054054054054,
+          "false_negative_rate": 0.375,
+          "confusion_matrix": {
+            "label_order": [
+              0,
+              1
+            ],
+            "rows": "actual",
+            "columns": "predicted",
+            "values": [
+              [
+                71,
+                3
+              ],
+              [
+                24,
+                40
+              ]
+            ],
+            "tn": 71,
+            "fp": 3,
+            "fn": 24,
+            "tp": 40
+          }
+        },
+        "validation_by_scenario": {
+          "controlled_burst_chat": {
+            "rows": 56,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 56,
+            "fp": 0,
+            "fn": 16,
+            "recall": 0.7142857142857143,
+            "false_positive_rate": null
+          },
+          "malformed_chat_payload": {
+            "rows": 4,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 4,
+            "fp": 0,
+            "fn": 4,
+            "recall": 0.0,
+            "false_positive_rate": null
+          },
+          "malformed_length_chat": {
+            "rows": 4,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 4,
+            "fp": 0,
+            "fn": 4,
+            "recall": 0.0,
+            "false_positive_rate": null
+          },
+          "normal_batched_chat": {
+            "rows": 23,
+            "normal_rows": 23,
+            "controlled_anomaly_rows": 0,
+            "fp": 3,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.13043478260869565
+          },
+          "normal_chat": {
+            "rows": 27,
+            "normal_rows": 27,
+            "controlled_anomaly_rows": 0,
+            "fp": 0,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.0
+          },
+          "normal_fragmented_chat": {
+            "rows": 24,
+            "normal_rows": 24,
+            "controlled_anomaly_rows": 0,
+            "fp": 0,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.0
+          }
+        }
+      },
+      "pipeline_path": "candidates/lr_c_1/pipeline.joblib",
+      "pipeline_sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+      "candidate_report_path": "candidate_reports/lr_c_1.json"
+    },
+    {
+      "id": "lr_c_10",
+      "kind": "logistic_regression",
+      "specification": {
+        "id": "lr_c_10",
+        "kind": "logistic_regression",
+        "C": 10.0
+      },
+      "training_acceptable": true,
+      "training": {
+        "fit_seconds": 0.005597699899226427,
+        "convergence": {
+          "max_iter": 1000,
+          "iterations_used": 22,
+          "converged": true,
+          "warnings": []
+        }
+      },
+      "train_metrics": {
+        "rows": 126,
+        "accuracy": 0.8968253968253969,
+        "precision": 0.8450704225352113,
+        "recall": 0.967741935483871,
+        "f1": 0.9022556390977443,
+        "roc_auc": 0.9768145161290323,
+        "average_precision": 0.9780558485681461,
+        "log_loss": 0.22023907436514217,
+        "false_positive_rate": 0.171875,
+        "false_negative_rate": 0.03225806451612903,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              53,
+              11
+            ],
+            [
+              2,
+              60
+            ]
+          ],
+          "tn": 53,
+          "fp": 11,
+          "fn": 2,
+          "tp": 60
+        }
+      },
+      "default_validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.7463768115942029,
+        "precision": 0.6986301369863014,
+        "recall": 0.796875,
+        "f1": 0.7445255474452555,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.2972972972972973,
+        "false_negative_rate": 0.203125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              52,
+              22
+            ],
+            [
+              13,
+              51
+            ]
+          ],
+          "tn": 52,
+          "fp": 22,
+          "fn": 13,
+          "tp": 51
+        }
+      },
+      "best_feasible_trial": {
+        "candidate_id": "lr_c_10",
+        "kind": "logistic_regression",
+        "threshold": 0.7,
+        "training_acceptable": true,
+        "eligible": true,
+        "rejection_reasons": [],
+        "metrics": {
+          "rows": 138,
+          "accuracy": 0.8043478260869565,
+          "precision": 0.9302325581395349,
+          "recall": 0.625,
+          "f1": 0.7476635514018691,
+          "roc_auc": 0.886402027027027,
+          "average_precision": 0.888162719529584,
+          "log_loss": 0.3700915354666957,
+          "false_positive_rate": 0.04054054054054054,
+          "false_negative_rate": 0.375,
+          "confusion_matrix": {
+            "label_order": [
+              0,
+              1
+            ],
+            "rows": "actual",
+            "columns": "predicted",
+            "values": [
+              [
+                71,
+                3
+              ],
+              [
+                24,
+                40
+              ]
+            ],
+            "tn": 71,
+            "fp": 3,
+            "fn": 24,
+            "tp": 40
+          }
+        },
+        "validation_by_scenario": {
+          "controlled_burst_chat": {
+            "rows": 56,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 56,
+            "fp": 0,
+            "fn": 16,
+            "recall": 0.7142857142857143,
+            "false_positive_rate": null
+          },
+          "malformed_chat_payload": {
+            "rows": 4,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 4,
+            "fp": 0,
+            "fn": 4,
+            "recall": 0.0,
+            "false_positive_rate": null
+          },
+          "malformed_length_chat": {
+            "rows": 4,
+            "normal_rows": 0,
+            "controlled_anomaly_rows": 4,
+            "fp": 0,
+            "fn": 4,
+            "recall": 0.0,
+            "false_positive_rate": null
+          },
+          "normal_batched_chat": {
+            "rows": 23,
+            "normal_rows": 23,
+            "controlled_anomaly_rows": 0,
+            "fp": 3,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.13043478260869565
+          },
+          "normal_chat": {
+            "rows": 27,
+            "normal_rows": 27,
+            "controlled_anomaly_rows": 0,
+            "fp": 0,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.0
+          },
+          "normal_fragmented_chat": {
+            "rows": 24,
+            "normal_rows": 24,
+            "controlled_anomaly_rows": 0,
+            "fp": 0,
+            "fn": 0,
+            "recall": null,
+            "false_positive_rate": 0.0
+          }
+        }
+      },
+      "pipeline_path": "candidates/lr_c_10/pipeline.joblib",
+      "pipeline_sha256": "0708db71e107a1c3d9eef148456a8f6396717571a927b4ca68fef7a61e04a82d",
+      "candidate_report_path": "candidate_reports/lr_c_10.json"
+    },
+    {
+      "id": "rf_leaf_1",
+      "kind": "random_forest",
+      "specification": {
+        "id": "rf_leaf_1",
+        "kind": "random_forest",
+        "min_samples_leaf": 1,
+        "max_depth": null
+      },
+      "training_acceptable": true,
+      "training": {
+        "fit_seconds": 0.06918299989774823,
+        "trees_fitted": 100,
+        "convergence": {
+          "applicable": false,
+          "reason": "RF는 지정한 트리 수를 구성하며 LR의 수렴 반복과 다르다."
+        },
+        "tree_depth": {
+          "minimum": 5,
+          "maximum": 13,
+          "mean": 8.29
+        },
+        "total_tree_nodes": 2710
+      },
+      "train_metrics": {
+        "rows": 126,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "average_precision": 1.0,
+        "log_loss": 0.0492201156569274,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              64,
+              0
+            ],
+            [
+              0,
+              62
+            ]
+          ],
+          "tn": 64,
+          "fp": 0,
+          "fn": 0,
+          "tp": 62
+        }
+      },
+      "default_validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.7142857142857143,
+        "recall": 0.546875,
+        "f1": 0.6194690265486725,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.1891891891891892,
+        "false_negative_rate": 0.453125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              60,
+              14
+            ],
+            [
+              29,
+              35
+            ]
+          ],
+          "tn": 60,
+          "fp": 14,
+          "fn": 29,
+          "tp": 35
+        }
+      },
+      "best_feasible_trial": null,
+      "pipeline_path": "candidates/rf_leaf_1/pipeline.joblib",
+      "pipeline_sha256": "55ac99a6531552774abaa8f2f92f56ae11d66ffaafb7a48975e51c0369405058",
+      "candidate_report_path": "candidate_reports/rf_leaf_1.json"
+    },
+    {
+      "id": "rf_leaf_5",
+      "kind": "random_forest",
+      "specification": {
+        "id": "rf_leaf_5",
+        "kind": "random_forest",
+        "min_samples_leaf": 5,
+        "max_depth": null
+      },
+      "training_acceptable": true,
+      "training": {
+        "fit_seconds": 0.07113679964095354,
+        "trees_fitted": 100,
+        "convergence": {
+          "applicable": false,
+          "reason": "RF는 지정한 트리 수를 구성하며 LR의 수렴 반복과 다르다."
+        },
+        "tree_depth": {
+          "minimum": 3,
+          "maximum": 7,
+          "mean": 4.53
+        },
+        "total_tree_nodes": 1376
+      },
+      "train_metrics": {
+        "rows": 126,
+        "accuracy": 0.9206349206349206,
+        "precision": 0.8823529411764706,
+        "recall": 0.967741935483871,
+        "f1": 0.9230769230769231,
+        "roc_auc": 0.9910534274193549,
+        "average_precision": 0.9911255053695202,
+        "log_loss": 0.19055683760204464,
+        "false_positive_rate": 0.125,
+        "false_negative_rate": 0.03225806451612903,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              56,
+              8
+            ],
+            [
+              2,
+              60
+            ]
+          ],
+          "tn": 56,
+          "fp": 8,
+          "fn": 2,
+          "tp": 60
+        }
+      },
+      "default_validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.6909090909090909,
+        "recall": 0.59375,
+        "f1": 0.6386554621848739,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.22972972972972974,
+        "false_negative_rate": 0.40625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              57,
+              17
+            ],
+            [
+              26,
+              38
+            ]
+          ],
+          "tn": 57,
+          "fp": 17,
+          "fn": 26,
+          "tp": 38
+        }
+      },
+      "best_feasible_trial": null,
+      "pipeline_path": "candidates/rf_leaf_5/pipeline.joblib",
+      "pipeline_sha256": "df4074d5fd85c6c05995f18136b71a9b9891a525c6d04dc93cec9ce553bc4906",
+      "candidate_report_path": "candidate_reports/rf_leaf_5.json"
+    },
+    {
+      "id": "rf_leaf_10",
+      "kind": "random_forest",
+      "specification": {
+        "id": "rf_leaf_10",
+        "kind": "random_forest",
+        "min_samples_leaf": 10,
+        "max_depth": null
+      },
+      "training_acceptable": true,
+      "training": {
+        "fit_seconds": 0.06960969977080822,
+        "trees_fitted": 100,
+        "convergence": {
+          "applicable": false,
+          "reason": "RF는 지정한 트리 수를 구성하며 LR의 수렴 반복과 다르다."
+        },
+        "tree_depth": {
+          "minimum": 2,
+          "maximum": 5,
+          "mean": 3.23
+        },
+        "total_tree_nodes": 896
+      },
+      "train_metrics": {
+        "rows": 126,
+        "accuracy": 0.9126984126984127,
+        "precision": 0.8695652173913043,
+        "recall": 0.967741935483871,
+        "f1": 0.916030534351145,
+        "roc_auc": 0.9877772177419355,
+        "average_precision": 0.9869340144198664,
+        "log_loss": 0.24276302052546678,
+        "false_positive_rate": 0.140625,
+        "false_negative_rate": 0.03225806451612903,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              55,
+              9
+            ],
+            [
+              2,
+              60
+            ]
+          ],
+          "tn": 55,
+          "fp": 9,
+          "fn": 2,
+          "tp": 60
+        }
+      },
+      "default_validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.6909090909090909,
+        "recall": 0.59375,
+        "f1": 0.6386554621848739,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.22972972972972974,
+        "false_negative_rate": 0.40625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              57,
+              17
+            ],
+            [
+              26,
+              38
+            ]
+          ],
+          "tn": 57,
+          "fp": 17,
+          "fn": 26,
+          "tp": 38
+        }
+      },
+      "best_feasible_trial": null,
+      "pipeline_path": "candidates/rf_leaf_10/pipeline.joblib",
+      "pipeline_sha256": "180d9275531db1c016068e5f1a4137f98325bbbb5bd71fc8816f56d1ad923202",
+      "candidate_report_path": "candidate_reports/rf_leaf_10.json"
+    }
+  ],
+  "trials": [
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.3,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7753623188405797,
+        "precision": 0.6736842105263158,
+        "recall": 1.0,
+        "f1": 0.8050314465408805,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.4189189189189189,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              43,
+              31
+            ],
+            [
+              0,
+              64
+            ]
+          ],
+          "tn": 43,
+          "fp": 31,
+          "fn": 0,
+          "tp": 64
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 23,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 1.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 4,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.14814814814814814
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 4,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.16666666666666666
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.4,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.782608695652174,
+        "precision": 0.6808510638297872,
+        "recall": 1.0,
+        "f1": 0.810126582278481,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.40540540540540543,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              44,
+              30
+            ],
+            [
+              0,
+              64
+            ]
+          ],
+          "tn": 44,
+          "fp": 30,
+          "fn": 0,
+          "tp": 64
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 23,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 1.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 4,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.14814814814814814
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.125
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.5,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.782608695652174,
+        "precision": 0.7236842105263158,
+        "recall": 0.859375,
+        "f1": 0.7857142857142857,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.28378378378378377,
+        "false_negative_rate": 0.140625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              53,
+              21
+            ],
+            [
+              9,
+              55
+            ]
+          ],
+          "tn": 53,
+          "fp": 21,
+          "fn": 9,
+          "tp": 55
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.9821428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 21,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.9130434782608695
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.6,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7681159420289855,
+        "precision": 0.82,
+        "recall": 0.640625,
+        "f1": 0.7192982456140351,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.12162162162162163,
+        "false_negative_rate": 0.359375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              65,
+              9
+            ],
+            [
+              23,
+              41
+            ]
+          ],
+          "tn": 65,
+          "fp": 9,
+          "fn": 23,
+          "tp": 41
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 15,
+          "recall": 0.7321428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 9,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.391304347826087
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7971014492753623,
+        "precision": 0.9285714285714286,
+        "recall": 0.609375,
+        "f1": 0.7358490566037735,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.04054054054054054,
+        "false_negative_rate": 0.390625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              71,
+              3
+            ],
+            [
+              25,
+              39
+            ]
+          ],
+          "tn": 71,
+          "fp": 3,
+          "fn": 25,
+          "tp": 39
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 17,
+          "recall": 0.6964285714285714,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.13043478260869565
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.8,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7101449275362319,
+        "precision": 1.0,
+        "recall": 0.375,
+        "f1": 0.5454545454545454,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              40,
+              24
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 40,
+          "tp": 24
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 32,
+          "recall": 0.42857142857142855,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_0_1",
+      "kind": "logistic_regression",
+      "threshold": 0.9,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.644927536231884,
+        "precision": 1.0,
+        "recall": 0.234375,
+        "f1": 0.379746835443038,
+        "roc_auc": 0.8923141891891891,
+        "average_precision": 0.8855265677528921,
+        "log_loss": 0.39697870923471296,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.765625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              49,
+              15
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 49,
+          "tp": 15
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 41,
+          "recall": 0.26785714285714285,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.3,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.782608695652174,
+        "precision": 0.6808510638297872,
+        "recall": 1.0,
+        "f1": 0.810126582278481,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.40540540540540543,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              44,
+              30
+            ],
+            [
+              0,
+              64
+            ]
+          ],
+          "tn": 44,
+          "fp": 30,
+          "fn": 0,
+          "tp": 64
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 23,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 1.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 4,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.14814814814814814
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.125
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.4,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 0.7078651685393258,
+        "recall": 0.984375,
+        "f1": 0.8235294117647058,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.35135135135135137,
+        "false_negative_rate": 0.015625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              48,
+              26
+            ],
+            [
+              1,
+              63
+            ]
+          ],
+          "tn": 48,
+          "fp": 26,
+          "fn": 1,
+          "tp": 63
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 23,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 1.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.07407407407407407
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.5,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7608695652173914,
+        "precision": 0.7066666666666667,
+        "recall": 0.828125,
+        "f1": 0.762589928057554,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.2972972972972973,
+        "false_negative_rate": 0.171875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              52,
+              22
+            ],
+            [
+              11,
+              53
+            ]
+          ],
+          "tn": 52,
+          "fp": 22,
+          "fn": 11,
+          "tp": 53
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 8,
+          "recall": 0.8571428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 3,
+          "recall": 0.25,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 20,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8695652173913043
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.6,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7101449275362319,
+        "precision": 0.7142857142857143,
+        "recall": 0.625,
+        "f1": 0.6666666666666666,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.21621621621621623,
+        "false_negative_rate": 0.375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              58,
+              16
+            ],
+            [
+              24,
+              40
+            ]
+          ],
+          "tn": 58,
+          "fp": 16,
+          "fn": 24,
+          "tp": 40
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 16,
+          "recall": 0.7142857142857143,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 16,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.6956521739130435
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 0.9302325581395349,
+        "recall": 0.625,
+        "f1": 0.7476635514018691,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.04054054054054054,
+        "false_negative_rate": 0.375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              71,
+              3
+            ],
+            [
+              24,
+              40
+            ]
+          ],
+          "tn": 71,
+          "fp": 3,
+          "fn": 24,
+          "tp": 40
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 16,
+          "recall": 0.7142857142857143,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.13043478260869565
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.8,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 0.9302325581395349,
+        "recall": 0.625,
+        "f1": 0.7476635514018691,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.04054054054054054,
+        "false_negative_rate": 0.375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              71,
+              3
+            ],
+            [
+              24,
+              40
+            ]
+          ],
+          "tn": 71,
+          "fp": 3,
+          "fn": 24,
+          "tp": 40
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 16,
+          "recall": 0.7142857142857143,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.13043478260869565
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.9,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7463768115942029,
+        "precision": 1.0,
+        "recall": 0.453125,
+        "f1": 0.6236559139784946,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.546875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              35,
+              29
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 35,
+          "tp": 29
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 27,
+          "recall": 0.5178571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.3,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7681159420289855,
+        "precision": 0.7,
+        "recall": 0.875,
+        "f1": 0.7777777777777778,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.32432432432432434,
+        "false_negative_rate": 0.125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              50,
+              24
+            ],
+            [
+              8,
+              56
+            ]
+          ],
+          "tn": 50,
+          "fp": 24,
+          "fn": 8,
+          "tp": 56
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 7,
+          "recall": 0.875,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 21,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.9130434782608695
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.07407407407407407
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.4,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7463768115942029,
+        "precision": 0.6986301369863014,
+        "recall": 0.796875,
+        "f1": 0.7445255474452555,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.2972972972972973,
+        "false_negative_rate": 0.203125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              52,
+              22
+            ],
+            [
+              13,
+              51
+            ]
+          ],
+          "tn": 52,
+          "fp": 22,
+          "fn": 13,
+          "tp": 51
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 12,
+          "recall": 0.7857142857142857,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 20,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8695652173913043
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.5,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7463768115942029,
+        "precision": 0.6986301369863014,
+        "recall": 0.796875,
+        "f1": 0.7445255474452555,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.2972972972972973,
+        "false_negative_rate": 0.203125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              52,
+              22
+            ],
+            [
+              13,
+              51
+            ]
+          ],
+          "tn": 52,
+          "fp": 22,
+          "fn": 13,
+          "tp": 51
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 12,
+          "recall": 0.7857142857142857,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 20,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8695652173913043
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.6,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7028985507246377,
+        "precision": 0.6825396825396826,
+        "recall": 0.671875,
+        "f1": 0.6771653543307087,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.2702702702702703,
+        "false_negative_rate": 0.328125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              54,
+              20
+            ],
+            [
+              21,
+              43
+            ]
+          ],
+          "tn": 54,
+          "fp": 20,
+          "fn": 21,
+          "tp": 43
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 15,
+          "recall": 0.7321428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 2,
+          "recall": 0.5,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 18,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.782608695652174
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 0.9302325581395349,
+        "recall": 0.625,
+        "f1": 0.7476635514018691,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.04054054054054054,
+        "false_negative_rate": 0.375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              71,
+              3
+            ],
+            [
+              24,
+              40
+            ]
+          ],
+          "tn": 71,
+          "fp": 3,
+          "fn": 24,
+          "tp": 40
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 16,
+          "recall": 0.7142857142857143,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.13043478260869565
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.8,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 0.9302325581395349,
+        "recall": 0.625,
+        "f1": 0.7476635514018691,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.04054054054054054,
+        "false_negative_rate": 0.375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              71,
+              3
+            ],
+            [
+              24,
+              40
+            ]
+          ],
+          "tn": 71,
+          "fp": 3,
+          "fn": 24,
+          "tp": 40
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 16,
+          "recall": 0.7142857142857143,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.13043478260869565
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "lr_c_10",
+      "kind": "logistic_regression",
+      "threshold": 0.9,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 1.0,
+        "recall": 0.578125,
+        "f1": 0.7326732673267327,
+        "roc_auc": 0.886402027027027,
+        "average_precision": 0.888162719529584,
+        "log_loss": 0.3700915354666957,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.421875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              27,
+              37
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 27,
+          "tp": 37
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 19,
+          "recall": 0.6607142857142857,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.3,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7101449275362319,
+        "precision": 0.6818181818181818,
+        "recall": 0.703125,
+        "f1": 0.6923076923076923,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.28378378378378377,
+        "false_negative_rate": 0.296875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              53,
+              21
+            ],
+            [
+              19,
+              45
+            ]
+          ],
+          "tn": 53,
+          "fp": 21,
+          "fn": 19,
+          "tp": 45
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 18,
+          "recall": 0.6785714285714286,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 19,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8260869565217391
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.4,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7028985507246377,
+        "precision": 0.6949152542372882,
+        "recall": 0.640625,
+        "f1": 0.6666666666666666,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.24324324324324326,
+        "false_negative_rate": 0.359375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              56,
+              18
+            ],
+            [
+              23,
+              41
+            ]
+          ],
+          "tn": 56,
+          "fp": 18,
+          "fn": 23,
+          "tp": 41
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 22,
+          "recall": 0.6071428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 16,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.6956521739130435
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.5,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.7142857142857143,
+        "recall": 0.546875,
+        "f1": 0.6194690265486725,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.1891891891891892,
+        "false_negative_rate": 0.453125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              60,
+              14
+            ],
+            [
+              29,
+              35
+            ]
+          ],
+          "tn": 60,
+          "fp": 14,
+          "fn": 29,
+          "tp": 35
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 28,
+          "recall": 0.5,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 13,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.5652173913043478
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.6,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다.",
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.6014492753623188,
+        "precision": 0.68,
+        "recall": 0.265625,
+        "f1": 0.38202247191011235,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.10810810810810811,
+        "false_negative_rate": 0.734375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              66,
+              8
+            ],
+            [
+              47,
+              17
+            ]
+          ],
+          "tn": 66,
+          "fp": 8,
+          "fn": 47,
+          "tp": 17
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 45,
+          "recall": 0.19642857142857142,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 2,
+          "recall": 0.5,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 7,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.30434782608695654
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5869565217391305,
+        "precision": 0.6666666666666666,
+        "recall": 0.21875,
+        "f1": 0.32941176470588235,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.0945945945945946,
+        "false_negative_rate": 0.78125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              67,
+              7
+            ],
+            [
+              50,
+              14
+            ]
+          ],
+          "tn": 67,
+          "fp": 7,
+          "fn": 50,
+          "tp": 14
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 48,
+          "recall": 0.14285714285714285,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 2,
+          "recall": 0.5,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 7,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.30434782608695654
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.8,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.572463768115942,
+        "precision": 0.6923076923076923,
+        "recall": 0.140625,
+        "f1": 0.23376623376623376,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.05405405405405406,
+        "false_negative_rate": 0.859375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              70,
+              4
+            ],
+            [
+              55,
+              9
+            ]
+          ],
+          "tn": 70,
+          "fp": 4,
+          "fn": 55,
+          "tp": 9
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 4,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.17391304347826086
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_1",
+      "kind": "random_forest",
+      "threshold": 0.9,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5652173913043478,
+        "precision": 0.8333333333333334,
+        "recall": 0.078125,
+        "f1": 0.14285714285714285,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.013513513513513514,
+        "false_negative_rate": 0.921875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              73,
+              1
+            ],
+            [
+              59,
+              5
+            ]
+          ],
+          "tn": 73,
+          "fp": 1,
+          "fn": 59,
+          "tp": 5
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.043478260869565216
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.3,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7318840579710145,
+        "precision": 0.684931506849315,
+        "recall": 0.78125,
+        "f1": 0.7299270072992701,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.3108108108108108,
+        "false_negative_rate": 0.21875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              51,
+              23
+            ],
+            [
+              14,
+              50
+            ]
+          ],
+          "tn": 51,
+          "fp": 23,
+          "fn": 14,
+          "tp": 50
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 14,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 19,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8260869565217391
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.07407407407407407
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.08333333333333333
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.4,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7101449275362319,
+        "precision": 0.7,
+        "recall": 0.65625,
+        "f1": 0.6774193548387096,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.24324324324324326,
+        "false_negative_rate": 0.34375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              56,
+              18
+            ],
+            [
+              22,
+              42
+            ]
+          ],
+          "tn": 56,
+          "fp": 18,
+          "fn": 22,
+          "tp": 42
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 21,
+          "recall": 0.625,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 16,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.6956521739130435
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.5,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.6909090909090909,
+        "recall": 0.59375,
+        "f1": 0.6386554621848739,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.22972972972972974,
+        "false_negative_rate": 0.40625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              57,
+              17
+            ],
+            [
+              26,
+              38
+            ]
+          ],
+          "tn": 57,
+          "fp": 17,
+          "fn": 26,
+          "tp": 38
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 25,
+          "recall": 0.5535714285714286,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 15,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.6521739130434783
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.6,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다.",
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5434782608695652,
+        "precision": 0.52,
+        "recall": 0.203125,
+        "f1": 0.29213483146067415,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.16216216216216217,
+        "false_negative_rate": 0.796875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              62,
+              12
+            ],
+            [
+              51,
+              13
+            ]
+          ],
+          "tn": 62,
+          "fp": 12,
+          "fn": 51,
+          "tp": 13
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 44,
+          "recall": 0.21428571428571427,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 3,
+          "recall": 0.25,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 12,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.5217391304347826
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5579710144927537,
+        "precision": 0.5882352941176471,
+        "recall": 0.15625,
+        "f1": 0.24691358024691357,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.0945945945945946,
+        "false_negative_rate": 0.84375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              67,
+              7
+            ],
+            [
+              54,
+              10
+            ]
+          ],
+          "tn": 67,
+          "fp": 7,
+          "fn": 54,
+          "tp": 10
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 47,
+          "recall": 0.16071428571428573,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 3,
+          "recall": 0.25,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 7,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.30434782608695654
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.8,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5652173913043478,
+        "precision": 0.8333333333333334,
+        "recall": 0.078125,
+        "f1": 0.14285714285714285,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.013513513513513514,
+        "false_negative_rate": 0.921875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              73,
+              1
+            ],
+            [
+              59,
+              5
+            ]
+          ],
+          "tn": 73,
+          "fp": 1,
+          "fn": 59,
+          "tp": 5
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.043478260869565216
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_5",
+      "kind": "random_forest",
+      "threshold": 0.9,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.572463768115942,
+        "precision": 1.0,
+        "recall": 0.078125,
+        "f1": 0.14492753623188406,
+        "roc_auc": 0.7791385135135135,
+        "average_precision": 0.6696195234278124,
+        "log_loss": 0.565352217597073,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.921875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              59,
+              5
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 59,
+          "tp": 5
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.3,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.7753623188405797,
+        "precision": 0.7088607594936709,
+        "recall": 0.875,
+        "f1": 0.7832167832167832,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.3108108108108108,
+        "false_negative_rate": 0.125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              51,
+              23
+            ],
+            [
+              8,
+              56
+            ]
+          ],
+          "tn": 51,
+          "fp": 23,
+          "fn": 8,
+          "tp": 56
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 8,
+          "recall": 0.8571428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 19,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8260869565217391
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.07407407407407407
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.08333333333333333
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.4,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.6956521739130435,
+        "precision": 0.671875,
+        "recall": 0.671875,
+        "f1": 0.671875,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.28378378378378377,
+        "false_negative_rate": 0.328125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              53,
+              21
+            ],
+            [
+              21,
+              43
+            ]
+          ],
+          "tn": 53,
+          "fp": 21,
+          "fn": 21,
+          "tp": 43
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 20,
+          "recall": 0.6428571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 19,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8260869565217391
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.5,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.6909090909090909,
+        "recall": 0.59375,
+        "f1": 0.6386554621848739,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.22972972972972974,
+        "false_negative_rate": 0.40625,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              57,
+              17
+            ],
+            [
+              26,
+              38
+            ]
+          ],
+          "tn": 57,
+          "fp": 17,
+          "fn": 26,
+          "tp": 38
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 25,
+          "recall": 0.5535714285714286,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 15,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.6521739130434783
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.6,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "정상 오탐률 상한을 초과했습니다.",
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5652173913043478,
+        "precision": 0.5833333333333334,
+        "recall": 0.21875,
+        "f1": 0.3181818181818182,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.13513513513513514,
+        "false_negative_rate": 0.78125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              64,
+              10
+            ],
+            [
+              50,
+              14
+            ]
+          ],
+          "tn": 64,
+          "fp": 10,
+          "fn": 50,
+          "tp": 14
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 45,
+          "recall": 0.19642857142857142,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 9,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.391304347826087
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.5289855072463768,
+        "precision": 0.45454545454545453,
+        "recall": 0.078125,
+        "f1": 0.13333333333333333,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.08108108108108109,
+        "false_negative_rate": 0.921875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              68,
+              6
+            ],
+            [
+              59,
+              5
+            ]
+          ],
+          "tn": 68,
+          "fp": 6,
+          "fn": 59,
+          "tp": 5
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 6,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.2608695652173913
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.8,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.572463768115942,
+        "precision": 1.0,
+        "recall": 0.078125,
+        "f1": 0.14492753623188406,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.921875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              59,
+              5
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 59,
+          "tp": 5
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    {
+      "candidate_id": "rf_leaf_10",
+      "kind": "random_forest",
+      "threshold": 0.9,
+      "training_acceptable": true,
+      "eligible": false,
+      "rejection_reasons": [
+        "이상 Recall 하한을 충족하지 못했습니다."
+      ],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.572463768115942,
+        "precision": 1.0,
+        "recall": 0.078125,
+        "f1": 0.14492753623188406,
+        "roc_auc": 0.7902238175675675,
+        "average_precision": 0.6783084132639691,
+        "log_loss": 0.5379136553944937,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.921875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              74,
+              0
+            ],
+            [
+              59,
+              5
+            ]
+          ],
+          "tn": 74,
+          "fp": 0,
+          "fn": 59,
+          "tp": 5
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 51,
+          "recall": 0.08928571428571429,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    }
+  ],
+  "selection": {
+    "status": "selected",
+    "selection_scope": "validation_baseline_only",
+    "selected_trial": {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.7,
+      "training_acceptable": true,
+      "eligible": true,
+      "rejection_reasons": [],
+      "metrics": {
+        "rows": 138,
+        "accuracy": 0.8043478260869565,
+        "precision": 0.9302325581395349,
+        "recall": 0.625,
+        "f1": 0.7476635514018691,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.04054054054054054,
+        "false_negative_rate": 0.375,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              71,
+              3
+            ],
+            [
+              24,
+              40
+            ]
+          ],
+          "tn": 71,
+          "fp": 3,
+          "fn": 24,
+          "tp": 40
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 16,
+          "recall": 0.7142857142857143,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 4,
+          "recall": 0.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 3,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.13043478260869565
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      }
+    },
+    "rule": {
+      "max_false_positive_rate": 0.1,
+      "min_recall": 0.5,
+      "primary_metric": "recall",
+      "tie_breakers": [
+        "f1_desc",
+        "false_positive_rate_asc",
+        "candidate_id_asc",
+        "threshold_asc"
+      ]
+    },
+    "eligible_trial_count": 6,
+    "reason": "사전 제약과 동률 순서에 따라 선정했습니다.",
+    "protocol_sha256": "c025c37919577be6da6e4044c8a4d567c561ed272de3be19e3ea2e9dbc643055",
+    "feature_contract_id": "server_application_message_v2",
+    "feature_order": [
+      "packet_size",
+      "payload_size",
+      "connection_duration_ms",
+      "message_interval_ms",
+      "bytes_received_total",
+      "bytes_sent_total",
+      "error_count_total"
+    ],
+    "label_map": {
+      "normal": 0,
+      "controlled_anomaly": 1
+    },
+    "positive_class": 1,
+    "comparison": ">=",
+    "refit_with_validation": false,
+    "test_evaluated": false,
+    "final_model_selected": false,
+    "deployment_ready": false,
+    "model_path": "candidates/lr_c_1/pipeline.joblib",
+    "model_sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+    "feature_schema_path": "candidates/lr_c_1/feature_schema.json",
+    "label_map_path": "candidates/lr_c_1/label_map.json",
+    "threshold": 0.7
+  },
+  "artifacts": {
+    "candidate_reports/lr_c_0_1.json": {
+      "sha256": "c4be902311cc135bf2da2db62e5974268af1e5b68ab40ebbdb9dd730f9429b65",
+      "bytes": 9744
+    },
+    "candidate_reports/lr_c_0_1.md": {
+      "sha256": "b0284c6482cc27e5c39bb0de597c3084b241340215082d9a290db29fd83f1185",
+      "bytes": 3462
+    },
+    "candidate_reports/lr_c_1.json": {
+      "sha256": "26b3429a1f41be108181a1cc07e760adfeaef255176da4d6fb5a8e3f983254bb",
+      "bytes": 9775
+    },
+    "candidate_reports/lr_c_1.md": {
+      "sha256": "487b10d16c87330fd9a229aeb8078cafd7a67046e88a7bc3aa63d35403272cdf",
+      "bytes": 3462
+    },
+    "candidate_reports/lr_c_10.json": {
+      "sha256": "7960a6092c9af4053cccc14c62f33c37dd22c3edd9b24bf18ddb5a41a049a7f6",
+      "bytes": 9777
+    },
+    "candidate_reports/lr_c_10.md": {
+      "sha256": "43500a9fb147c1b2ba2a73976fd15ce3897ced4a62baaee045f97714e89aedfc",
+      "bytes": 3465
+    },
+    "candidate_reports/rf_leaf_1.json": {
+      "sha256": "f4558f53438fac91e055e25bcdfec81e78899f8eb48f2d0a0394c67528d42bb4",
+      "bytes": 9409
+    },
+    "candidate_reports/rf_leaf_1.md": {
+      "sha256": "5a46089fc6ef14c3f04d0375e5f1b50966d20b3ac8afd2b6980e0a61336614dc",
+      "bytes": 3352
+    },
+    "candidate_reports/rf_leaf_10.json": {
+      "sha256": "c7e6f45f0282a4e45eb890f855c7eb802bad0131e8b074ca5f5fdbf0d2a0998c",
+      "bytes": 9554
+    },
+    "candidate_reports/rf_leaf_10.md": {
+      "sha256": "ab7f85a3bce79216b843a9f0a660628ca92669b26a55ba4080a526d758e59745",
+      "bytes": 3354
+    },
+    "candidate_reports/rf_leaf_5.json": {
+      "sha256": "696b284a235a837bfab74e22d1ea1cd25042a819ae462d3d2547644de1d5c27a",
+      "bytes": 9546
+    },
+    "candidate_reports/rf_leaf_5.md": {
+      "sha256": "fd529bc87063b44ed17aac6cbdb2f9b6fe660ae00565241b4e4994a35ea92c77",
+      "bytes": 3352
+    },
+    "candidates/lr_c_0_1/decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "candidates/lr_c_0_1/feature_schema.json": {
+      "sha256": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+      "bytes": 1923
+    },
+    "candidates/lr_c_0_1/label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "candidates/lr_c_0_1/pipeline.joblib": {
+      "sha256": "b46f16775b3fcc1e2f612d4bebb2220764ccc70041a0d3a02743688ba3fccbc0",
+      "bytes": 1125
+    },
+    "candidates/lr_c_0_1/training_manifest.json": {
+      "sha256": "3f26f289784545e6e70107771c9191f94379e822a3a9797d3226b07be1e60396",
+      "bytes": 2351
+    },
+    "candidates/lr_c_0_1/validation_predictions.csv": {
+      "sha256": "69af207ccf4dd53c516ddd44347c14efeca1f02c3936dbcc2ce0352b12c56935",
+      "bytes": 60247
+    },
+    "candidates/lr_c_1/decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "candidates/lr_c_1/feature_schema.json": {
+      "sha256": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+      "bytes": 1923
+    },
+    "candidates/lr_c_1/label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "candidates/lr_c_1/pipeline.joblib": {
+      "sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+      "bytes": 1128
+    },
+    "candidates/lr_c_1/training_manifest.json": {
+      "sha256": "b4ffcb46ccac053ba620c59cfb3b04afa82d83fd042ff0c13590e9f78f51696b",
+      "bytes": 2347
+    },
+    "candidates/lr_c_1/validation_predictions.csv": {
+      "sha256": "e4751818a9f42be55f583ae6abb6f819d0b90bd483168646a5ccc7c4e9f467d0",
+      "bytes": 60307
+    },
+    "candidates/lr_c_10/decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "candidates/lr_c_10/feature_schema.json": {
+      "sha256": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+      "bytes": 1923
+    },
+    "candidates/lr_c_10/label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "candidates/lr_c_10/pipeline.joblib": {
+      "sha256": "0708db71e107a1c3d9eef148456a8f6396717571a927b4ca68fef7a61e04a82d",
+      "bytes": 1124
+    },
+    "candidates/lr_c_10/training_manifest.json": {
+      "sha256": "ecf2f09591a8521d597652934488542b7a434b35b41953fc1712a597c94bcd79",
+      "bytes": 2349
+    },
+    "candidates/lr_c_10/validation_predictions.csv": {
+      "sha256": "2997c1e866c462b2fab5fac30d2497d901d6e6ca2bfb40ba5b543445487b33ac",
+      "bytes": 60383
+    },
+    "candidates/rf_leaf_1/decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "candidates/rf_leaf_1/feature_schema.json": {
+      "sha256": "d9ca985f5d7a0be9b31e1c431a385c5f1fc095a10879334c92ce5d032d0d4201",
+      "bytes": 1920
+    },
+    "candidates/rf_leaf_1/label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "candidates/rf_leaf_1/pipeline.joblib": {
+      "sha256": "55ac99a6531552774abaa8f2f92f56ae11d66ffaafb7a48975e51c0369405058",
+      "bytes": 40387
+    },
+    "candidates/rf_leaf_1/training_manifest.json": {
+      "sha256": "473e28de0a0d6d868ca9c80bfe1663ccd4ac6b6b80ee81abced845b6485616bb",
+      "bytes": 2332
+    },
+    "candidates/rf_leaf_1/validation_predictions.csv": {
+      "sha256": "c5c11b395df62e147b7ed828c7413e46df331552a1c8a0e3b526316becded574",
+      "bytes": 58326
+    },
+    "candidates/rf_leaf_10/decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "candidates/rf_leaf_10/feature_schema.json": {
+      "sha256": "d9ca985f5d7a0be9b31e1c431a385c5f1fc095a10879334c92ce5d032d0d4201",
+      "bytes": 1920
+    },
+    "candidates/rf_leaf_10/label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "candidates/rf_leaf_10/pipeline.joblib": {
+      "sha256": "180d9275531db1c016068e5f1a4137f98325bbbb5bd71fc8816f56d1ad923202",
+      "bytes": 19670
+    },
+    "candidates/rf_leaf_10/training_manifest.json": {
+      "sha256": "7c2f5c165b05a460bcf3afbe51b72bccaa5f2e129714b8d8bbcf48ed9cdb0fa8",
+      "bytes": 2334
+    },
+    "candidates/rf_leaf_10/validation_predictions.csv": {
+      "sha256": "60847dcc2358f42468e2367463d1053201c64f7dfeb5c345969529ede91c1d9a",
+      "bytes": 60362
+    },
+    "candidates/rf_leaf_5/decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "candidates/rf_leaf_5/feature_schema.json": {
+      "sha256": "d9ca985f5d7a0be9b31e1c431a385c5f1fc095a10879334c92ce5d032d0d4201",
+      "bytes": 1920
+    },
+    "candidates/rf_leaf_5/label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "candidates/rf_leaf_5/pipeline.joblib": {
+      "sha256": "df4074d5fd85c6c05995f18136b71a9b9891a525c6d04dc93cec9ce553bc4906",
+      "bytes": 26310
+    },
+    "candidates/rf_leaf_5/training_manifest.json": {
+      "sha256": "3dc9dfae3f01e688115c66dfe056d3db990153c782428d6e5340cc233b52a649",
+      "bytes": 2332
+    },
+    "candidates/rf_leaf_5/validation_predictions.csv": {
+      "sha256": "d40e95b7c500b86a1131adf92d39b40ae7544dc65b13cef1d2911e7199208339",
+      "bytes": 60381
+    },
+    "protocol_lock.json": {
+      "sha256": "5032622481552be2e82dc536c2aab52acdbf816f2537e694f5de52647a73bb30",
+      "bytes": 2971
+    },
+    "selected_validation_predictions.csv": {
+      "sha256": "72e55b3ff72d1b5e1ad69494dbe206a67feeddb6044b247df374f5cd6b58c82d",
+      "bytes": 60265
+    },
+    "selection.json": {
+      "sha256": "f6c8f05c92f9523f7af45b5254c68710f2308ca418f6b581815f6730ecc98f8c",
+      "bytes": 3739
+    }
+  },
+  "code_sha256": {
+    "operational_data.py": "38ec4d5431cf17e81553d482f65be4133ef7486286746e2f8f3274754e1cc1a3",
+    "train_operational_logistic_regression.py": "febb4285b912d3ac571c9d7e61bafa059ee0b046af31e2f75ae662e6f3f08664",
+    "train_operational_random_forest.py": "2ce9d6126a91530ec75c61e9e2bb3bcabde9acfa3d337a119b23e8900301bfa3",
+    "run_operational_validation_experiment.py": "e1b61f645880ebd3709903550b12f0e8c6f8dd19d50a20d4bb28a0d2d34a82e7"
+  },
+  "limitations": [
+    "분할별 메시지·run·세션 수는 dataset_splits에 기록한다. 초기 데이터는 단일 캠페인이며 메시지별 점수는 독립 캠페인 일반화 성능이 아니다.",
+    "Validation은 후보·threshold 선택에 사용했다. 선정된 Validation 지표는 독립적인 최종 성능 추정치가 아니다.",
+    "현재 수집 데이터와 의미 계약에서만 비교한다. 본문 오류의 관측 불가와 생성기 편향을 모델 설정으로 해결했다고 주장하지 않는다.",
+    "FPR 상한과 Recall 하한은 초기 실험 기준이며 배포 요구사항이나 실제 공격 탐지 보장이 아니다.",
+    "threshold는 클래스 확률의 판정 기준이다. 변경한다고 가중치·트리·확률 자체가 바뀌거나 확률 보정이 되는 것은 아니다.",
+    "후보 실패 또는 미선정 때문에 기준·후보를 자동 변경하지 않는다. 추가 실험은 별도 protocol과 새로운 실험 경로로 관리한다.",
+    "최종 Test 비교·지연시간/메모리 측정·실제 모델 FastAPI 연결은 수행하지 않았다."
+  ]
+}

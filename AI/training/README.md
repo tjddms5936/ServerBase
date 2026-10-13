@@ -8,6 +8,10 @@
 train_logistic_regression.py
 train_random_forest.py
 run_validation_experiment.py
+operational_data.py
+train_operational_logistic_regression.py
+train_operational_random_forest.py
+run_operational_validation_experiment.py
 ```
 
 전처리된 UNSW-NB15 데이터를 불러와 Logistic Regression 기준 모델을 학습하고 평가합니다.
@@ -66,6 +70,57 @@ artifacts/validation_experiment/<candidate_id>.joblib
 ```
 
 `selection.json`은 선정 모델 경로와 threshold, 전처리기 경로를 함께 기록합니다. 선정 모델은 분리된 학습 부분으로 학습한 상태이며, 전체 train 재학습이나 공식 test 평가를 수행하지 않습니다. 같은 feature 그룹을 분리해도 시간/세션 전체의 독립성을 보장하는 것은 아닙니다.
+
+## 운영 메시지 Logistic Regression
+
+```powershell
+python .\training\train_operational_logistic_regression.py
+```
+
+`configs/operational_logistic_regression.json`의 고정 운영 데이터셋을 사용한다. `operational_data.py`가 manifest·허용된 파일 해시·입력 계약·행 정렬·run/session 비중복을 검사하고, train만으로 StandardScaler와 LR을 fit한다. validation은 예측에만 사용하고 test CSV는 해시 검사에도 읽지 않는다.
+
+최대 반복 1000회, C=1.0, solver=lbfgs, tol=0.0001, threshold=0.5의 고정 초기 모델이다. 설정이나 threshold를 validation에서 선정한 단계가 아니다. 기존 UNSW 모델을 덮어쓰지 않는다.
+
+산출물은 `artifacts/operational_message/logistic_regression_v1/`, 보고서는 `reports/operational_logistic_regression.json`과 `.md`다. scaler와 LR을 하나의 Pipeline으로 저장하고 학습한 가중치·실제 반복 수·validation 예측을 남긴다. 기존 결과가 있으면 새 `--artifact-dir`과 `--report-prefix`를 지정한다.
+
+설명은 `docs/operational_logistic_regression.md`를 참조한다. 동일 데이터의 운영 RF 초기 학습·비교와 아래 validation 선정도 완료했다. FastAPI는 아직 dummy 모델을 유지한다.
+
+## 운영 메시지 RandomForest
+
+```powershell
+python .\training\train_operational_random_forest.py
+python .\evaluation\compare_operational_baselines.py
+```
+
+`configs/operational_random_forest.json`으로 트리 100개, max_depth=None, min_samples_leaf=1, max_features=sqrt, bootstrap=True, seed=42, n_jobs=1, threshold=0.5를 사전에 고정했다. RF는 scaler 없이 같은 원본 입력 7개를 사용하며 train만 fit하고 test는 읽지 않는다.
+
+산출물은 `artifacts/operational_message/random_forest_v1/`, 학습 보고서는 `reports/operational_random_forest.json`과 `.md`, 비교 보고서는 `reports/operational_baseline_comparison.json`과 `.md`다. 기존 결과를 덮어쓰지 않는다. RF 초기 모델은 validation FP 14건, FN 29건으로 LR보다 오탐은 줄었지만 누락이 늘었다. 최종 개선 모델로 선정하지 않았다.
+
+흐름·개념·재실행 방법은 `docs/operational_random_forest.md`에 정리했다. 기존 UNSW 학습과 운영 학습을 혼합하지 않는다.
+
+## 운영 Validation 설정·threshold 선정
+
+```powershell
+python .\training\run_operational_validation_experiment.py
+```
+
+`configs/operational_validation_experiment.json`에서 LR C=0.1/1/10, RF min_samples_leaf=1/5/10과 threshold 0.3~0.9를 고정한다. FPR 10% 이하·Recall 50% 이상 중 Recall 최대를 선정하고 동률은 F1·FPR·후보 id·threshold 순으로 처리한다. 후보별 Train 학습은 한 번씩 수행하며 threshold마다 재학습하지 않는다. Test는 읽지 않는다.
+
+학습 전 protocol 잠금과 모델 6개·조합 42개의 전체 결과를 저장한다. 결과는 `artifacts/operational_message/validation_selection_v1/`, `reports/operational_validation_experiment.json`과 `.md`다. `selection.json`에는 모델 경로와 선정 threshold를 함께 기록한다. 후보 기본 정책의 0.5와 선정 정책을 구분한다. 제약 충족 후보가 없으면 미선정으로 완료하고 기준을 자동 완화하지 않는다.
+
+실제 선정은 LR C=1, threshold=0.7이며 Validation FP=3, FN=24였다. 기존 baseline을 덮어쓰지 않고 최종 모델·배포 확정으로 취급하지 않는다. 재실행은 새 `--artifact-dir`과 `--report-prefix`를 지정한다. 개념·코드 흐름·한계는 `docs/operational_validation_experiment.md`에 정리했다. 선정 모델의 오분류 분석·보강 설계도 완료했고 다음 작업은 생성기 제어·캠페인 분리 구현과 새 수집·검증이다. 설명은 `docs/operational_error_analysis.md`, `docs/operational_data_augmentation.md`를 참조한다.
+
+## 새 Train 전용 보강 LR/RF 실험
+
+```powershell
+python .\training\run_operational_augmentation_experiment.py
+```
+
+`configs/operational_augmentation_experiment.json`에서 6개 후보·7개 threshold·선정 규칙을 먼저 고정한다. 기존 모델·진단 CSV·새 캠페인 입력을 검증하고 전체 보강 lock과 후보 선정 lock을 저장한 뒤 새 Train 1,538건으로만 학습한다. 같은 Validation 513건을 사용하며 Test CSV는 읽지 않는다. Validation을 이미 진단했다는 이력도 lock과 보고서에 보관한다.
+
+기존 `run_operational_validation_experiment.py`의 학습·선정 로직을 재사용하고 저장 후보를 다시 검증해 고정 0.7 비교와 모델별 최적 정책 비교를 분리한다. 결과는 RF leaf=5·threshold=0.3, FP 30·FN 9·FPR 8.60%·Recall 94.51%·F1 88.83%다. 최종 모델 선정은 아니다.
+
+산출물은 `artifacts/operational_message/augmentation_v1/`, 보고서는 `reports/operational_augmentation_validation.json/.md`, `reports/operational_augmentation_comparison.json/.md`다. 기존 경로는 덮어쓰지 않는다. 재실행에는 새 `--run-dir`, `--selection-report-prefix`, `--comparison-report-prefix`를 모두 지정한다. 실제 흐름·한계·재현은 `docs/operational_augmentation_experiment.md`에서 확인한다.
 
 이후 추가할 스크립트:
 

@@ -1,0 +1,66 @@
+{
+  "plan_version": "v1",
+  "status": "design_only",
+  "scope": "독립 캠페인 수집·분할 설계이며 현재 수집기용 실행 설정이 아니다.",
+  "feature_contract_id": "server_application_message_v2",
+  "target_dataset_id": "operational_message_v2_campaign_holdout",
+  "reference_selection": "../artifacts/operational_message/validation_selection_v1/selection.json",
+  "freeze_reference_before_collection": true,
+  "campaign_split_policy": "preassigned_campaign_holdout",
+  "campaign_slots": [
+    {"slot_id": "development_01", "seed": 101, "split": "train"},
+    {"slot_id": "development_02", "seed": 211, "split": "train"},
+    {"slot_id": "development_03", "seed": 307, "split": "train"},
+    {"slot_id": "selection_01", "seed": 401, "split": "validation"},
+    {"slot_id": "holdout_01", "seed": 503, "split": "test"},
+    {"slot_id": "holdout_02", "seed": 607, "split": "test"}
+  ],
+  "repeats_per_campaign": 2,
+  "sessions_per_run": 4,
+  "scenario_ids": ["normal_chat", "normal_fragmented_chat", "normal_batched_chat", "controlled_burst_chat", "malformed_chat_payload", "malformed_length_chat", "invalid_frame_size"],
+  "planned_generator_controls": {
+    "text_sizes": [8, 24, 96, 384, 768],
+    "normal_message_count_range": [6, 24],
+    "burst_message_count_range": [12, 24],
+    "normal_wait_ms_ranges": [[1, 4], [5, 15], [20, 40]],
+    "burst_intentional_wait_ms": 0,
+    "batch_sizes": [1, 4, 8],
+    "fragment_sizes_bytes": [7, 19, 31],
+    "concurrency_levels": [1, 2, 4],
+    "scenario_order": "캠페인 seed로 순서를 결정하고 시나리오와 실행 순서·동시 연결 수준이 고정 대응하지 않도록 교차 배치한다.",
+    "implementation_required": "현재 생성기는 batch=4, fragment=31 등 일부 설정이 고정돼 있다. 명시적 설정 필드와 검증·테스트를 다음 수집 구현에 추가해야 한다."
+  },
+  "label_policy": {
+    "source": "송신 전 고정한 시나리오·행동 정책 manifest",
+    "normal": "유효한 프로토콜의 일반·분할·묶음 전송. 긴 정상 세션도 포함하며 명시한 정상 pacing을 따른다.",
+    "controlled_anomaly": "사전에 정의한 bounded 무대기 연속 요청 또는 의도적으로 잘못 만든 프로토콜 본문·헤더.",
+    "scope": "실제 공격 여부가 아니라 통제된 애플리케이션 이상 정책의 정답이다.",
+    "prohibited_sources": ["모델 확률·예측", "서버 error_count", "종료 summary", "오분류 여부"],
+    "do_not_relabel_early_prefix": true
+  },
+  "quality_gates": [
+    "각 캠페인의 시나리오·seed·설정·빌드·feature 계약·정답 manifest를 송신 전에 보관한다.",
+    "캠페인·run·세션·메시지 식별자를 검사하고 사전 기대값과 JSONL 누락·중복·종료 통계를 대조한다.",
+    "불완전 run은 제외 사유와 함께 격리하며 정답을 임의로 바꾸지 않는다.",
+    "헤더 거부는 메시지 0개가 기대값이다. 종료 summary로 메시지를 만들지 않고 별도 coverage로 보고한다.",
+    "시나리오별 분포와 정상·이상 크기/타이밍 범위, 실제 파싱 시각 및 송신 계획의 차이를 보고한다.",
+    "새 Test의 형식·유실 품질만 확인하고 모델 점수·오분류·feature 선택에는 사용하지 않는다."
+  ],
+  "analysis_protocol": {
+    "frozen_baseline_audit": "현재 선정 모델과 threshold를 고정하고 새 Validation에서만 진단한다. 새 Test는 최종 평가까지 열지 않는다.",
+    "refit_scope": "새 Train 캠페인만으로 scaler·모델을 fit한다. 새 Validation은 사전 후보 선정에만 사용한다.",
+    "protect_legacy_test": true,
+    "prevent_cross_campaign_or_session_windows": true,
+    "report_message_and_session_prefix_coverage": true,
+    "limitations": "새 seed와 캠페인 분리는 생성기·장비·실제 공격 도메인 편향을 제거하지 않는다. 같은 장비 반복임을 기록한다."
+  },
+  "safety_limits": {
+    "destination": "127.0.0.1:4000",
+    "max_messages_per_session": 24,
+    "max_sessions_per_run": 4,
+    "max_concurrency": 4,
+    "max_text_bytes": 768,
+    "external_traffic_allowed": false,
+    "auto_collect_now": false
+  }
+}

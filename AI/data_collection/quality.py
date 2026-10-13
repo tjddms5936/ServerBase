@@ -12,7 +12,7 @@ from pydantic import Field, model_validator
 
 from inference_api.schemas import InferenceRequest
 from .config import ScenarioManifest, StrictModel
-from .traffic import CampaignPlan, build_expectations
+from .traffic import CampaignPlan, build_expectations, planned_runs, planned_send_groups
 
 
 class CollectedRecord(StrictModel):
@@ -96,7 +96,7 @@ def audit_run(root: Path, entry: dict, campaign: dict) -> dict:
         expected = read_json(expected_path)
         require(hashlib.sha256(expected_path.read_bytes()).hexdigest() == entry["expectations_sha256"], "사전 기대값 파일의 해시가 다릅니다.")
         plan = CampaignPlan.model_validate(campaign["plan_snapshot"])
-        profile = next(profile for profile in plan.profiles if profile.scenario_id == entry["scenario_id"])
+        profile = next(profile for profile in plan.profiles_for_repeat(entry["repeat_index"]) if profile.scenario_id == entry["scenario_id"])
         source_manifest = ScenarioManifest.model_validate(campaign["scenario_manifest_snapshot"])
         scenario = next(scenario for scenario in source_manifest.scenarios if scenario.scenario_id == entry["scenario_id"])
         label = scenario.label
@@ -136,6 +136,15 @@ def audit_run(root: Path, entry: dict, campaign: dict) -> dict:
             require(actual.get("frames_sent") == len(session["frames"]), "실제 송신 프레임 수가 기대값과 다릅니다.")
             require(actual.get("bytes_sent") == sum(frame["wire_size"] for frame in session["frames"]), "실제 송신 바이트가 기대값과 다릅니다.")
             require(actual.get("responses_received") == session["expected_responses"], "실제 정상 응답 수가 기대값과 다릅니다.")
+            if regenerated["expectation_version"] == "v2":
+                require(actual.get("transport_controls") == session["transport_controls"], "실제 송신 묶음·분할 제어가 사전 설정과 다릅니다.")
+                require(actual.get("sendall_calls") == session["expected_sendall_calls"], "실제 sendall 호출 수가 사전 묶음·분할 기대값과 다릅니다.")
+                groups = actual.get("send_groups", [])
+                keys = ("first_frame_index", "frame_count", "wire_size", "wait_after_ms")
+                require([{key: group.get(key) for key in keys} for group in groups] ==
+                        planned_send_groups(session, session["transport_controls"]), "실제 송신 묶음별 크기·대기 기록이 사전 계획과 다릅니다.")
+                require(all(isinstance(group.get(key), (int, float)) and math.isfinite(group[key]) and group[key] >= 0
+                            for group in groups for key in ("start_interval_ms", "send_duration_ms")), "송신 계측 시간은 유한한 0 이상이어야 합니다.")
 
         require(summary["complete"] is True and summary["shutdown_complete"] is True, "불완전 종료로 기록된 run입니다.")
         require(not summary["shutdown_timed_out"] and not summary["write_error"] and not summary["summary_error"], "종료 시간 초과 또는 파일 저장 오류가 있습니다.")
@@ -237,12 +246,12 @@ def audit_campaign(root: Path) -> dict:
     if actual_dirs - set(ids):
         campaign_issues.append("계획에 없는 추가 run 디렉터리가 있습니다.")
     plan = CampaignPlan.model_validate(campaign["plan_snapshot"])
-    expected_ids = {f"{campaign['campaign_id']}_r{repeat:02d}_{profile.scenario_id}" for repeat in range(plan.repeats) for profile in plan.profiles}
+    expected_ids = {f"{campaign['campaign_id']}_r{repeat:02d}_{profile.scenario_id}" for repeat, profile, _ in planned_runs(plan)}
     if set(ids) != expected_ids:
         campaign_issues.append("수집 계획 대비 run 항목이 누락되거나 추가되었습니다.")
     canonical = {
-        f"{campaign['campaign_id']}_r{repeat:02d}_{profile.scenario_id}": (profile.scenario_id, repeat, plan.seed + repeat * 100 + index)
-        for repeat in range(plan.repeats) for index, profile in enumerate(plan.profiles)
+        f"{campaign['campaign_id']}_r{repeat:02d}_{profile.scenario_id}": (profile.scenario_id, repeat, seed)
+        for repeat, profile, seed in planned_runs(plan)
     }
     for entry in campaign["runs"]:
         if canonical.get(entry["run_id"]) != (entry["scenario_id"], entry["repeat_index"], entry["seed"]):

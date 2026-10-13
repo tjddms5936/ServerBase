@@ -1,0 +1,307 @@
+{
+  "report_version": "v1",
+  "generated_at_utc": "2026-10-12T10:12:22.411795+00:00",
+  "experiment": "operational_random_forest_fixed_baseline",
+  "dataset_id": "operational_message_v1",
+  "feature_contract_id": "server_application_message_v2",
+  "feature_order": [
+    "packet_size",
+    "payload_size",
+    "connection_duration_ms",
+    "message_interval_ms",
+    "bytes_received_total",
+    "bytes_sent_total",
+    "error_count_total"
+  ],
+  "config": {
+    "config_version": "v1",
+    "dataset_id": "operational_message_v1",
+    "dataset_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v1",
+    "artifact_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\random_forest_v1",
+    "report_prefix": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_random_forest",
+    "n_estimators": 100,
+    "criterion": "gini",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "max_features": "sqrt",
+    "bootstrap": true,
+    "class_weight": null,
+    "random_state": 42,
+    "n_jobs": 1,
+    "threshold": 0.5
+  },
+  "model_parameters": {
+    "n_estimators": 100,
+    "criterion": "gini",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "max_features": "sqrt",
+    "bootstrap": true,
+    "class_weight": null,
+    "random_state": 42,
+    "n_jobs": 1
+  },
+  "label_map": {
+    "normal": 0,
+    "controlled_anomaly": 1
+  },
+  "fit_scope": "train_only",
+  "preprocessing": "identity_no_scaler",
+  "evaluated_splits": [
+    "train",
+    "validation"
+  ],
+  "test_files_read": false,
+  "test_evaluated": false,
+  "threshold_selection": "fixed_baseline_not_tuned",
+  "deployment_ready": false,
+  "artifact_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\random_forest_v1",
+  "dataset_splits": {
+    "train": {
+      "rows": 126,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 64,
+        "1": 62
+      }
+    },
+    "validation": {
+      "rows": 138,
+      "runs": 6,
+      "sessions": 24,
+      "label_distribution": {
+        "0": 74,
+        "1": 64
+      }
+    }
+  },
+  "training": {
+    "fit_seconds": 0.06607880024239421,
+    "trees_fitted": 100,
+    "convergence": {
+      "applicable": false,
+      "reason": "RF는 지정한 트리 수를 구성하며 LR의 수렴 반복과 다르다."
+    },
+    "tree_depth": {
+      "minimum": 5,
+      "maximum": 13,
+      "mean": 8.29
+    },
+    "total_tree_nodes": 2710
+  },
+  "constant_training_features": [
+    "error_count_total"
+  ],
+  "train_metrics": {
+    "rows": 126,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 1.0,
+    "average_precision": 1.0,
+    "log_loss": 0.0492201156569274,
+    "false_positive_rate": 0.0,
+    "false_negative_rate": 0.0,
+    "confusion_matrix": {
+      "label_order": [
+        0,
+        1
+      ],
+      "rows": "actual",
+      "columns": "predicted",
+      "values": [
+        [
+          64,
+          0
+        ],
+        [
+          0,
+          62
+        ]
+      ],
+      "tn": 64,
+      "fp": 0,
+      "fn": 0,
+      "tp": 62
+    }
+  },
+  "validation_metrics": {
+    "rows": 138,
+    "accuracy": 0.6884057971014492,
+    "precision": 0.7142857142857143,
+    "recall": 0.546875,
+    "f1": 0.6194690265486725,
+    "roc_auc": 0.8025760135135135,
+    "average_precision": 0.7280344493566133,
+    "log_loss": 1.092817286493403,
+    "false_positive_rate": 0.1891891891891892,
+    "false_negative_rate": 0.453125,
+    "confusion_matrix": {
+      "label_order": [
+        0,
+        1
+      ],
+      "rows": "actual",
+      "columns": "predicted",
+      "values": [
+        [
+          60,
+          14
+        ],
+        [
+          29,
+          35
+        ]
+      ],
+      "tn": 60,
+      "fp": 14,
+      "fn": 29,
+      "tp": 35
+    }
+  },
+  "validation_by_scenario": {
+    "controlled_burst_chat": {
+      "rows": 56,
+      "normal_rows": 0,
+      "controlled_anomaly_rows": 56,
+      "fp": 0,
+      "fn": 28,
+      "recall": 0.5,
+      "false_positive_rate": null
+    },
+    "malformed_chat_payload": {
+      "rows": 4,
+      "normal_rows": 0,
+      "controlled_anomaly_rows": 4,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1.0,
+      "false_positive_rate": null
+    },
+    "malformed_length_chat": {
+      "rows": 4,
+      "normal_rows": 0,
+      "controlled_anomaly_rows": 4,
+      "fp": 0,
+      "fn": 1,
+      "recall": 0.75,
+      "false_positive_rate": null
+    },
+    "normal_batched_chat": {
+      "rows": 23,
+      "normal_rows": 23,
+      "controlled_anomaly_rows": 0,
+      "fp": 13,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.5652173913043478
+    },
+    "normal_chat": {
+      "rows": 27,
+      "normal_rows": 27,
+      "controlled_anomaly_rows": 0,
+      "fp": 1,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.037037037037037035
+    },
+    "normal_fragmented_chat": {
+      "rows": 24,
+      "normal_rows": 24,
+      "controlled_anomaly_rows": 0,
+      "fp": 0,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.0
+    }
+  },
+  "feature_importances": [
+    {
+      "feature": "connection_duration_ms",
+      "importance": 0.4857966656390842
+    },
+    {
+      "feature": "message_interval_ms",
+      "importance": 0.2058704493706059
+    },
+    {
+      "feature": "bytes_received_total",
+      "importance": 0.14194932657824724
+    },
+    {
+      "feature": "bytes_sent_total",
+      "importance": 0.09166098762602046
+    },
+    {
+      "feature": "packet_size",
+      "importance": 0.03985801159988401
+    },
+    {
+      "feature": "payload_size",
+      "importance": 0.034864559186158266
+    },
+    {
+      "feature": "error_count_total",
+      "importance": 0.0
+    }
+  ],
+  "input_sha256": {
+    "dataset_manifest.json": "edcd424e6aaca6071524933d2ce5830034c2b780ca07ae34b6ddf87b20911bfd",
+    "feature_schema.json": "fc2bc80380a166bc0aba4000dd9d78a2561b90575dc93a5f93a27a8dc38830f6",
+    "label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "split_manifest.json": "3d23924aea2490677b9ce0b66fb335c9930eadba41b0e6ad5f2628cbf8d31774",
+    "X_train.csv": "c8801a650b0ac8fd6c928633bb70d4b2210bb17de6931e5070d7ef4ec0b16399",
+    "y_train.csv": "6f2abc1a213ab0a3583b4b779850ec7bb16a0c8a112d9512f5e5d308c32a85d0",
+    "metadata_train.csv": "3a8626dcec91322c4dc77f687a2bbd5294a2e1b619543042c7f89c2fa1c37142",
+    "X_validation.csv": "fdb64efa38bc7381d3e182cffe17aa536226ff7432e3f50824844fe69e40cecf",
+    "y_validation.csv": "7799a9300cfa2d2910779fe86a5f98ba69fcb3b6a22a58659de8c61f892f0d8c",
+    "metadata_validation.csv": "b8c79fc1b953301b3e41b4212eb4b107dc98d52f3ef7d59709580b466acdd379"
+  },
+  "code_sha256": {
+    "operational_data.py": "38ec4d5431cf17e81553d482f65be4133ef7486286746e2f8f3274754e1cc1a3",
+    "train_operational_logistic_regression.py": "febb4285b912d3ac571c9d7e61bafa059ee0b046af31e2f75ae662e6f3f08664",
+    "train_operational_random_forest.py": "2ce9d6126a91530ec75c61e9e2bb3bcabde9acfa3d337a119b23e8900301bfa3"
+  },
+  "environment": {
+    "python": "3.12.4",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "scikit_learn": "1.8.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "joblib": "1.5.3"
+  },
+  "limitations": [
+    "통제된 시나리오 정답의 초기 검증 결과이며 실제 침입 탐지 성능이 아니다.",
+    "train/validation의 독립 run 수가 작고 동일 생성기·단일 캠페인 편향이 남는다. 메시지마다 독립 표본인 것은 아니다.",
+    "불순도 감소 기반 중요도는 학습 분기의 사용 정도다. 값의 종류가 많은 입력에 편향될 수 있고 인과관계나 원인으로 해석하지 않는다.",
+    "packet_size와 payload_size는 중복 정보라 중요도를 나누어 가질 수 있다. error_count_total은 train에서 상수 0이다.",
+    "현재 snapshot 이후 발생한 본문 오류는 입력에 포함되지 않는다. RF 도입만으로 관측 불가능한 정보를 복원하지 못한다.",
+    "트리 수·설정·threshold 탐색, 최종 test 평가, 지연시간·메모리 비교와 FastAPI 모델 연결은 아직 하지 않았다."
+  ],
+  "artifacts": {
+    "decision_policy.json": {
+      "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "bytes": 147
+    },
+    "feature_schema.json": {
+      "sha256": "d9ca985f5d7a0be9b31e1c431a385c5f1fc095a10879334c92ce5d032d0d4201",
+      "bytes": 1920
+    },
+    "label_map.json": {
+      "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "bytes": 49
+    },
+    "pipeline.joblib": {
+      "sha256": "55ac99a6531552774abaa8f2f92f56ae11d66ffaafb7a48975e51c0369405058",
+      "bytes": 40387
+    },
+    "validation_predictions.csv": {
+      "sha256": "c5c11b395df62e147b7ed828c7413e46df331552a1c8a0e3b526316becded574",
+      "bytes": 58326
+    }
+  }
+}

@@ -1,0 +1,921 @@
+{
+  "report_version": "v1",
+  "generated_at_utc": "2026-10-12T10:12:24.968616+00:00",
+  "dataset_id": "operational_message_v1",
+  "feature_contract_id": "server_application_message_v2",
+  "feature_order": [
+    "packet_size",
+    "payload_size",
+    "connection_duration_ms",
+    "message_interval_ms",
+    "bytes_received_total",
+    "bytes_sent_total",
+    "error_count_total"
+  ],
+  "threshold": 0.5,
+  "threshold_selection": "fixed_baseline_not_tuned",
+  "evaluated_split": "validation",
+  "test_files_read": false,
+  "test_evaluated": false,
+  "final_model_selected": false,
+  "deployment_ready": false,
+  "validation_rows": 138,
+  "input_sha256": {
+    "dataset_manifest.json": "edcd424e6aaca6071524933d2ce5830034c2b780ca07ae34b6ddf87b20911bfd",
+    "feature_schema.json": "fc2bc80380a166bc0aba4000dd9d78a2561b90575dc93a5f93a27a8dc38830f6",
+    "label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "split_manifest.json": "3d23924aea2490677b9ce0b66fb335c9930eadba41b0e6ad5f2628cbf8d31774",
+    "X_train.csv": "c8801a650b0ac8fd6c928633bb70d4b2210bb17de6931e5070d7ef4ec0b16399",
+    "y_train.csv": "6f2abc1a213ab0a3583b4b779850ec7bb16a0c8a112d9512f5e5d308c32a85d0",
+    "metadata_train.csv": "3a8626dcec91322c4dc77f687a2bbd5294a2e1b619543042c7f89c2fa1c37142",
+    "X_validation.csv": "fdb64efa38bc7381d3e182cffe17aa536226ff7432e3f50824844fe69e40cecf",
+    "y_validation.csv": "7799a9300cfa2d2910779fe86a5f98ba69fcb3b6a22a58659de8c61f892f0d8c",
+    "metadata_validation.csv": "b8c79fc1b953301b3e41b4212eb4b107dc98d52f3ef7d59709580b466acdd379"
+  },
+  "models": {
+    "lr": {
+      "validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.7608695652173914,
+        "precision": 0.7066666666666667,
+        "recall": 0.828125,
+        "f1": 0.762589928057554,
+        "roc_auc": 0.8855574324324323,
+        "average_precision": 0.8815743142941475,
+        "log_loss": 0.3518424311007014,
+        "false_positive_rate": 0.2972972972972973,
+        "false_negative_rate": 0.171875,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              52,
+              22
+            ],
+            [
+              11,
+              53
+            ]
+          ],
+          "tn": 52,
+          "fp": 22,
+          "fn": 11,
+          "tp": 53
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 8,
+          "recall": 0.8571428571428571,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 3,
+          "recall": 0.25,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 20,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.8695652173913043
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.041666666666666664
+        }
+      },
+      "train_metrics_reference": {
+        "rows": 126,
+        "accuracy": 0.873015873015873,
+        "precision": 0.8194444444444444,
+        "recall": 0.9516129032258065,
+        "f1": 0.8805970149253731,
+        "roc_auc": 0.959929435483871,
+        "average_precision": 0.9633486540806371,
+        "log_loss": 0.26751619339775606,
+        "false_positive_rate": 0.203125,
+        "false_negative_rate": 0.04838709677419355,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              51,
+              13
+            ],
+            [
+              3,
+              59
+            ]
+          ],
+          "tn": 51,
+          "fp": 13,
+          "fn": 3,
+          "tp": 59
+        }
+      },
+      "preprocessing": "train_only_StandardScaler"
+    },
+    "rf": {
+      "validation_metrics": {
+        "rows": 138,
+        "accuracy": 0.6884057971014492,
+        "precision": 0.7142857142857143,
+        "recall": 0.546875,
+        "f1": 0.6194690265486725,
+        "roc_auc": 0.8025760135135135,
+        "average_precision": 0.7280344493566133,
+        "log_loss": 1.092817286493403,
+        "false_positive_rate": 0.1891891891891892,
+        "false_negative_rate": 0.453125,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              60,
+              14
+            ],
+            [
+              29,
+              35
+            ]
+          ],
+          "tn": 60,
+          "fp": 14,
+          "fn": 29,
+          "tp": 35
+        }
+      },
+      "validation_by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 56,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 56,
+          "fp": 0,
+          "fn": 28,
+          "recall": 0.5,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 4,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 4,
+          "fp": 0,
+          "fn": 1,
+          "recall": 0.75,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 23,
+          "normal_rows": 23,
+          "controlled_anomaly_rows": 0,
+          "fp": 13,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.5652173913043478
+        },
+        "normal_chat": {
+          "rows": 27,
+          "normal_rows": 27,
+          "controlled_anomaly_rows": 0,
+          "fp": 1,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.037037037037037035
+        },
+        "normal_fragmented_chat": {
+          "rows": 24,
+          "normal_rows": 24,
+          "controlled_anomaly_rows": 0,
+          "fp": 0,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.0
+        }
+      },
+      "train_metrics_reference": {
+        "rows": 126,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "roc_auc": 1.0,
+        "average_precision": 1.0,
+        "log_loss": 0.0492201156569274,
+        "false_positive_rate": 0.0,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              64,
+              0
+            ],
+            [
+              0,
+              62
+            ]
+          ],
+          "tn": 64,
+          "fp": 0,
+          "fn": 0,
+          "tp": 62
+        }
+      },
+      "preprocessing": "identity_no_scaler"
+    }
+  },
+  "model_evidence": {
+    "lr": {
+      "directory": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\logistic_regression_v1",
+      "training_manifest_sha256": "6fc5037d222e89075c9e2d370f486f371659f032a2647db64f0bf9e7b8e733a9",
+      "report_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_logistic_regression.json",
+      "report_sha256": "a5d2e9ecc4379f0affe1d7f152599872bec44a9d24ae518c60f0f2334727aa66",
+      "artifacts": {
+        "decision_policy.json": {
+          "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+          "bytes": 147
+        },
+        "feature_schema.json": {
+          "sha256": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+          "bytes": 1923
+        },
+        "label_map.json": {
+          "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+          "bytes": 49
+        },
+        "pipeline.joblib": {
+          "sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+          "bytes": 1128
+        },
+        "validation_predictions.csv": {
+          "sha256": "e4751818a9f42be55f583ae6abb6f819d0b90bd483168646a5ccc7c4e9f467d0",
+          "bytes": 60307
+        }
+      }
+    },
+    "rf": {
+      "directory": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\random_forest_v1",
+      "training_manifest_sha256": "85adbcbc463afe272d2e65d2eb3ee8e5dc493a146461189313752107f13a0561",
+      "report_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_random_forest.json",
+      "report_sha256": "84b63ca4eec7a6cc6baa73c60ba57e757c1bc691ac21906d8a653d36d6d8656d",
+      "artifacts": {
+        "decision_policy.json": {
+          "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+          "bytes": 147
+        },
+        "feature_schema.json": {
+          "sha256": "d9ca985f5d7a0be9b31e1c431a385c5f1fc095a10879334c92ce5d032d0d4201",
+          "bytes": 1920
+        },
+        "label_map.json": {
+          "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+          "bytes": 49
+        },
+        "pipeline.joblib": {
+          "sha256": "55ac99a6531552774abaa8f2f92f56ae11d66ffaafb7a48975e51c0369405058",
+          "bytes": 40387
+        },
+        "validation_predictions.csv": {
+          "sha256": "c5c11b395df62e147b7ed828c7413e46df331552a1c8a0e3b526316becded574",
+          "bytes": 58326
+        }
+      }
+    }
+  },
+  "metric_deltas_rf_minus_lr": {
+    "accuracy": -0.07246376811594213,
+    "precision": 0.007619047619047636,
+    "recall": -0.28125,
+    "f1": -0.14312090150888146,
+    "roc_auc": -0.08298141891891886,
+    "average_precision": -0.15353986493753413,
+    "log_loss": 0.7409748553927016,
+    "false_positive_rate": -0.10810810810810811,
+    "false_negative_rate": 0.28125
+  },
+  "prediction_transitions": {
+    "both_correct": 84,
+    "both_wrong": 22,
+    "corrected_fp": 8,
+    "corrected_fn": 3,
+    "new_fp": 0,
+    "new_fn": 21
+  },
+  "changed_predictions": [
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat:43:1",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat",
+      "session_id": "43",
+      "request_index": "1",
+      "scenario_id": "normal_fragmented_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.5016883175861223,
+      "rf_probability": 0.42,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:39:5",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "39",
+      "request_index": "5",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.6358078018815105,
+      "rf_probability": 0.1,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:40:2",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "40",
+      "request_index": "2",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.5720101473836581,
+      "rf_probability": 0.4,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:40:4",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "40",
+      "request_index": "4",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.6311403647642113,
+      "rf_probability": 0.42,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:4",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "42",
+      "request_index": "4",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.616598141132275,
+      "rf_probability": 0.49,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:6",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "42",
+      "request_index": "6",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.8657395412167554,
+      "rf_probability": 0.33,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:7",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "42",
+      "request_index": "7",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.8658891219635375,
+      "rf_probability": 0.33,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:8",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "session_id": "42",
+      "request_index": "8",
+      "scenario_id": "normal_batched_chat",
+      "label": 0,
+      "change_type": "corrected_fp",
+      "lr_probability": 0.8534036013572113,
+      "rf_probability": 0.36,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:39:4",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "39",
+      "request_index": "4",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.5102082894989622,
+      "rf_probability": 0.48,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:5",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "40",
+      "request_index": "5",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8541652616201082,
+      "rf_probability": 0.35,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:6",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "40",
+      "request_index": "6",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8439841317927178,
+      "rf_probability": 0.24,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:7",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "40",
+      "request_index": "7",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8564706330404755,
+      "rf_probability": 0.35,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:8",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "40",
+      "request_index": "8",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8538128701869817,
+      "rf_probability": 0.27,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:1",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "1",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.5535615986431072,
+      "rf_probability": 0.16,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:2",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "2",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.5481329232172149,
+      "rf_probability": 0.17,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:3",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "3",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.5486749346908496,
+      "rf_probability": 0.18,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:4",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "4",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.5916009367508186,
+      "rf_probability": 0.17,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:5",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "5",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8972420947079441,
+      "rf_probability": 0.35,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:6",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "6",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.9007168478906946,
+      "rf_probability": 0.42,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:7",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "7",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.9006380831422309,
+      "rf_probability": 0.42,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:8",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "42",
+      "request_index": "8",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8916237001551482,
+      "rf_probability": 0.34,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:5",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "5",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8371478270965146,
+      "rf_probability": 0.18,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:6",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "6",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8519600592753845,
+      "rf_probability": 0.28,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:7",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "7",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8519061481707455,
+      "rf_probability": 0.28,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:8",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "8",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.8493592442941771,
+      "rf_probability": 0.16,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:9",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "9",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.9759260008560737,
+      "rf_probability": 0.48,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:11",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "11",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.9761760204687199,
+      "rf_probability": 0.48,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:12",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "session_id": "43",
+      "request_index": "12",
+      "scenario_id": "controlled_burst_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.9716121442962633,
+      "rf_probability": 0.45,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:39:1",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "session_id": "39",
+      "request_index": "1",
+      "scenario_id": "malformed_chat_payload",
+      "label": 1,
+      "change_type": "corrected_fn",
+      "lr_probability": 0.49981598621338813,
+      "rf_probability": 0.84,
+      "lr_prediction": 0,
+      "rf_prediction": 1
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:40:1",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "session_id": "40",
+      "request_index": "1",
+      "scenario_id": "malformed_chat_payload",
+      "label": 1,
+      "change_type": "corrected_fn",
+      "lr_probability": 0.4832918648332013,
+      "rf_probability": 0.88,
+      "lr_prediction": 0,
+      "rf_prediction": 1
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:42:1",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "session_id": "42",
+      "request_index": "1",
+      "scenario_id": "malformed_chat_payload",
+      "label": 1,
+      "change_type": "corrected_fn",
+      "lr_probability": 0.3700265808205941,
+      "rf_probability": 0.87,
+      "lr_prediction": 0,
+      "rf_prediction": 1
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_length_chat:42:1",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+      "session_id": "42",
+      "request_index": "1",
+      "scenario_id": "malformed_length_chat",
+      "label": 1,
+      "change_type": "new_fn",
+      "lr_probability": 0.5009396659864679,
+      "rf_probability": 0.19,
+      "lr_prediction": 1,
+      "rf_prediction": 0
+    }
+  ],
+  "scenario_comparison": {
+    "controlled_burst_chat": {
+      "lr": {
+        "rows": 56,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 56,
+        "fp": 0,
+        "fn": 8,
+        "recall": 0.8571428571428571,
+        "false_positive_rate": null
+      },
+      "rf": {
+        "rows": 56,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 56,
+        "fp": 0,
+        "fn": 28,
+        "recall": 0.5,
+        "false_positive_rate": null
+      }
+    },
+    "malformed_chat_payload": {
+      "lr": {
+        "rows": 4,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 4,
+        "fp": 0,
+        "fn": 3,
+        "recall": 0.25,
+        "false_positive_rate": null
+      },
+      "rf": {
+        "rows": 4,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 4,
+        "fp": 0,
+        "fn": 0,
+        "recall": 1.0,
+        "false_positive_rate": null
+      }
+    },
+    "malformed_length_chat": {
+      "lr": {
+        "rows": 4,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 4,
+        "fp": 0,
+        "fn": 0,
+        "recall": 1.0,
+        "false_positive_rate": null
+      },
+      "rf": {
+        "rows": 4,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 4,
+        "fp": 0,
+        "fn": 1,
+        "recall": 0.75,
+        "false_positive_rate": null
+      }
+    },
+    "normal_batched_chat": {
+      "lr": {
+        "rows": 23,
+        "normal_rows": 23,
+        "controlled_anomaly_rows": 0,
+        "fp": 20,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.8695652173913043
+      },
+      "rf": {
+        "rows": 23,
+        "normal_rows": 23,
+        "controlled_anomaly_rows": 0,
+        "fp": 13,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.5652173913043478
+      }
+    },
+    "normal_chat": {
+      "lr": {
+        "rows": 27,
+        "normal_rows": 27,
+        "controlled_anomaly_rows": 0,
+        "fp": 1,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.037037037037037035
+      },
+      "rf": {
+        "rows": 27,
+        "normal_rows": 27,
+        "controlled_anomaly_rows": 0,
+        "fp": 1,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.037037037037037035
+      }
+    },
+    "normal_fragmented_chat": {
+      "lr": {
+        "rows": 24,
+        "normal_rows": 24,
+        "controlled_anomaly_rows": 0,
+        "fp": 1,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.041666666666666664
+      },
+      "rf": {
+        "rows": 24,
+        "normal_rows": 24,
+        "controlled_anomaly_rows": 0,
+        "fp": 0,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.0
+      }
+    }
+  },
+  "code_sha256": {
+    "compare_operational_baselines.py": "4dee81576e285ada290550fa6c194d3de998704b043211f8b2e3a2fc33a34463",
+    "operational_data.py": "38ec4d5431cf17e81553d482f65be4133ef7486286746e2f8f3274754e1cc1a3",
+    "train_operational_logistic_regression.py": "febb4285b912d3ac571c9d7e61bafa059ee0b046af31e2f75ae662e6f3f08664"
+  },
+  "limitations": [
+    "통제된 애플리케이션 메시지의 초기 결과이며 실제 침입 탐지 성능이나 배포 성능이 아니다.",
+    "동일 입력·분할·threshold를 맞췄지만 같은 생성기·단일 캠페인의 작은 독립 run 수 한계는 해결하지 못했다.",
+    "전체 지표와 시나리오별 FP/FN을 함께 해석한다. 확률 0.5가 두 모델에서 같은 보정 수준이라는 뜻은 아니다.",
+    "validation에서 확인한 차이가 별도 캠페인이나 최종 test에도 유지된다고 보장하지 않는다.",
+    "RF가 개선되더라도 선형 모델의 한계가 유일한 원인이라고 확정하지 않는다. 본문 관측 불가·생성기 특성도 남는다.",
+    "설정·threshold 선정, 지연시간·메모리 측정, 최종 test 비교와 모델 연결은 별도 단계로 남아 있다."
+  ]
+}

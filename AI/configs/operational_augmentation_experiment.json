@@ -1,0 +1,39 @@
+{
+  "config_version": "v1",
+  "run_dir": "../artifacts/operational_message/augmentation_v1",
+  "reference_experiment_dir": "../artifacts/operational_message/validation_selection_v1",
+  "reference_audit_report": "../reports/operational_frozen_baseline_audit.json",
+  "comparison_report_prefix": "../reports/operational_augmentation_comparison",
+  "expected_train_rows": 1538,
+  "expected_validation_rows": 513,
+  "validation_prior_use": "frozen_baseline_audit_completed",
+  "experiment": {
+    "config_version": "v1",
+    "experiment_id": "operational_augmentation_v1",
+    "dataset_id": "operational_message_v2_campaign_holdout",
+    "dataset_dir": "../data/processed/operational_message/v2_campaign_holdout",
+    "artifact_dir": "../artifacts/operational_message/augmentation_v1/validation_selection",
+    "report_prefix": "../reports/operational_augmentation_validation",
+    "thresholds": [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+    "selection_rule": {
+      "max_false_positive_rate": 0.1,
+      "min_recall": 0.5,
+      "primary_metric": "recall",
+      "tie_breakers": ["f1_desc", "false_positive_rate_asc", "candidate_id_asc", "threshold_asc"]
+    },
+    "common_parameters": {
+      "random_state": 42,
+      "lr_max_iter": 1000,
+      "lr_tol": 0.0001,
+      "rf_n_estimators": 100
+    },
+    "candidates": [
+      {"id": "lr_c_0_1", "kind": "logistic_regression", "C": 0.1},
+      {"id": "lr_c_1", "kind": "logistic_regression", "C": 1.0},
+      {"id": "lr_c_10", "kind": "logistic_regression", "C": 10.0},
+      {"id": "rf_leaf_1", "kind": "random_forest", "min_samples_leaf": 1, "max_depth": null},
+      {"id": "rf_leaf_5", "kind": "random_forest", "min_samples_leaf": 5, "max_depth": null},
+      {"id": "rf_leaf_10", "kind": "random_forest", "min_samples_leaf": 10, "max_depth": null}
+    ]
+  }
+}

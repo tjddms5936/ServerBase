@@ -1,0 +1,13 @@
+{
+  "config_version": "v1",
+  "dataset_id": "operational_message_v1",
+  "dataset_dir": "../data/processed/operational_message/v1",
+  "artifact_dir": "../artifacts/operational_message/logistic_regression_v1",
+  "report_prefix": "../reports/operational_logistic_regression",
+  "C": 1.0,
+  "max_iter": 1000,
+  "tol": 0.0001,
+  "solver": "lbfgs",
+  "random_state": 42,
+  "threshold": 0.5
+}

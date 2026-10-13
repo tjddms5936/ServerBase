@@ -25,6 +25,12 @@ C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 
 
 품질 검사에서 잘못된·누락된·중복된 레코드와 정답 혼입을 검출하고, 메시지 관측 불가·연동 테스트 run을 메시지 학습 후보에서 제외합니다. 구조와 재검사 명령은 `docs/traffic_generation.md`에 있습니다.
 
+## raw/operational_augmentation
+
+독립 보강 캠페인 6개를 하나의 batch 아래 보관합니다. `assignment_manifest.json`에는 송신 전 고정한 역할·seed·구체적 생성기 계획·기준 모델 해시가, `prepared_manifest.json`에는 고정 파일 해시가 들어 있습니다. 각 캠페인에는 원본 JSONL·기대값·실제 송신 결과·프로세스 로그·품질 보고서가 있습니다. `batch_runtime.json`은 전체 실행 상태, `dataset_config.json`은 재구성할 때 사용하는 입력 경로·역할 registry입니다.
+
+실패 원본은 삭제하거나 정상 run만 추려 승인하지 않습니다. 완료 batch와 준비만 실패한 폴더를 구분합니다. 실제 수집·재현 명령과 한계는 `docs/operational_augmentation_collection.md`를 확인합니다.
+
 ## processed/operational_message
 
 검증된 운영 메시지의 고정 학습용 입력을 보관합니다. 기본 `v1/`에는 분할별 `X`, `y`, `metadata` CSV와 feature·label·분할·전체 데이터셋 manifest가 있습니다. 같은 행 위치가 같은 메시지이며 X에는 현재 원본 feature 7개만 들어갑니다. metadata나 종료 요약을 X에 합치지 않습니다.
@@ -32,6 +38,8 @@ C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 
 원본을 다시 검증하고 run 전체를 시간 순서의 반복 묶음으로 train·validation·test에 배치합니다. 식별자와 같은 feature 값의 분할 간 중복을 따로 확인합니다. 아직 정규화·scaler 학습을 하지 않은 데이터이며 전처리 fit은 다음 학습 단계에서 train으로만 수행합니다.
 
 저장 결과는 Git에서 제외하고 기존 경로를 덮어쓰지 않습니다. 실행·분할 정책·한계는 `docs/operational_dataset.md`에 있습니다.
+
+새 `v2_campaign_holdout/`은 같은 7개 입력 의미를 유지하면서 캠페인 전체를 사전 역할대로 분리한 버전입니다. v1과 합치거나 덮어쓰지 않습니다. Train 3개·Validation 1개·Test 2개 캠페인의 모든 반복·run·세션·메시지가 해당 split에만 속하며 캠페인 식별자 중복도 검사합니다. 아직 scaler나 모델을 fit하지 않은 원본 수치입니다.
 
 ## raw/unsw_nb15
 

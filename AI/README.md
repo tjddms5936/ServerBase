@@ -19,6 +19,13 @@
 - 독립 시나리오 정답과 run별 provenance를 보관하는 비동기 bounded JSONL 수집기
 - 정상·통제된 이상 트래픽 생성기, 다중 run 수집과 누락·중복·정답 분포 검증
 - 운영 메시지 입력·독립 정답·metadata 분리와 run/session 비중복 고정 train·validation·test
+- 운영 train 전용 StandardScaler/LR 직접 학습과 validation 평가·수렴·가중치 기록
+- 동일 운영 train 전용 RF 초기 학습과 LR/RF validation 오분류 비교
+- 제한된 운영 LR/RF 후보·threshold의 validation 선정과 사전 protocol·선정 정책 보관
+- 선정 운영 모델의 Validation 오분류·prefix·입력 관측 한계 분석과 독립 캠페인 보강 설계
+- 명시적 v2 송신 제어, 독립 캠페인 6개·84개 run 실제 수집·검증과 사전 캠페인 단위 분할
+- 고정 기존 LR·threshold 0.7의 새 Validation 513건 평가·오분류·세션 prefix 진단
+- 새 Train 1,538건 전용 보강 LR/RF 6개·threshold 42개 조합 선정과 동일 Validation 비교
 
 학습 로드맵:
 
@@ -182,4 +189,107 @@ python .\scripts\prepare_operational_dataset.py
 
 결과는 `data/processed/operational_message/v1/`와 `reports/operational_dataset.json`, `.md`입니다. 기존 결과는 덮어쓰지 않으므로 재구성은 새 `--output-dir`로 실행합니다. 원본이 없는 checkout에서는 먼저 캠페인을 수집하고 `--campaign-dir`로 지정합니다.
 
-이번 단계에서는 scaler와 모델을 fit하지 않았습니다. 다음 작업은 train 전용 전처리와 운영 LR/RF baseline 학습 및 validation 선정입니다. 데이터셋 설명은 `docs/operational_dataset.md`, 최초 목표 기준 남은 7단계는 `docs/project_roadmap.md`에서 확인합니다.
+데이터셋 구성 단계 자체에서는 scaler와 모델을 fit하지 않습니다. 데이터셋 설명은 `docs/operational_dataset.md`, 현재 남은 6단계는 `docs/project_roadmap.md`에서 확인합니다.
+
+운영 Logistic Regression 초기 기준 모델 학습:
+
+```powershell
+python .\training\train_operational_logistic_regression.py
+```
+
+고정 데이터셋의 train 126건만으로 StandardScaler와 LR을 학습하고 validation 138건으로 평가했습니다. 최대 반복 1000회 중 12회에서 수렴했고, validation 정상 오탐은 22건, 이상 누락은 11건입니다. test CSV는 해시 검사에도 읽지 않았고 threshold=0.5는 사전에 고정했습니다.
+
+모델 묶음은 `artifacts/operational_message/logistic_regression_v1/`, 결과는 `reports/operational_logistic_regression.json`과 `.md`입니다. 기존 출력이 있으면 새 `--artifact-dir`과 `--report-prefix`를 지정합니다. 설명과 실행 순서는 `docs/operational_logistic_regression.md`에 정리했습니다.
+
+FastAPI는 여전히 dummy 추론을 사용합니다. 아래 RF 초기 학습·비교와 validation 선정까지 완료했으며, 최종 test 평가는 이후에 진행합니다.
+
+운영 RandomForest 학습과 동일 validation 비교:
+
+```powershell
+python .\training\train_operational_random_forest.py
+python .\evaluation\compare_operational_baselines.py
+```
+
+같은 train 126건으로 트리 100개·seed 42·threshold=0.5를 고정해 학습했습니다. RF는 scaler 없이 원본 입력 7개를 사용합니다. 저장된 두 모델의 입력·분할 해시와 schema·보고서·예측 기록을 검증하고 validation 138건을 재예측했습니다. test CSV는 읽지 않습니다.
+
+RF는 FP 22→14건으로 오탐을 줄였지만 FN 11→29건으로 이상 누락이 늘었습니다. F1은 LR 76.26%, RF 61.95%로 현재 조건에서 RF의 전체 개선을 주장하지 않습니다. 학습 결과는 `reports/operational_random_forest.json`과 `.md`, 비교는 `reports/operational_baseline_comparison.json`과 `.md`입니다.
+
+설명·파일 역할·재실행 방법은 `docs/operational_random_forest.md`에 정리했습니다. 최종 모델은 아직 선정하지 않았습니다.
+
+운영 Validation 설정·threshold 선정:
+
+```powershell
+python .\training\run_operational_validation_experiment.py
+```
+
+LR C=0.1/1/10, RF 최소 leaf 표본 수=1/5/10과 threshold 0.3~0.9를 학습 전에 고정했습니다. 정상 FPR 10% 이하·이상 Recall 50% 이상 중 Recall 최대를 선정했습니다. 후보 학습은 Train만, 선정은 Validation만 사용하고 Test CSV는 해시 검사에도 열지 않았습니다.
+
+42개 조합 중 제약 충족은 6개였고 LR C=1·threshold=0.7이 임시 baseline으로 선정됐습니다. FP는 초기 LR 22→3건으로 줄었지만 FN은 11→24건으로 늘었으며 malformed 두 시나리오는 모두 놓쳤습니다. 전체 성능 개선이나 최종 배포 가능성을 주장하지 않습니다.
+
+실험은 `artifacts/operational_message/validation_selection_v1/`, 보고서는 `reports/operational_validation_experiment.json`과 `.md`입니다. `selection.json`의 모델 경로와 threshold를 함께 사용해야 하며 후보 기본 정책의 0.5와 구분합니다. 기존 결과는 덮어쓰지 않으므로 재실행은 새 `--artifact-dir`과 `--report-prefix`로 지정합니다.
+
+개념·흐름·선정 근거는 `docs/operational_validation_experiment.md`에 정리했습니다. 로드맵 1단계는 완료했고 최종 마무리까지 6단계가 남았습니다.
+
+선정 모델 오분류·관측 한계 분석:
+
+```powershell
+python .\evaluation\analyze_operational_errors.py
+```
+
+Validation FP 3건·FN 24건을 원본 행 위치·입력·확률·LR 점수 기여도와 함께 추적했습니다. burst 누락은 네 세션의 첫 네 메시지에, 정상 묶음 오탐은 한 세션의 6~8번째 메시지에 모였습니다. 너무 짧은 본문의 크기 단서와 같은 크기에서 잘못된 문자열 길이 필드가 입력에 없는 문제를 구분했습니다. Test와 원본 JSONL은 읽지 않았고 모델·threshold를 바꾸지 않았습니다.
+
+보고서는 `reports/operational_error_analysis.json`, `.md`, `.csv`입니다. 기존 결과는 덮어쓰지 않으므로 재실행은 새 `--report-prefix`로 지정합니다. 설명은 `docs/operational_error_analysis.md`에 정리했습니다.
+
+독립 보강 설계는 `configs/operational_augmentation_plan.json`, `docs/operational_data_augmentation.md`입니다. 이 JSON은 기존 `CampaignPlan` 명령에 직접 넣는 설정이 아니라 새 명령에서 구체적 v2 계획으로 변환하는 사전 설계입니다.
+
+독립 캠페인 수집·분할:
+
+```powershell
+python .\scripts\collect_operational_augmentation.py
+```
+
+묶음 크기 1/4/8개, 정상 분할 조각 7/19/31바이트, 동시 연결 1/2/4개, 정상 대기 범위와 시나리오 순서를 사전 교차 배치했습니다. 모든 캠페인 역할·seed·기준 모델 해시를 첫 송신 전에 저장하고 실제 sendall 호출·JSONL·응답·종료를 대조했습니다.
+
+완료 batch는 `aug_261013_e1cafdde`입니다. 캠페인 6개·run 84개·세션 336개에서 메시지 3,122건과 종료 요약 336건을 수집했고 84/84 run이 통과했습니다. 헤더 거부 12개 run은 메시지가 없어 별도 coverage로 기록하며 메시지 데이터셋에는 72개 run·288개 세션을 사용합니다.
+
+| 분할 | 캠페인 | 메시지 | 정상 | 통제된 이상 |
+| --- | ---: | ---: | ---: | ---: |
+| Train | 3 | 1,538 | 1,049 | 489 |
+| Validation | 1 | 513 | 349 | 164 |
+| Test | 2 | 1,071 | 762 | 309 |
+
+원본은 `data/raw/operational_augmentation/<batch_id>/`, 새 데이터셋은 `data/processed/operational_message/v2_campaign_holdout/`입니다. 이전 v1·선정 모델은 보존했습니다. 캠페인/run/session/row 분할 중복과 원본 누락·레코드 중복은 0이며 같은 feature 값의 분할 간 그룹은 2개로 별도 보고했습니다. 재구성한 12개 CSV/schema/split 파일의 해시도 일치했습니다.
+
+보고서는 `reports/operational_augmentation_collection.json/.md`, `reports/operational_dataset_v2.json/.md`, 설명은 `docs/operational_augmentation_collection.md`입니다. 기본 결과가 이미 있으면 덮어쓰기 없이 종료하므로 재수집에는 새 데이터셋·두 보고서 경로를 지정합니다.
+
+수집·분할 단계에서는 모델 fit·예측·Test 성능 평가를 하지 않았습니다. 이후 아래 고정 모델의 새 Validation 진단까지 완료했습니다. FastAPI는 계속 dummy 상태입니다.
+
+기존 LR의 새 Validation 진단:
+
+```powershell
+python .\evaluation\audit_frozen_operational_baseline.py
+```
+
+기존 v1 Train 126건에서 학습한 scaler·LR과 threshold 0.7을 그대로 사용해 새 Validation 513건만 예측했습니다. 새 Train은 공통 로더의 형식·해시 검사에만 읽고 학습·예측에 넣지 않았습니다. 기존 v1 CSV·Test CSV·원본 JSONL·종료 summary는 읽지 않았으며 모델·threshold도 변경하지 않았습니다.
+
+실제 결과는 TN 257·FP 92·FN 46·TP 118, Accuracy 73.10%·Precision 56.19%·Recall 71.95%·F1 63.10%·ROC-AUC 0.8342·정상 FPR 26.36%입니다. 기존 FPR 10% 이하 기준은 충족하지 못했습니다. 정상 일반/묶음에서 FP 41/51건이 발생했고 malformed 두 시나리오 16건은 모두 놓쳤습니다. burst 8개 세션 모두 한 번 이상 잡았어도 초반 메시지 30건은 놓쳤습니다.
+
+기존 선정 Validation과 표본·설정·비율이 다르므로 점수 차이를 모델 개선 성과로 주장하지 않습니다. 진단은 `reports/operational_frozen_baseline_audit.json/.md`, 전체 예측은 `.predictions.csv`, 오분류는 `.errors.csv`, 설명은 `docs/operational_frozen_baseline_audit.md`입니다. 결과가 이미 있으면 재실행에는 새 `--report-prefix`가 필요합니다.
+
+후속 보강 학습·비교까지 아래 단계에서 완료했습니다. 새 Test는 최종 평가까지 보류합니다.
+
+새 Train 전용 보강 LR/RF 실험:
+
+```powershell
+python .\training\run_operational_augmentation_experiment.py
+```
+
+LR C=0.1/1/10, RF leaf=1/5/10과 threshold 0.3~0.9, FPR 10% 이하·Recall 50% 이상 중 Recall 최대 규칙을 학습 전에 고정했습니다. 후보 6개를 새 Train 1,538건으로 각각 한 번 학습하고 같은 Validation 513건에서 42개 조합을 비교했습니다. LR scaler는 새 Train만으로 fit했고 RF는 원본 입력을 사용했습니다. Validation은 이미 기존 진단에 사용했다는 사실을 공개하며 Test는 읽지 않았습니다.
+
+18개 조합이 제약을 충족했고 **RF leaf=5·threshold=0.3**이 선정됐습니다. 같은 Validation에서 기존 LR의 FP/FN 92/46건이 선정 RF에서는 30/9건, FPR 26.36%→8.60%, Recall 71.95%→94.51%, F1 63.10%→88.83%였습니다. 반면 같은 LR C=1·0.7을 재학습하면 FP 0·FN 134건이어서 데이터만 늘리면 모든 정책이 좋아진다고 주장하지 않습니다.
+
+정상 묶음 FPR 16.15%는 여전히 높고, malformed 16건을 잡았어도 입력에 없는 본문 유효성을 학습한 증거는 아닙니다. 현재 제한된 생성기·Validation에서의 개발 결과이며 독립 Test·실제 침입 성능·최종 배포 검증은 아닙니다.
+
+산출물은 `artifacts/operational_message/augmentation_v1/`, 선정 보고서는 `reports/operational_augmentation_validation.json/.md`, 비교는 `reports/operational_augmentation_comparison.json/.md`입니다. 기존 모델·진단·데이터는 보존했고 설정·동일 행 오분류 변화·prefix·재현·실행 방법은 `docs/operational_augmentation_experiment.md`에 정리했습니다. 기존 결과가 있으면 새 `--run-dir`, `--selection-report-prefix`, `--comparison-report-prefix`를 지정합니다.
+
+전체 테스트 203개가 통과했고 동일 설정·seed의 재현 학습도 지표·선정·비교 CSV 해시가 일치했습니다. 데이터 보강 단계는 완료해 **큰 작업 묶음은 5개**가 남았습니다. 다음은 동일 run/session 내부 시계열 창 구성과 LSTM 개선 실험입니다. FastAPI는 아직 dummy 상태입니다.

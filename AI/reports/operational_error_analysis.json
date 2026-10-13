@@ -1,0 +1,3141 @@
+{
+  "report_version": "v1",
+  "generated_at_utc": "2026-10-13T06:28:21.585236+00:00",
+  "dataset_id": "operational_message_v1",
+  "feature_contract_id": "server_application_message_v2",
+  "candidate_id": "lr_c_1",
+  "threshold": 0.7,
+  "analysis_split": "validation",
+  "model_refit_performed": false,
+  "threshold_changed": false,
+  "test_files_read": false,
+  "test_evaluated": false,
+  "raw_jsonl_read": false,
+  "summary_used_as_input_or_label": false,
+  "input_sha256": {
+    "dataset_manifest.json": "edcd424e6aaca6071524933d2ce5830034c2b780ca07ae34b6ddf87b20911bfd",
+    "feature_schema.json": "fc2bc80380a166bc0aba4000dd9d78a2561b90575dc93a5f93a27a8dc38830f6",
+    "label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "split_manifest.json": "3d23924aea2490677b9ce0b66fb335c9930eadba41b0e6ad5f2628cbf8d31774",
+    "X_train.csv": "c8801a650b0ac8fd6c928633bb70d4b2210bb17de6931e5070d7ef4ec0b16399",
+    "y_train.csv": "6f2abc1a213ab0a3583b4b779850ec7bb16a0c8a112d9512f5e5d308c32a85d0",
+    "metadata_train.csv": "3a8626dcec91322c4dc77f687a2bbd5294a2e1b619543042c7f89c2fa1c37142",
+    "X_validation.csv": "fdb64efa38bc7381d3e182cffe17aa536226ff7432e3f50824844fe69e40cecf",
+    "y_validation.csv": "7799a9300cfa2d2910779fe86a5f98ba69fcb3b6a22a58659de8c61f892f0d8c",
+    "metadata_validation.csv": "b8c79fc1b953301b3e41b4212eb4b107dc98d52f3ef7d59709580b466acdd379"
+  },
+  "selection_evidence": {
+    "verified_artifacts": {
+      "experiment_manifest.json": "0b2e15037d54c67f84157956936f332eda9102dc27fa95b4a9924fd9cb1e4090",
+      "selection.json": "f6c8f05c92f9523f7af45b5254c68710f2308ca418f6b581815f6730ecc98f8c",
+      "protocol_lock.json": "5032622481552be2e82dc536c2aab52acdbf816f2537e694f5de52647a73bb30",
+      "candidates/lr_c_1/pipeline.joblib": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+      "candidates/lr_c_1/training_manifest.json": "b4ffcb46ccac053ba620c59cfb3b04afa82d83fd042ff0c13590e9f78f51696b",
+      "candidates/lr_c_1/feature_schema.json": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+      "candidates/lr_c_1/label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "candidates/lr_c_1/decision_policy.json": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+      "candidates/lr_c_1/validation_predictions.csv": "e4751818a9f42be55f583ae6abb6f819d0b90bd483168646a5ccc7c4e9f467d0",
+      "candidate_reports/lr_c_1.json": "26b3429a1f41be108181a1cc07e760adfeaef255176da4d6fb5a8e3f983254bb",
+      "selected_validation_predictions.csv": "72e55b3ff72d1b5e1ad69494dbe206a67feeddb6044b247df374f5cd6b58c82d"
+    },
+    "model": {
+      "directory": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1",
+      "training_manifest_sha256": "b4ffcb46ccac053ba620c59cfb3b04afa82d83fd042ff0c13590e9f78f51696b",
+      "report_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidate_reports\\lr_c_1.json",
+      "report_sha256": "26b3429a1f41be108181a1cc07e760adfeaef255176da4d6fb5a8e3f983254bb",
+      "artifacts": {
+        "decision_policy.json": {
+          "sha256": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+          "bytes": 147
+        },
+        "feature_schema.json": {
+          "sha256": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+          "bytes": 1923
+        },
+        "label_map.json": {
+          "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+          "bytes": 49
+        },
+        "pipeline.joblib": {
+          "sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+          "bytes": 1128
+        },
+        "validation_predictions.csv": {
+          "sha256": "e4751818a9f42be55f583ae6abb6f819d0b90bd483168646a5ccc7c4e9f467d0",
+          "bytes": 60307
+        }
+      }
+    },
+    "experiment_report_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_validation_experiment.json",
+    "experiment_report_sha256": "dd7671158d141e8709250641ee0457f9035163616a12b5590170d7e7c11eb201"
+  },
+  "validation_metrics": {
+    "rows": 138,
+    "accuracy": 0.8043478260869565,
+    "precision": 0.9302325581395349,
+    "recall": 0.625,
+    "f1": 0.7476635514018691,
+    "roc_auc": 0.8855574324324323,
+    "average_precision": 0.8815743142941475,
+    "log_loss": 0.3518424311007014,
+    "false_positive_rate": 0.04054054054054054,
+    "false_negative_rate": 0.375,
+    "confusion_matrix": {
+      "label_order": [
+        0,
+        1
+      ],
+      "rows": "actual",
+      "columns": "predicted",
+      "values": [
+        [
+          71,
+          3
+        ],
+        [
+          24,
+          40
+        ]
+      ],
+      "tn": 71,
+      "fp": 3,
+      "fn": 24,
+      "tp": 40
+    }
+  },
+  "validation_by_scenario": {
+    "controlled_burst_chat": {
+      "rows": 56,
+      "normal_rows": 0,
+      "controlled_anomaly_rows": 56,
+      "fp": 0,
+      "fn": 16,
+      "recall": 0.7142857142857143,
+      "false_positive_rate": null
+    },
+    "malformed_chat_payload": {
+      "rows": 4,
+      "normal_rows": 0,
+      "controlled_anomaly_rows": 4,
+      "fp": 0,
+      "fn": 4,
+      "recall": 0.0,
+      "false_positive_rate": null
+    },
+    "malformed_length_chat": {
+      "rows": 4,
+      "normal_rows": 0,
+      "controlled_anomaly_rows": 4,
+      "fp": 0,
+      "fn": 4,
+      "recall": 0.0,
+      "false_positive_rate": null
+    },
+    "normal_batched_chat": {
+      "rows": 23,
+      "normal_rows": 23,
+      "controlled_anomaly_rows": 0,
+      "fp": 3,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.13043478260869565
+    },
+    "normal_chat": {
+      "rows": 27,
+      "normal_rows": 27,
+      "controlled_anomaly_rows": 0,
+      "fp": 0,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.0
+    },
+    "normal_fragmented_chat": {
+      "rows": 24,
+      "normal_rows": 24,
+      "controlled_anomaly_rows": 0,
+      "fp": 0,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.0
+    }
+  },
+  "error_cases": [
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:6",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "scenario_id": "normal_batched_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "6",
+      "queue_sequence_id": "22",
+      "collection_sequence_id": "22",
+      "timestamp": "2026-10-12T05:01:46.504Z",
+      "received_at_utc": "2026-10-12T05:01:46.513507+00:00",
+      "source_line": "22",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "b2f86d85d7275546cfe82f8e4bc5fac008e513ba73a4d7a593668152d00b45d6",
+      "label": 0,
+      "predicted_label": 1,
+      "error_type": "false_positive",
+      "anomaly_probability": 0.8657395412167554,
+      "threshold": 0.7,
+      "probability_minus_threshold": 0.1657395412167555,
+      "features": {
+        "packet_size": 270.0,
+        "payload_size": 262.0,
+        "connection_duration_ms": 21.551,
+        "message_interval_ms": 0.071,
+        "bytes_received_total": 2240.0,
+        "bytes_sent_total": 96.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_controlled_burst_chat:39:9",
+        "scenario_id": "controlled_burst_chat",
+        "label": 1,
+        "standardized_euclidean_distance": 1.2958350162616399,
+        "features": {
+          "packet_size": 270.0,
+          "payload_size": 262.0,
+          "connection_duration_ms": 2.76,
+          "message_interval_ms": 0.881,
+          "bytes_received_total": 2632.0,
+          "bytes_sent_total": 192.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 1.863802466975097,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.008593450369559526,
+        "payload_size": -0.008593450369559526,
+        "connection_duration_ms": 0.4913201592450218,
+        "message_interval_ms": 0.8596337978773625,
+        "bytes_received_total": 0.534065406711953,
+        "bytes_sent_total": 0.369749736466796,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:7",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "scenario_id": "normal_batched_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "7",
+      "queue_sequence_id": "23",
+      "collection_sequence_id": "23",
+      "timestamp": "2026-10-12T05:01:46.504Z",
+      "received_at_utc": "2026-10-12T05:01:46.514508+00:00",
+      "source_line": "23",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "848d646778107caa393b9d36314c15b81e3f16269f0841ab34fcf13665d577ee",
+      "label": 0,
+      "predicted_label": 1,
+      "error_type": "false_positive",
+      "anomaly_probability": 0.8658891219635375,
+      "threshold": 0.7,
+      "probability_minus_threshold": 0.16588912196353756,
+      "features": {
+        "packet_size": 270.0,
+        "payload_size": 262.0,
+        "connection_duration_ms": 21.591,
+        "message_interval_ms": 0.04,
+        "bytes_received_total": 2240.0,
+        "bytes_sent_total": 96.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_controlled_burst_chat:39:9",
+        "scenario_id": "controlled_burst_chat",
+        "label": 1,
+        "standardized_euclidean_distance": 1.2961300912943825,
+        "features": {
+          "packet_size": 270.0,
+          "payload_size": 262.0,
+          "connection_duration_ms": 2.76,
+          "message_interval_ms": 0.881,
+          "bytes_received_total": 2632.0,
+          "bytes_sent_total": 192.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 1.8650899598433437,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.008593450369559526,
+        "payload_size": -0.008593450369559526,
+        "connection_duration_ms": 0.48972302450374267,
+        "message_interval_ms": 0.8625184254868883,
+        "bytes_received_total": 0.534065406711953,
+        "bytes_sent_total": 0.369749736466796,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_normal_batched_chat:42:8",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+      "scenario_id": "normal_batched_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "8",
+      "queue_sequence_id": "24",
+      "collection_sequence_id": "24",
+      "timestamp": "2026-10-12T05:01:46.504Z",
+      "received_at_utc": "2026-10-12T05:01:46.516508+00:00",
+      "source_line": "24",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "a0870e61103274b91f50e69726712e04cdd0778e7ac06d724f4f12f1b02b1f3e",
+      "label": 0,
+      "predicted_label": 1,
+      "error_type": "false_positive",
+      "anomaly_probability": 0.8534036013572113,
+      "threshold": 0.7,
+      "probability_minus_threshold": 0.15340360135721132,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 21.628,
+        "message_interval_ms": 0.036,
+        "bytes_received_total": 2240.0,
+        "bytes_sent_total": 96.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_controlled_burst_chat:40:8",
+        "scenario_id": "controlled_burst_chat",
+        "label": 1,
+        "standardized_euclidean_distance": 0.37013386089490197,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 1.847,
+          "message_interval_ms": 0.057,
+          "bytes_received_total": 2240.0,
+          "bytes_sent_total": 96.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 1.761549367479549,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 0.48824567486805964,
+        "message_interval_ms": 0.8628906355010206,
+        "bytes_received_total": 0.534065406711953,
+        "bytes_sent_total": 0.369749736466796,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:39:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "39",
+      "request_index": "1",
+      "queue_sequence_id": "1",
+      "collection_sequence_id": "1",
+      "timestamp": "2026-10-12T05:01:49.014Z",
+      "received_at_utc": "2026-10-12T05:01:49.024965+00:00",
+      "source_line": "1",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "badd93068b4142cad722e847ed76559bf139a581194d1df3819bedda539ab0fa",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.546882067657162,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.153117932342838,
+      "features": {
+        "packet_size": 78.0,
+        "payload_size": 70.0,
+        "connection_duration_ms": 0.248,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 408.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:41:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.24750842167801346,
+        "features": {
+          "packet_size": 78.0,
+          "payload_size": 70.0,
+          "connection_duration_ms": 0.258,
+          "message_interval_ms": 0.093,
+          "bytes_received_total": 168.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.1880807528452459,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.02981984440878194,
+        "payload_size": 0.02981984440878194,
+        "connection_duration_ms": 1.3419141940816866,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.46918480456843065,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:39:2",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "39",
+      "request_index": "2",
+      "queue_sequence_id": "2",
+      "collection_sequence_id": "2",
+      "timestamp": "2026-10-12T05:01:49.016Z",
+      "received_at_utc": "2026-10-12T05:01:49.026963+00:00",
+      "source_line": "2",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "88cd7d580cb08bfb712316ca0911bece156f649bd6cfb8b23d434f7d91611806",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5003482704209666,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.19965172957903332,
+      "features": {
+        "packet_size": 30.0,
+        "payload_size": 22.0,
+        "connection_duration_ms": 1.797,
+        "message_interval_ms": 1.548,
+        "bytes_received_total": 408.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:41:3",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.26907023143407605,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.31,
+          "message_interval_ms": 0.052,
+          "bytes_received_total": 168.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.0013930819091600433,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0394231681033673,
+        "payload_size": 0.0394231681033673,
+        "connection_duration_ms": 1.280065151225657,
+        "message_interval_ms": 0.7221952501589851,
+        "bytes_received_total": -0.46918480456843065,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:39:3",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "39",
+      "request_index": "3",
+      "queue_sequence_id": "3",
+      "collection_sequence_id": "3",
+      "timestamp": "2026-10-12T05:01:49.016Z",
+      "received_at_utc": "2026-10-12T05:01:49.028963+00:00",
+      "source_line": "3",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "17b4f931959120976bf00bf4f681ea7c5981ec6bf478542f315d013af82b9049",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5340461486357857,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.16595385136421426,
+      "features": {
+        "packet_size": 30.0,
+        "payload_size": 22.0,
+        "connection_duration_ms": 1.865,
+        "message_interval_ms": 0.068,
+        "bytes_received_total": 408.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:41:4",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.24904778116339432,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.352,
+          "message_interval_ms": 0.042,
+          "bytes_received_total": 168.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.13639565807796256,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0394231681033673,
+        "payload_size": 0.0394231681033673,
+        "connection_duration_ms": 1.2773500221654828,
+        "message_interval_ms": 0.8599129553879616,
+        "bytes_received_total": -0.46918480456843065,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:39:4",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "39",
+      "request_index": "4",
+      "queue_sequence_id": "4",
+      "collection_sequence_id": "4",
+      "timestamp": "2026-10-12T05:01:49.016Z",
+      "received_at_utc": "2026-10-12T05:01:49.030965+00:00",
+      "source_line": "4",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "4201a52d13aca03df053b0ecf2ce25ae4209688ffeeaaf19d1512b7eee88a8d3",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5102082894989622,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.1897917105010377,
+      "features": {
+        "packet_size": 270.0,
+        "payload_size": 262.0,
+        "connection_duration_ms": 1.909,
+        "message_interval_ms": 0.044,
+        "bytes_received_total": 408.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_chat:43:1",
+        "scenario_id": "normal_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.24128971177991676,
+        "features": {
+          "packet_size": 270.0,
+          "payload_size": 262.0,
+          "connection_duration_ms": 12.323,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 270.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.0408388330014961,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.008593450369559526,
+        "payload_size": -0.008593450369559526,
+        "connection_duration_ms": 1.2755931739500759,
+        "message_interval_ms": 0.8621462154727558,
+        "bytes_received_total": -0.46918480456843065,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "40",
+      "request_index": "1",
+      "queue_sequence_id": "15",
+      "collection_sequence_id": "15",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.048964+00:00",
+      "source_line": "15",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "f39f67b2f14606d222edd790091e904fbc2fbca4df03208e077ac253ed04b3d0",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.49862561058542737,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.20137438941457259,
+      "features": {
+        "packet_size": 30.0,
+        "payload_size": 22.0,
+        "connection_duration_ms": 15.891,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 1160.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:39:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.31360875669922506,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 16.113,
+          "message_interval_ms": 0.153,
+          "bytes_received_total": 856.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.00549757150447433,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0394231681033673,
+        "payload_size": 0.0394231681033673,
+        "connection_duration_ms": 0.7173147251360006,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.05737030736163561,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:2",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "40",
+      "request_index": "2",
+      "queue_sequence_id": "17",
+      "collection_sequence_id": "17",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.051963+00:00",
+      "source_line": "17",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "771f07e3813455f916e82da201acbed10aabebd8196855fa272e2c83ed544d99",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.44285289915088316,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.2571471008491168,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 16.083,
+        "message_interval_ms": 0.193,
+        "bytes_received_total": 1160.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.26062526165851185,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 11.711,
+          "message_interval_ms": 0.14,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.22959164113259783,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 0.7096484783778614,
+        "message_interval_ms": 0.8482813924463252,
+        "bytes_received_total": -0.05737030736163561,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:3",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "40",
+      "request_index": "3",
+      "queue_sequence_id": "19",
+      "collection_sequence_id": "19",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.054963+00:00",
+      "source_line": "19",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "7d88a1ad9d1ee274567f7770d54d3dc76ec25f4c0d9b43398c66b74eb4c63fea",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.4450211518924117,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.25497884810758825,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 16.152,
+        "message_interval_ms": 0.069,
+        "bytes_received_total": 1160.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.26105326908357135,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 11.711,
+          "message_interval_ms": 0.14,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.22080818812320097,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 0.7068934209491551,
+        "message_interval_ms": 0.8598199028844286,
+        "bytes_received_total": -0.05737030736163561,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:40:4",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "40",
+      "request_index": "4",
+      "queue_sequence_id": "21",
+      "collection_sequence_id": "21",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.058963+00:00",
+      "source_line": "21",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "0d0e7e755d5575fc3478746f0993c9662b3637515f8ee8af3e88dd197fccd59b",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.48783001115400365,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.2121699888459963,
+      "features": {
+        "packet_size": 78.0,
+        "payload_size": 70.0,
+        "connection_duration_ms": 16.254,
+        "message_interval_ms": 0.102,
+        "bytes_received_total": 1160.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:3",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.26094994527334836,
+        "features": {
+          "packet_size": 78.0,
+          "payload_size": 70.0,
+          "connection_duration_ms": 11.823,
+          "message_interval_ms": 0.113,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.048689572031127615,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.02981984440878194,
+        "payload_size": 0.02981984440878194,
+        "connection_duration_ms": 0.7028207273588936,
+        "message_interval_ms": 0.8567491702678365,
+        "bytes_received_total": -0.05737030736163561,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "1",
+      "queue_sequence_id": "16",
+      "collection_sequence_id": "16",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.050963+00:00",
+      "source_line": "16",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "43db4f838c89d1f5d610ba4f3d888b83840a238f2a7b2320a65ef6609fbf75a3",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5535615986431072,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.1464384013568928,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 12.199,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 1656.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:1",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.26418371563932375,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 11.571,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.21507160337238757,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 0.8647302617560525,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": 0.21425202058327178,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:2",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "2",
+      "queue_sequence_id": "18",
+      "collection_sequence_id": "18",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.053964+00:00",
+      "source_line": "18",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "1642c3c17b2adb3659a2ef02c9a078cd101c1c5d13bcc414f1e7779d63044045",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5481329232172149,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.1518670767827851,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 12.364,
+        "message_interval_ms": 0.165,
+        "bytes_received_total": 1656.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.2642104345831245,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 11.711,
+          "message_interval_ms": 0.14,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.19312975948165118,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 0.8581420809482765,
+        "message_interval_ms": 0.8508868625452518,
+        "bytes_received_total": 0.21425202058327178,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:3",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "3",
+      "queue_sequence_id": "20",
+      "collection_sequence_id": "20",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.056964+00:00",
+      "source_line": "20",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "18adcc98deaef1766bd4b5b74e891dee2b7c16b71996860928090b63a8569a7b",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5486749346908496,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.15132506530915035,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 12.463,
+        "message_interval_ms": 0.099,
+        "bytes_received_total": 1656.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.26431186641896004,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 11.711,
+          "message_interval_ms": 0.14,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.19531831623016987,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 0.854189172463611,
+        "message_interval_ms": 0.8570283277784358,
+        "bytes_received_total": 0.21425202058327178,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:42:4",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "4",
+      "queue_sequence_id": "22",
+      "collection_sequence_id": "22",
+      "timestamp": "2026-10-12T05:01:49.030Z",
+      "received_at_utc": "2026-10-12T05:01:49.059963+00:00",
+      "source_line": "22",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "1547f27063d7edcc0df46a58f62c807ab5a36eebfdefe62b08583a9c624ddee7",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5916009367508186,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.10839906324918136,
+      "features": {
+        "packet_size": 78.0,
+        "payload_size": 70.0,
+        "connection_duration_ms": 12.563,
+        "message_interval_ms": 0.099,
+        "bytes_received_total": 1656.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:43:3",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.2642869472948411,
+        "features": {
+          "packet_size": 78.0,
+          "payload_size": 70.0,
+          "connection_duration_ms": 11.823,
+          "message_interval_ms": 0.113,
+          "bytes_received_total": 1400.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.3705875216758991,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.02981984440878194,
+        "payload_size": 0.02981984440878194,
+        "connection_duration_ms": 0.8501963356104134,
+        "message_interval_ms": 0.8570283277784358,
+        "bytes_received_total": 0.21425202058327178,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "43",
+      "request_index": "1",
+      "queue_sequence_id": "45",
+      "collection_sequence_id": "45",
+      "timestamp": "2026-10-12T05:01:49.045Z",
+      "received_at_utc": "2026-10-12T05:01:49.095964+00:00",
+      "source_line": "45",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "af910fe41093a0b61e10c5062572171d024eda2f99a8622b72b984f36cd4d8b5",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.4627988493715759,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.23720115062842406,
+      "features": {
+        "packet_size": 270.0,
+        "payload_size": 262.0,
+        "connection_duration_ms": 12.693,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 840.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:39:3",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.06720861698664948,
+        "features": {
+          "packet_size": 270.0,
+          "payload_size": 262.0,
+          "connection_duration_ms": 16.169,
+          "message_interval_ms": 0.056,
+          "bytes_received_total": 856.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.1490800974624314,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.008593450369559526,
+        "payload_size": -0.008593450369559526,
+        "connection_duration_ms": 0.845005647701257,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.23261051893899523,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:2",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "43",
+      "request_index": "2",
+      "queue_sequence_id": "46",
+      "collection_sequence_id": "46",
+      "timestamp": "2026-10-12T05:01:49.045Z",
+      "received_at_utc": "2026-10-12T05:01:49.096963+00:00",
+      "source_line": "46",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "190ddd8d15b1f8370a2938389698aa8cbaea92ff1af7aa48a1779aa88328aea6",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.45800856251942096,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.241991437480579,
+      "features": {
+        "packet_size": 270.0,
+        "payload_size": 262.0,
+        "connection_duration_ms": 12.838,
+        "message_interval_ms": 0.145,
+        "bytes_received_total": 840.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:39:3",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.06475856375366681,
+        "features": {
+          "packet_size": 270.0,
+          "payload_size": 262.0,
+          "connection_duration_ms": 16.169,
+          "message_interval_ms": 0.056,
+          "bytes_received_total": 856.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.1683623239118664,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.008593450369559526,
+        "payload_size": -0.008593450369559526,
+        "connection_duration_ms": 0.8392160342641203,
+        "message_interval_ms": 0.8527479126159137,
+        "bytes_received_total": -0.23261051893899523,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:3",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "43",
+      "request_index": "3",
+      "queue_sequence_id": "47",
+      "collection_sequence_id": "47",
+      "timestamp": "2026-10-12T05:01:49.045Z",
+      "received_at_utc": "2026-10-12T05:01:49.098963+00:00",
+      "source_line": "47",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "18fab0a8bbe4fb67689ce20dae075607371b6631a9d80d61f43b5b8cc3c5c830",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.4837340980782612,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.21626590192173878,
+      "features": {
+        "packet_size": 30.0,
+        "payload_size": 22.0,
+        "connection_duration_ms": 12.885,
+        "message_interval_ms": 0.047,
+        "bytes_received_total": 840.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:39:2",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.0630281769912796,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 16.113,
+          "message_interval_ms": 0.153,
+          "bytes_received_total": 856.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.06508657494077236,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0394231681033673,
+        "payload_size": 0.0394231681033673,
+        "connection_duration_ms": 0.8373394009431175,
+        "message_interval_ms": 0.8618670579621567,
+        "bytes_received_total": -0.23261051893899523,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_controlled_burst_chat:43:4",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+      "scenario_id": "controlled_burst_chat",
+      "repeat_index": "1",
+      "session_id": "43",
+      "request_index": "4",
+      "queue_sequence_id": "48",
+      "collection_sequence_id": "48",
+      "timestamp": "2026-10-12T05:01:49.045Z",
+      "received_at_utc": "2026-10-12T05:01:49.099963+00:00",
+      "source_line": "48",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "83f70246963c2e78fe3b160e4369802f178ec57515093a520537cf502a2e816d",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.4594960823926167,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.24050391760738327,
+      "features": {
+        "packet_size": 270.0,
+        "payload_size": 262.0,
+        "connection_duration_ms": 12.928,
+        "message_interval_ms": 0.042,
+        "bytes_received_total": 840.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:39:3",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.06285435926033997,
+        "features": {
+          "packet_size": 270.0,
+          "payload_size": 262.0,
+          "connection_duration_ms": 16.169,
+          "message_interval_ms": 0.056,
+          "bytes_received_total": 856.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.16237146921583562,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.008593450369559526,
+        "payload_size": -0.008593450369559526,
+        "connection_duration_ms": 0.8356224810962426,
+        "message_interval_ms": 0.8623323204798221,
+        "bytes_received_total": -0.23261051893899523,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:39:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "scenario_id": "malformed_chat_payload",
+      "repeat_index": "1",
+      "session_id": "39",
+      "request_index": "1",
+      "queue_sequence_id": "1",
+      "collection_sequence_id": "1",
+      "timestamp": "2026-10-12T05:01:51.496Z",
+      "received_at_utc": "2026-10-12T05:01:51.505870+00:00",
+      "source_line": "1",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "3239591633a5b68ecc203594f15cb8d18aa57808d3e2254830532ddddf91bfb7",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.49981598621338813,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.20018401378661183,
+      "features": {
+        "packet_size": 9.0,
+        "payload_size": 1.0,
+        "connection_duration_ms": 0.196,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 9.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": true,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_chat:39:1",
+        "scenario_id": "normal_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.15102810162578173,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.179,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 30.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.0007360551796787296,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0436246222197484,
+        "payload_size": 0.0436246222197484,
+        "connection_duration_ms": 1.3439904692453493,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6876874433789509,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:40:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "scenario_id": "malformed_chat_payload",
+      "repeat_index": "1",
+      "session_id": "40",
+      "request_index": "1",
+      "queue_sequence_id": "2",
+      "collection_sequence_id": "2",
+      "timestamp": "2026-10-12T05:01:51.498Z",
+      "received_at_utc": "2026-10-12T05:01:51.507872+00:00",
+      "source_line": "2",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "764fa1ca9fca6e7fb6803b146e39ce6367dd892a73d68839b20e1cd5e14b1411",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.4832918648332013,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.21670813516679865,
+      "features": {
+        "packet_size": 9.0,
+        "payload_size": 1.0,
+        "connection_duration_ms": 1.852,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 9.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": true,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_chat:40:1",
+        "scenario_id": "normal_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.15387266053301085,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.278,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 30.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.06685743346862943,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0436246222197484,
+        "payload_size": 0.0436246222197484,
+        "connection_duration_ms": 1.2778690909563986,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6876874433789509,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:41:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "scenario_id": "malformed_chat_payload",
+      "repeat_index": "1",
+      "session_id": "41",
+      "request_index": "1",
+      "queue_sequence_id": "5",
+      "collection_sequence_id": "5",
+      "timestamp": "2026-10-12T05:01:51.498Z",
+      "received_at_utc": "2026-10-12T05:01:51.513873+00:00",
+      "source_line": "5",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "b66270a29591433548ffbd5e6d01850acb7d73ef5bda04c3e5a2b780bc527184",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5009938717678001,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.19900612823219987,
+      "features": {
+        "packet_size": 9.0,
+        "payload_size": 1.0,
+        "connection_duration_ms": 0.078,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 9.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": true,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_chat:39:1",
+        "scenario_id": "normal_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.15103959034632683,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.179,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 30.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.003975492307093986,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0436246222197484,
+        "payload_size": 0.0436246222197484,
+        "connection_duration_ms": 1.348702016732122,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6876874433789509,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_chat_payload:42:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+      "scenario_id": "malformed_chat_payload",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "1",
+      "queue_sequence_id": "7",
+      "collection_sequence_id": "7",
+      "timestamp": "2026-10-12T05:01:51.512Z",
+      "received_at_utc": "2026-10-12T05:01:51.516871+00:00",
+      "source_line": "7",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "063147574fd2f361a4ba1961e9d0153846a2ca2479ee33141016b7cf7f142f53",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.3700265808205941,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.32997341917940587,
+      "features": {
+        "packet_size": 9.0,
+        "payload_size": 1.0,
+        "connection_duration_ms": 13.504,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 9.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": true,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_chat:40:1",
+        "scenario_id": "normal_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.2899215997525753,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.278,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 30.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": -0.5321027836032031,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0436246222197484,
+        "payload_size": 0.0436246222197484,
+        "connection_duration_ms": 0.8126237408218251,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6876874433789509,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_length_chat:39:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+      "scenario_id": "malformed_length_chat",
+      "repeat_index": "1",
+      "session_id": "39",
+      "request_index": "1",
+      "queue_sequence_id": "2",
+      "collection_sequence_id": "2",
+      "timestamp": "2026-10-12T05:01:53.886Z",
+      "received_at_utc": "2026-10-12T05:01:53.898632+00:00",
+      "source_line": "2",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "6eb68043a6c3ef272f120061b407756bfe06e29de24c5188efe01e0c67760ce8",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5178828452997959,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.18211715470020406,
+      "features": {
+        "packet_size": 526.0,
+        "payload_size": 518.0,
+        "connection_duration_ms": 0.295,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 526.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_batched_chat:40:1",
+        "scenario_id": "normal_batched_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.4391852450475921,
+        "features": {
+          "packet_size": 526.0,
+          "payload_size": 518.0,
+          "connection_duration_ms": 0.222,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 952.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.0715619052444671,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": -0.059811176740681475,
+        "payload_size": -0.059811176740681475,
+        "connection_duration_ms": 1.3400375607606834,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.40456497654927936,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_length_chat:40:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+      "scenario_id": "malformed_length_chat",
+      "repeat_index": "1",
+      "session_id": "40",
+      "request_index": "1",
+      "queue_sequence_id": "1",
+      "collection_sequence_id": "1",
+      "timestamp": "2026-10-12T05:01:53.886Z",
+      "received_at_utc": "2026-10-12T05:01:53.896324+00:00",
+      "source_line": "1",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "24ec99fb2ecf0d05d5d749e4d4c8736444dcef8b501afe12ece900aba0e2158e",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5019009545576179,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.1980990454423821,
+      "features": {
+        "packet_size": 78.0,
+        "payload_size": 70.0,
+        "connection_duration_ms": 0.242,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 78.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat:42:1",
+        "scenario_id": "normal_fragmented_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.062159419922770555,
+        "features": {
+          "packet_size": 78.0,
+          "payload_size": 70.0,
+          "connection_duration_ms": 3.564,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 78.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.007603854867285376,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.02981984440878194,
+        "payload_size": 0.02981984440878194,
+        "connection_duration_ms": 1.3421537642928782,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6499012727575828,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_length_chat:41:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+      "scenario_id": "malformed_length_chat",
+      "repeat_index": "1",
+      "session_id": "41",
+      "request_index": "1",
+      "queue_sequence_id": "5",
+      "collection_sequence_id": "5",
+      "timestamp": "2026-10-12T05:01:53.887Z",
+      "received_at_utc": "2026-10-12T05:01:53.903587+00:00",
+      "source_line": "5",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "3d8a2c643b51f54d62a516279348a002cc46a4ea47168c152b52324905312347",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5032485004461114,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.1967514995538886,
+      "features": {
+        "packet_size": 78.0,
+        "payload_size": 70.0,
+        "connection_duration_ms": 0.107,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 78.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_fragmented_chat:42:1",
+        "scenario_id": "normal_fragmented_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.06468546498284637,
+        "features": {
+          "packet_size": 78.0,
+          "payload_size": 70.0,
+          "connection_duration_ms": 3.564,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 78.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.012994184619102123,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.02981984440878194,
+        "payload_size": 0.02981984440878194,
+        "connection_duration_ms": 1.3475440940446948,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6499012727575828,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    },
+    {
+      "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r01_malformed_length_chat:42:1",
+      "campaign_id": "campaign_20261012T050123_b3017a53",
+      "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+      "scenario_id": "malformed_length_chat",
+      "repeat_index": "1",
+      "session_id": "42",
+      "request_index": "1",
+      "queue_sequence_id": "7",
+      "collection_sequence_id": "7",
+      "timestamp": "2026-10-12T05:01:53.887Z",
+      "received_at_utc": "2026-10-12T05:01:53.906587+00:00",
+      "source_line": "7",
+      "block_id": "campaign_20261012T050123_b3017a53:repeat:1",
+      "split": "validation",
+      "feature_hash": "86da76a18b6245ffa944d35455e75f7ad86974d7068753b9951abe81a20ad578",
+      "label": 1,
+      "predicted_label": 0,
+      "error_type": "false_negative",
+      "anomaly_probability": 0.5009396659864679,
+      "threshold": 0.7,
+      "probability_minus_threshold": -0.19906033401353207,
+      "features": {
+        "packet_size": 30.0,
+        "payload_size": 22.0,
+        "connection_duration_ms": 0.161,
+        "message_interval_ms": 0.0,
+        "bytes_received_total": 30.0,
+        "bytes_sent_total": 0.0,
+        "error_count_total": 0.0
+      },
+      "minimum_chat_payload_violation": false,
+      "minimum_payload_scope": "현재 캠페인의 CS_CHAT만 해당하며 정답이나 모델 입력을 바꾸는 규칙이 아니다.",
+      "nearest_opposite_label_train_example": {
+        "row_id": "campaign_20261012T050123_b3017a53:campaign_20261012T050123_b3017a53_r00_normal_chat:39:1",
+        "scenario_id": "normal_chat",
+        "label": 0,
+        "standardized_euclidean_distance": 0.000336806006953459,
+        "features": {
+          "packet_size": 30.0,
+          "payload_size": 22.0,
+          "connection_duration_ms": 0.179,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 30.0,
+          "bytes_sent_total": 0.0,
+          "error_count_total": 0.0
+        }
+      },
+      "lr_intercept": -0.37377973258691727,
+      "lr_score": 0.003758668370942464,
+      "threshold_logit": 0.8472978603872034,
+      "feature_contributions": {
+        "packet_size": 0.0394231681033673,
+        "payload_size": 0.0394231681033673,
+        "connection_duration_ms": 1.3453879621439682,
+        "message_interval_ms": 0.866240525628212,
+        "bytes_received_total": -0.6761873044941866,
+        "bytes_sent_total": -1.2367491185268686,
+        "error_count_total": 0.0
+      }
+    }
+  ],
+  "session_diagnostics": {
+    "sessions": [
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_chat",
+        "session_id": "39",
+        "scenario_id": "normal_chat",
+        "message_rows": 7,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_chat",
+        "session_id": "40",
+        "scenario_id": "normal_chat",
+        "message_rows": 6,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_chat",
+        "session_id": "41",
+        "scenario_id": "normal_chat",
+        "message_rows": 7,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_chat",
+        "session_id": "43",
+        "scenario_id": "normal_chat",
+        "message_rows": 7,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat",
+        "session_id": "39",
+        "scenario_id": "normal_fragmented_chat",
+        "message_rows": 5,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat",
+        "session_id": "40",
+        "scenario_id": "normal_fragmented_chat",
+        "message_rows": 7,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat",
+        "session_id": "42",
+        "scenario_id": "normal_fragmented_chat",
+        "message_rows": 7,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_fragmented_chat",
+        "session_id": "43",
+        "scenario_id": "normal_fragmented_chat",
+        "message_rows": 5,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+        "session_id": "39",
+        "scenario_id": "normal_batched_chat",
+        "message_rows": 5,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+        "session_id": "40",
+        "scenario_id": "normal_batched_chat",
+        "message_rows": 5,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+        "session_id": "42",
+        "scenario_id": "normal_batched_chat",
+        "message_rows": 8,
+        "error_rows": 3,
+        "misclassified_request_indices": [
+          6,
+          7,
+          8
+        ],
+        "first_positive_request_index": 6
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_normal_batched_chat",
+        "session_id": "43",
+        "scenario_id": "normal_batched_chat",
+        "message_rows": 5,
+        "error_rows": 0,
+        "misclassified_request_indices": [],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+        "session_id": "39",
+        "scenario_id": "controlled_burst_chat",
+        "message_rows": 13,
+        "error_rows": 4,
+        "misclassified_request_indices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "first_positive_request_index": 5
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+        "session_id": "40",
+        "scenario_id": "controlled_burst_chat",
+        "message_rows": 16,
+        "error_rows": 4,
+        "misclassified_request_indices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "first_positive_request_index": 5
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+        "session_id": "42",
+        "scenario_id": "controlled_burst_chat",
+        "message_rows": 12,
+        "error_rows": 4,
+        "misclassified_request_indices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "first_positive_request_index": 5
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_controlled_burst_chat",
+        "session_id": "43",
+        "scenario_id": "controlled_burst_chat",
+        "message_rows": 15,
+        "error_rows": 4,
+        "misclassified_request_indices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "first_positive_request_index": 5
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+        "session_id": "39",
+        "scenario_id": "malformed_chat_payload",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+        "session_id": "40",
+        "scenario_id": "malformed_chat_payload",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+        "session_id": "41",
+        "scenario_id": "malformed_chat_payload",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_chat_payload",
+        "session_id": "42",
+        "scenario_id": "malformed_chat_payload",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+        "session_id": "39",
+        "scenario_id": "malformed_length_chat",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+        "session_id": "40",
+        "scenario_id": "malformed_length_chat",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+        "session_id": "41",
+        "scenario_id": "malformed_length_chat",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      },
+      {
+        "run_id": "campaign_20261012T050123_b3017a53_r01_malformed_length_chat",
+        "session_id": "42",
+        "scenario_id": "malformed_length_chat",
+        "message_rows": 1,
+        "error_rows": 1,
+        "misclassified_request_indices": [
+          1
+        ],
+        "first_positive_request_index": null
+      }
+    ],
+    "burst_by_request_index": [
+      {
+        "request_index": 1,
+        "rows": 4,
+        "fn": 4
+      },
+      {
+        "request_index": 2,
+        "rows": 4,
+        "fn": 4
+      },
+      {
+        "request_index": 3,
+        "rows": 4,
+        "fn": 4
+      },
+      {
+        "request_index": 4,
+        "rows": 4,
+        "fn": 4
+      },
+      {
+        "request_index": 5,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 6,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 7,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 8,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 9,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 10,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 11,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 12,
+        "rows": 4,
+        "fn": 0
+      },
+      {
+        "request_index": 13,
+        "rows": 3,
+        "fn": 0
+      },
+      {
+        "request_index": 14,
+        "rows": 2,
+        "fn": 0
+      },
+      {
+        "request_index": 15,
+        "rows": 2,
+        "fn": 0
+      },
+      {
+        "request_index": 16,
+        "rows": 1,
+        "fn": 0
+      }
+    ],
+    "interpretation": "세션·prefix는 진단용 묶음이다. 메시지 정답·평가 지표를 세션 단위로 바꾸거나 미래 정보를 입력에 합치지 않았다."
+  },
+  "feature_diagnostics": {
+    "by_scenario": {
+      "controlled_burst_chat": {
+        "train_rows": 54,
+        "validation_rows": 56,
+        "features": {
+          "packet_size": {
+            "train": {
+              "rows": 54,
+              "minimum": 30.0,
+              "median": 78.0,
+              "mean": 203.33333333333334,
+              "maximum": 526.0
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 30.0,
+              "median": 78.0,
+              "mean": 226.28571428571428,
+              "maximum": 526.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "payload_size": {
+            "train": {
+              "rows": 54,
+              "minimum": 22.0,
+              "median": 70.0,
+              "mean": 195.33333333333334,
+              "maximum": 518.0
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 22.0,
+              "median": 70.0,
+              "mean": 218.28571428571428,
+              "maximum": 518.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "connection_duration_ms": {
+            "train": {
+              "rows": 54,
+              "minimum": 0.105,
+              "median": 1.2265000000000001,
+              "mean": 1.4338703703703704,
+              "maximum": 3.445
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 0.248,
+              "median": 13.2975,
+              "mean": 11.738357142857144,
+              "maximum": 17.847
+            },
+            "validation_outside_same_scenario_train_range": 43
+          },
+          "message_interval_ms": {
+            "train": {
+              "rows": 54,
+              "minimum": 0.0,
+              "median": 0.088,
+              "mean": 0.16298148148148148,
+              "maximum": 0.881
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 0.0,
+              "median": 0.0655,
+              "mean": 0.13558928571428572,
+              "maximum": 1.548
+            },
+            "validation_outside_same_scenario_train_range": 1
+          },
+          "bytes_received_total": {
+            "train": {
+              "rows": 54,
+              "minimum": 168.0,
+              "median": 1728.0,
+              "mean": 1882.7407407407406,
+              "maximum": 4018.0
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 408.0,
+              "median": 1808.0,
+              "mean": 1935.357142857143,
+              "maximum": 3686.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "bytes_sent_total": {
+            "train": {
+              "rows": 54,
+              "minimum": 0.0,
+              "median": 96.0,
+              "mean": 115.55555555555556,
+              "maximum": 288.0
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 0.0,
+              "median": 96.0,
+              "mean": 123.42857142857143,
+              "maximum": 288.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "error_count_total": {
+            "train": {
+              "rows": 54,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 56,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          }
+        }
+      },
+      "malformed_chat_payload": {
+        "train_rows": 4,
+        "validation_rows": 4,
+        "features": {
+          "packet_size": {
+            "train": {
+              "rows": 4,
+              "minimum": 9.0,
+              "median": 9.0,
+              "mean": 9.0,
+              "maximum": 9.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 9.0,
+              "median": 9.0,
+              "mean": 9.0,
+              "maximum": 9.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "payload_size": {
+            "train": {
+              "rows": 4,
+              "minimum": 1.0,
+              "median": 1.0,
+              "mean": 1.0,
+              "maximum": 1.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 1.0,
+              "median": 1.0,
+              "mean": 1.0,
+              "maximum": 1.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "connection_duration_ms": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.168,
+              "median": 6.1545000000000005,
+              "mean": 7.013999999999999,
+              "maximum": 15.579
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.078,
+              "median": 1.024,
+              "mean": 3.9074999999999998,
+              "maximum": 13.504
+            },
+            "validation_outside_same_scenario_train_range": 1
+          },
+          "message_interval_ms": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "bytes_received_total": {
+            "train": {
+              "rows": 4,
+              "minimum": 9.0,
+              "median": 9.0,
+              "mean": 9.0,
+              "maximum": 9.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 9.0,
+              "median": 9.0,
+              "mean": 9.0,
+              "maximum": 9.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "bytes_sent_total": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "error_count_total": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          }
+        }
+      },
+      "malformed_length_chat": {
+        "train_rows": 4,
+        "validation_rows": 4,
+        "features": {
+          "packet_size": {
+            "train": {
+              "rows": 4,
+              "minimum": 78.0,
+              "median": 398.0,
+              "mean": 350.0,
+              "maximum": 526.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 30.0,
+              "median": 78.0,
+              "mean": 178.0,
+              "maximum": 526.0
+            },
+            "validation_outside_same_scenario_train_range": 1
+          },
+          "payload_size": {
+            "train": {
+              "rows": 4,
+              "minimum": 70.0,
+              "median": 390.0,
+              "mean": 342.0,
+              "maximum": 518.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 22.0,
+              "median": 70.0,
+              "mean": 170.0,
+              "maximum": 518.0
+            },
+            "validation_outside_same_scenario_train_range": 1
+          },
+          "connection_duration_ms": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.136,
+              "median": 0.168,
+              "mean": 0.17475000000000002,
+              "maximum": 0.227
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.107,
+              "median": 0.2015,
+              "mean": 0.20124999999999998,
+              "maximum": 0.295
+            },
+            "validation_outside_same_scenario_train_range": 3
+          },
+          "message_interval_ms": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "bytes_received_total": {
+            "train": {
+              "rows": 4,
+              "minimum": 78.0,
+              "median": 398.0,
+              "mean": 350.0,
+              "maximum": 526.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 30.0,
+              "median": 78.0,
+              "mean": 178.0,
+              "maximum": 526.0
+            },
+            "validation_outside_same_scenario_train_range": 1
+          },
+          "bytes_sent_total": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "error_count_total": {
+            "train": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 4,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          }
+        }
+      },
+      "normal_batched_chat": {
+        "train_rows": 17,
+        "validation_rows": 23,
+        "features": {
+          "packet_size": {
+            "train": {
+              "rows": 17,
+              "minimum": 30.0,
+              "median": 78.0,
+              "mean": 214.47058823529412,
+              "maximum": 526.0
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 30.0,
+              "median": 270.0,
+              "mean": 291.5652173913044,
+              "maximum": 526.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "payload_size": {
+            "train": {
+              "rows": 17,
+              "minimum": 22.0,
+              "median": 70.0,
+              "mean": 206.47058823529412,
+              "maximum": 518.0
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 22.0,
+              "median": 262.0,
+              "mean": 283.5652173913044,
+              "maximum": 518.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "connection_duration_ms": {
+            "train": {
+              "rows": 17,
+              "minimum": 0.164,
+              "median": 11.571,
+              "mean": 8.97235294117647,
+              "maximum": 33.919
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 0.078,
+              "median": 2.048,
+              "mean": 6.860869565217389,
+              "maximum": 21.831
+            },
+            "validation_outside_same_scenario_train_range": 2
+          },
+          "message_interval_ms": {
+            "train": {
+              "rows": 17,
+              "minimum": 0.0,
+              "median": 0.065,
+              "mean": 1.1893529411764707,
+              "maximum": 17.595
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 0.0,
+              "median": 0.066,
+              "mean": 3.234913043478261,
+              "maximum": 21.22
+            },
+            "validation_outside_same_scenario_train_range": 3
+          },
+          "bytes_received_total": {
+            "train": {
+              "rows": 17,
+              "minimum": 168.0,
+              "median": 952.0,
+              "mean": 860.5882352941177,
+              "maximum": 1400.0
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 904.0,
+              "median": 1336.0,
+              "mean": 1407.391304347826,
+              "maximum": 2240.0
+            },
+            "validation_outside_same_scenario_train_range": 6
+          },
+          "bytes_sent_total": {
+            "train": {
+              "rows": 17,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 5.647058823529412,
+              "maximum": 96.0
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 29.217391304347824,
+              "maximum": 96.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "error_count_total": {
+            "train": {
+              "rows": 17,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 23,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          }
+        }
+      },
+      "normal_chat": {
+        "train_rows": 24,
+        "validation_rows": 27,
+        "features": {
+          "packet_size": {
+            "train": {
+              "rows": 24,
+              "minimum": 30.0,
+              "median": 270.0,
+              "mean": 259.3333333333333,
+              "maximum": 526.0
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 30.0,
+              "median": 270.0,
+              "mean": 261.7037037037037,
+              "maximum": 526.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "payload_size": {
+            "train": {
+              "rows": 24,
+              "minimum": 22.0,
+              "median": 262.0,
+              "mean": 251.33333333333334,
+              "maximum": 518.0
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 22.0,
+              "median": 262.0,
+              "mean": 253.7037037037037,
+              "maximum": 518.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "connection_duration_ms": {
+            "train": {
+              "rows": 24,
+              "minimum": 0.179,
+              "median": 74.3695,
+              "mean": 83.543,
+              "maximum": 234.632
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 0.189,
+              "median": 83.459,
+              "mean": 95.69048148148147,
+              "maximum": 216.492
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "message_interval_ms": {
+            "train": {
+              "rows": 24,
+              "minimum": 0.0,
+              "median": 24.1675,
+              "mean": 23.520708333333335,
+              "maximum": 40.107
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 0.0,
+              "median": 25.384,
+              "mean": 24.754888888888892,
+              "maximum": 41.253
+            },
+            "validation_outside_same_scenario_train_range": 3
+          },
+          "bytes_received_total": {
+            "train": {
+              "rows": 24,
+              "minimum": 30.0,
+              "median": 835.0,
+              "mean": 920.0833333333334,
+              "maximum": 2560.0
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 30.0,
+              "median": 1052.0,
+              "mean": 986.5925925925926,
+              "maximum": 2242.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "bytes_sent_total": {
+            "train": {
+              "rows": 24,
+              "minimum": 0.0,
+              "median": 60.0,
+              "mean": 63.0,
+              "maximum": 168.0
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 0.0,
+              "median": 72.0,
+              "mean": 69.33333333333333,
+              "maximum": 144.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "error_count_total": {
+            "train": {
+              "rows": 24,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 27,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          }
+        }
+      },
+      "normal_fragmented_chat": {
+        "train_rows": 23,
+        "validation_rows": 24,
+        "features": {
+          "packet_size": {
+            "train": {
+              "rows": 23,
+              "minimum": 30.0,
+              "median": 270.0,
+              "mean": 274.8695652173913,
+              "maximum": 526.0
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 30.0,
+              "median": 174.0,
+              "mean": 186.0,
+              "maximum": 526.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "payload_size": {
+            "train": {
+              "rows": 23,
+              "minimum": 22.0,
+              "median": 262.0,
+              "mean": 266.8695652173913,
+              "maximum": 518.0
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 22.0,
+              "median": 166.0,
+              "mean": 178.0,
+              "maximum": 518.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "connection_duration_ms": {
+            "train": {
+              "rows": 23,
+              "minimum": 3.564,
+              "median": 85.343,
+              "mean": 87.04847826086957,
+              "maximum": 200.546
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 0.086,
+              "median": 72.9915,
+              "mean": 80.04316666666666,
+              "maximum": 187.438
+            },
+            "validation_outside_same_scenario_train_range": 1
+          },
+          "message_interval_ms": {
+            "train": {
+              "rows": 23,
+              "minimum": 0.0,
+              "median": 24.074,
+              "mean": 25.19291304347826,
+              "maximum": 51.536
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 0.0,
+              "median": 20.32,
+              "mean": 20.809875,
+              "maximum": 47.599
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "bytes_received_total": {
+            "train": {
+              "rows": 23,
+              "minimum": 78.0,
+              "median": 810.0,
+              "mean": 849.7391304347826,
+              "maximum": 1954.0
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 30.0,
+              "median": 586.0,
+              "mean": 670.1666666666666,
+              "maximum": 1906.0
+            },
+            "validation_outside_same_scenario_train_range": 3
+          },
+          "bytes_sent_total": {
+            "train": {
+              "rows": 23,
+              "minimum": 0.0,
+              "median": 48.0,
+              "mean": 63.65217391304348,
+              "maximum": 168.0
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 0.0,
+              "median": 60.0,
+              "mean": 62.0,
+              "maximum": 144.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          },
+          "error_count_total": {
+            "train": {
+              "rows": 23,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation": {
+              "rows": 24,
+              "minimum": 0.0,
+              "median": 0.0,
+              "mean": 0.0,
+              "maximum": 0.0
+            },
+            "validation_outside_same_scenario_train_range": 0
+          }
+        }
+      }
+    },
+    "observed_exact_feature_conflicting_label_groups": 0,
+    "constant_train_features": [
+      "error_count_total"
+    ],
+    "packet_payload_difference_always_8": true
+  },
+  "representation_probe": {
+    "probe_kind": "constructed_representation_counterexample_not_captured_traffic",
+    "wire_size_equal": true,
+    "wire_bytes_equal": false,
+    "normal_wire_sha256": "bbcaf92e9fc2a10d3c3ad5943b485f46490b9e4cb87497b510efe817aa54abab",
+    "malformed_wire_sha256": "4e266ef11cae1b7142440c3527129c0f12d8ed8e6a68e1c5cc38e3a428db34b8",
+    "normal_declared_text_length": 20,
+    "malformed_declared_text_length": 60000,
+    "available_text_bytes_after_fixed_fields": 20,
+    "identical_feature_vector": {
+      "packet_size": 34,
+      "payload_size": 26,
+      "connection_duration_ms": 1.0,
+      "message_interval_ms": 0.0,
+      "bytes_received_total": 34,
+      "bytes_sent_total": 0,
+      "error_count_total": 0
+    },
+    "anomaly_probabilities": [
+      0.492712695020798,
+      0.492712695020798
+    ],
+    "predicted_labels": [
+      0,
+      0
+    ],
+    "same_model_output": true,
+    "interpretation": "일곱 입력을 같게 고정하면 본문 길이 필드의 차이는 전달되지 않는다. 실제 수집된 두 행이 완전히 같았다는 증거는 아니다."
+  },
+  "augmentation_design": {
+    "status": "design_only",
+    "plan_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_augmentation_plan.json",
+    "plan_sha256": "628b477587559c99ac6259564bb7c412c9b5afc0ad7f8d43e3479ad4a8e0e755",
+    "plan": {
+      "plan_version": "v1",
+      "status": "design_only",
+      "scope": "독립 캠페인 수집·분할 설계이며 현재 수집기용 실행 설정이 아니다.",
+      "feature_contract_id": "server_application_message_v2",
+      "target_dataset_id": "operational_message_v2_campaign_holdout",
+      "reference_selection": "../artifacts/operational_message/validation_selection_v1/selection.json",
+      "freeze_reference_before_collection": true,
+      "campaign_split_policy": "preassigned_campaign_holdout",
+      "campaign_slots": [
+        {
+          "slot_id": "development_01",
+          "seed": 101,
+          "split": "train"
+        },
+        {
+          "slot_id": "development_02",
+          "seed": 211,
+          "split": "train"
+        },
+        {
+          "slot_id": "development_03",
+          "seed": 307,
+          "split": "train"
+        },
+        {
+          "slot_id": "selection_01",
+          "seed": 401,
+          "split": "validation"
+        },
+        {
+          "slot_id": "holdout_01",
+          "seed": 503,
+          "split": "test"
+        },
+        {
+          "slot_id": "holdout_02",
+          "seed": 607,
+          "split": "test"
+        }
+      ],
+      "repeats_per_campaign": 2,
+      "sessions_per_run": 4,
+      "scenario_ids": [
+        "normal_chat",
+        "normal_fragmented_chat",
+        "normal_batched_chat",
+        "controlled_burst_chat",
+        "malformed_chat_payload",
+        "malformed_length_chat",
+        "invalid_frame_size"
+      ],
+      "planned_generator_controls": {
+        "text_sizes": [
+          8,
+          24,
+          96,
+          384,
+          768
+        ],
+        "normal_message_count_range": [
+          6,
+          24
+        ],
+        "burst_message_count_range": [
+          12,
+          24
+        ],
+        "normal_wait_ms_ranges": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ],
+        "burst_intentional_wait_ms": 0,
+        "batch_sizes": [
+          1,
+          4,
+          8
+        ],
+        "fragment_sizes_bytes": [
+          7,
+          19,
+          31
+        ],
+        "concurrency_levels": [
+          1,
+          2,
+          4
+        ],
+        "scenario_order": "캠페인 seed로 순서를 결정하고 시나리오와 실행 순서·동시 연결 수준이 고정 대응하지 않도록 교차 배치한다.",
+        "implementation_required": "현재 생성기는 batch=4, fragment=31 등 일부 설정이 고정돼 있다. 명시적 설정 필드와 검증·테스트를 다음 수집 구현에 추가해야 한다."
+      },
+      "label_policy": {
+        "source": "송신 전 고정한 시나리오·행동 정책 manifest",
+        "normal": "유효한 프로토콜의 일반·분할·묶음 전송. 긴 정상 세션도 포함하며 명시한 정상 pacing을 따른다.",
+        "controlled_anomaly": "사전에 정의한 bounded 무대기 연속 요청 또는 의도적으로 잘못 만든 프로토콜 본문·헤더.",
+        "scope": "실제 공격 여부가 아니라 통제된 애플리케이션 이상 정책의 정답이다.",
+        "prohibited_sources": [
+          "모델 확률·예측",
+          "서버 error_count",
+          "종료 summary",
+          "오분류 여부"
+        ],
+        "do_not_relabel_early_prefix": true
+      },
+      "quality_gates": [
+        "각 캠페인의 시나리오·seed·설정·빌드·feature 계약·정답 manifest를 송신 전에 보관한다.",
+        "캠페인·run·세션·메시지 식별자를 검사하고 사전 기대값과 JSONL 누락·중복·종료 통계를 대조한다.",
+        "불완전 run은 제외 사유와 함께 격리하며 정답을 임의로 바꾸지 않는다.",
+        "헤더 거부는 메시지 0개가 기대값이다. 종료 summary로 메시지를 만들지 않고 별도 coverage로 보고한다.",
+        "시나리오별 분포와 정상·이상 크기/타이밍 범위, 실제 파싱 시각 및 송신 계획의 차이를 보고한다.",
+        "새 Test의 형식·유실 품질만 확인하고 모델 점수·오분류·feature 선택에는 사용하지 않는다."
+      ],
+      "analysis_protocol": {
+        "frozen_baseline_audit": "현재 선정 모델과 threshold를 고정하고 새 Validation에서만 진단한다. 새 Test는 최종 평가까지 열지 않는다.",
+        "refit_scope": "새 Train 캠페인만으로 scaler·모델을 fit한다. 새 Validation은 사전 후보 선정에만 사용한다.",
+        "protect_legacy_test": true,
+        "prevent_cross_campaign_or_session_windows": true,
+        "report_message_and_session_prefix_coverage": true,
+        "limitations": "새 seed와 캠페인 분리는 생성기·장비·실제 공격 도메인 편향을 제거하지 않는다. 같은 장비 반복임을 기록한다."
+      },
+      "safety_limits": {
+        "destination": "127.0.0.1:4000",
+        "max_messages_per_session": 24,
+        "max_sessions_per_run": 4,
+        "max_concurrency": 4,
+        "max_text_bytes": 768,
+        "external_traffic_allowed": false,
+        "auto_collect_now": false
+      }
+    },
+    "planned_campaigns": 6,
+    "planned_runs": 84,
+    "planned_sessions_including_header_rejection": 336,
+    "planned_message_observable_sessions": 288,
+    "planned_header_rejection_runs": 12,
+    "actual_new_campaigns_collected": 0,
+    "frozen_reference": {
+      "candidate_id": "lr_c_1",
+      "model_sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+      "threshold": 0.7
+    }
+  },
+  "source_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_feature_schema.json": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\traffic.py": "786398fae05d47a0fd0601b8609924708405d4392b9d7b7cef7262c1cd02cf09",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\ServerBase\\Session.cpp": "962102e1972ed393b9d2444c13a303e7821995dbe947668fe5220fac62fcd323",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\Server\\ServerSession.cpp": "985cf01dff06a8dc29ee49e4ea569d472907f04d6bc487c77682b8b2b7fca4a4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\FeatureCollector.cpp": "4388a89602752fa40848607ed58e11a8e7ee73a1eacfce345c2034b13c534325",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\ServerBase\\Protocol.h": "f34cca055b58e6f20591cefac6ca708563c350f97c3d7c6a16c35694d360bf11",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\ServerBase\\MemoryStream.h": "ca095d5f865c2f94e9db897bbae8764870177a7ede219e3ac0e3ce501f4ac8ca"
+  },
+  "code_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\analyze_operational_errors.py": "a79d09c219793756fa405d22b3037b37d17e588bd72be1ad660d90c861eb45d3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\training\\operational_data.py": "38ec4d5431cf17e81553d482f65be4133ef7486286746e2f8f3274754e1cc1a3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\compare_operational_baselines.py": "4dee81576e285ada290550fa6c194d3de998704b043211f8b2e3a2fc33a34463",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\training\\train_operational_logistic_regression.py": "febb4285b912d3ac571c9d7e61bafa059ee0b046af31e2f75ae662e6f3f08664",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\training\\run_operational_validation_experiment.py": "e1b61f645880ebd3709903550b12f0e8c6f8dd19d50a20d4bb28a0d2d34a82e7"
+  },
+  "environment": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "scikit_learn": "1.8.0"
+  },
+  "observability_findings": [
+    "malformed_chat_payload의 payload 1바이트는 CS_CHAT의 최소 고정 필드 6바이트보다 짧다. 크기 단서는 현재 입력에 있지만 모델의 누락과 프로토콜 검증 실패는 별개다.",
+    "malformed_length_chat은 같은 크기의 정상 본문에서 문자열 길이 필드만 바꿀 수 있다. 그 필드·본문 유효성은 현재 입력 7개에 없다.",
+    "PacketParsed와 FeatureCollector의 snapshot은 ServerSession의 본문 역직렬화 전에 생성된다. 이후 오류나 종료 summary를 현재 error_count_total에 가져오면 판단 시점 누출이다.",
+    "첫 메시지 간격은 0이고 짧은 이상 세션은 메시지 하나뿐이다. 시계열 모델도 없는 과거 정보나 본문 필드를 복원할 수 없다.",
+    "묶음 전송의 파싱 간격은 실제 TCP 패킷 도착 간격과 다르다. 정상 묶음도 짧은 간격·동일 수신 누적값을 보일 수 있다.",
+    "같은 시나리오의 Train/Validation 시간 범위를 별도로 비교한다. 전체 Train 범위 안에 있어도 시나리오별 분포 차이는 남을 수 있다.",
+    "invalid_frame_size는 메시지 snapshot이 없으므로 메시지 모델 평가 대상 밖이다. 이미 적용한 헤더 거부 경로와 별도의 coverage로 구분한다."
+  ],
+  "limitations": [
+    "이미 선정에 사용한 Validation의 사후 진단이다. 독립적인 최종 성능 또는 원인 확정으로 해석하지 않는다.",
+    "시나리오별 표본과 독립 세션 수가 작다. 요약 범위 차이는 통계적 분포 이동 검정이 아니다.",
+    "LR 기여도는 표준화 입력·현재 가중치의 계산 분해이며 중복 입력과 상관관계를 포함한다. 기여도가 실제 원인이라는 뜻은 아니다.",
+    "같은 feature의 실제 다른 정답 관측 여부와 구성 반례를 구분한다. 실제 feature 충돌이 0이어도 충분한 관측 정보를 보장하지 않는다.",
+    "보강 계획은 아직 실행하지 않았다. 새 캠페인·seed 분리만으로 실제 공격 도메인이나 생성기 편향이 해결되지는 않는다.",
+    "프로토콜 검증 규칙으로 본문 오류를 검출하는 것을 AI 모델 개선 성과로 대신 주장하지 않는다."
+  ],
+  "error_csv": {
+    "path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_error_analysis.csv",
+    "rows": 27,
+    "sha256": "8d05bb4a15004ecc8565c90b9e2720b1606c7b70e8675c1bfbd5dda04ac6532b"
+  }
+}

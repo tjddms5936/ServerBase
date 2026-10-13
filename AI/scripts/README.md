@@ -14,6 +14,18 @@ python .\scripts\prepare_operational_dataset.py
 
 상세 정책과 CSV 행 대응 규칙은 `docs/operational_dataset.md`에 있습니다.
 
+## collect_operational_augmentation.py
+
+기존 보강 설계를 v2 생성기 설정으로 변환해 6개 캠페인의 역할·seed·기준 모델 해시를 송신 전에 고정합니다. 84개 run을 실제 로컬 C++/FastAPI로 수집·검증하고 캠페인 전체 단위로 Train 3개·Validation 1개·Test 2개를 배치합니다. 모델 학습·예측은 하지 않습니다.
+
+```powershell
+python .\scripts\collect_operational_augmentation.py
+```
+
+기본 데이터셋은 `data/processed/operational_message/v2_campaign_holdout/`, 보고서는 `reports/operational_augmentation_collection.json/.md`와 `reports/operational_dataset_v2.json/.md`입니다. 기존 데이터셋·보고서는 덮어쓰지 않습니다. 재수집에는 `--dataset-output`, `--report-prefix`, `--dataset-report-prefix`를 모두 새 경로로 지정합니다. `--prepare-only`는 기대값만 저장하고 송신하지 않습니다.
+
+새 원본은 `data/raw/operational_augmentation/<batch_id>/`에 저장합니다. 실행 절차·실패 처리·송신 계측·재구성은 `docs/operational_augmentation_collection.md`를 확인합니다. 설계 JSON은 기존 `collect_operational_traffic.py --plan`이 아니라 이 새 명령에서 사용합니다.
+
 ## collect_operational_traffic.py
 
 정상·통제된 이상 트래픽을 로컬 C++ 서버에 보내고, 시나리오별 새 run으로 실제 feature를 수집한 뒤 품질을 검사합니다. 두 서버와 클라이언트의 실행·종료를 자동으로 처리합니다.

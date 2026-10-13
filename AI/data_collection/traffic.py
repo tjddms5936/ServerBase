@@ -5,6 +5,7 @@ import random
 import socket
 import struct
 import time
+import math
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from typing import Annotated, Literal
@@ -41,6 +42,8 @@ class TrafficProfile(StrictModel):
     text_sizes: Annotated[list[Annotated[int, Field(ge=1, le=1024, strict=True)]], Field(min_length=1, max_length=8)] = [16, 64, 256, 512]
     interval_min_ms: Annotated[int, Field(ge=0, le=100, strict=True)] = 10
     interval_max_ms: Annotated[int, Field(ge=0, le=100, strict=True)] = 30
+    batch_size: Annotated[int, Field(ge=1, le=8, strict=True)] | None = None
+    fragment_size_bytes: Annotated[int, Field(ge=1, le=256, strict=True)] | None = None
 
     @model_validator(mode="after")
     def validate_ranges(self) -> TrafficProfile:
@@ -56,17 +59,73 @@ class TrafficProfile(StrictModel):
 
 
 class CampaignPlan(StrictModel):
-    plan_version: Literal["v1"]
+    plan_version: Literal["v1", "v2"]
     seed: Annotated[int, Field(ge=0, le=2**31 - 1, strict=True)]
     repeats: Annotated[int, Field(ge=1, le=10, strict=True)]
     profiles: Annotated[list[TrafficProfile], Field(min_length=1, max_length=7)]
+    repeat_profiles: list[list[TrafficProfile]] | None = None
 
     @model_validator(mode="after")
     def validate_scenarios(self) -> CampaignPlan:
         ids = [profile.scenario_id for profile in self.profiles]
         if len(ids) != len(set(ids)):
             raise ValueError("수집 계획의 시나리오가 중복되었습니다.")
+        groups = self.repeat_profiles if self.repeat_profiles is not None else [self.profiles]
+        if self.repeat_profiles is not None and (len(groups) != self.repeats or groups[0] != self.profiles):
+            raise ValueError("반복별 프로필 수와 첫 반복 프로필이 계획과 다릅니다.")
+        for profiles in groups:
+            names = [profile.scenario_id for profile in profiles]
+            if len(names) != len(set(names)) or set(names) != set(ids):
+                raise ValueError("모든 반복은 중복 없이 같은 시나리오 집합을 포함해야 합니다.")
+            if self.plan_version == "v1" and any(profile.batch_size is not None or profile.fragment_size_bytes is not None for profile in profiles):
+                raise ValueError("명시적 송신 제어에는 v2 계획이 필요합니다.")
+            if self.plan_version == "v2" and any(profile.batch_size is None for profile in profiles):
+                raise ValueError("v2는 모든 프로필의 묶음 크기를 명시해야 합니다.")
+        if self.plan_version == "v1" and self.repeat_profiles is not None:
+            raise ValueError("반복별 교차 배치는 v2 계획에서 사용합니다.")
         return self
+
+    def profiles_for_repeat(self, repeat: int) -> list[TrafficProfile]:
+        if not 0 <= repeat < self.repeats:
+            raise ValueError("계획 범위 밖의 반복 번호입니다.")
+        return self.repeat_profiles[repeat] if self.repeat_profiles is not None else self.profiles
+
+
+def planned_runs(plan: CampaignPlan):
+    for repeat in range(plan.repeats):
+        for index, profile in enumerate(plan.profiles_for_repeat(repeat)):
+            if plan.plan_version == "v1":
+                seed = plan.seed + repeat * 100 + index
+            else:
+                # 실행 순서를 바꿔도 같은 캠페인·반복·시나리오의 난수 계열은 유지한다.
+                encoded = f"{plan.seed}:{repeat}:{profile.scenario_id}".encode("ascii")
+                seed = int.from_bytes(hashlib.sha256(encoded).digest()[:8], "big") % (2**31)
+            yield repeat, profile, seed
+
+
+def transport_controls(profile: TrafficProfile) -> dict:
+    return {
+        "batch_size": profile.batch_size if profile.batch_size is not None else
+                      (4 if profile.scenario_id in {"normal_batched_chat", "controlled_burst_chat"} else 1),
+        "fragment_size_bytes": (profile.fragment_size_bytes or 31) if profile.scenario_id == "normal_fragmented_chat" else None,
+        "fragment_wait_ms": 1 if profile.scenario_id == "normal_fragmented_chat" else 0,
+    }
+
+
+def expected_send_calls(session: dict, controls: dict) -> int:
+    frames = session["frames"]
+    return sum(math.ceil(sum(frame["wire_size"] for frame in frames[start:start + controls["batch_size"]]) /
+                         controls["fragment_size_bytes"]) if controls["fragment_size_bytes"] else 1
+               for start in range(0, len(frames), controls["batch_size"]))
+
+
+def planned_send_groups(session: dict, controls: dict) -> list[dict]:
+    frames = session["frames"]
+    return [{"first_frame_index": start + 1, "frame_count": len(frames[start:start + controls["batch_size"]]),
+             "wire_size": sum(frame["wire_size"] for frame in frames[start:start + controls["batch_size"]]),
+             "wait_after_ms": frames[min(start + controls["batch_size"], len(frames)) - 1]["interval_after_ms"]
+             if start + controls["batch_size"] < len(frames) else 0}
+            for start in range(0, len(frames), controls["batch_size"])]
 
 
 def chat_frame(text: bytes, value: int = 42) -> bytes:
@@ -113,10 +172,16 @@ def build_expectations(profile: TrafficProfile, seed: int, run_id: str, label: i
             "expected_last_error_message": ERROR_MESSAGES.get(profile.scenario_id, ""),
         })
     expected_messages = sum(len(session["expected_message_frames"]) for session in sessions)
+    explicit = profile.batch_size is not None or profile.fragment_size_bytes is not None
+    if explicit:
+        for session in sessions:
+            session["transport_controls"] = transport_controls(profile)
+            session["expected_sendall_calls"] = expected_send_calls(session, session["transport_controls"])
     return {
-        "expectation_version": "v1", "generator_version": GENERATOR_VERSION,
+        "expectation_version": "v2" if explicit else "v1",
+        "generator_version": "application_traffic_v2" if explicit else GENERATOR_VERSION,
         "run_id": run_id, "scenario_id": profile.scenario_id, "independent_label": label,
-        "seed": seed, "profile": profile.model_dump(mode="json"), "sessions": sessions,
+        "seed": seed, "profile": profile.model_dump(mode="json", exclude_none=True), "sessions": sessions,
         "expected_sessions": len(sessions), "expected_messages": expected_messages,
         "expected_summaries": len(sessions), "expected_records": expected_messages + len(sessions),
         "message_observable": profile.scenario_id != "invalid_frame_size",
@@ -161,27 +226,45 @@ def connect_local() -> socket.socket:
             time.sleep(0.05)
 
 
-def run_session(session: dict, scenario_id: str) -> dict:
+def run_session(session: dict, scenario_id: str, profile: TrafficProfile | None = None) -> dict:
+    profile = profile or TrafficProfile(scenario_id=scenario_id, **(
+        {"messages_min": 12, "messages_max": 16, "interval_min_ms": 0, "interval_max_ms": 0}
+        if scenario_id == "controlled_burst_chat" else {}))
+    controls = transport_controls(profile)
     result = {
         "client_index": session["client_index"], "passed": False,
         "connected": False, "frames_sent": 0, "bytes_sent": 0, "responses_received": 0,
         "started_at_utc": datetime.now(UTC).isoformat(), "error": None,
+        "transport_controls": controls, "sendall_calls": 0, "send_groups": [],
     }
     try:
         with connect_local() as connection:
             result["connected"] = True
             frames = session["frames"]
-            batch_size = 4 if scenario_id in {"normal_batched_chat", "controlled_burst_chat"} else 1
+            batch_size = controls["batch_size"]
+            previous_group_start = None
             for start in range(0, len(frames), batch_size):
                 group = frames[start:start + batch_size]
                 wire = b"".join(bytes.fromhex(frame["wire_hex"]) for frame in group)
+                group_start = time.perf_counter()
+                group_record = {
+                    "first_frame_index": start + 1, "frame_count": len(group), "wire_size": len(wire),
+                    "wait_after_ms": group[-1]["interval_after_ms"] if start + len(group) < len(frames) else 0,
+                    "start_interval_ms": (group_start - previous_group_start) * 1000 if previous_group_start is not None else 0,
+                }
+                previous_group_start = group_start
                 if scenario_id == "normal_fragmented_chat":
                     # 분할 송신은 정상 TCP 동작이다. 실제 수신 완료 경계는 OS가 결정한다.
-                    for offset in range(0, len(wire), 31):
-                        connection.sendall(wire[offset:offset + 31])
+                    fragment_size = controls["fragment_size_bytes"]
+                    for offset in range(0, len(wire), fragment_size):
+                        connection.sendall(wire[offset:offset + fragment_size])
+                        result["sendall_calls"] += 1
                         time.sleep(0.001)
                 else:
                     connection.sendall(wire)
+                    result["sendall_calls"] += 1
+                group_record["send_duration_ms"] = (time.perf_counter() - group_start) * 1000
+                result["send_groups"].append(group_record)
                 result["frames_sent"] += len(group)
                 result["bytes_sent"] += len(wire)
                 if session["expected_responses"]:
@@ -212,10 +295,10 @@ def generate_traffic(expectations: dict) -> dict:
     profile = TrafficProfile.model_validate(expectations["profile"])
     with ThreadPoolExecutor(max_workers=profile.concurrency) as workers:
         results = list(workers.map(
-            lambda session: run_session(session, profile.scenario_id), expectations["sessions"],
+            lambda session: run_session(session, profile.scenario_id, profile), expectations["sessions"],
         ))
     return {
-        "outcome_version": "v1", "run_id": expectations["run_id"], "scenario_id": profile.scenario_id,
+        "outcome_version": expectations["expectation_version"], "run_id": expectations["run_id"], "scenario_id": profile.scenario_id,
         "passed": all(result["passed"] for result in results), "sessions": results,
         "connected_sessions": sum(result["connected"] for result in results),
         "frames_sent": sum(result["frames_sent"] for result in results),

@@ -1,0 +1,3416 @@
+{
+  "status": "complete",
+  "batch_id": "aug_261013_e1cafdde",
+  "batch_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde",
+  "generated_at_utc": "2026-10-13T07:59:27.014821+00:00",
+  "assignment_sha256": "d8f020539f159ba388d09f2419f77d3cef68a7aa39dd27473fe550ef5c1399e2",
+  "assignment": {
+    "assignment_version": "v1",
+    "batch_id": "aug_261013_e1cafdde",
+    "locked_at_utc": "2026-10-13T07:55:45.695646+00:00",
+    "prepared_before_collection": true,
+    "split_policy": "preassigned_campaign_holdout",
+    "feature_contract_id": "server_application_message_v2",
+    "target_dataset_id": "operational_message_v2_campaign_holdout",
+    "campaigns": [
+      {
+        "slot_id": "development_01",
+        "seed": 101,
+        "split": "train",
+        "campaign_id": "aug_261013_e1cafdde_development_01",
+        "campaign_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_development_01",
+        "plan_snapshot": {
+          "plan_version": "v2",
+          "seed": 101,
+          "repeats": 2,
+          "profiles": [
+            {
+              "scenario_id": "malformed_length_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "controlled_burst_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 12,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 0,
+              "interval_max_ms": 0,
+              "batch_size": 4,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_fragmented_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": 7
+            },
+            {
+              "scenario_id": "normal_batched_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_chat_payload",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "invalid_frame_size",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            }
+          ],
+          "repeat_profiles": [
+            [
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": 7
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ],
+            [
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": 19
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "slot_id": "development_02",
+        "seed": 211,
+        "split": "train",
+        "campaign_id": "aug_261013_e1cafdde_development_02",
+        "campaign_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_development_02",
+        "plan_snapshot": {
+          "plan_version": "v2",
+          "seed": 211,
+          "repeats": 2,
+          "profiles": [
+            {
+              "scenario_id": "malformed_chat_payload",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_length_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "invalid_frame_size",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_batched_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 4,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_fragmented_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": 19
+            },
+            {
+              "scenario_id": "normal_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "controlled_burst_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 12,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 0,
+              "interval_max_ms": 0,
+              "batch_size": 8,
+              "fragment_size_bytes": null
+            }
+          ],
+          "repeat_profiles": [
+            [
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": 19
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              }
+            ],
+            [
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": 31
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "slot_id": "development_03",
+        "seed": 307,
+        "split": "train",
+        "campaign_id": "aug_261013_e1cafdde_development_03",
+        "campaign_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_development_03",
+        "plan_snapshot": {
+          "plan_version": "v2",
+          "seed": 307,
+          "repeats": 2,
+          "profiles": [
+            {
+              "scenario_id": "malformed_chat_payload",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_length_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "controlled_burst_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 12,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 0,
+              "interval_max_ms": 0,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_batched_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 8,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_fragmented_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": 31
+            },
+            {
+              "scenario_id": "invalid_frame_size",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            }
+          ],
+          "repeat_profiles": [
+            [
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": 31
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ],
+            [
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": 7
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "slot_id": "selection_01",
+        "seed": 401,
+        "split": "validation",
+        "campaign_id": "aug_261013_e1cafdde_selection_01",
+        "campaign_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_selection_01",
+        "plan_snapshot": {
+          "plan_version": "v2",
+          "seed": 401,
+          "repeats": 2,
+          "profiles": [
+            {
+              "scenario_id": "normal_batched_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "invalid_frame_size",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_length_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_fragmented_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": 7
+            },
+            {
+              "scenario_id": "malformed_chat_payload",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "controlled_burst_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 12,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 0,
+              "interval_max_ms": 0,
+              "batch_size": 4,
+              "fragment_size_bytes": null
+            }
+          ],
+          "repeat_profiles": [
+            [
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": 7
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              }
+            ],
+            [
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": 19
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "slot_id": "holdout_01",
+        "seed": 503,
+        "split": "test",
+        "campaign_id": "aug_261013_e1cafdde_holdout_01",
+        "campaign_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_holdout_01",
+        "plan_snapshot": {
+          "plan_version": "v2",
+          "seed": 503,
+          "repeats": 2,
+          "profiles": [
+            {
+              "scenario_id": "normal_fragmented_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": 19
+            },
+            {
+              "scenario_id": "malformed_length_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "controlled_burst_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 12,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 0,
+              "interval_max_ms": 0,
+              "batch_size": 8,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_chat_payload",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "invalid_frame_size",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_batched_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 4,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            }
+          ],
+          "repeat_profiles": [
+            [
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": 19
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ],
+            [
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": 31
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ]
+          ]
+        }
+      },
+      {
+        "slot_id": "holdout_02",
+        "seed": 607,
+        "split": "test",
+        "campaign_id": "aug_261013_e1cafdde_holdout_02",
+        "campaign_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_holdout_02",
+        "plan_snapshot": {
+          "plan_version": "v2",
+          "seed": 607,
+          "repeats": 2,
+          "profiles": [
+            {
+              "scenario_id": "normal_fragmented_chat",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": 31
+            },
+            {
+              "scenario_id": "normal_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "controlled_burst_chat",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 12,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 0,
+              "interval_max_ms": 0,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "invalid_frame_size",
+              "sessions": 4,
+              "concurrency": 4,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 20,
+              "interval_max_ms": 40,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "normal_batched_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 8,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_length_chat",
+              "sessions": 4,
+              "concurrency": 2,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 5,
+              "interval_max_ms": 15,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            },
+            {
+              "scenario_id": "malformed_chat_payload",
+              "sessions": 4,
+              "concurrency": 1,
+              "messages_min": 6,
+              "messages_max": 24,
+              "text_sizes": [
+                8,
+                24,
+                96,
+                384,
+                768
+              ],
+              "interval_min_ms": 1,
+              "interval_max_ms": 4,
+              "batch_size": 1,
+              "fragment_size_bytes": null
+            }
+          ],
+          "repeat_profiles": [
+            [
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": 31
+              },
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 8,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ],
+            [
+              {
+                "scenario_id": "normal_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_length_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "malformed_chat_payload",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "invalid_frame_size",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 1,
+                "interval_max_ms": 4,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "controlled_burst_chat",
+                "sessions": 4,
+                "concurrency": 1,
+                "messages_min": 12,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 0,
+                "interval_max_ms": 0,
+                "batch_size": 4,
+                "fragment_size_bytes": null
+              },
+              {
+                "scenario_id": "normal_fragmented_chat",
+                "sessions": 4,
+                "concurrency": 2,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 5,
+                "interval_max_ms": 15,
+                "batch_size": 1,
+                "fragment_size_bytes": 7
+              },
+              {
+                "scenario_id": "normal_batched_chat",
+                "sessions": 4,
+                "concurrency": 4,
+                "messages_min": 6,
+                "messages_max": 24,
+                "text_sizes": [
+                  8,
+                  24,
+                  96,
+                  384,
+                  768
+                ],
+                "interval_min_ms": 20,
+                "interval_max_ms": 40,
+                "batch_size": 1,
+                "fragment_size_bytes": null
+              }
+            ]
+          ]
+        }
+      }
+    ],
+    "reference_baseline": {
+      "candidate_id": "lr_c_1",
+      "kind": "logistic_regression",
+      "threshold": 0.7,
+      "model_sha256": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+      "file_sha256": {
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\selection.json": "f6c8f05c92f9523f7af45b5254c68710f2308ca418f6b581815f6730ecc98f8c",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1\\pipeline.joblib": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1\\feature_schema.json": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\experiment_manifest.json": "0b2e15037d54c67f84157956936f332eda9102dc27fa95b4a9924fd9cb1e4090"
+      },
+      "model_loaded": false,
+      "prediction_performed": false,
+      "fit_performed": false
+    },
+    "locked_file_sha256": {
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_augmentation_plan.json": "628b477587559c99ac6259564bb7c412c9b5afc0ad7f8d43e3479ad4a8e0e755",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe": "2d7e83ccb7ed1869a7ec76b104dc79659f6ff073f9de9429ab6d1458924f2582",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\collection_scenarios.json": "4628e059987bcc1e23588de8b29d2fdf74f33d0dcad31d262044ba76bed4ccb8",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\selection.json": "f6c8f05c92f9523f7af45b5254c68710f2308ca418f6b581815f6730ecc98f8c",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1\\pipeline.joblib": "d9592c5c118b444a81d139ef6107dd32e97942acc62c664eabcc89fa206b03a9",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1\\feature_schema.json": "19a824dd877b300fd2f90c09b8aa71b3a475ae787d4d56baef266970bde7b693",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\candidates\\lr_c_1\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\validation_selection_v1\\experiment_manifest.json": "0b2e15037d54c67f84157956936f332eda9102dc27fa95b4a9924fd9cb1e4090",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\api_runner.py": "aa08c8f69e49986195f4de3610af0852985e322f985ad9598b01a8e81b7fbb81",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\augmentation.py": "6ac29ee239f2a3b0dbdbe9f6071b2985cb8879f79c4dcca898adcd8ca003648d",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\campaign.py": "12bcb7c866902d66ccb35930ea534b24bb4a3511872f3bc5c06c0c875cfa817e",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\collector.py": "0c339c7aacbe9bac1962b50b08d895fa31b75181c9751f53b61194d68adcfa10",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\config.py": "6b40d3115469dc288ab464c50313f06b88870009c343ee67c43ced86552f4b31",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\quality.py": "8ce214eff4ad7b37fe2f77a12dc2785374102223f860d4d2cd839710b5a84060",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\runtime.py": "f2428b7f0cf71e75810118a17d7c172a203935ea51d33ba1ae570b8a66b6bdee",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\traffic.py": "7c411656910127b5998d35d7c0672b7c024321fbeeb4ca8340f21537e0a8ee00",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\__init__.py": "cc91622ce1f1e7b7a6880d6b4bdec544a6471889f738d226dfbf30411b220ab8",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_preparation\\operational_dataset.py": "64f0189e63015cfcbb97270126cd29e0a9f59de9e4126cba17f90e59c8e5f69b",
+      "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_feature_schema.json": "0bb2db97490fac5cedd6758596b33e6aa81990078b1bc94fcaba0067f5566d87"
+    },
+    "design_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_augmentation_plan.json",
+    "design_sha256": "628b477587559c99ac6259564bb7c412c9b5afc0ad7f8d43e3479ad4a8e0e755"
+  },
+  "quality": {
+    "passed": true,
+    "campaigns": 6,
+    "runs": 84,
+    "passed_runs": 84,
+    "eligible_message_runs": 72,
+    "totals": {
+      "sessions": 336,
+      "messages": 3122,
+      "summaries": 336,
+      "record_count": 3458,
+      "invalid_records": 0,
+      "duplicate_records": 0,
+      "missing_messages": 0,
+      "missing_summaries": 0,
+      "unexpected_records": 0
+    },
+    "validated_label_distribution": {
+      "runs": {
+        "0": 36,
+        "1": 48
+      },
+      "sessions": {
+        "0": 144,
+        "1": 192
+      },
+      "messages": {
+        "0": 2160,
+        "1": 962
+      },
+      "session_summaries": {
+        "0": 144,
+        "1": 192
+      }
+    },
+    "campaign_results": [
+      {
+        "campaign_id": "aug_261013_e1cafdde_development_01",
+        "passed": true,
+        "totals": {
+          "sessions": 56,
+          "messages": 491,
+          "summaries": 56,
+          "record_count": 547,
+          "invalid_records": 0,
+          "duplicate_records": 0,
+          "missing_messages": 0,
+          "missing_summaries": 0,
+          "unexpected_records": 0
+        },
+        "quality_report": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_development_01\\quality_report.json"
+      },
+      {
+        "campaign_id": "aug_261013_e1cafdde_development_02",
+        "passed": true,
+        "totals": {
+          "sessions": 56,
+          "messages": 514,
+          "summaries": 56,
+          "record_count": 570,
+          "invalid_records": 0,
+          "duplicate_records": 0,
+          "missing_messages": 0,
+          "missing_summaries": 0,
+          "unexpected_records": 0
+        },
+        "quality_report": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_development_02\\quality_report.json"
+      },
+      {
+        "campaign_id": "aug_261013_e1cafdde_development_03",
+        "passed": true,
+        "totals": {
+          "sessions": 56,
+          "messages": 533,
+          "summaries": 56,
+          "record_count": 589,
+          "invalid_records": 0,
+          "duplicate_records": 0,
+          "missing_messages": 0,
+          "missing_summaries": 0,
+          "unexpected_records": 0
+        },
+        "quality_report": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_development_03\\quality_report.json"
+      },
+      {
+        "campaign_id": "aug_261013_e1cafdde_selection_01",
+        "passed": true,
+        "totals": {
+          "sessions": 56,
+          "messages": 513,
+          "summaries": 56,
+          "record_count": 569,
+          "invalid_records": 0,
+          "duplicate_records": 0,
+          "missing_messages": 0,
+          "missing_summaries": 0,
+          "unexpected_records": 0
+        },
+        "quality_report": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_selection_01\\quality_report.json"
+      },
+      {
+        "campaign_id": "aug_261013_e1cafdde_holdout_01",
+        "passed": true,
+        "totals": {
+          "sessions": 56,
+          "messages": 527,
+          "summaries": 56,
+          "record_count": 583,
+          "invalid_records": 0,
+          "duplicate_records": 0,
+          "missing_messages": 0,
+          "missing_summaries": 0,
+          "unexpected_records": 0
+        },
+        "quality_report": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_holdout_01\\quality_report.json"
+      },
+      {
+        "campaign_id": "aug_261013_e1cafdde_holdout_02",
+        "passed": true,
+        "totals": {
+          "sessions": 56,
+          "messages": 544,
+          "summaries": 56,
+          "record_count": 600,
+          "invalid_records": 0,
+          "duplicate_records": 0,
+          "missing_messages": 0,
+          "missing_summaries": 0,
+          "unexpected_records": 0
+        },
+        "quality_report": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_augmentation\\aug_261013_e1cafdde\\aug_261013_e1cafdde_holdout_02\\quality_report.json"
+      }
+    ]
+  },
+  "dataset_output": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout",
+  "dataset_manifest_sha256": "c16fad4ba8f92e8993c7aa328eeea1fa55240f28429f09deaa36c2fe43c9594b",
+  "splits": {
+    "train": {
+      "campaigns": 3,
+      "rows": 1538,
+      "runs": 36,
+      "sessions": 144,
+      "label_distribution": {
+        "0": 1049,
+        "1": 489
+      },
+      "scenario_distribution": {
+        "controlled_burst_chat": 441,
+        "malformed_chat_payload": 24,
+        "malformed_length_chat": 24,
+        "normal_batched_chat": 355,
+        "normal_chat": 337,
+        "normal_fragmented_chat": 357
+      }
+    },
+    "validation": {
+      "campaigns": 1,
+      "rows": 513,
+      "runs": 12,
+      "sessions": 48,
+      "label_distribution": {
+        "0": 349,
+        "1": 164
+      },
+      "scenario_distribution": {
+        "controlled_burst_chat": 148,
+        "malformed_chat_payload": 8,
+        "malformed_length_chat": 8,
+        "normal_batched_chat": 130,
+        "normal_chat": 110,
+        "normal_fragmented_chat": 109
+      }
+    },
+    "test": {
+      "campaigns": 2,
+      "rows": 1071,
+      "runs": 24,
+      "sessions": 96,
+      "label_distribution": {
+        "0": 762,
+        "1": 309
+      },
+      "scenario_distribution": {
+        "controlled_burst_chat": 277,
+        "malformed_chat_payload": 16,
+        "malformed_length_chat": 16,
+        "normal_batched_chat": 270,
+        "normal_chat": 234,
+        "normal_fragmented_chat": 258
+      }
+    }
+  },
+  "identity_overlaps": {
+    "train__validation": {
+      "runs": 0,
+      "sessions": 0,
+      "rows": 0,
+      "campaigns": 0
+    },
+    "train__test": {
+      "runs": 0,
+      "sessions": 0,
+      "rows": 0,
+      "campaigns": 0
+    },
+    "validation__test": {
+      "runs": 0,
+      "sessions": 0,
+      "rows": 0,
+      "campaigns": 0
+    }
+  },
+  "duplicate_features": {
+    "duplicate_feature_groups": 2,
+    "cross_split_feature_groups": 2,
+    "cross_split_feature_rows": 4,
+    "conflicting_label_feature_groups": 0,
+    "pairwise_shared_feature_groups": {
+      "train__validation": 1,
+      "train__test": 0,
+      "validation__test": 1
+    }
+  },
+  "excluded_runs": 12,
+  "generator_controls": {
+    "planned_coverage": {
+      "train:malformed_length_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "train:controlled_burst_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1,
+          4,
+          8
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "train:normal_fragmented_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [
+          7,
+          19,
+          31
+        ],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "train:normal_batched_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1,
+          4,
+          8
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "train:normal_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "train:malformed_chat_payload": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "train:invalid_frame_size": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "validation:normal_batched_chat": {
+        "concurrency": [
+          1,
+          4
+        ],
+        "batch_size": [
+          1,
+          4
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "validation:invalid_frame_size": {
+        "concurrency": [
+          1,
+          2
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ]
+        ]
+      },
+      "validation:malformed_length_chat": {
+        "concurrency": [
+          1,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "validation:normal_fragmented_chat": {
+        "concurrency": [
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [
+          7,
+          19
+        ],
+        "wait_range_ms": [
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "validation:malformed_chat_payload": {
+        "concurrency": [
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "validation:normal_chat": {
+        "concurrency": [
+          1,
+          2
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ]
+        ]
+      },
+      "validation:controlled_burst_chat": {
+        "concurrency": [
+          1,
+          2
+        ],
+        "batch_size": [
+          4,
+          8
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "test:normal_fragmented_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [
+          7,
+          19,
+          31
+        ],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "test:malformed_length_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "test:controlled_burst_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1,
+          4,
+          8
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "test:malformed_chat_payload": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "test:invalid_frame_size": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "test:normal_batched_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1,
+          4,
+          8
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "test:normal_chat": {
+        "concurrency": [
+          1,
+          2,
+          4
+        ],
+        "batch_size": [
+          1
+        ],
+        "fragment_size_bytes": [],
+        "wait_range_ms": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      }
+    },
+    "observed_train_validation": {
+      "train": {
+        "message_by_scenario": {
+          "malformed_length_chat": {
+            "packet_size": {
+              "count": 24,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 24,
+              "minimum": 0.086,
+              "maximum": 15.062
+            },
+            "message_interval_ms": {
+              "count": 24,
+              "minimum": 0.0,
+              "maximum": 0.0
+            }
+          },
+          "controlled_burst_chat": {
+            "packet_size": {
+              "count": 441,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 441,
+              "minimum": 0.082,
+              "maximum": 18.444
+            },
+            "message_interval_ms": {
+              "count": 441,
+              "minimum": 0.0,
+              "maximum": 0.819
+            }
+          },
+          "normal_fragmented_chat": {
+            "packet_size": {
+              "count": 357,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 357,
+              "minimum": 1.469,
+              "maximum": 2384.795
+            },
+            "message_interval_ms": {
+              "count": 357,
+              "minimum": 0.0,
+              "maximum": 234.151
+            }
+          },
+          "normal_batched_chat": {
+            "packet_size": {
+              "count": 355,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 355,
+              "minimum": 0.093,
+              "maximum": 646.448
+            },
+            "message_interval_ms": {
+              "count": 355,
+              "minimum": 0.0,
+              "maximum": 41.065
+            }
+          },
+          "normal_chat": {
+            "packet_size": {
+              "count": 337,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 337,
+              "minimum": 0.084,
+              "maximum": 601.265
+            },
+            "message_interval_ms": {
+              "count": 337,
+              "minimum": 0.0,
+              "maximum": 40.733
+            }
+          },
+          "malformed_chat_payload": {
+            "packet_size": {
+              "count": 24,
+              "minimum": 9.0,
+              "maximum": 9.0
+            },
+            "connection_duration_ms": {
+              "count": 24,
+              "minimum": 0.088,
+              "maximum": 15.543
+            },
+            "message_interval_ms": {
+              "count": 24,
+              "minimum": 0.0,
+              "maximum": 0.0
+            }
+          }
+        },
+        "actual_client_group_start_interval_ms": {
+          "count": 972,
+          "minimum": 0.1354999840259552,
+          "maximum": 232.4492996558547
+        },
+        "actual_client_group_send_duration_ms": {
+          "count": 1140,
+          "minimum": 0.0073998235166072845,
+          "maximum": 220.91889986768365
+        },
+        "planned_group_wait_ms": {
+          "count": 972,
+          "minimum": 0,
+          "maximum": 40
+        }
+      },
+      "validation": {
+        "message_by_scenario": {
+          "normal_batched_chat": {
+            "packet_size": {
+              "count": 130,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 130,
+              "minimum": 0.074,
+              "maximum": 640.167
+            },
+            "message_interval_ms": {
+              "count": 130,
+              "minimum": 0.0,
+              "maximum": 41.405
+            }
+          },
+          "malformed_length_chat": {
+            "packet_size": {
+              "count": 8,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 8,
+              "minimum": 0.087,
+              "maximum": 2.038
+            },
+            "message_interval_ms": {
+              "count": 8,
+              "minimum": 0.0,
+              "maximum": 0.0
+            }
+          },
+          "normal_fragmented_chat": {
+            "packet_size": {
+              "count": 109,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 109,
+              "minimum": 2.023,
+              "maximum": 1175.806
+            },
+            "message_interval_ms": {
+              "count": 109,
+              "minimum": 0.0,
+              "maximum": 208.98
+            }
+          },
+          "malformed_chat_payload": {
+            "packet_size": {
+              "count": 8,
+              "minimum": 9.0,
+              "maximum": 9.0
+            },
+            "connection_duration_ms": {
+              "count": 8,
+              "minimum": 0.227,
+              "maximum": 13.645
+            },
+            "message_interval_ms": {
+              "count": 8,
+              "minimum": 0.0,
+              "maximum": 0.0
+            }
+          },
+          "normal_chat": {
+            "packet_size": {
+              "count": 110,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 110,
+              "minimum": 0.09,
+              "maximum": 232.493
+            },
+            "message_interval_ms": {
+              "count": 110,
+              "minimum": 0.0,
+              "maximum": 16.051
+            }
+          },
+          "controlled_burst_chat": {
+            "packet_size": {
+              "count": 148,
+              "minimum": 22.0,
+              "maximum": 782.0
+            },
+            "connection_duration_ms": {
+              "count": 148,
+              "minimum": 0.084,
+              "maximum": 12.278
+            },
+            "message_interval_ms": {
+              "count": 148,
+              "minimum": 0.0,
+              "maximum": 2.467
+            }
+          }
+        },
+        "actual_client_group_start_interval_ms": {
+          "count": 300,
+          "minimum": 0.31979987397789955,
+          "maximum": 221.59809991717339
+        },
+        "actual_client_group_send_duration_ms": {
+          "count": 356,
+          "minimum": 0.010699965059757233,
+          "maximum": 206.20949985459447
+        },
+        "planned_group_wait_ms": {
+          "count": 300,
+          "minimum": 0,
+          "maximum": 40
+        }
+      }
+    },
+    "test_feature_ranges_analyzed": false,
+    "interpretation": "클라이언트 묶음 시작 간격은 송신·응답·지정 대기를 포함한다. 서버 메시지 파싱 간격과 직접 대응하지 않으며 같다고 검증하지 않는다."
+  },
+  "preprocessing_fitted": false,
+  "model_training_performed": false,
+  "model_prediction_performed": false,
+  "test_model_evaluated": false,
+  "legacy_baseline_unchanged": true,
+  "destination": "127.0.0.1:4000"
+}

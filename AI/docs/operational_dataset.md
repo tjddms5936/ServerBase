@@ -126,6 +126,16 @@ test의 분할·정답 수를 확인한 것은 데이터 품질 검사다. 그 �
 
 시계열 모델은 이 분할을 완료한 후 각 split의 동일 run/session 안에서 창을 만들어야 한다. 원본 전체에서 창을 만든 뒤 행 단위로 섞으면 분할 경계와 세션 경계를 넘는 누출이 생길 수 있다.
 
+## 새 캠페인 holdout 버전
+
+기존 v1의 반복 단위 정책은 그대로 보존한다. 새 `v2_campaign_holdout/`에는 송신 전에 역할을 고정한 캠페인 전체를 배치한다. 설정의 `config_version=v2`, `split_policy=preassigned_campaign_holdout`, `campaign_registry`가 필요하다. registry의 역할·seed·원본 집합·계획·고정 시각을 검사하고 같은 캠페인의 모든 반복·run·세션·메시지를 한 split에 둔다.
+
+캠페인 하나의 품질 검사가 실패하면 통과한 run만 골라 승인하지 않고 구성을 중단한다. 헤더 거부는 정상 품질 통과지만 메시지 관측 불가로 제외한다. 캠페인/run/session/row 중복과 같은 값의 feature 중복을 따로 확인한다.
+
+실제 6개 캠페인에서 새 Train 1,538건, Validation 513건, Test 1,071건을 구성했다. 입력 7개와 의미 계약은 동일하며 scaler fit·모델 예측·Test 성능 평가는 하지 않았다. 구성·재현은 `docs/operational_augmentation_collection.md`, 결과는 `reports/operational_dataset_v2.md`를 참조한다.
+
 ## 다음 작업
 
-운영 LR/RF baseline을 직접 학습하고 validation에서 설정·threshold를 선정한다. 초기 데이터 규모와 본문 관측 한계를 함께 기록하며, 개선 모델이 반드시 더 좋아질 것이라고 가정하지 않는다. 전체 남은 작업은 `docs/project_roadmap.md`에 정리했다.
+운영 LR/RF 학습·비교·Validation 선정, 오분류 분석, 독립 캠페인 보강 수집·분할, 고정 기존 모델 진단과 새 Train 전용 보강 학습·비교까지 완료했다. 다음은 이 고정 split의 동일 run/session 내부 시계열 창을 구성하고 LSTM을 설계하는 것이다. 진단은 `docs/operational_frozen_baseline_audit.md`, 보강 실험은 `docs/operational_augmentation_experiment.md`에 정리했다.
+
+초기 데이터 규모와 본문 관측 한계를 함께 기록하며, 개선 모델이 반드시 더 좋아질 것이라고 가정하지 않는다. 전체 남은 작업은 `docs/project_roadmap.md`에 정리했다.

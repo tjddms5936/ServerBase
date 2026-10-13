@@ -1,0 +1,29 @@
+{
+  "config_version": "v1",
+  "experiment_id": "operational_validation_v1",
+  "dataset_id": "operational_message_v1",
+  "dataset_dir": "../data/processed/operational_message/v1",
+  "artifact_dir": "../artifacts/operational_message/validation_selection_v1",
+  "report_prefix": "../reports/operational_validation_experiment",
+  "thresholds": [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "selection_rule": {
+    "max_false_positive_rate": 0.1,
+    "min_recall": 0.5,
+    "primary_metric": "recall",
+    "tie_breakers": ["f1_desc", "false_positive_rate_asc", "candidate_id_asc", "threshold_asc"]
+  },
+  "common_parameters": {
+    "random_state": 42,
+    "lr_max_iter": 1000,
+    "lr_tol": 0.0001,
+    "rf_n_estimators": 100
+  },
+  "candidates": [
+    {"id": "lr_c_0_1", "kind": "logistic_regression", "C": 0.1},
+    {"id": "lr_c_1", "kind": "logistic_regression", "C": 1.0},
+    {"id": "lr_c_10", "kind": "logistic_regression", "C": 10.0},
+    {"id": "rf_leaf_1", "kind": "random_forest", "min_samples_leaf": 1, "max_depth": null},
+    {"id": "rf_leaf_5", "kind": "random_forest", "min_samples_leaf": 5, "max_depth": null},
+    {"id": "rf_leaf_10", "kind": "random_forest", "min_samples_leaf": 10, "max_depth": null}
+  ]
+}
