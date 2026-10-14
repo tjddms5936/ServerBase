@@ -41,6 +41,20 @@ C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 
 
 새 `v2_campaign_holdout/`은 같은 7개 입력 의미를 유지하면서 캠페인 전체를 사전 역할대로 분리한 버전입니다. v1과 합치거나 덮어쓰지 않습니다. Train 3개·Validation 1개·Test 2개 캠페인의 모든 반복·run·세션·메시지가 해당 split에만 속하며 캠페인 식별자 중복도 검사합니다. 아직 scaler나 모델을 fit하지 않은 원본 수치입니다.
 
+## raw/operational_recovery
+
+정상 묶음 오탐 보정의 새 캠페인 6개를 보관합니다. `assignment_manifest.json`은 송신 전 역할·실제 id·출력 위치·모델/코드/빌드 해시, `prepared_manifest.json`은 모든 run 설정·기대값의 해시를 저장합니다. 각 캠페인의 실제 JSONL·독립 정답·송수신 결과·종료 통계·로그·품질 보고서를 보존합니다.
+
+`rec_261014_3878ea96` batch는 378/378개 run·1,512개 세션·16,120개 메시지·1,512개 종료 요약의 수집을 완료했습니다. `completion_manifest.json`으로 보호 입력·원본·출력 해시를 확인합니다. 실패하거나 중단한 batch는 같은 폴더에서 재송신하지 않으며 원본을 자동 삭제하지 않습니다.
+
+## processed/operational_message/recovery_v1
+
+기존 원본 v2 메시지 feature 7개를 유지한 새 보정 데이터셋입니다. 캠페인 3/1/2 역할에 따라 Train 7,976건·Validation 2,737건·Test 5,407건을 저장했습니다. X/y/metadata의 같은 행은 같은 메시지이며 원본으로 재대조했습니다. 파생 입력·scaler·모델은 아직 학습하지 않았습니다.
+
+헤더 거부 54개 run은 종료 요약으로 품질 검사하되 메시지 모델에는 넣지 않습니다. split 간 식별자 중복은 0건이고 동일 feature 값의 반복은 별도 보고했습니다. 새 Test의 품질·분할·해시는 확인했지만 모델 예측·threshold 선정·feature 범위 탐색에는 사용하지 않았습니다. 이전에 노출된 v2 Test와 구분합니다.
+
+원본과 처리 데이터는 Git에서 제외합니다. 실제 수집·검증·재수집·한계는 `docs/operational_recovery_collection.md`를 확인합니다.
+
 ## processed/operational_sequence
 
 고정 메시지 데이터셋에서 같은 campaign/run/session의 과거·현재 최대 8개를 묶은 시계열 입력을 보관합니다. 기본 `v1/`에는 Train/Validation NPZ, 원본 행 추적 metadata CSV, 창 구성 전 설정 lock, sequence schema와 검증 완료 manifest가 있습니다. Test 창은 아직 만들지 않습니다.

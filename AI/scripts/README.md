@@ -133,3 +133,15 @@ UNSW_NB15_features.csv
 UNSW-NB15_features.csv
 NUSW-NB15_features.csv
 ```
+
+## collect_operational_recovery.py
+
+고정한 정상 묶음 오탐 보정 계획을 실행합니다. 실제 송신 전에 캠페인 6개의 역할·seed·출력 경로·기준 RF·코드·빌드와 378개 run의 기대값/설정을 잠급니다. 기존 수집용 FastAPI와 C++ 서버를 run마다 실행·종료하고 6개 모두 품질 검사를 통과한 경우에만 캠페인 전체를 Train/Validation/Test 3/1/2 역할로 분리합니다.
+
+```powershell
+python -X utf8 .\scripts\collect_operational_recovery.py
+```
+
+포트 4000·8000은 비어 있어야 합니다. 사용자가 실행한 기존 서버를 강제로 종료하지 않습니다. `--prepare-only`는 송신 없이 기대값과 잠금 파일만 생성하고, `--prepared-batch`는 아직 수집을 시도하지 않은 준비 batch의 잠근 출력 경로로 실행합니다. 기존 데이터셋·보고서와 시도한 batch를 덮어쓰거나 재송신하지 않습니다.
+
+완료 자료는 `data/processed/operational_message/recovery_v1/`와 `reports/operational_recovery_collection.json/.md`, `reports/operational_recovery_dataset.json/.md`입니다. 실제 수집은 메시지 16,120건이며 모델 학습·예측·새 Test 성능 평가는 하지 않았습니다. 재수집 시 새 출력 경로와 필요한 이전 산출물은 `docs/operational_recovery_collection.md`에서 확인합니다.

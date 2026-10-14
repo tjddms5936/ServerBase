@@ -1,0 +1,17 @@
+{
+  "config_version": "v1",
+  "experiment_id": "operational_recovery_validation_v1",
+  "dataset_id": "operational_message_recovery_campaign_v1",
+  "dataset_dir": "../data/processed/operational_message/recovery_v1",
+  "design_path": "operational_recovery_plan.json",
+  "previous_plan": "operational_augmentation_plan.json",
+  "collection_report": "../reports/operational_recovery_collection.json",
+  "reference_dataset_id": "operational_message_v2_campaign_holdout",
+  "reference_dataset_dir": "../data/processed/operational_message/v2_campaign_holdout",
+  "reference_model_dir": "../artifacts/operational_message/augmentation_v1/validation_selection/candidates/rf_leaf_5",
+  "artifact_dir": "../artifacts/operational_message/recovery_v1/validation_selection",
+  "report_prefix": "../reports/operational_recovery_validation",
+  "comparison_report_prefix": "../reports/operational_recovery_comparison",
+  "expected_train_rows": 7976,
+  "expected_validation_rows": 2737
+}

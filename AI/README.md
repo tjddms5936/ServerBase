@@ -30,8 +30,10 @@
 - Train 전용 scaler·LSTM 두 후보 직접 학습, 최적 epoch·14개 정책 선정·동일 Validation RF 비교와 실제 재학습 재현
 - Validation 비용 기반 사전 후보 잠금·고정 Test 최종 비교·holdout 사용 기록과 배포 승인 보류
 - 고정 RF의 정상 묶음 오탐 진단, 과거·현재 입력 보정 후보와 새 독립 캠페인·승인 계획 검증
+- 보정 캠페인 6개·378개 run 실제 수집·품질 검증과 원본 v2 메시지 16,120건의 사전 캠페인 분할
+- 새 Train 7,976건 전용 RF 입력 표현 후보 4개 학습과 새 Validation 2,737건의 20개 정책 비교·개발 선정
 
-최근 작업은 `docs/operational_rf_diagnosis.md`와 `reports/operational_rf_diagnosis.md`에서 확인합니다. Validation 정상 묶음 FP 21건의 짧은 파싱 간격을 분석하고 보정 후보 4개·20개 조합을 설계했습니다. 새 후보 학습·새 데이터 수집·배포는 아직 수행하지 않았으며 큰 작업 묶음은 4개 남아 있습니다.
+최근 작업은 `docs/operational_recovery_experiment.md`와 `reports/operational_recovery_validation.md`에서 확인합니다. 새 Train 7,976건으로 RF 입력 표현 후보 4개를 학습하고 같은 새 Validation 2,737건에서 20개 조합을 비교했습니다. 원본 7개 입력 RF·threshold 0.7이 개발 선정됐습니다. 기존 RF 대비 FP 266→39건이지만 FN 71→275건으로 증가했습니다. 새 Test 성능·비용·배포 승인은 아직 확인하지 않았으며 큰 작업 묶음은 4개 남아 있습니다. 이전 수집은 `docs/operational_recovery_collection.md`, 오탐 단서와 사전 후보 설계는 `docs/operational_rf_diagnosis.md`에 있습니다.
 
 학습 로드맵:
 

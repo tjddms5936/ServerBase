@@ -56,6 +56,14 @@ operational_rf_diagnosis.json
 operational_rf_diagnosis.md
 operational_rf_diagnosis.predictions.csv
 operational_rf_diagnosis.errors.csv
+operational_recovery_collection.json
+operational_recovery_collection.md
+operational_recovery_dataset.json
+operational_recovery_dataset.md
+operational_recovery_validation.json
+operational_recovery_validation.md
+operational_recovery_comparison.json
+operational_recovery_comparison.md
 logistic_error_analysis.json
 logistic_error_analysis.md
 model_comparison.md
@@ -106,6 +114,10 @@ figures/
 - `operational_rf_diagnosis.json/.md`: 고정 RF의 Train/Validation 재예측, 정상 묶음 오탐·첫 메시지·파싱 간격·입력 중요도·prefix 분포와 새 보정 후보·독립 캠페인 설계 검증입니다. 기존 Test는 완료 보고서에서만 인용하고 새 Test 접근·학습·수집·승인은 하지 않았습니다.
 - `operational_rf_diagnosis.predictions.csv`: Train/Validation 2,051행의 원본 식별자·입력·정답·고정 확률/판단과 과거·현재 prefix 진단 값입니다. 기존 최종 Test 예측 CSV와 구분합니다.
 - `operational_rf_diagnosis.errors.csv`: 고정 RF의 Train FP 113건과 Validation FP 30건·FN 9건, 총 152건의 추적 자료입니다. 새로운 학습 정답으로 자동 추가하지 않습니다.
+- `operational_recovery_collection.json/.md`: 보정 캠페인 6개·378개 run의 실제 실행·수집 품질·독립 정답·사전 역할·해시 잠금·정상 묶음 9조합·Train/Validation 관측과 데이터셋 대조 결과입니다. 메시지 16,120건을 수집했지만 학습 모델 로딩·예측·Test 성능 평가·배포는 하지 않았습니다.
+- `operational_recovery_dataset.json/.md`: 새 Train 7,976건·Validation 2,737건·Test 5,407건의 사전 캠페인 분할, 정답 분포·식별자 비중복·동일 feature 값 반복·헤더 거부 제외·원본/출력 해시입니다. 정규화·모델 학습·독립 승인 결과가 아니며 새 Test는 품질 확인에만 사용했습니다.
+- `operational_recovery_validation.json/.md`: 새 Train 7,976건 전용 RF 후보 4개 학습·실제 트리·입력 변환 schema·protocol과 새 Validation 2,737건의 전체 20개 정책·탈락 근거·개발 선정입니다. rf_raw7·0.7의 FP 39·FN 275건을 기록하며 비용·새 Test·배포는 미확인입니다.
+- `operational_recovery_comparison.json/.md`: 같은 Validation에서 기존 RF·0.3과 새 원본 RF·0.3, 기본 0.5·후보별 최적·전체 선정 정책을 구분한 시나리오·첫 메시지·오분류 변경·burst prefix입니다. FP 266→39건과 FN 71→275건을 함께 해석하고 재학습/threshold 효과를 분리합니다. 실제 모델이나 threshold를 Test로 고른 결과가 아닙니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

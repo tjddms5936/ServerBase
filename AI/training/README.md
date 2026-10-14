@@ -140,7 +140,21 @@ python -X utf8 .\training\run_operational_lstm_experiment.py
 
 산출물은 `artifacts/operational_sequence/lstm_v1/`, 보고서는 `reports/operational_lstm_validation.json/.md/.predictions.csv`다. 기존 출력은 보존한다. 재실행에는 새 `--artifact-dir`와 `--report-prefix`가 필요하다. 설명과 실제 재학습 검사는 `docs/operational_lstm_experiment.md`, `tests/run_lstm_reproducibility.py`에서 확인한다. 이후 단계는 최종 성능·비용 비교이며 API는 아직 dummy다.
 
-초기 목표:
+## 보정 RF 입력 표현·Validation 실험
+
+```powershell
+python -X utf8 .\training\run_operational_recovery_experiment.py
+```
+
+새 Train 7,976건만으로 원본 7개·송수신량 제외 5개·평균 간격 5개·평균+파싱 합 6개 입력의 RF 4개를 각각 한 번 학습합니다. 사전 계획의 트리 100·최소 leaf 5·seed 42·n_jobs=1을 유지하고 scaler나 Validation 합산 fit은 하지 않습니다. 후보/threshold를 수집 전 계획과 대조하고 새 Validation 예측·학습 전에 실제 protocol을 잠급니다.
+
+새 Validation 2,737건에서 20개 정책을 비교합니다. 전체 FPR·정상 묶음 FPR 모두 10% 이하, Recall 50% 이상 중 Recall·F1·FPR 순으로 고릅니다. 통과한 2개 중 원본 입력 RF·0.7이 선정됐고 FP 39·FN 275건입니다. 기존 RF·0.3은 재학습 없이 같은 Validation에서 FP 266·FN 71건이었습니다. 오탐 감소와 누락 증가를 함께 보고합니다.
+
+산출물은 `artifacts/operational_message/recovery_v1/validation_selection/`, 보고서는 `reports/operational_recovery_validation.json/.md`와 `reports/operational_recovery_comparison.json/.md`입니다. 원본 schema와 모델 입력 schema, 기본 0.5와 선정 0.7 정책을 구분합니다. 새 Test CSV·raw JSONL·종료 summary·비용 측정·배포는 미실행입니다.
+
+기본 출력은 이미 있으므로 재실행은 새 `--artifact-dir`, `--report-prefix`, `--comparison-report-prefix`를 모두 지정합니다. 설명과 검증은 `docs/operational_recovery_experiment.md`에 있습니다. 현재 선정은 비용/Test 확인 대기이며, raw7 입력이므로 추가 Python prefix 상태는 필요 없습니다.
+
+## 초기 공개 데이터 목표
 
 1. 전처리된 UNSW-NB15 데이터를 로드합니다.
 2. Logistic Regression 기준 모델을 학습합니다.

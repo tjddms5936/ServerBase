@@ -18,6 +18,7 @@ operational_final_models.py
 operational_cost_worker.py
 run_operational_final_evaluation.py
 analyze_operational_rf_errors.py
+compare_operational_recovery.py
 ```
 
 ## audit_operational_data.py
@@ -178,7 +179,19 @@ python -X utf8 .\evaluation\analyze_operational_rf_errors.py
 
 결과는 `reports/operational_rf_diagnosis.json/.md/.predictions.csv/.errors.csv`와 `artifacts/operational_rf_diagnosis/v1/`에 저장한다. 기존 결과가 있으면 새 `--artifact-dir`와 `--report-prefix`를 지정한다. 설명과 다음 수집 단계는 `docs/operational_rf_diagnosis.md`에 있다.
 
-이후 추가할 스크립트:
+## 보정 RF의 새 Validation 비교
+
+`compare_operational_recovery.py`는 보정 학습 실행기가 호출하는 비교 모듈입니다. 전체·정상 묶음 FPR·Recall의 세 제약, 사전 순위, 첫 메시지/후속 메시지, 시나리오·burst prefix와 같은 행의 수정/신규 오분류를 기록합니다. 별도 Test 평가나 추가 모델 학습을 시작하지 않습니다.
+
+```powershell
+python -X utf8 .\training\run_operational_recovery_experiment.py
+```
+
+기존 고정 RF·0.3, 새 원본 RF·0.3, 후보별 기본 0.5·제약 통과 최적 정책·전체 선정 정책을 구분합니다. 같은 Validation에서 rf_raw7·0.7이 선정됐지만 FP 감소와 FN 증가가 함께 있어 전체 개선을 단정하지 않습니다. `reports/operational_recovery_comparison.json/.md`와 같은 행 비교 CSV는 개발 비교이며 독립 Test 결과가 아닙니다.
+
+설명과 다음 비용 검증은 `docs/operational_recovery_experiment.md`에 있습니다.
+
+## 향후 일반 평가 명령
 
 ```text
 evaluate_model.py
