@@ -26,6 +26,9 @@
 - 명시적 v2 송신 제어, 독립 캠페인 6개·84개 run 실제 수집·검증과 사전 캠페인 단위 분할
 - 고정 기존 LR·threshold 0.7의 새 Validation 513건 평가·오분류·세션 prefix 진단
 - 새 Train 1,538건 전용 보강 LR/RF 6개·threshold 42개 조합 선정과 동일 Validation 비교
+- 동일 campaign/run/session의 과거·현재 최대 8개 창, 짧은 세션 padding·mask·정답·원본 추적과 LSTM 사전 설계
+- Train 전용 scaler·LSTM 두 후보 직접 학습, 최적 epoch·14개 정책 선정·동일 Validation RF 비교와 실제 재학습 재현
+- Validation 비용 기반 사전 후보 잠금·고정 Test 최종 비교·holdout 사용 기록과 배포 승인 보류
 
 학습 로드맵:
 
@@ -189,7 +192,7 @@ python .\scripts\prepare_operational_dataset.py
 
 결과는 `data/processed/operational_message/v1/`와 `reports/operational_dataset.json`, `.md`입니다. 기존 결과는 덮어쓰지 않으므로 재구성은 새 `--output-dir`로 실행합니다. 원본이 없는 checkout에서는 먼저 캠페인을 수집하고 `--campaign-dir`로 지정합니다.
 
-데이터셋 구성 단계 자체에서는 scaler와 모델을 fit하지 않습니다. 데이터셋 설명은 `docs/operational_dataset.md`, 현재 남은 6단계는 `docs/project_roadmap.md`에서 확인합니다.
+데이터셋 구성 단계 자체에서는 scaler와 모델을 fit하지 않습니다. 데이터셋 설명은 `docs/operational_dataset.md`, 최신 진행 상태와 남은 큰 작업 묶음은 `docs/project_roadmap.md`에서 확인합니다.
 
 운영 Logistic Regression 초기 기준 모델 학습:
 
@@ -292,4 +295,70 @@ LR C=0.1/1/10, RF leaf=1/5/10과 threshold 0.3~0.9, FPR 10% 이하·Recall 50% �
 
 산출물은 `artifacts/operational_message/augmentation_v1/`, 선정 보고서는 `reports/operational_augmentation_validation.json/.md`, 비교는 `reports/operational_augmentation_comparison.json/.md`입니다. 기존 모델·진단·데이터는 보존했고 설정·동일 행 오분류 변화·prefix·재현·실행 방법은 `docs/operational_augmentation_experiment.md`에 정리했습니다. 기존 결과가 있으면 새 `--run-dir`, `--selection-report-prefix`, `--comparison-report-prefix`를 지정합니다.
 
-전체 테스트 203개가 통과했고 동일 설정·seed의 재현 학습도 지표·선정·비교 CSV 해시가 일치했습니다. 데이터 보강 단계는 완료해 **큰 작업 묶음은 5개**가 남았습니다. 다음은 동일 run/session 내부 시계열 창 구성과 LSTM 개선 실험입니다. FastAPI는 아직 dummy 상태입니다.
+이 보강 학습 당시 전체 테스트 203개가 통과했고 동일 설정·seed의 재현 학습도 지표·선정·비교 CSV 해시가 일치했습니다. 데이터 보강 단계는 완료했으며, 이어서 아래 시계열 입력 준비를 마쳤습니다. FastAPI는 아직 dummy 상태입니다.
+
+운영 메시지 시계열 창 구성:
+
+```powershell
+python .\scripts\prepare_operational_sequences.py
+```
+
+같은 campaign/run/session에서 현재까지 받은 최근 최대 8개 메시지만 묶습니다. 오른쪽 padding·유효 lengths·mask를 함께 저장하며, 메시지 하나당 창 하나와 현재 메시지의 정답을 유지합니다. 원본 행 순서를 보존해 기존 RF와 같은 Validation 메시지에서 비교할 수 있습니다.
+
+| 분할 | 입력 shape | 세션 | 길이 8 | 길이 1~7 | 길이 1 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Train | `(1538, 8, 7)` | 144 | 822 | 716 | 144 |
+| Validation | `(513, 8, 7)` | 48 | 274 | 239 | 48 |
+
+malformed의 Train 48건·Validation 16건도 길이 1로 유지했습니다. 저장 후 원본 값·위치·정답을 재검증했고, 다시 구성한 배열·metadata·schema 5개 파일의 해시가 일치했습니다. 새 테스트 20개를 포함해 전체 223개가 통과했습니다.
+
+데이터는 `data/processed/operational_sequence/v1/`, 보고서는 `reports/operational_sequence_dataset.json/.md`입니다. 기존 결과는 덮어쓰지 않으므로 재실행에는 새 `--output-dir`와 `--report-prefix`를 모두 지정합니다. 설명은 `docs/operational_sequence_dataset.md`에 정리했습니다.
+
+시계열 입력 준비 당시에는 scaler fit·LSTM 학습·모델 예측·Test 접근을 하지 않았습니다. `configs/operational_lstm_plan.json`과 `docs/operational_lstm_plan.md`는 해당 시점의 사전 설계 기록이며, 아래 실제 학습 구현에서 그대로 검증해 사용했습니다.
+
+운영 LSTM 직접 학습과 Validation 비교:
+
+```powershell
+python -m pip install --target .deps_lstm -r requirements-lstm.txt
+python -X utf8 .\training\run_operational_lstm_experiment.py
+```
+
+기존 `.deps`와 분리된 CPU용 PyTorch를 사용합니다. 원본 Train 1,538행으로만 scaler를 한 번 fit하고 유효 timestep만 변환했습니다. hidden 크기 16/32, 최대 30 epoch, patience 5와 손실 최소 checkpoint를 고정해 직접 학습했습니다. 두 후보 모두 30 epoch를 사용했고 최적 epoch는 각각 30/27입니다.
+
+LSTM 후보·threshold 14개 조합 중 5개가 제약을 충족해 **h16·threshold 0.5**가 선정됐습니다. 같은 Validation 513건에서 기존 RF와 다음 차이가 있었습니다.
+
+| 모델 | FP | FN | FPR | Recall | F1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 선정 RF leaf=5·0.3 | 30 | 9 | 8.60% | 94.51% | 88.83% |
+| 선정 LSTM h16·0.5 | 13 | 50 | 3.72% | 69.51% | 78.35% |
+
+**LSTM은 오탐을 줄였지만 이상 누락이 늘어 전체 개선이라고 주장하지 않습니다.** malformed 16건을 모두 놓쳤고 burst FN도 9→34건으로 늘었습니다. LSTM 후보 내 선정과 RF 교체·최종 배포 승인을 구분합니다. 기존 RF는 변경하지 않았고 FastAPI도 여전히 dummy입니다.
+
+모델은 `artifacts/operational_sequence/lstm_v1/`, 보고서는 `reports/operational_lstm_validation.json/.md/.predictions.csv`, 재현 증거는 `reports/operational_lstm_reproducibility.json`입니다. 기존 결과는 덮어쓰지 않으므로 재실행에는 새 `--artifact-dir`와 `--report-prefix`를 지정합니다. 상세 흐름·역할·한계는 `docs/operational_lstm_experiment.md`에 정리했습니다.
+
+LSTM 단계 당시 새 테스트 22개를 포함해 전체 245개가 통과했습니다. 저장 checkpoint·scaler 재로딩이 일치했고 실제 재학습의 epoch 손실·가중치·14개 지표·예측 CSV 해시도 같았습니다. 해당 단계에서는 Test를 읽지 않았으며, 이후 아래 최종 평가까지 진행했습니다.
+
+운영 모델 최종 성능·비용 평가:
+
+```powershell
+python -m pip install --target .deps -r requirements-evaluation.txt
+python -X utf8 .\evaluation\run_operational_final_evaluation.py
+```
+
+기존 선정 LR C=0.1·0.5, RF leaf=5·0.3, LSTM h16·0.5를 고정했습니다. 모델별 별도 프로세스 3회에서 같은 Validation 요청 300개·워밍업 20회·배치 10회·CPU 계산 스레드 1로 측정하고, Validation과 비용으로 RF를 잠근 뒤 Test 1,071건을 처음 평가했습니다. 모델·scaler를 fit하거나 Test에서 후보·threshold를 고르지 않았습니다.
+
+| 고정 모델 | Test FP | Test FN | Test FPR | Test Recall | Test F1 | 단일 중앙값 ms | 프로세스 peak RSS MiB |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| LR | 113 | 131 | 14.83% | 57.61% | 59.33% | 0.670 | 150.11 |
+| RF | 122 | 9 | 16.01% | 97.09% | 82.08% | 4.675 | 152.61 |
+| LSTM | 60 | 104 | 7.87% | 66.34% | 71.43% | 0.947 | 380.93 |
+
+비용은 Validation 기반 전처리·모델·threshold 포함 오프라인 경로입니다. HTTP·JSON·큐·history 관리·feature 검증은 제외하며 RSS는 라이브러리·입력·측정 캐시까지 포함하는 프로세스 전체입니다. 모델 파일 크기나 단일 forward의 증분 메모리와 다릅니다.
+
+**RF의 Test FPR 16.01%가 사전 상한 10%를 넘어서 배포 승인을 보류했습니다.** 정상 묶음 오탐이 103/270건으로 집중됐습니다. Test를 보고 LSTM으로 바꾸지 않았고 승인 묶음도 생성하지 않았습니다. C++ 서버와 FastAPI dummy는 그대로 유지했습니다.
+
+완료 산출물은 `artifacts/operational_final_evaluation/v2/`, 보고서는 `reports/operational_final_evaluation.json/.md/.predictions.csv`입니다. `v1/`은 Test 전 float32 수치 점검 실패 기록으로 보존했습니다. 수치 허용오차를 명시한 수정·재실행은 Test 공개 전에 수행했으며 모델·threshold·승인 기준은 변경하지 않았습니다.
+
+설명은 `docs/operational_final_evaluation.md`, 이번 단계 커밋 제안은 `docs/operational_final_evaluation_commit.md`입니다. 기존 결과를 덮어쓰지 않으며 같은 holdout의 변경 정책 재평가는 사용 기록으로 거부합니다. 현재 Test는 이미 사용된 자료입니다.
+
+전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 최종 평가·승인 보류 판단은 완료했습니다. **기본 남은 3개에 오탐 보정·새 독립 검증 1개를 추가해 실제 남은 큰 묶음은 4개입니다.** 다음은 바로 FastAPI 연결이 아니라 정상 묶음 오탐 보정과 새로운 독립 평가 설계입니다.

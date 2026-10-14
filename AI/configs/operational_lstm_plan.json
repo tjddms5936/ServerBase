@@ -1,0 +1,68 @@
+{
+  "plan_version": "v1",
+  "status": "design_only_not_trained",
+  "scope": "시계열 입력 계약과 다음 LSTM 학습의 제한된 후보 설계다. 이번 단계에서는 모델을 학습하지 않는다.",
+  "sequence_dataset_id": "operational_message_sequence_v1",
+  "sequence_dataset_dir": "../data/processed/operational_sequence/v1",
+  "base_dataset_id": "operational_message_v2_campaign_holdout",
+  "base_dataset_dir": "../data/processed/operational_message/v2_campaign_holdout",
+  "reference_selection": "../artifacts/operational_message/augmentation_v1/validation_selection/selection.json",
+  "reference_comparison": "../reports/operational_augmentation_comparison.json",
+  "framework": "pytorch",
+  "device": "cpu",
+  "cpu_threads": 1,
+  "random_seed": 42,
+  "input_features": 7,
+  "window_size": 8,
+  "padding_side": "right",
+  "target_policy": "current_message_label",
+  "sequence_processing": {
+    "valid_steps_only": true,
+    "readout": "last_valid_timestep",
+    "hidden_state_policy": "reset_to_zero_for_each_window",
+    "output_head": "linear_hidden_to_one_logit"
+  },
+  "preprocessing": {
+    "kind": "StandardScaler",
+    "fit_scope": "unique_original_train_rows_only",
+    "transform_scope": "valid_steps_only_then_zero_pad",
+    "tensor_dtype": "float32",
+    "missing_value_policy": "reject_without_zero_fill"
+  },
+  "candidates": [
+    {"id": "lstm_h16", "hidden_size": 16, "num_layers": 1, "dropout": 0.0, "bidirectional": false},
+    {"id": "lstm_h32", "hidden_size": 32, "num_layers": 1, "dropout": 0.0, "bidirectional": false}
+  ],
+  "training": {
+    "max_epochs": 30,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "loss": "BCEWithLogitsLoss",
+    "positive_class_weight": 1.0,
+    "shuffle_train_windows": true,
+    "checkpoint_rule": "minimum_validation_loss",
+    "early_stopping_patience": 5,
+    "early_stopping_min_delta": 0.0,
+    "refit_with_validation": false
+  },
+  "thresholds": [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "selection_rule": {
+    "max_false_positive_rate": 0.1,
+    "min_recall": 0.5,
+    "primary_metric": "recall",
+    "tie_breakers": ["f1_desc", "false_positive_rate_asc", "candidate_id_asc", "threshold_asc"]
+  },
+  "validation_prior_use": "baseline_audit_and_lr_rf_selection_completed",
+  "test_access_allowed": false,
+  "test_model_evaluated": false,
+  "model_training_performed": false,
+  "limitations": [
+    "이번에는 입력 준비와 다음 실험 설계만 수행했다. 실제 dependency·학습 전 lock·checkpoint·학습 기록은 다음 작업에서 검증한다.",
+    "오른쪽 padding을 유효 메시지로 처리하지 않고 lengths/mask를 이용해 마지막 유효 timestep을 선택해야 한다.",
+    "창의 과거 입력 반복과 padding을 포함해 scaler를 fit하면 통계가 왜곡된다. 원본 Train 행 1538건만 한 번 사용한다.",
+    "새 Validation은 이미 LR/RF 선정에 사용했다. LSTM의 개발 지표가 독립적인 최종 성능은 아니다.",
+    "LSTM도 없는 본문 정보나 짧은 세션의 존재하지 않는 과거를 복원하지 못한다. RF보다 반드시 좋아진다고 가정하지 않는다."
+  ]
+}

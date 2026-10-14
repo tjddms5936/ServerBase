@@ -1,0 +1,4 @@
+# coding: utf-8 (한글 주석의 인코딩을 고정한다.)
+# 기존 AI 의존성과 분리해 설치하는 LSTM 학습용 CPU 환경이다.
+--index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu

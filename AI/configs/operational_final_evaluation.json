@@ -1,0 +1,44 @@
+{
+  "config_version": "v1",
+  "experiment_id": "operational_final_evaluation_v2",
+  "dataset_id": "operational_message_v2_campaign_holdout",
+  "dataset_dir": "../data/processed/operational_message/v2_campaign_holdout",
+  "sequence_dir": "../data/processed/operational_sequence/v1",
+  "augmentation_report": "../reports/operational_augmentation_comparison.json",
+  "lstm_report": "../reports/operational_lstm_validation.json",
+  "augmentation_root": "../artifacts/operational_message/augmentation_v1/validation_selection",
+  "lstm_root": "../artifacts/operational_sequence/lstm_v1",
+  "artifact_dir": "../artifacts/operational_final_evaluation/v2",
+  "holdout_registry_dir": "../artifacts/operational_final_evaluation/holdout_usage",
+  "report_prefix": "../reports/operational_final_evaluation",
+  "expected_train_rows": 1538,
+  "expected_validation_rows": 513,
+  "expected_test_rows": 1071,
+  "window_size": 8,
+  "models": [
+    {"id": "selected_lr", "kind": "logistic_regression", "candidate_id": "lr_c_0_1", "threshold": 0.5},
+    {"id": "selected_rf", "kind": "random_forest", "candidate_id": "rf_leaf_5", "threshold": 0.3},
+    {"id": "selected_lstm", "kind": "lstm", "candidate_id": "lstm_h16", "threshold": 0.5}
+  ],
+  "benchmark": {
+    "process_repeats": 3,
+    "warmup_repeats": 20,
+    "single_request_repeats": 300,
+    "batch_repeats": 10,
+    "sampling_seed": 42,
+    "cpu_threads": 1,
+    "probability_absolute_tolerance": 0.00001,
+    "worker_timeout_seconds": 180
+  },
+  "criteria": {
+    "max_false_positive_rate": 0.1,
+    "min_recall": 0.5,
+    "max_single_request_p95_ms": 25.0,
+    "max_process_peak_rss_mib": 512.0,
+    "max_deployment_artifacts_mib": 50.0,
+    "scope": "local_advisory_integration_only"
+  },
+  "selection_rule": "validation_recall_f1_fpr_then_cost_then_id",
+  "test_rule": "confirm_locked_candidate_without_model_or_threshold_reselection",
+  "validation_prior_use": "lr_rf_and_lstm_selection_completed"
+}

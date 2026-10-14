@@ -6,7 +6,7 @@
 data/
   raw/        다운로드한 원본 데이터 파일
   interim/    전처리 과정에서 생기는 임시 중간 파일
-  processed/  학습 스크립트가 사용하는 정제된 train/test 파일
+  processed/  학습 스크립트가 사용하는 정제된 데이터와 고정 분할
 ```
 
 대용량 데이터 파일은 Git에 올리지 않습니다. 이 폴더에는 작은 설명 문서와 `.gitkeep` 파일만 추적합니다.
@@ -40,6 +40,14 @@ C++에서 전송한 운영 feature를 비동기 JSONL 수집기로 저장하는 
 저장 결과는 Git에서 제외하고 기존 경로를 덮어쓰지 않습니다. 실행·분할 정책·한계는 `docs/operational_dataset.md`에 있습니다.
 
 새 `v2_campaign_holdout/`은 같은 7개 입력 의미를 유지하면서 캠페인 전체를 사전 역할대로 분리한 버전입니다. v1과 합치거나 덮어쓰지 않습니다. Train 3개·Validation 1개·Test 2개 캠페인의 모든 반복·run·세션·메시지가 해당 split에만 속하며 캠페인 식별자 중복도 검사합니다. 아직 scaler나 모델을 fit하지 않은 원본 수치입니다.
+
+## processed/operational_sequence
+
+고정 메시지 데이터셋에서 같은 campaign/run/session의 과거·현재 최대 8개를 묶은 시계열 입력을 보관합니다. 기본 `v1/`에는 Train/Validation NPZ, 원본 행 추적 metadata CSV, 창 구성 전 설정 lock, sequence schema와 검증 완료 manifest가 있습니다. Test 창은 아직 만들지 않습니다.
+
+Train `(1538, 8, 7)`, Validation `(513, 8, 7)`이며 하나의 현재 메시지당 창 하나와 원본 정답을 유지합니다. NPZ의 `X`는 아직 정규화하지 않은 원본 수치이고, `lengths`·`mask`는 오른쪽 padding을 제외하는 구조 정보입니다. `source_positions`는 각 유효 timestep을 원본 CSV 행으로 추적합니다. metadata와 정답을 추가 학습 feature로 넣지 않습니다.
+
+짧은 세션과 최초 메시지도 유지합니다. 다음 LSTM scaler는 겹친 창을 펼치지 않고 원본 Train 메시지 1,538행으로만 fit해야 합니다. 저장 데이터는 Git에서 제외하며 실행·검증·재현·한계는 `docs/operational_sequence_dataset.md`에 정리했습니다.
 
 ## raw/unsw_nb15
 

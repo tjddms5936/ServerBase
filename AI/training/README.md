@@ -12,6 +12,9 @@ operational_data.py
 train_operational_logistic_regression.py
 train_operational_random_forest.py
 run_operational_validation_experiment.py
+run_operational_augmentation_experiment.py
+operational_lstm.py
+run_operational_lstm_experiment.py
 ```
 
 전처리된 UNSW-NB15 데이터를 불러와 Logistic Regression 기준 모델을 학습하고 평가합니다.
@@ -122,11 +125,20 @@ python .\training\run_operational_augmentation_experiment.py
 
 산출물은 `artifacts/operational_message/augmentation_v1/`, 보고서는 `reports/operational_augmentation_validation.json/.md`, `reports/operational_augmentation_comparison.json/.md`다. 기존 경로는 덮어쓰지 않는다. 재실행에는 새 `--run-dir`, `--selection-report-prefix`, `--comparison-report-prefix`를 모두 지정한다. 실제 흐름·한계·재현은 `docs/operational_augmentation_experiment.md`에서 확인한다.
 
-이후 추가할 스크립트:
+## 운영 LSTM 직접 학습·Validation 비교
 
-```text
-train_lstm.py
+```powershell
+python -m pip install --target .deps_lstm -r requirements-lstm.txt
+python -X utf8 .\training\run_operational_lstm_experiment.py
 ```
+
+`configs/operational_lstm_experiment.json`이 기존 설계 파일과 출력 경로를 지정한다. 시계열 계약·원본 행·RF 해시·선정 정책을 검증하고 scaler fit 전 실제 계획·코드·환경 lock을 저장한다. 원본 Train 1,538행으로만 scaler를 fit하며 padding을 제외한 길이 8의 창으로 hidden 16/32 두 후보를 직접 학습한다.
+
+최대 30 epoch, 손실 개선이 5회 연속 없을 때 조기 종료하고 Validation 손실 최소 checkpoint를 저장한다. 후보마다 threshold 0.3~0.9를 비교하며 기존 FPR 10% 이하·Recall 50% 이상 중 Recall 최대 규칙을 재사용한다. Validation은 gradient 없이 손실·확률을 관측하며 가중치 갱신에는 사용하지 않는다. Test는 읽지 않는다.
+
+실제 두 후보는 30 epoch를 사용했고 최적 epoch는 h16 30·h32 27이다. 14개 조합 중 5개가 충족해 h16·0.5를 선정했다. Validation FP 13·FN 50·F1 78.35%로 기존 RF보다 오탐은 줄고 누락은 늘었다. RF를 교체하지 않았다.
+
+산출물은 `artifacts/operational_sequence/lstm_v1/`, 보고서는 `reports/operational_lstm_validation.json/.md/.predictions.csv`다. 기존 출력은 보존한다. 재실행에는 새 `--artifact-dir`와 `--report-prefix`가 필요하다. 설명과 실제 재학습 검사는 `docs/operational_lstm_experiment.md`, `tests/run_lstm_reproducibility.py`에서 확인한다. 이후 단계는 최종 성능·비용 비교이며 API는 아직 dummy다.
 
 초기 목표:
 

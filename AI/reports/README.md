@@ -43,6 +43,15 @@ operational_augmentation_validation.json
 operational_augmentation_validation.md
 operational_augmentation_comparison.json
 operational_augmentation_comparison.md
+operational_sequence_dataset.json
+operational_sequence_dataset.md
+operational_lstm_validation.json
+operational_lstm_validation.md
+operational_lstm_validation.predictions.csv
+operational_lstm_reproducibility.json
+operational_final_evaluation.json
+operational_final_evaluation.md
+operational_final_evaluation.predictions.csv
 logistic_error_analysis.json
 logistic_error_analysis.md
 model_comparison.md
@@ -84,6 +93,12 @@ figures/
 - `operational_frozen_baseline_audit.errors.csv`: 정상 오탐 92건·이상 누락 46건, 총 138건의 추적 자료입니다. 이 파일을 새 정답이나 추가 학습 데이터로 자동 사용하지 않습니다.
 - `operational_augmentation_validation.json/.md`: 새 Train 1,538건 전용 LR/RF 후보 6개 직접 학습·수렴/트리 기록과 학습 전 고정한 42개 조합·제약·선정 근거입니다. Validation 513건에서 RF leaf=5·threshold=0.3을 선정했습니다. Test는 읽지 않습니다.
 - `operational_augmentation_comparison.json/.md`: 같은 Validation 행에서 기존 LR 0.7, 보강 LR/RF 0.7, 모델별 제약 충족 최적 정책을 구분한 지표·수정/신규 오분류·모든 변경 row_id·burst prefix·입력/모델 보존 근거입니다. 이미 진단한 Validation의 개발 비교이며 최종 성능·배포 결과가 아닙니다.
+- `operational_sequence_dataset.json/.md`: 같은 campaign/run/session의 과거·현재 최대 8개 창 구성, Train/Validation shape·정답·유효 길이·시나리오 coverage·식별자 비중복·원본/출력/코드 해시입니다. 짧은 창과 길이 1 메시지를 모두 유지하며 저장 후 원본 대조를 수행합니다. scaler fit·LSTM 학습·모델 예측·Test 접근은 하지 않았고 모델 성능 보고서도 아닙니다.
+- `operational_lstm_validation.json/.md`: 원본 Train 전용 scaler·LSTM 두 후보 직접 학습, epoch별 손실·최적 checkpoint·종료·파라미터 수, 14개 threshold 조합·선정 근거와 기존 RF 대비 같은 Validation의 시나리오·길이·오분류·burst prefix입니다. h16·0.5를 LSTM 후보 중 선정했지만 RF보다 FN이 늘었습니다. Test·최종 배포 검증은 아닙니다.
+- `operational_lstm_validation.predictions.csv`: 동일 Validation 513개 현재 메시지의 식별자·원본 수치·정답·문맥 길이·각 비교 역할의 확률/판단/threshold입니다. 비교·추적 자료이며 새로운 학습 데이터나 정답이 아닙니다.
+- `operational_lstm_reproducibility.json`: 완료된 실제 LSTM 실험을 임시 경로에 재학습해 후보별 epoch 손실·가중치·checkpoint 해시, 전체 14개 지표·선정·비교 CSV가 일치함을 검증한 결과입니다. 현재 CPU 환경에서의 재현 증거이며 독립 데이터 일반화 평가가 아닙니다. 원본 모델은 보존하고 재현 임시 산출물만 제거합니다.
+- `operational_final_evaluation.json/.md`: 고정 LR/RF/LSTM의 Validation 기반 독립 프로세스 비용, Test 전 RF 잠금, Test 1,071건의 성능·시나리오·coverage·prefix·같은 행 오분류 비교와 승인 판단입니다. RF의 FPR 16.01%로 승인을 보류했으며 Test에서 다른 모델로 재선정하지 않았습니다. 비용은 API/HTTP 종단 측정이 아니고 실제 침입·운영 배포 승인을 의미하지 않습니다.
+- `operational_final_evaluation.predictions.csv`: Test 전체의 식별자·원본 수치·독립 정답·문맥 길이·각 고정 모델의 확률/판단/threshold입니다. 현재 Test는 이미 모델 평가에 사용됐으며 이 CSV를 새 학습 데이터로 자동 추가하거나 새 독립 평가 자료로 주장하지 않습니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

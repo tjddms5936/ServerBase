@@ -1,0 +1,13 @@
+{
+  "config_version": "v1",
+  "dataset_id": "operational_message_sequence_v1",
+  "source_dataset_id": "operational_message_v2_campaign_holdout",
+  "source_dataset_dir": "../data/processed/operational_message/v2_campaign_holdout",
+  "output_dir": "../data/processed/operational_sequence/v1",
+  "window_size": 8,
+  "stride": 1,
+  "padding_side": "right",
+  "target_policy": "current_message_label",
+  "expected_train_rows": 1538,
+  "expected_validation_rows": 513
+}

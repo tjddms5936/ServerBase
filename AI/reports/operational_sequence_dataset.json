@@ -1,0 +1,325 @@
+{
+  "report_version": "v1",
+  "status": "complete",
+  "generated_at_utc": "2026-10-14T01:39:17.946870+00:00",
+  "dataset_id": "operational_message_sequence_v1",
+  "source_dataset_id": "operational_message_v2_campaign_holdout",
+  "output_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_sequence\\v1",
+  "window_size": 8,
+  "feature_order": [
+    "packet_size",
+    "payload_size",
+    "connection_duration_ms",
+    "message_interval_ms",
+    "bytes_received_total",
+    "bytes_sent_total",
+    "error_count_total"
+  ],
+  "schema": {
+    "schema_version": "v1",
+    "sequence_contract_id": "server_application_message_sequence_v1",
+    "dataset_id": "operational_message_sequence_v1",
+    "base_dataset_id": "operational_message_v2_campaign_holdout",
+    "base_feature_contract_id": "server_application_message_v2",
+    "feature_order": [
+      "packet_size",
+      "payload_size",
+      "connection_duration_ms",
+      "message_interval_ms",
+      "bytes_received_total",
+      "bytes_sent_total",
+      "error_count_total"
+    ],
+    "feature_units": {
+      "packet_size": "byte",
+      "payload_size": "byte",
+      "connection_duration_ms": "ms",
+      "message_interval_ms": "ms",
+      "bytes_received_total": "byte",
+      "bytes_sent_total": "byte",
+      "error_count_total": "count"
+    },
+    "window_size": 8,
+    "input_shape": [
+      "batch",
+      8,
+      7
+    ],
+    "input_dtype": "float64_raw_not_scaled",
+    "stride": 1,
+    "include_current_message": true,
+    "history_direction": "past_and_current_only",
+    "group_columns": [
+      "campaign_id",
+      "run_id",
+      "session_id"
+    ],
+    "time_order": "request_index_ascending_contiguous_from_1",
+    "padding": {
+      "side": "right",
+      "raw_value": 0.0,
+      "mask_valid": true,
+      "mask_padding": false,
+      "source_position_padding": -1,
+      "minimum_valid_length": 1
+    },
+    "target_policy": "current_message_label",
+    "anchor_alignment": "original_message_row_order",
+    "preprocessing": {
+      "status": "not_fitted",
+      "future_fit_scope": "unique_original_train_rows_only_not_flattened_windows",
+      "future_transform_scope": "valid_steps_only_then_zero_pad",
+      "tensor_dtype_after_transform": "float32"
+    },
+    "excluded_model_metadata": [
+      "row_id",
+      "campaign_id",
+      "run_id",
+      "scenario_id",
+      "repeat_index",
+      "session_id",
+      "request_index",
+      "queue_sequence_id",
+      "collection_sequence_id",
+      "timestamp",
+      "received_at_utc",
+      "source_line",
+      "block_id",
+      "split",
+      "feature_hash",
+      "window_id",
+      "context_length",
+      "context_start_request_index",
+      "source_row_ids",
+      "label",
+      "session_summary"
+    ],
+    "test_windows_generated": false,
+    "test_files_read": false
+  },
+  "splits": {
+    "train": {
+      "shape": [
+        1538,
+        8,
+        7
+      ],
+      "windows": 1538,
+      "campaigns": 3,
+      "runs": 36,
+      "sessions": 144,
+      "label_distribution": {
+        "0": 1049,
+        "1": 489
+      },
+      "full_windows": 822,
+      "partial_windows": 716,
+      "length_one_windows": 144,
+      "context_length_distribution": {
+        "1": 144,
+        "2": 96,
+        "3": 96,
+        "4": 96,
+        "5": 96,
+        "6": 96,
+        "7": 92,
+        "8": 822
+      },
+      "valid_steps": 9284,
+      "padded_steps": 3020,
+      "by_scenario": {
+        "controlled_burst_chat": {
+          "windows": 441,
+          "partial_windows": 168,
+          "length_one_windows": 24,
+          "normal": 0,
+          "controlled_anomaly": 441
+        },
+        "malformed_chat_payload": {
+          "windows": 24,
+          "partial_windows": 24,
+          "length_one_windows": 24,
+          "normal": 0,
+          "controlled_anomaly": 24
+        },
+        "malformed_length_chat": {
+          "windows": 24,
+          "partial_windows": 24,
+          "length_one_windows": 24,
+          "normal": 0,
+          "controlled_anomaly": 24
+        },
+        "normal_batched_chat": {
+          "windows": 355,
+          "partial_windows": 166,
+          "length_one_windows": 24,
+          "normal": 355,
+          "controlled_anomaly": 0
+        },
+        "normal_chat": {
+          "windows": 337,
+          "partial_windows": 166,
+          "length_one_windows": 24,
+          "normal": 337,
+          "controlled_anomaly": 0
+        },
+        "normal_fragmented_chat": {
+          "windows": 357,
+          "partial_windows": 168,
+          "length_one_windows": 24,
+          "normal": 357,
+          "controlled_anomaly": 0
+        }
+      }
+    },
+    "validation": {
+      "shape": [
+        513,
+        8,
+        7
+      ],
+      "windows": 513,
+      "campaigns": 1,
+      "runs": 12,
+      "sessions": 48,
+      "label_distribution": {
+        "0": 349,
+        "1": 164
+      },
+      "full_windows": 274,
+      "partial_windows": 239,
+      "length_one_windows": 48,
+      "context_length_distribution": {
+        "1": 48,
+        "2": 32,
+        "3": 32,
+        "4": 32,
+        "5": 32,
+        "6": 32,
+        "7": 31,
+        "8": 274
+      },
+      "valid_steps": 3097,
+      "padded_steps": 1007,
+      "by_scenario": {
+        "controlled_burst_chat": {
+          "windows": 148,
+          "partial_windows": 56,
+          "length_one_windows": 8,
+          "normal": 0,
+          "controlled_anomaly": 148
+        },
+        "malformed_chat_payload": {
+          "windows": 8,
+          "partial_windows": 8,
+          "length_one_windows": 8,
+          "normal": 0,
+          "controlled_anomaly": 8
+        },
+        "malformed_length_chat": {
+          "windows": 8,
+          "partial_windows": 8,
+          "length_one_windows": 8,
+          "normal": 0,
+          "controlled_anomaly": 8
+        },
+        "normal_batched_chat": {
+          "windows": 130,
+          "partial_windows": 56,
+          "length_one_windows": 8,
+          "normal": 130,
+          "controlled_anomaly": 0
+        },
+        "normal_chat": {
+          "windows": 110,
+          "partial_windows": 55,
+          "length_one_windows": 8,
+          "normal": 110,
+          "controlled_anomaly": 0
+        },
+        "normal_fragmented_chat": {
+          "windows": 109,
+          "partial_windows": 56,
+          "length_one_windows": 8,
+          "normal": 109,
+          "controlled_anomaly": 0
+        }
+      }
+    }
+  },
+  "identity_overlaps": {
+    "campaigns": 0,
+    "runs": 0,
+    "sessions": 0,
+    "rows": 0
+  },
+  "source_input_sha256": {
+    "dataset_manifest.json": "c16fad4ba8f92e8993c7aa328eeea1fa55240f28429f09deaa36c2fe43c9594b",
+    "feature_schema.json": "281d96d89722c567c6c0fe890b166a240bd6966bbd248cc39b207cc632c2fa89",
+    "label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "split_manifest.json": "e6800677f7041407b3e149531b71aa69d9c75041f852c7b5c2816f6eb5f50678",
+    "X_train.csv": "c9d9fefe553be955830c5d63c5b94d5d0427af1a7dad7807890e07ca580310ff",
+    "y_train.csv": "88a203b41e1cda0d7344a919ba659aad14d704691cb3e7a9c9eb9bca8b6a3020",
+    "metadata_train.csv": "507fafe2e9b30a592338cf3e49a0e9a730eb4b96172f70b87d2448e5579a1996",
+    "X_validation.csv": "859c97e927541572dfdbc1c95961c4e83617573095525337f67e523d55f5f17b",
+    "y_validation.csv": "e535977417f7f8cb50baea6699b5541d9e13abb701f4026ed7273a24bd07d81b",
+    "metadata_validation.csv": "f6e9ff3e5c67d7a4ad2cd8a432deb29308f2b783054a50634e6ba29047afe0b5"
+  },
+  "config_snapshot": {
+    "config_version": "v1",
+    "dataset_id": "operational_message_sequence_v1",
+    "source_dataset_id": "operational_message_v2_campaign_holdout",
+    "source_dataset_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout",
+    "output_dir": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_sequence\\v1",
+    "window_size": 8,
+    "stride": 1,
+    "padding_side": "right",
+    "target_policy": "current_message_label",
+    "expected_train_rows": 1538,
+    "expected_validation_rows": 513
+  },
+  "output_files": {
+    "metadata_train.csv": {
+      "sha256": "e8ea51eb36507bc39551e2109bbc81814214c94fd25511e80fcd1dbe08d8dfb4",
+      "bytes": 1788363
+    },
+    "metadata_validation.csv": {
+      "sha256": "f2d2cfa1ce9a7048002d49d7d069fce33619c0f30a6adca46387599f721fa63d",
+      "bytes": 579545
+    },
+    "sequence_schema.json": {
+      "sha256": "434e5c1d6d27c3ea3003a6ef2805f5a5b758f3a3423f4f2ee771f68e012038ad",
+      "bytes": 2192
+    },
+    "train.npz": {
+      "sha256": "41f1199deb8d802d15a4354b76fe3b4fa75f15dce0f90a844d771da8d4ffaa7c",
+      "bytes": 40842
+    },
+    "validation.npz": {
+      "sha256": "5c416a6e58c6cb5f220359f8c4e6654820f55989a5d7bef869b2fef82153c0ea",
+      "bytes": 14294
+    },
+    "window_protocol_lock.json": {
+      "sha256": "d0d2fb0c7e49db181e0e80ff1561584aaee3a16f36643dc6f98e245ef71d59a9",
+      "bytes": 1704
+    }
+  },
+  "code_sha256": {
+    "operational_sequences.py": "a30e8eb0d8825d650de0708dc7e64a21bfd75d098f558317d1c58620e6a4e640",
+    "operational_data.py": "38ec4d5431cf17e81553d482f65be4133ef7486286746e2f8f3274754e1cc1a3"
+  },
+  "preprocessing_fitted": false,
+  "model_training_performed": false,
+  "model_prediction_performed": false,
+  "test_files_read": false,
+  "test_windows_generated": false,
+  "raw_jsonl_read": false,
+  "limitations": [
+    "메시지 하나당 하나의 창을 만들지만 같은 세션의 겹치는 창은 독립 표본이 아니다.",
+    "mask와 lengths는 현재까지의 유효 관측 수다. 세션 종료 뒤 알게 되는 최종 길이를 입력에 넣지 않는다.",
+    "오른쪽 padding은 결측값을 0으로 대체한 것이 아니다. 이후 학습에서도 padding을 scaler fit이나 유효 timestep으로 사용하면 안 된다.",
+    "원본 Train 행으로만 scaler를 fit해야 한다. 창을 펼치면 이전 메시지가 반복되고 padding도 포함돼 통계가 달라진다.",
+    "본문 정보는 여전히 입력에 없다. 길이 1 세션이나 최초 메시지에는 존재하지 않는 과거를 만들어 넣지 않는다.",
+    "Train/Validation만 구성했다. Test는 최종 비교 단계에서 같은 고정 규칙으로 별도 처리한다."
+  ]
+}

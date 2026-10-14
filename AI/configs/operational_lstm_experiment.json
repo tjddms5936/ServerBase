@@ -1,0 +1,9 @@
+{
+  "config_version": "v1",
+  "experiment_id": "operational_lstm_validation_v1",
+  "plan_path": "operational_lstm_plan.json",
+  "artifact_dir": "../artifacts/operational_sequence/lstm_v1",
+  "report_prefix": "../reports/operational_lstm_validation",
+  "expected_train_rows": 1538,
+  "expected_validation_rows": 513
+}

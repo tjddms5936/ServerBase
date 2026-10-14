@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "generated_at_utc": "2026-10-14T05:28:53.670774+00:00",
+  "source_report_sha256": "867a17f4c2a0910e137195fbe8b2dde0bd379b91885eb601fd7df67ce7c70e3c",
+  "source_protocol_sha256": "9f110d6235eeef3dab3f98efe6d495e6d5edafc3044469a57c314a54a27b4327",
+  "replay_protocol_sha256": "a30e1cef52b8ef84c7fbf1db787b4cd52bf416745e4ba2fd3f313696e9cb0358",
+  "protocol_note": "임시 출력 경로가 달라 protocol 해시는 달라진다. 데이터·설정·seed·환경은 유지해 수치·가중치·예측을 대조했다.",
+  "environment": {
+    "python": "3.12.4",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "pytorch": "2.14.1+cpu",
+    "cuda_build": null,
+    "device": "cpu",
+    "cpu_intraop_threads": 1,
+    "cpu_interop_threads": 8,
+    "deterministic_algorithms": true,
+    "scikit_learn": "1.8.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "joblib": "1.5.3"
+  },
+  "candidate_results": [
+    {
+      "id": "lstm_h16",
+      "epochs_used": 30,
+      "best_epoch": 30,
+      "history_sha256": "55c3b36d6364f151d8a9352011ab02e7511f342686b72a9427871958b6663646",
+      "weight_sha256": "6e7b019bfcda8a72b398e0a4e8339fd6845380c788768a2ccdfdc801b624af4d",
+      "checkpoint_sha256": "27eef92b14cf9b3590608dfec37230122ddf95c86c3bb16dd120f9ea96ccf2a7",
+      "history_equal": true,
+      "weights_equal": true,
+      "checkpoint_equal": true
+    },
+    {
+      "id": "lstm_h32",
+      "epochs_used": 30,
+      "best_epoch": 27,
+      "history_sha256": "26c16e584be22a8113828c30a1d2e235b9505f778edf87e7fec38daf30dbdb7f",
+      "weight_sha256": "79cbbdc4891b6b77d9a6dc1531872ae31aac15397e6fec0df153a215b42c88db",
+      "checkpoint_sha256": "a979eede3e198bcf9b826299c6d0fe2b6569e3dc1b249b940ee0e5ab1d5b63da",
+      "history_equal": true,
+      "weights_equal": true,
+      "checkpoint_equal": true
+    }
+  ],
+  "trial_count": 14,
+  "all_trial_metrics_equal": true,
+  "selected_trial_equal": true,
+  "comparison_predictions_sha256": "d0d82097428ff9ed6cc7c26ec4d628a292eea291a55dc259acb50ce3616a9e91",
+  "comparison_predictions_equal": true,
+  "protected_files_unchanged": true,
+  "temporary_replay_artifacts_removed": true,
+  "test_files_read": false,
+  "test_evaluated": false,
+  "script_sha256": "7697f768281f9711e00cb79ea84523a671f36866bdfff5e440ee8ab03626da55",
+  "limitations": [
+    "현재 CPU 환경·버전·seed에서의 재현 검사다. 다른 장치나 버전의 완전 동일성을 보장하지 않는다.",
+    "같은 데이터 재학습은 독립 데이터 일반화 평가가 아니다."
+  ]
+}

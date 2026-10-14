@@ -2,6 +2,24 @@
 
 이 폴더는 데이터 확인, 전처리, 학습 실행처럼 반복해서 실행하는 Python 스크립트를 모아두는 곳입니다.
 
+## prepare_operational_sequences.py
+
+고정 메시지 데이터셋의 Train/Validation을 읽고 같은 campaign/run/session의 현재 메시지까지 최대 8개를 묶습니다. 짧은 창은 오른쪽 padding·유효 lengths·mask로 표현하며 원본 메시지 행 순서와 현재 정답을 보존합니다. scaler fit·모델 학습·예측·Test CSV 접근은 하지 않습니다.
+
+```powershell
+python .\scripts\prepare_operational_sequences.py
+```
+
+설정은 `configs/operational_sequence_dataset.json`, 결과는 `data/processed/operational_sequence/v1/`, 보고서는 `reports/operational_sequence_dataset.json/.md`입니다. NPZ·metadata를 저장한 뒤 재로딩해 모든 유효 timestep을 원본과 대조합니다. 설정 lock·입력/출력/code 해시를 보관하고 기존 원본을 바꾸지 않습니다.
+
+기본 결과는 이미 생성했습니다. 재실행 시 기존 데이터셋과 보고서를 모두 보존하도록 두 출력 경로를 새로 지정합니다.
+
+```powershell
+python .\scripts\prepare_operational_sequences.py --output-dir .\data\processed\operational_sequence\replay_v1 --report-prefix .\reports\operational_sequence_replay
+```
+
+원본 번호 누락·중복, 감소하는 누적값, 다른 세션·split·미래 혼입과 잘못된 padding/정답은 구성을 중단합니다. 규칙과 파일 역할은 `docs/operational_sequence_dataset.md`, 다음 학습 설계는 `docs/operational_lstm_plan.md`에 있습니다. LSTM 학습 명령은 아직 구현하지 않았습니다.
+
 ## prepare_operational_dataset.py
 
 운영 캠페인을 다시 검증해 메시지의 입력 7개·독립 정답·metadata를 분리하고 시간 순서의 run 단위 train·validation·test를 만듭니다. 모델이나 전처리기를 fit하지 않습니다.

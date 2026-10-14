@@ -11,6 +11,12 @@ audit_feature_alignment.py
 audit_operational_data.py
 compare_operational_baselines.py
 analyze_operational_errors.py
+compare_operational_augmentation.py
+compare_operational_lstm.py
+operational_final_data.py
+operational_final_models.py
+operational_cost_worker.py
+run_operational_final_evaluation.py
 ```
 
 ## audit_operational_data.py
@@ -129,6 +135,35 @@ python .\training\run_operational_augmentation_experiment.py
 ```
 
 수정/신규 FP/FN과 모든 변경 행·확률·threshold·burst prefix를 `reports/operational_augmentation_comparison.json/.md`에 보관한다. 전체 비교 CSV는 `artifacts/operational_message/augmentation_v1/comparison_predictions.csv`다. 이번 선정은 RF leaf=5·0.3이지만 정상 묶음의 높은 FPR과 본문 관측 한계는 남아 있다. 설명은 `docs/operational_augmentation_experiment.md`에 정리했다.
+
+## 운영 LSTM의 동일 Validation 비교
+
+`evaluation/compare_operational_lstm.py`는 LSTM 실행 모듈이 호출하는 비교 전용 모듈이다. 별도 CLI로 학습하거나 Test를 여는 스크립트가 아니다. 기존 선정 RF와 LSTM 기본 0.5·후보별 최적 정책·전체 선정 정책을 구분해 같은 513개 현재 메시지를 비교한다.
+
+전체·시나리오·길이별 FP/FN, 같은 행에서 수정/신규 오분류, burst 첫 양성·request_index별 누락을 기록한다. 모든 메시지와 길이 1 malformed를 유지한다. RF는 현재 입력 7개, LSTM은 같은 의미의 과거·현재 창이라는 문맥 차이를 공개한다.
+
+```powershell
+python -X utf8 .\training\run_operational_lstm_experiment.py
+```
+
+결과는 `reports/operational_lstm_validation.json/.md/.predictions.csv`다. 선정 LSTM h16·0.5는 FP 13·FN 50·Recall 69.51%로, 기존 RF의 FP 30·FN 9·Recall 94.51%보다 오탐은 줄고 누락은 늘었다. 최종 성능·비용 benchmark나 모델 교체 승인이 아니다. threshold와 epoch 선택에 쓴 Validation의 개발 비교이며 Test는 아직 보류했다. 설명은 `docs/operational_lstm_experiment.md`에 있다.
+
+## 운영 최종 Test·비용 평가
+
+```powershell
+python -m pip install --target .deps -r requirements-evaluation.txt
+python -X utf8 .\evaluation\run_operational_final_evaluation.py
+```
+
+기존 선정 LR/RF/LSTM 정책을 그대로 검증한다. Validation 비용을 모델별 별도 프로세스에서 측정하고 성능·비용 기준으로 후보를 잠근 뒤에만 Test CSV를 읽는다. 기존 학습용 로더의 Test 금지와 이전 코드·모델 해시는 유지한다. 전처리 포함/모델 단독 지연시간, 프로세스 RSS/native peak/USS, 주요 배열·필수 파일 저장량을 나눠 기록한다.
+
+같은 Test의 사용 예약·재실행을 기록하고 모델·threshold·승인 기준을 바꿔 새로운 독립 평가처럼 재사용하지 않는다. Test는 잠근 후보의 승인 확인과 고정 정책 진단에만 사용하며 최고 Test 점수로 모델을 바꾸지 않는다. 짧은 세션과 모든 메시지를 유지한 Test 창도 저장 후 원본과 대조한다.
+
+Test 전 후보는 RF였지만 Test FPR 16.01%가 상한 10%를 넘었다. 평가 실행은 완료했으나 배포 승인은 보류했다. LSTM으로 교체하거나 threshold를 다시 탐색하지 않았고 FastAPI는 계속 dummy다.
+
+완료 산출물은 `artifacts/operational_final_evaluation/v2/`, 보고서는 `reports/operational_final_evaluation.json/.md/.predictions.csv`다. `v1/`은 Test 전 수치 검사 실패 기록이다. 기존 결과를 덮어쓰지 않으며 실행 코드 0과 모델 승인 성공을 구분한다. 설명·범위·재실행 제한은 `docs/operational_final_evaluation.md`에서 확인한다.
+
+다음은 승인 보류의 원인인 정상 묶음 오탐을 개발 관점에서 분석하고 새 독립 holdout을 설계하는 작업이다. 현재 Test로 새 후보의 threshold를 고르지 않는다.
 
 이후 추가할 스크립트:
 

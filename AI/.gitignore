@@ -1,4 +1,5 @@
 .deps/
+.deps_lstm/
 .venv/
 __pycache__/
 *.pyc
