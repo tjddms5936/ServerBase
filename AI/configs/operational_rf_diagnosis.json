@@ -1,0 +1,15 @@
+{
+  "config_version": "v1",
+  "dataset_id": "operational_message_v2_campaign_holdout",
+  "dataset_dir": "../data/processed/operational_message/v2_campaign_holdout",
+  "model_dir": "../artifacts/operational_message/augmentation_v1/validation_selection/candidates/rf_leaf_5",
+  "comparison_report": "../reports/operational_augmentation_comparison.json",
+  "final_report": "../reports/operational_final_evaluation.json",
+  "recovery_plan": "operational_recovery_plan.json",
+  "previous_plan": "operational_augmentation_plan.json",
+  "artifact_dir": "../artifacts/operational_rf_diagnosis/v1",
+  "report_prefix": "../reports/operational_rf_diagnosis",
+  "candidate_id": "rf_leaf_5",
+  "threshold": 0.3,
+  "short_parse_interval_ms": 1.0
+}

@@ -29,6 +29,9 @@
 - 동일 campaign/run/session의 과거·현재 최대 8개 창, 짧은 세션 padding·mask·정답·원본 추적과 LSTM 사전 설계
 - Train 전용 scaler·LSTM 두 후보 직접 학습, 최적 epoch·14개 정책 선정·동일 Validation RF 비교와 실제 재학습 재현
 - Validation 비용 기반 사전 후보 잠금·고정 Test 최종 비교·holdout 사용 기록과 배포 승인 보류
+- 고정 RF의 정상 묶음 오탐 진단, 과거·현재 입력 보정 후보와 새 독립 캠페인·승인 계획 검증
+
+최근 작업은 `docs/operational_rf_diagnosis.md`와 `reports/operational_rf_diagnosis.md`에서 확인합니다. Validation 정상 묶음 FP 21건의 짧은 파싱 간격을 분석하고 보정 후보 4개·20개 조합을 설계했습니다. 새 후보 학습·새 데이터 수집·배포는 아직 수행하지 않았으며 큰 작업 묶음은 4개 남아 있습니다.
 
 학습 로드맵:
 

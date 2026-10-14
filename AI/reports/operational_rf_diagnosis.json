@@ -1,0 +1,4733 @@
+{
+  "report_version": "v1",
+  "status": "complete",
+  "generated_at_utc": "2026-10-14T07:46:32.033793+00:00",
+  "scope": "post_test_development_diagnosis_and_recovery_design",
+  "dataset_id": "operational_message_v2_campaign_holdout",
+  "candidate_id": "rf_leaf_5",
+  "threshold": 0.3,
+  "splits": {
+    "train": {
+      "metrics": {
+        "rows": 1538,
+        "accuracy": 0.9265279583875162,
+        "precision": 0.8122923588039868,
+        "recall": 1.0,
+        "f1": 0.8964252978918423,
+        "roc_auc": 0.9986509695668873,
+        "average_precision": 0.997237987067467,
+        "log_loss": 0.1170439747137383,
+        "false_positive_rate": 0.10772163965681601,
+        "false_negative_rate": 0.0,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              936,
+              113
+            ],
+            [
+              0,
+              489
+            ]
+          ],
+          "tn": 936,
+          "fp": 113,
+          "fn": 0,
+          "tp": 489
+        }
+      },
+      "by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 441,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 441,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 24,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 24,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 24,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 24,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 355,
+          "normal_rows": 355,
+          "controlled_anomaly_rows": 0,
+          "fp": 85,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.23943661971830985
+        },
+        "normal_chat": {
+          "rows": 337,
+          "normal_rows": 337,
+          "controlled_anomaly_rows": 0,
+          "fp": 18,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.05341246290801187
+        },
+        "normal_fragmented_chat": {
+          "rows": 357,
+          "normal_rows": 357,
+          "controlled_anomaly_rows": 0,
+          "fp": 10,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.028011204481792718
+        }
+      },
+      "interval_buckets": [
+        {
+          "scenario_id": "controlled_burst_chat",
+          "bucket": "at_most_1ms",
+          "rows": 417,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 417,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "controlled_burst_chat",
+          "bucket": "first_message",
+          "rows": 24,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 24,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "malformed_chat_payload",
+          "bucket": "first_message",
+          "rows": 24,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 24,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "malformed_length_chat",
+          "bucket": "first_message",
+          "rows": 24,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 24,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "at_most_1ms",
+          "rows": 190,
+          "fp": 69,
+          "fn": 0,
+          "normal_rows": 190,
+          "anomaly_rows": 0,
+          "fpr": 0.3631578947368421,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "first_message",
+          "rows": 24,
+          "fp": 16,
+          "fn": 0,
+          "normal_rows": 24,
+          "anomaly_rows": 0,
+          "fpr": 0.6666666666666666,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "over_1_to_5ms",
+          "rows": 25,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 25,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "over_5ms",
+          "rows": 116,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 116,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_chat",
+          "bucket": "first_message",
+          "rows": 24,
+          "fp": 18,
+          "fn": 0,
+          "normal_rows": 24,
+          "anomaly_rows": 0,
+          "fpr": 0.75,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_chat",
+          "bucket": "over_1_to_5ms",
+          "rows": 87,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 87,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_chat",
+          "bucket": "over_5ms",
+          "rows": 226,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 226,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "bucket": "first_message",
+          "rows": 24,
+          "fp": 10,
+          "fn": 0,
+          "normal_rows": 24,
+          "anomaly_rows": 0,
+          "fpr": 0.4166666666666667,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "bucket": "over_1_to_5ms",
+          "rows": 5,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 5,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "bucket": "over_5ms",
+          "rows": 328,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 328,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        }
+      ],
+      "scenario_outcome_features": [
+        {
+          "scenario_id": "controlled_burst_chat",
+          "outcome": "TP",
+          "rows": 441,
+          "first_messages": 24,
+          "same_recv_counter_rows": 229,
+          "short_nonfirst_rows": 417,
+          "features": {
+            "packet_size": {
+              "count": 441,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 441,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 441,
+              "minimum": 0.082,
+              "p10": 0.525,
+              "median": 2.823,
+              "p90": 14.055,
+              "maximum": 18.444
+            },
+            "message_interval_ms": {
+              "count": 441,
+              "minimum": 0.0,
+              "p10": 0.036,
+              "median": 0.099,
+              "p90": 0.469,
+              "maximum": 0.819
+            },
+            "bytes_received_total": {
+              "count": 441,
+              "minimum": 22.0,
+              "p10": 936.0,
+              "median": 2928.0,
+              "p90": 5812.0,
+              "maximum": 7908.0
+            },
+            "bytes_sent_total": {
+              "count": 441,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 192.0,
+              "p90": 384.0,
+              "maximum": 504.0
+            },
+            "error_count_total": {
+              "count": 441,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 441,
+              "minimum": 0.0,
+              "p10": 0.07566666666666666,
+              "median": 0.134,
+              "p90": 0.4445,
+              "maximum": 0.809
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 441,
+              "minimum": 22.0,
+              "p10": 436.0,
+              "median": 2480.0,
+              "p90": 5490.0,
+              "maximum": 7908.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 441,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 22.0,
+              "p90": 1482.0,
+              "maximum": 3650.0
+            },
+            "anomaly_probability": {
+              "count": 441,
+              "minimum": 0.38782192398583787,
+              "p10": 0.6458971091810544,
+              "median": 0.9171393518761942,
+              "p90": 0.9851930014430015,
+              "maximum": 1.0
+            }
+          }
+        },
+        {
+          "scenario_id": "malformed_chat_payload",
+          "outcome": "TP",
+          "rows": 24,
+          "first_messages": 24,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 24,
+              "minimum": 9.0,
+              "p10": 9.0,
+              "median": 9.0,
+              "p90": 9.0,
+              "maximum": 9.0
+            },
+            "payload_size": {
+              "count": 24,
+              "minimum": 1.0,
+              "p10": 1.0,
+              "median": 1.0,
+              "p90": 1.0,
+              "maximum": 1.0
+            },
+            "connection_duration_ms": {
+              "count": 24,
+              "minimum": 0.088,
+              "p10": 0.1212,
+              "median": 0.221,
+              "p90": 8.735199999999992,
+              "maximum": 15.543
+            },
+            "message_interval_ms": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 24,
+              "minimum": 9.0,
+              "p10": 9.0,
+              "median": 9.0,
+              "p90": 9.0,
+              "maximum": 9.0
+            },
+            "bytes_sent_total": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 24,
+              "minimum": 9.0,
+              "p10": 9.0,
+              "median": 9.0,
+              "p90": 9.0,
+              "maximum": 9.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 24,
+              "minimum": 0.9527746812011517,
+              "p10": 0.9662087021328908,
+              "median": 0.9946330680813439,
+              "p90": 0.9954022988505747,
+              "maximum": 0.9954022988505747
+            }
+          }
+        },
+        {
+          "scenario_id": "malformed_length_chat",
+          "outcome": "TP",
+          "rows": 24,
+          "first_messages": 24,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 24,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 74.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 24,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 66.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 24,
+              "minimum": 0.086,
+              "p10": 0.1092,
+              "median": 0.23099999999999998,
+              "p90": 14.685699999999999,
+              "maximum": 15.062
+            },
+            "message_interval_ms": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 24,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 74.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "bytes_sent_total": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 24,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 74.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 24,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 24,
+              "minimum": 0.38308798798719607,
+              "p10": 0.43167868154333466,
+              "median": 0.5391024181714177,
+              "p90": 0.6085602722557758,
+              "maximum": 0.6275924661420409
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "outcome": "FP",
+          "rows": 85,
+          "first_messages": 16,
+          "same_recv_counter_rows": 69,
+          "short_nonfirst_rows": 69,
+          "features": {
+            "packet_size": {
+              "count": 85,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 85,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 85,
+              "minimum": 0.093,
+              "p10": 0.19640000000000002,
+              "median": 2.019,
+              "p90": 13.9502,
+              "maximum": 17.441
+            },
+            "message_interval_ms": {
+              "count": 85,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.053,
+              "p90": 0.11760000000000005,
+              "maximum": 0.32
+            },
+            "bytes_received_total": {
+              "count": 85,
+              "minimum": 22.0,
+              "p10": 110.0,
+              "median": 1952.0,
+              "p90": 5368.0,
+              "maximum": 6232.0
+            },
+            "bytes_sent_total": {
+              "count": 85,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 288.0,
+              "maximum": 480.0
+            },
+            "error_count_total": {
+              "count": 85,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 85,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.32,
+              "p90": 0.8599487179487181,
+              "maximum": 1.4665000000000001
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 85,
+              "minimum": 22.0,
+              "p10": 52.80000000000001,
+              "median": 1602.0,
+              "p90": 5210.800000000003,
+              "maximum": 6232.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 85,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 110.0,
+              "p90": 1266.8000000000004,
+              "maximum": 2234.0
+            },
+            "anomaly_probability": {
+              "count": 85,
+              "minimum": 0.3024102717887548,
+              "p10": 0.33157193107889704,
+              "median": 0.4013345834263509,
+              "p90": 0.516079126334412,
+              "maximum": 0.6249497248322711
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "outcome": "TN",
+          "rows": 270,
+          "first_messages": 8,
+          "same_recv_counter_rows": 124,
+          "short_nonfirst_rows": 121,
+          "features": {
+            "packet_size": {
+              "count": 270,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 270,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 270,
+              "minimum": 0.094,
+              "p10": 4.1521,
+              "median": 28.2305,
+              "p90": 402.9922999999999,
+              "maximum": 646.448
+            },
+            "message_interval_ms": {
+              "count": 270,
+              "minimum": 0.0,
+              "p10": 0.038,
+              "median": 2.251,
+              "p90": 35.1972,
+              "maximum": 41.065
+            },
+            "bytes_received_total": {
+              "count": 270,
+              "minimum": 60.0,
+              "p10": 1136.0,
+              "median": 3016.0,
+              "p90": 5248.0,
+              "maximum": 7050.0
+            },
+            "bytes_sent_total": {
+              "count": 270,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 192.0,
+              "p90": 384.0,
+              "maximum": 480.0
+            },
+            "error_count_total": {
+              "count": 270,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 270,
+              "minimum": 0.0,
+              "p10": 0.09271428571428572,
+              "median": 1.4537525252525252,
+              "p90": 31.956773333333327,
+              "maximum": 34.923500000000004
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 270,
+              "minimum": 60.0,
+              "p10": 621.6,
+              "median": 2759.0,
+              "p90": 5101.8,
+              "maximum": 7050.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 270,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 22.0,
+              "p90": 1182.1999999999998,
+              "maximum": 3218.0
+            },
+            "anomaly_probability": {
+              "count": 270,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.04326526126951824,
+              "p90": 0.25923969961754784,
+              "maximum": 0.2995870795870796
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_chat",
+          "outcome": "FP",
+          "rows": 18,
+          "first_messages": 18,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 18,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 18,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 18,
+              "minimum": 0.084,
+              "p10": 0.089,
+              "median": 0.21250000000000002,
+              "p90": 13.293700000000001,
+              "maximum": 15.294
+            },
+            "message_interval_ms": {
+              "count": 18,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 18,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "bytes_sent_total": {
+              "count": 18,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 18,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 18,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 18,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 18,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 18,
+              "minimum": 0.30821782329746056,
+              "p10": 0.36356384624761945,
+              "median": 0.44239219951675746,
+              "p90": 0.4770197226795845,
+              "maximum": 0.5354005095777933
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_chat",
+          "outcome": "TN",
+          "rows": 319,
+          "first_messages": 6,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 319,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 319,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 319,
+              "minimum": 1.916,
+              "p10": 15.951600000000001,
+              "median": 67.011,
+              "p90": 288.2636,
+              "maximum": 601.265
+            },
+            "message_interval_ms": {
+              "count": 319,
+              "minimum": 0.0,
+              "p10": 2.9530000000000003,
+              "median": 9.925,
+              "p90": 33.9844,
+              "maximum": 40.733
+            },
+            "bytes_received_total": {
+              "count": 319,
+              "minimum": 44.0,
+              "p10": 508.0,
+              "median": 1864.0,
+              "p90": 4654.399999999999,
+              "maximum": 8462.0
+            },
+            "bytes_sent_total": {
+              "count": 319,
+              "minimum": 0.0,
+              "p10": 48.0,
+              "median": 168.0,
+              "p90": 360.0,
+              "maximum": 528.0
+            },
+            "error_count_total": {
+              "count": 319,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 319,
+              "minimum": 0.0,
+              "p10": 3.385433566433566,
+              "median": 10.945,
+              "p90": 31.157577777777778,
+              "maximum": 38.954
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 319,
+              "minimum": 44.0,
+              "p10": 508.0,
+              "median": 1864.0,
+              "p90": 4654.399999999999,
+              "maximum": 8462.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 319,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 319,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.01483333333333333,
+              "maximum": 0.23407838652575497
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "outcome": "FP",
+          "rows": 10,
+          "first_messages": 10,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 10,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 30.0,
+              "p90": 38.0,
+              "maximum": 38.0
+            },
+            "payload_size": {
+              "count": 10,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 22.0,
+              "p90": 30.0,
+              "maximum": 30.0
+            },
+            "connection_duration_ms": {
+              "count": 10,
+              "minimum": 1.469,
+              "p10": 1.5113,
+              "median": 5.025,
+              "p90": 14.966199999999999,
+              "maximum": 17.335
+            },
+            "message_interval_ms": {
+              "count": 10,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 10,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 30.0,
+              "p90": 38.0,
+              "maximum": 38.0
+            },
+            "bytes_sent_total": {
+              "count": 10,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 10,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 10,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 10,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 30.0,
+              "p90": 38.0,
+              "maximum": 38.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 10,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 10,
+              "minimum": 0.3179239626127981,
+              "p10": 0.3212027785697141,
+              "median": 0.36608322559272777,
+              "p90": 0.39225043444696234,
+              "maximum": 0.4698392934549866
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "outcome": "TN",
+          "rows": 347,
+          "first_messages": 14,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 347,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 347,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 347,
+              "minimum": 8.484,
+              "p10": 67.38080000000001,
+              "median": 324.774,
+              "p90": 1080.6776000000002,
+              "maximum": 2384.795
+            },
+            "message_interval_ms": {
+              "count": 347,
+              "minimum": 0.0,
+              "p10": 7.8398,
+              "median": 33.874,
+              "p90": 116.94140000000004,
+              "maximum": 234.151
+            },
+            "bytes_received_total": {
+              "count": 347,
+              "minimum": 22.0,
+              "p10": 503.20000000000005,
+              "median": 2360.0,
+              "p90": 5576.400000000005,
+              "maximum": 8566.0
+            },
+            "bytes_sent_total": {
+              "count": 347,
+              "minimum": 0.0,
+              "p10": 24.0,
+              "median": 168.0,
+              "p90": 384.0,
+              "maximum": 528.0
+            },
+            "error_count_total": {
+              "count": 347,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 347,
+              "minimum": 0.0,
+              "p10": 16.63495,
+              "median": 53.46922222222222,
+              "p90": 98.14281000000003,
+              "maximum": 150.7845
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 347,
+              "minimum": 22.0,
+              "p10": 503.20000000000005,
+              "median": 2360.0,
+              "p90": 5576.400000000005,
+              "maximum": 8566.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 347,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 347,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.004860750360750366,
+              "maximum": 0.2762108237180925
+            }
+          }
+        }
+      ],
+      "sessions": [
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_length_chat",
+          "session_id": "39",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_length_chat",
+          "session_id": "41",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_length_chat",
+          "session_id": "42",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_controlled_burst_chat",
+          "session_id": "41",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_controlled_burst_chat",
+          "session_id": "42",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 24,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_controlled_burst_chat",
+          "session_id": "43",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 9,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_fragmented_chat",
+          "session_id": "41",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 15,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_fragmented_chat",
+          "session_id": "42",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 10,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_fragmented_chat",
+          "session_id": "43",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 21,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.047619047619047616
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_batched_chat",
+          "session_id": "37",
+          "scenario_id": "normal_batched_chat",
+          "rows": 20,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_batched_chat",
+          "session_id": "38",
+          "scenario_id": "normal_batched_chat",
+          "rows": 6,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.16666666666666666
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_batched_chat",
+          "session_id": "39",
+          "scenario_id": "normal_batched_chat",
+          "rows": 10,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 20,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 16,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.0625
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_chat",
+          "session_id": "41",
+          "scenario_id": "normal_chat",
+          "rows": 10,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_chat",
+          "session_id": "42",
+          "scenario_id": "normal_chat",
+          "rows": 8,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.125
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_normal_chat",
+          "session_id": "43",
+          "scenario_id": "normal_chat",
+          "rows": 18,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05555555555555555
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_chat_payload",
+          "session_id": "39",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_chat_payload",
+          "session_id": "41",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r00_malformed_chat_payload",
+          "session_id": "42",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_controlled_burst_chat",
+          "session_id": "39",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_controlled_burst_chat",
+          "session_id": "41",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 19,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_controlled_burst_chat",
+          "session_id": "43",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 18,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_chat_payload",
+          "session_id": "37",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_chat_payload",
+          "session_id": "38",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_chat_payload",
+          "session_id": "39",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_length_chat",
+          "session_id": "41",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_length_chat",
+          "session_id": "42",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_malformed_length_chat",
+          "session_id": "43",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_chat",
+          "session_id": "39",
+          "scenario_id": "normal_chat",
+          "rows": 20,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_chat",
+          "session_id": "42",
+          "scenario_id": "normal_chat",
+          "rows": 23,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.043478260869565216
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_chat",
+          "session_id": "43",
+          "scenario_id": "normal_chat",
+          "rows": 14,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.07142857142857142
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_fragmented_chat",
+          "session_id": "37",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 9,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1111111111111111
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_fragmented_chat",
+          "session_id": "38",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 12,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_fragmented_chat",
+          "session_id": "39",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 10,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 20,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 8,
+          "fp": 5,
+          "fn": 0,
+          "message_fpr": 0.625
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_batched_chat",
+          "session_id": "41",
+          "scenario_id": "normal_batched_chat",
+          "rows": 8,
+          "fp": 7,
+          "fn": 0,
+          "message_fpr": 0.875
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_batched_chat",
+          "session_id": "42",
+          "scenario_id": "normal_batched_chat",
+          "rows": 15,
+          "fp": 5,
+          "fn": 0,
+          "message_fpr": 0.3333333333333333
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_01",
+          "run_id": "aug_261013_e1cafdde_development_01_r01_normal_batched_chat",
+          "session_id": "43",
+          "scenario_id": "normal_batched_chat",
+          "rows": 13,
+          "fp": 8,
+          "fn": 0,
+          "message_fpr": 0.6153846153846154
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_chat_payload",
+          "session_id": "38",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_chat_payload",
+          "session_id": "39",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_chat_payload",
+          "session_id": "43",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_length_chat",
+          "session_id": "41",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_length_chat",
+          "session_id": "42",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_malformed_length_chat",
+          "session_id": "43",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 22,
+          "fp": 14,
+          "fn": 0,
+          "message_fpr": 0.6363636363636364
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_batched_chat",
+          "session_id": "41",
+          "scenario_id": "normal_batched_chat",
+          "rows": 23,
+          "fp": 7,
+          "fn": 0,
+          "message_fpr": 0.30434782608695654
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_batched_chat",
+          "session_id": "42",
+          "scenario_id": "normal_batched_chat",
+          "rows": 7,
+          "fp": 3,
+          "fn": 0,
+          "message_fpr": 0.42857142857142855
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_batched_chat",
+          "session_id": "43",
+          "scenario_id": "normal_batched_chat",
+          "rows": 20,
+          "fp": 9,
+          "fn": 0,
+          "message_fpr": 0.45
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_fragmented_chat",
+          "session_id": "37",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 15,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_fragmented_chat",
+          "session_id": "38",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_fragmented_chat",
+          "session_id": "39",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 10,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_chat",
+          "session_id": "39",
+          "scenario_id": "normal_chat",
+          "rows": 19,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05263157894736842
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 6,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.16666666666666666
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_chat",
+          "session_id": "41",
+          "scenario_id": "normal_chat",
+          "rows": 15,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_normal_chat",
+          "session_id": "43",
+          "scenario_id": "normal_chat",
+          "rows": 10,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_controlled_burst_chat",
+          "session_id": "39",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_controlled_burst_chat",
+          "session_id": "41",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 20,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r00_controlled_burst_chat",
+          "session_id": "43",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 16,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_chat_payload",
+          "session_id": "41",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_chat_payload",
+          "session_id": "42",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_chat_payload",
+          "session_id": "43",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_length_chat",
+          "session_id": "39",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_length_chat",
+          "session_id": "41",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_malformed_length_chat",
+          "session_id": "43",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 7,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_fragmented_chat",
+          "session_id": "41",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 15,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.06666666666666667
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_fragmented_chat",
+          "session_id": "42",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 18,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05555555555555555
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_fragmented_chat",
+          "session_id": "43",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 9,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1111111111111111
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_controlled_burst_chat",
+          "session_id": "38",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_controlled_burst_chat",
+          "session_id": "39",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 16,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 18,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_controlled_burst_chat",
+          "session_id": "42",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_chat",
+          "session_id": "37",
+          "scenario_id": "normal_chat",
+          "rows": 6,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_chat",
+          "session_id": "38",
+          "scenario_id": "normal_chat",
+          "rows": 7,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.14285714285714285
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_chat",
+          "session_id": "39",
+          "scenario_id": "normal_chat",
+          "rows": 13,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.07692307692307693
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_batched_chat",
+          "session_id": "41",
+          "scenario_id": "normal_batched_chat",
+          "rows": 24,
+          "fp": 9,
+          "fn": 0,
+          "message_fpr": 0.375
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_batched_chat",
+          "session_id": "42",
+          "scenario_id": "normal_batched_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_02",
+          "run_id": "aug_261013_e1cafdde_development_02_r01_normal_batched_chat",
+          "session_id": "43",
+          "scenario_id": "normal_batched_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_chat_payload",
+          "session_id": "41",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_chat_payload",
+          "session_id": "42",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_chat_payload",
+          "session_id": "43",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_length_chat",
+          "session_id": "39",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_length_chat",
+          "session_id": "41",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_malformed_length_chat",
+          "session_id": "42",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_chat",
+          "session_id": "37",
+          "scenario_id": "normal_chat",
+          "rows": 15,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.06666666666666667
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_chat",
+          "session_id": "38",
+          "scenario_id": "normal_chat",
+          "rows": 18,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05555555555555555
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_chat",
+          "session_id": "39",
+          "scenario_id": "normal_chat",
+          "rows": 21,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.047619047619047616
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 10,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_controlled_burst_chat",
+          "session_id": "37",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_controlled_burst_chat",
+          "session_id": "38",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 18,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_controlled_burst_chat",
+          "session_id": "39",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 20,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_batched_chat",
+          "session_id": "39",
+          "scenario_id": "normal_batched_chat",
+          "rows": 12,
+          "fp": 3,
+          "fn": 0,
+          "message_fpr": 0.25
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 22,
+          "fp": 4,
+          "fn": 0,
+          "message_fpr": 0.18181818181818182
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_batched_chat",
+          "session_id": "42",
+          "scenario_id": "normal_batched_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_batched_chat",
+          "session_id": "43",
+          "scenario_id": "normal_batched_chat",
+          "rows": 6,
+          "fp": 4,
+          "fn": 0,
+          "message_fpr": 0.6666666666666666
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_fragmented_chat",
+          "session_id": "41",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 21,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.047619047619047616
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_fragmented_chat",
+          "session_id": "42",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 15,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r00_normal_fragmented_chat",
+          "session_id": "43",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 16,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_fragmented_chat",
+          "session_id": "39",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 21,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.047619047619047616
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 23,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_fragmented_chat",
+          "session_id": "42",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 11,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.09090909090909091
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_fragmented_chat",
+          "session_id": "43",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 14,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.07142857142857142
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_batched_chat",
+          "session_id": "38",
+          "scenario_id": "normal_batched_chat",
+          "rows": 10,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_batched_chat",
+          "session_id": "39",
+          "scenario_id": "normal_batched_chat",
+          "rows": 7,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.14285714285714285
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 19,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05263157894736842
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_batched_chat",
+          "session_id": "43",
+          "scenario_id": "normal_batched_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 15,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.06666666666666667
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_chat",
+          "session_id": "41",
+          "scenario_id": "normal_chat",
+          "rows": 7,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.14285714285714285
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_chat",
+          "session_id": "42",
+          "scenario_id": "normal_chat",
+          "rows": 22,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.045454545454545456
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_normal_chat",
+          "session_id": "43",
+          "scenario_id": "normal_chat",
+          "rows": 17,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.058823529411764705
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_controlled_burst_chat",
+          "session_id": "41",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_controlled_burst_chat",
+          "session_id": "42",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 22,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_controlled_burst_chat",
+          "session_id": "43",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 16,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_chat_payload",
+          "session_id": "39",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_chat_payload",
+          "session_id": "41",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_chat_payload",
+          "session_id": "42",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_length_chat",
+          "session_id": "37",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_length_chat",
+          "session_id": "38",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_length_chat",
+          "session_id": "39",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_development_03",
+          "run_id": "aug_261013_e1cafdde_development_03_r01_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        }
+      ],
+      "normal_session_diagnostics": {
+        "sessions": 72,
+        "sessions_with_any_fp": 47,
+        "macro_message_fpr": 0.11922172685853585,
+        "interpretation": "세션별 메시지 FPR의 평균이며 별도 세션 분류 모델의 FPR이 아니다."
+      },
+      "candidate_transform_checks": {
+        "raw7_v1": {
+          "rows": 1538,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "message_interval_ms",
+            "bytes_received_total",
+            "bytes_sent_total",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        },
+        "without_io5_v1": {
+          "rows": 1538,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "message_interval_ms",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        },
+        "prefix_mean5_v1": {
+          "rows": 1538,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "prefix_mean_interval_ms",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        },
+        "prefix_mean_parsed6_v1": {
+          "rows": 1538,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "prefix_mean_interval_ms",
+            "parsed_bytes_prefix_total",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        }
+      }
+    },
+    "validation": {
+      "metrics": {
+        "rows": 513,
+        "accuracy": 0.9239766081871345,
+        "precision": 0.8378378378378378,
+        "recall": 0.9451219512195121,
+        "f1": 0.8882521489971347,
+        "roc_auc": 0.9815151303375498,
+        "average_precision": 0.9607766666306261,
+        "log_loss": 0.18209020475657142,
+        "false_positive_rate": 0.08595988538681948,
+        "false_negative_rate": 0.054878048780487805,
+        "confusion_matrix": {
+          "label_order": [
+            0,
+            1
+          ],
+          "rows": "actual",
+          "columns": "predicted",
+          "values": [
+            [
+              319,
+              30
+            ],
+            [
+              9,
+              155
+            ]
+          ],
+          "tn": 319,
+          "fp": 30,
+          "fn": 9,
+          "tp": 155
+        }
+      },
+      "by_scenario": {
+        "controlled_burst_chat": {
+          "rows": 148,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 148,
+          "fp": 0,
+          "fn": 9,
+          "recall": 0.9391891891891891,
+          "false_positive_rate": null
+        },
+        "malformed_chat_payload": {
+          "rows": 8,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 8,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "malformed_length_chat": {
+          "rows": 8,
+          "normal_rows": 0,
+          "controlled_anomaly_rows": 8,
+          "fp": 0,
+          "fn": 0,
+          "recall": 1.0,
+          "false_positive_rate": null
+        },
+        "normal_batched_chat": {
+          "rows": 130,
+          "normal_rows": 130,
+          "controlled_anomaly_rows": 0,
+          "fp": 21,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.16153846153846155
+        },
+        "normal_chat": {
+          "rows": 110,
+          "normal_rows": 110,
+          "controlled_anomaly_rows": 0,
+          "fp": 7,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.06363636363636363
+        },
+        "normal_fragmented_chat": {
+          "rows": 109,
+          "normal_rows": 109,
+          "controlled_anomaly_rows": 0,
+          "fp": 2,
+          "fn": 0,
+          "recall": null,
+          "false_positive_rate": 0.01834862385321101
+        }
+      },
+      "interval_buckets": [
+        {
+          "scenario_id": "controlled_burst_chat",
+          "bucket": "at_most_1ms",
+          "rows": 137,
+          "fp": 0,
+          "fn": 7,
+          "normal_rows": 0,
+          "anomaly_rows": 137,
+          "fpr": null,
+          "recall": 0.948905109489051
+        },
+        {
+          "scenario_id": "controlled_burst_chat",
+          "bucket": "first_message",
+          "rows": 8,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 8,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "controlled_burst_chat",
+          "bucket": "over_1_to_5ms",
+          "rows": 3,
+          "fp": 0,
+          "fn": 2,
+          "normal_rows": 0,
+          "anomaly_rows": 3,
+          "fpr": null,
+          "recall": 0.33333333333333337
+        },
+        {
+          "scenario_id": "malformed_chat_payload",
+          "bucket": "first_message",
+          "rows": 8,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 8,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "malformed_length_chat",
+          "bucket": "first_message",
+          "rows": 8,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 0,
+          "anomaly_rows": 8,
+          "fpr": null,
+          "recall": 1.0
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "at_most_1ms",
+          "rows": 48,
+          "fp": 16,
+          "fn": 0,
+          "normal_rows": 48,
+          "anomaly_rows": 0,
+          "fpr": 0.3333333333333333,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "first_message",
+          "rows": 8,
+          "fp": 5,
+          "fn": 0,
+          "normal_rows": 8,
+          "anomaly_rows": 0,
+          "fpr": 0.625,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "over_1_to_5ms",
+          "rows": 15,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 15,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "bucket": "over_5ms",
+          "rows": 59,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 59,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_chat",
+          "bucket": "first_message",
+          "rows": 8,
+          "fp": 7,
+          "fn": 0,
+          "normal_rows": 8,
+          "anomaly_rows": 0,
+          "fpr": 0.875,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_chat",
+          "bucket": "over_1_to_5ms",
+          "rows": 41,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 41,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_chat",
+          "bucket": "over_5ms",
+          "rows": 61,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 61,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "bucket": "first_message",
+          "rows": 8,
+          "fp": 2,
+          "fn": 0,
+          "normal_rows": 8,
+          "anomaly_rows": 0,
+          "fpr": 0.25,
+          "recall": null
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "bucket": "over_5ms",
+          "rows": 101,
+          "fp": 0,
+          "fn": 0,
+          "normal_rows": 101,
+          "anomaly_rows": 0,
+          "fpr": 0.0,
+          "recall": null
+        }
+      ],
+      "scenario_outcome_features": [
+        {
+          "scenario_id": "controlled_burst_chat",
+          "outcome": "FN",
+          "rows": 9,
+          "first_messages": 0,
+          "same_recv_counter_rows": 8,
+          "short_nonfirst_rows": 7,
+          "features": {
+            "packet_size": {
+              "count": 9,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 38.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 9,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 30.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 9,
+              "minimum": 0.19,
+              "p10": 0.2548,
+              "median": 3.188,
+              "p90": 11.0608,
+              "maximum": 11.152
+            },
+            "message_interval_ms": {
+              "count": 9,
+              "minimum": 0.035,
+              "p10": 0.059800000000000006,
+              "median": 0.117,
+              "p90": 1.6526000000000003,
+              "maximum": 2.467
+            },
+            "bytes_received_total": {
+              "count": 9,
+              "minimum": 1608.0,
+              "p10": 1608.0,
+              "median": 1736.0,
+              "p90": 2321.6000000000004,
+              "maximum": 4664.0
+            },
+            "bytes_sent_total": {
+              "count": 9,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 38.400000000000034,
+              "maximum": 192.0
+            },
+            "error_count_total": {
+              "count": 9,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 9,
+              "minimum": 0.05866666666666667,
+              "p10": 0.08773333333333333,
+              "median": 0.49333333333333335,
+              "p90": 0.8146000000000001,
+              "maximum": 1.296
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 9,
+              "minimum": 474.0,
+              "p10": 738.0,
+              "median": 954.0,
+              "p90": 1655.6000000000001,
+              "maximum": 1846.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 9,
+              "minimum": 0.0,
+              "p10": 318.40000000000003,
+              "median": 804.0,
+              "p90": 1573.2000000000003,
+              "maximum": 2818.0
+            },
+            "anomaly_probability": {
+              "count": 9,
+              "minimum": 0.09333939671439671,
+              "p10": 0.20957118889882045,
+              "median": 0.259625,
+              "p90": 0.2946438999596893,
+              "maximum": 0.29670567152146093
+            }
+          }
+        },
+        {
+          "scenario_id": "controlled_burst_chat",
+          "outcome": "TP",
+          "rows": 139,
+          "first_messages": 8,
+          "same_recv_counter_rows": 108,
+          "short_nonfirst_rows": 130,
+          "features": {
+            "packet_size": {
+              "count": 139,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 139,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 139,
+              "minimum": 0.084,
+              "p10": 0.3052,
+              "median": 1.711,
+              "p90": 6.3848,
+              "maximum": 12.278
+            },
+            "message_interval_ms": {
+              "count": 139,
+              "minimum": 0.0,
+              "p10": 0.0368,
+              "median": 0.054,
+              "p90": 0.25500000000000006,
+              "maximum": 1.33
+            },
+            "bytes_received_total": {
+              "count": 139,
+              "minimum": 480.0,
+              "p10": 848.0,
+              "median": 3272.0,
+              "p90": 7760.0,
+              "maximum": 8962.0
+            },
+            "bytes_sent_total": {
+              "count": 139,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 192.0,
+              "p90": 384.0,
+              "maximum": 480.0
+            },
+            "error_count_total": {
+              "count": 139,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 139,
+              "minimum": 0.0,
+              "p10": 0.06146666666666667,
+              "median": 0.1028,
+              "p90": 0.3145157894736842,
+              "maximum": 0.8773333333333334
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 139,
+              "minimum": 22.0,
+              "p10": 598.0000000000001,
+              "median": 2320.0,
+              "p90": 6070.0,
+              "maximum": 8962.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 139,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 450.0,
+              "p90": 1861.2000000000003,
+              "maximum": 3570.0
+            },
+            "anomaly_probability": {
+              "count": 139,
+              "minimum": 0.301272965490037,
+              "p10": 0.4597234924738593,
+              "median": 0.7965765068265069,
+              "p90": 0.9688058931264814,
+              "maximum": 1.0
+            }
+          }
+        },
+        {
+          "scenario_id": "malformed_chat_payload",
+          "outcome": "TP",
+          "rows": 8,
+          "first_messages": 8,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 8,
+              "minimum": 9.0,
+              "p10": 9.0,
+              "median": 9.0,
+              "p90": 9.0,
+              "maximum": 9.0
+            },
+            "payload_size": {
+              "count": 8,
+              "minimum": 1.0,
+              "p10": 1.0,
+              "median": 1.0,
+              "p90": 1.0,
+              "maximum": 1.0
+            },
+            "connection_duration_ms": {
+              "count": 8,
+              "minimum": 0.227,
+              "p10": 0.27249999999999996,
+              "median": 0.4615,
+              "p90": 13.5351,
+              "maximum": 13.645
+            },
+            "message_interval_ms": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 8,
+              "minimum": 9.0,
+              "p10": 9.0,
+              "median": 9.0,
+              "p90": 9.0,
+              "maximum": 9.0
+            },
+            "bytes_sent_total": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 8,
+              "minimum": 9.0,
+              "p10": 9.0,
+              "median": 9.0,
+              "p90": 9.0,
+              "maximum": 9.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 8,
+              "minimum": 0.9648172905525847,
+              "p10": 0.9648172905525847,
+              "median": 0.9954022988505747,
+              "p90": 0.9954022988505747,
+              "maximum": 0.9954022988505747
+            }
+          }
+        },
+        {
+          "scenario_id": "malformed_length_chat",
+          "outcome": "TP",
+          "rows": 8,
+          "first_messages": 8,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 8,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 398.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 8,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 390.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 8,
+              "minimum": 0.087,
+              "p10": 0.08839999999999999,
+              "median": 0.993,
+              "p90": 1.9609999999999999,
+              "maximum": 2.038
+            },
+            "message_interval_ms": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 8,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 398.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "bytes_sent_total": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 8,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 398.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 8,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 8,
+              "minimum": 0.3615738603670497,
+              "p10": 0.3615738603670497,
+              "median": 0.43561786201461067,
+              "p90": 0.4921986894927434,
+              "maximum": 0.509011036721752
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "outcome": "FP",
+          "rows": 21,
+          "first_messages": 5,
+          "same_recv_counter_rows": 16,
+          "short_nonfirst_rows": 16,
+          "features": {
+            "packet_size": {
+              "count": 21,
+              "minimum": 22.0,
+              "p10": 38.0,
+              "median": 398.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 21,
+              "minimum": 14.0,
+              "p10": 30.0,
+              "median": 390.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 21,
+              "minimum": 0.074,
+              "p10": 0.165,
+              "median": 4.539,
+              "p90": 16.011,
+              "maximum": 16.11
+            },
+            "message_interval_ms": {
+              "count": 21,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.041,
+              "p90": 0.067,
+              "maximum": 0.134
+            },
+            "bytes_received_total": {
+              "count": 21,
+              "minimum": 398.0,
+              "p10": 782.0,
+              "median": 2184.0,
+              "p90": 4608.0,
+              "maximum": 4608.0
+            },
+            "bytes_sent_total": {
+              "count": 21,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 96.0,
+              "p90": 288.0,
+              "maximum": 288.0
+            },
+            "error_count_total": {
+              "count": 21,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 21,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.7440000000000001,
+              "p90": 1.135857142857143,
+              "maximum": 1.2188461538461537
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 21,
+              "minimum": 22.0,
+              "p10": 398.0,
+              "median": 1786.0,
+              "p90": 4460.0,
+              "maximum": 4608.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 21,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 38.0,
+              "p90": 820.0,
+              "maximum": 930.0
+            },
+            "anomaly_probability": {
+              "count": 21,
+              "minimum": 0.31884299319500614,
+              "p10": 0.3615738603670497,
+              "median": 0.49139145337103046,
+              "p90": 0.5850480026658852,
+              "maximum": 0.6998880753289984
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_batched_chat",
+          "outcome": "TN",
+          "rows": 109,
+          "first_messages": 3,
+          "same_recv_counter_rows": 33,
+          "short_nonfirst_rows": 32,
+          "features": {
+            "packet_size": {
+              "count": 109,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 109,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 109,
+              "minimum": 1.938,
+              "p10": 15.425000000000002,
+              "median": 46.76,
+              "p90": 419.54140000000007,
+              "maximum": 640.167
+            },
+            "message_interval_ms": {
+              "count": 109,
+              "minimum": 0.0,
+              "p10": 0.042,
+              "median": 22.134,
+              "p90": 37.981,
+              "maximum": 41.405
+            },
+            "bytes_received_total": {
+              "count": 109,
+              "minimum": 110.0,
+              "p10": 771.2000000000002,
+              "median": 2646.0,
+              "p90": 5576.0,
+              "maximum": 6846.0
+            },
+            "bytes_sent_total": {
+              "count": 109,
+              "minimum": 0.0,
+              "p10": 24.0,
+              "median": 192.0,
+              "p90": 384.0,
+              "maximum": 480.0
+            },
+            "error_count_total": {
+              "count": 109,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 109,
+              "minimum": 0.0,
+              "p10": 0.37892000000000003,
+              "median": 25.093399999999995,
+              "p90": 32.35033333333334,
+              "maximum": 37.744
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 109,
+              "minimum": 38.0,
+              "p10": 657.6,
+              "median": 2584.0,
+              "p90": 5516.8,
+              "maximum": 6846.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 109,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 822.8000000000001,
+              "maximum": 1602.0
+            },
+            "anomaly_probability": {
+              "count": 109,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.003333333333333333,
+              "p90": 0.13402679265179265,
+              "maximum": 0.27796095067194815
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_chat",
+          "outcome": "FP",
+          "rows": 7,
+          "first_messages": 7,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 7,
+              "minimum": 22.0,
+              "p10": 31.6,
+              "median": 38.0,
+              "p90": 551.6000000000001,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 7,
+              "minimum": 14.0,
+              "p10": 23.6,
+              "median": 30.0,
+              "p90": 543.6000000000001,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 7,
+              "minimum": 0.09,
+              "p10": 0.1014,
+              "median": 0.124,
+              "p90": 4.396200000000004,
+              "maximum": 10.623
+            },
+            "message_interval_ms": {
+              "count": 7,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 7,
+              "minimum": 22.0,
+              "p10": 31.6,
+              "median": 38.0,
+              "p90": 551.6000000000001,
+              "maximum": 782.0
+            },
+            "bytes_sent_total": {
+              "count": 7,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 7,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 7,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 7,
+              "minimum": 22.0,
+              "p10": 31.6,
+              "median": 38.0,
+              "p90": 551.6000000000001,
+              "maximum": 782.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 7,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 7,
+              "minimum": 0.4274094996155636,
+              "p10": 0.44294705714175725,
+              "median": 0.5361376600983754,
+              "p90": 0.6423778950921759,
+              "maximum": 0.6447778950921759
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_chat",
+          "outcome": "TN",
+          "rows": 103,
+          "first_messages": 1,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 103,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 103,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 103,
+              "minimum": 3.925,
+              "p10": 12.733,
+              "median": 49.905,
+              "p90": 149.50279999999998,
+              "maximum": 232.493
+            },
+            "message_interval_ms": {
+              "count": 103,
+              "minimum": 0.0,
+              "p10": 2.0132,
+              "median": 5.877,
+              "p90": 14.058,
+              "maximum": 16.051
+            },
+            "bytes_received_total": {
+              "count": 103,
+              "minimum": 44.0,
+              "p10": 808.4,
+              "median": 2224.0,
+              "p90": 5283.2,
+              "maximum": 7030.0
+            },
+            "bytes_sent_total": {
+              "count": 103,
+              "minimum": 0.0,
+              "p10": 48.0,
+              "median": 168.0,
+              "p90": 384.0,
+              "maximum": 528.0
+            },
+            "error_count_total": {
+              "count": 103,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 103,
+              "minimum": 0.0,
+              "p10": 3.300706666666667,
+              "median": 9.7975,
+              "p90": 11.908019047619046,
+              "maximum": 14.016
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 103,
+              "minimum": 44.0,
+              "p10": 808.4,
+              "median": 2224.0,
+              "p90": 5283.2,
+              "maximum": 7030.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 103,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 103,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.027275410097149216,
+              "maximum": 0.2312507805792569
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "outcome": "FP",
+          "rows": 2,
+          "first_messages": 2,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 2,
+              "minimum": 38.0,
+              "p10": 38.0,
+              "median": 38.0,
+              "p90": 38.0,
+              "maximum": 38.0
+            },
+            "payload_size": {
+              "count": 2,
+              "minimum": 30.0,
+              "p10": 30.0,
+              "median": 30.0,
+              "p90": 30.0,
+              "maximum": 30.0
+            },
+            "connection_duration_ms": {
+              "count": 2,
+              "minimum": 2.023,
+              "p10": 2.0295,
+              "median": 2.0555000000000003,
+              "p90": 2.0815,
+              "maximum": 2.088
+            },
+            "message_interval_ms": {
+              "count": 2,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "bytes_received_total": {
+              "count": 2,
+              "minimum": 38.0,
+              "p10": 38.0,
+              "median": 38.0,
+              "p90": 38.0,
+              "maximum": 38.0
+            },
+            "bytes_sent_total": {
+              "count": 2,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "error_count_total": {
+              "count": 2,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 2,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 2,
+              "minimum": 38.0,
+              "p10": 38.0,
+              "median": 38.0,
+              "p90": 38.0,
+              "maximum": 38.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 2,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 2,
+              "minimum": 0.37283546273467083,
+              "p10": 0.37386071525992337,
+              "median": 0.3779617253609334,
+              "p90": 0.3820627354619435,
+              "maximum": 0.38308798798719607
+            }
+          }
+        },
+        {
+          "scenario_id": "normal_fragmented_chat",
+          "outcome": "TN",
+          "rows": 107,
+          "first_messages": 6,
+          "same_recv_counter_rows": 0,
+          "short_nonfirst_rows": 0,
+          "features": {
+            "packet_size": {
+              "count": 107,
+              "minimum": 22.0,
+              "p10": 22.0,
+              "median": 110.0,
+              "p90": 782.0,
+              "maximum": 782.0
+            },
+            "payload_size": {
+              "count": 107,
+              "minimum": 14.0,
+              "p10": 14.0,
+              "median": 102.0,
+              "p90": 774.0,
+              "maximum": 774.0
+            },
+            "connection_duration_ms": {
+              "count": 107,
+              "minimum": 9.824,
+              "p10": 110.32260000000001,
+              "median": 481.065,
+              "p90": 986.8786000000001,
+              "maximum": 1175.806
+            },
+            "message_interval_ms": {
+              "count": 107,
+              "minimum": 0.0,
+              "p10": 18.3678,
+              "median": 40.951,
+              "p90": 116.59720000000002,
+              "maximum": 208.98
+            },
+            "bytes_received_total": {
+              "count": 107,
+              "minimum": 110.0,
+              "p10": 521.2,
+              "median": 2006.0,
+              "p90": 3882.4000000000005,
+              "maximum": 5036.0
+            },
+            "bytes_sent_total": {
+              "count": 107,
+              "minimum": 0.0,
+              "p10": 24.0,
+              "median": 144.0,
+              "p90": 336.0,
+              "maximum": 480.0
+            },
+            "error_count_total": {
+              "count": 107,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "prefix_mean_interval_ms": {
+              "count": 107,
+              "minimum": 0.0,
+              "p10": 31.803800000000006,
+              "median": 56.82107142857143,
+              "p90": 86.52035,
+              "maximum": 115.36425
+            },
+            "parsed_bytes_prefix_total": {
+              "count": 107,
+              "minimum": 110.0,
+              "p10": 521.2,
+              "median": 2006.0,
+              "p90": 3882.4000000000005,
+              "maximum": 5036.0
+            },
+            "recv_ahead_of_parsed_bytes": {
+              "count": 107,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0,
+              "maximum": 0.0
+            },
+            "anomaly_probability": {
+              "count": 107,
+              "minimum": 0.0,
+              "p10": 0.0,
+              "median": 0.0,
+              "p90": 0.0005555555555555556,
+              "maximum": 0.27287749038475917
+            }
+          }
+        }
+      ],
+      "sessions": [
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_batched_chat",
+          "session_id": "37",
+          "scenario_id": "normal_batched_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_batched_chat",
+          "session_id": "38",
+          "scenario_id": "normal_batched_chat",
+          "rows": 18,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.05555555555555555
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_batched_chat",
+          "session_id": "39",
+          "scenario_id": "normal_batched_chat",
+          "rows": 12,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.08333333333333333
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 12,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.08333333333333333
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_length_chat",
+          "session_id": "37",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_length_chat",
+          "session_id": "38",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_length_chat",
+          "session_id": "39",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_fragmented_chat",
+          "session_id": "39",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 12,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 7,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_fragmented_chat",
+          "session_id": "42",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 19,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_fragmented_chat",
+          "session_id": "43",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_chat_payload",
+          "session_id": "39",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_chat_payload",
+          "session_id": "42",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_malformed_chat_payload",
+          "session_id": "43",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 12,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.08333333333333333
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_chat",
+          "session_id": "41",
+          "scenario_id": "normal_chat",
+          "rows": 23,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.043478260869565216
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_chat",
+          "session_id": "42",
+          "scenario_id": "normal_chat",
+          "rows": 7,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.14285714285714285
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_normal_chat",
+          "session_id": "43",
+          "scenario_id": "normal_chat",
+          "rows": 10,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_controlled_burst_chat",
+          "session_id": "41",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 2,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_controlled_burst_chat",
+          "session_id": "42",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 23,
+          "fp": 0,
+          "fn": 2,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r00_controlled_burst_chat",
+          "session_id": "43",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 13,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_fragmented_chat",
+          "session_id": "37",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 21,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_fragmented_chat",
+          "session_id": "38",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 12,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_fragmented_chat",
+          "session_id": "39",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 10,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.1
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_fragmented_chat",
+          "session_id": "40",
+          "scenario_id": "normal_fragmented_chat",
+          "rows": 14,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.07142857142857142
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_controlled_burst_chat",
+          "session_id": "39",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 20,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_controlled_burst_chat",
+          "session_id": "40",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 24,
+          "fp": 0,
+          "fn": 5,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_controlled_burst_chat",
+          "session_id": "42",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 17,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_controlled_burst_chat",
+          "session_id": "43",
+          "scenario_id": "controlled_burst_chat",
+          "rows": 17,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_batched_chat",
+          "session_id": "40",
+          "scenario_id": "normal_batched_chat",
+          "rows": 24,
+          "fp": 9,
+          "fn": 0,
+          "message_fpr": 0.375
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_batched_chat",
+          "session_id": "41",
+          "scenario_id": "normal_batched_chat",
+          "rows": 16,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_batched_chat",
+          "session_id": "42",
+          "scenario_id": "normal_batched_chat",
+          "rows": 14,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_batched_chat",
+          "session_id": "43",
+          "scenario_id": "normal_batched_chat",
+          "rows": 13,
+          "fp": 9,
+          "fn": 0,
+          "message_fpr": 0.6923076923076923
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_length_chat",
+          "session_id": "40",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_length_chat",
+          "session_id": "41",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_length_chat",
+          "session_id": "42",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_length_chat",
+          "session_id": "43",
+          "scenario_id": "malformed_length_chat",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_chat_payload",
+          "session_id": "37",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_chat_payload",
+          "session_id": "38",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_chat_payload",
+          "session_id": "39",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_malformed_chat_payload",
+          "session_id": "40",
+          "scenario_id": "malformed_chat_payload",
+          "rows": 1,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": null
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_chat",
+          "session_id": "39",
+          "scenario_id": "normal_chat",
+          "rows": 15,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.06666666666666667
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_chat",
+          "session_id": "40",
+          "scenario_id": "normal_chat",
+          "rows": 6,
+          "fp": 0,
+          "fn": 0,
+          "message_fpr": 0.0
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_chat",
+          "session_id": "42",
+          "scenario_id": "normal_chat",
+          "rows": 16,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.0625
+        },
+        {
+          "campaign_id": "aug_261013_e1cafdde_selection_01",
+          "run_id": "aug_261013_e1cafdde_selection_01_r01_normal_chat",
+          "session_id": "43",
+          "scenario_id": "normal_chat",
+          "rows": 21,
+          "fp": 1,
+          "fn": 0,
+          "message_fpr": 0.047619047619047616
+        }
+      ],
+      "normal_session_diagnostics": {
+        "sessions": 24,
+        "sessions_with_any_fp": 14,
+        "macro_message_fpr": 0.08364220572101007,
+        "interpretation": "세션별 메시지 FPR의 평균이며 별도 세션 분류 모델의 FPR이 아니다."
+      },
+      "candidate_transform_checks": {
+        "raw7_v1": {
+          "rows": 513,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "message_interval_ms",
+            "bytes_received_total",
+            "bytes_sent_total",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        },
+        "without_io5_v1": {
+          "rows": 513,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "message_interval_ms",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        },
+        "prefix_mean5_v1": {
+          "rows": 513,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "prefix_mean_interval_ms",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        },
+        "prefix_mean_parsed6_v1": {
+          "rows": 513,
+          "columns": [
+            "packet_size",
+            "payload_size",
+            "connection_duration_ms",
+            "prefix_mean_interval_ms",
+            "parsed_bytes_prefix_total",
+            "error_count_total"
+          ],
+          "finite": true,
+          "fit_performed": false
+        }
+      }
+    }
+  },
+  "training_impurity_importance": {
+    "features": {
+      "packet_size": 0.017806946629328996,
+      "payload_size": 0.01931751504062527,
+      "connection_duration_ms": 0.428109551581361,
+      "message_interval_ms": 0.39254481910748684,
+      "bytes_received_total": 0.08905029959255518,
+      "bytes_sent_total": 0.05317086804864278,
+      "error_count_total": 0.0
+    },
+    "timing_sum": 0.8206543706888478
+  },
+  "previous_test_evidence": {
+    "source": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_final_evaluation.json",
+    "sha256": "8f0a3d355806673819fcb6c2ec76df4cdfa57c5049e3837ab9965efe6b933efc",
+    "approval": {
+      "status": "withheld_after_test",
+      "reasons": [
+        "정상 FPR 상한 초과"
+      ],
+      "production_ready": false,
+      "automatic_blocking_allowed": false
+    },
+    "metrics": {
+      "rows": 1071,
+      "accuracy": 0.8776844070961718,
+      "precision": 0.7109004739336493,
+      "recall": 0.970873786407767,
+      "f1": 0.8207934336525308,
+      "roc_auc": 0.9709438625996992,
+      "average_precision": 0.9354963929285146,
+      "log_loss": 0.19493053492463436,
+      "false_positive_rate": 0.16010498687664043,
+      "false_negative_rate": 0.02912621359223301,
+      "confusion_matrix": {
+        "label_order": [
+          0,
+          1
+        ],
+        "rows": "actual",
+        "columns": "predicted",
+        "values": [
+          [
+            640,
+            122
+          ],
+          [
+            9,
+            300
+          ]
+        ],
+        "tn": 640,
+        "fp": 122,
+        "fn": 9,
+        "tp": 300
+      }
+    },
+    "normal_batched": {
+      "rows": 270,
+      "normal_rows": 270,
+      "controlled_anomaly_rows": 0,
+      "fp": 103,
+      "fn": 0,
+      "recall": null,
+      "false_positive_rate": 0.3814814814814815
+    },
+    "source_type": "existing_report_only_no_test_csv_or_prediction_csv_read"
+  },
+  "recovery_design": {
+    "status": "compiled_design_not_collected",
+    "splits": {
+      "train": {
+        "campaigns": 3,
+        "runs": 189,
+        "sessions": 756,
+        "expected_message_rows": 7976,
+        "normal_batch_crossing": [
+          [
+            1,
+            1,
+            4
+          ],
+          [
+            1,
+            5,
+            15
+          ],
+          [
+            1,
+            20,
+            40
+          ],
+          [
+            4,
+            1,
+            4
+          ],
+          [
+            4,
+            5,
+            15
+          ],
+          [
+            4,
+            20,
+            40
+          ],
+          [
+            8,
+            1,
+            4
+          ],
+          [
+            8,
+            5,
+            15
+          ],
+          [
+            8,
+            20,
+            40
+          ]
+        ]
+      },
+      "validation": {
+        "campaigns": 1,
+        "runs": 63,
+        "sessions": 252,
+        "expected_message_rows": 2737,
+        "normal_batch_crossing": [
+          [
+            1,
+            1,
+            4
+          ],
+          [
+            1,
+            5,
+            15
+          ],
+          [
+            1,
+            20,
+            40
+          ],
+          [
+            4,
+            1,
+            4
+          ],
+          [
+            4,
+            5,
+            15
+          ],
+          [
+            4,
+            20,
+            40
+          ],
+          [
+            8,
+            1,
+            4
+          ],
+          [
+            8,
+            5,
+            15
+          ],
+          [
+            8,
+            20,
+            40
+          ]
+        ]
+      },
+      "test": {
+        "campaigns": 2,
+        "runs": 126,
+        "sessions": 504,
+        "expected_message_rows": 5407,
+        "normal_batch_crossing": [
+          [
+            1,
+            1,
+            4
+          ],
+          [
+            1,
+            5,
+            15
+          ],
+          [
+            1,
+            20,
+            40
+          ],
+          [
+            4,
+            1,
+            4
+          ],
+          [
+            4,
+            5,
+            15
+          ],
+          [
+            4,
+            20,
+            40
+          ],
+          [
+            8,
+            1,
+            4
+          ],
+          [
+            8,
+            5,
+            15
+          ],
+          [
+            8,
+            20,
+            40
+          ]
+        ]
+      }
+    },
+    "planned_runs": 378,
+    "planned_sessions": 1512,
+    "candidate_input_columns": {
+      "rf_raw7": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ],
+      "rf_without_io5": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "error_count_total"
+      ],
+      "rf_prefix_mean5": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "prefix_mean_interval_ms",
+        "error_count_total"
+      ],
+      "rf_prefix_mean_parsed6": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "prefix_mean_interval_ms",
+        "parsed_bytes_prefix_total",
+        "error_count_total"
+      ]
+    },
+    "planned_trial_count": 20,
+    "collection_performed": false,
+    "fit_performed": false,
+    "interpretation": "기대 메시지 수는 생성기 계획의 값이며 실제 수집 성공·분할 완료·모델 승인 결과가 아니다."
+  },
+  "recovery_plan_sha256": "224cfe0331020d55f1ea2d507584997bd6b034322123487d0c5793aaac535f82",
+  "diagnosis_lock_sha256": "6520ddfc6776d9b8a084dcfc29c70fa9dae1afc6daa8924e7c95d203417ea098",
+  "protected_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_rf_diagnosis.json": "05d8ec991832c723f5467320eae06d5c3e7aaab3523273a0740d9dcec8f22bce",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_recovery_plan.json": "224cfe0331020d55f1ea2d507584997bd6b034322123487d0c5793aaac535f82",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_augmentation_plan.json": "628b477587559c99ac6259564bb7c412c9b5afc0ad7f8d43e3479ad4a8e0e755",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_augmentation_comparison.json": "3362136099700f9794b64e44c721e439fcee38ebc3d6685b76fc553a21528310",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_final_evaluation.json": "8f0a3d355806673819fcb6c2ec76df4cdfa57c5049e3837ab9965efe6b933efc",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\training_manifest.json": "8add4e79511eca50a866d61143f777ee942af51d739035ecf0ad24b76e2ebed6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidate_reports\\rf_leaf_5.json": "7ce8b9f6715d508d0c9693d305fc7ac58de08b553dafd6d2b6e1aa3093491d4d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\decision_policy.json": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\feature_schema.json": "a2b5a25959d0a0257cc5fb8288979d15a4accfa19122e69dc9473dcf321e9f10",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\pipeline.joblib": "3756917286fb09b3791d7ce4fb207cc95191855d54480e4af1ac64af5f2e6529",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\validation_predictions.csv": "294c542a59a9457faafd10f7ec23751016f30a1e86cb65141d3dd968f71dccb2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\recovery_design.py": "a6dfbad269ac6c5b072cc7e7af69eaae3e2d96e429b14fcd0c5d3d9579138e9f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_preparation\\operational_prefix_features.py": "aabcf3a277647b200518c9ec98987ad6eff758ecf8f4272f59293d0c9d4fd98b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\analyze_operational_rf_errors.py": "57f403e0715edc3813f08c1f13f604ae1f86361b7184e5fec6b749dc5eadc11f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\ServerBase\\Session.cpp": "962102e1972ed393b9d2444c13a303e7821995dbe947668fe5220fac62fcd323",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\FeatureCollector.cpp": "4388a89602752fa40848607ed58e11a8e7ee73a1eacfce345c2034b13c534325",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\dataset_manifest.json": "c16fad4ba8f92e8993c7aa328eeea1fa55240f28429f09deaa36c2fe43c9594b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\feature_schema.json": "281d96d89722c567c6c0fe890b166a240bd6966bbd248cc39b207cc632c2fa89",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\split_manifest.json": "e6800677f7041407b3e149531b71aa69d9c75041f852c7b5c2816f6eb5f50678",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\X_train.csv": "c9d9fefe553be955830c5d63c5b94d5d0427af1a7dad7807890e07ca580310ff",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\y_train.csv": "88a203b41e1cda0d7344a919ba659aad14d704691cb3e7a9c9eb9bca8b6a3020",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\metadata_train.csv": "507fafe2e9b30a592338cf3e49a0e9a730eb4b96172f70b87d2448e5579a1996",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\X_validation.csv": "859c97e927541572dfdbc1c95961c4e83617573095525337f67e523d55f5f17b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\y_validation.csv": "e535977417f7f8cb50baea6699b5541d9e13abb701f4026ed7273a24bd07d81b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\metadata_validation.csv": "f6e9ff3e5c67d7a4ad2cd8a432deb29308f2b783054a50634e6ba29047afe0b5"
+  },
+  "test_files_read": false,
+  "model_fit_performed": false,
+  "threshold_search_performed": false,
+  "traffic_sent": false,
+  "deployment_approved": false,
+  "fastapi_still_dummy": true,
+  "limitations": [
+    "학습된 중요도와 오분류의 상관은 원인 확정이나 보정 효과 검증이 아니다.",
+    "단일 수신의 누적 바이트와 현재 프레임의 파싱 합은 의미가 다르며 기존 v2 수집 자체가 잘못됐다고 단정하지 않는다.",
+    "평균 간격도 파서 처리 시각의 평균이지 클라이언트 송신 간격이나 TCP 패킷 도착 간격이 아니다.",
+    "첫 정상 묶음과 burst의 짧은 prefix는 같은 관측을 가질 수 있다. 과거가 없는 순간의 정보를 복원하지 못한다.",
+    "파생 입력은 종료 summary를 쓰지 않는다. 누락된 메시지를 0이나 미래 데이터로 채우지 않는다.",
+    "본문 내부 유효성·의도·실제 공격을 관측하지 않는다. error_count가 정답이나 현재 메시지의 검증 결과가 아니다.",
+    "새 seed·캠페인도 같은 생성기·장비의 실험이다. 실제 침입 탐지 일반화를 보장하지 않는다.",
+    "실시간 prefix 상태·누락 감지·수명 관리 및 새 모델 학습·비용·독립 승인은 후속 작업이다."
+  ]
+}

@@ -17,6 +17,7 @@ operational_final_data.py
 operational_final_models.py
 operational_cost_worker.py
 run_operational_final_evaluation.py
+analyze_operational_rf_errors.py
 ```
 
 ## audit_operational_data.py
@@ -163,7 +164,19 @@ Test 전 후보는 RF였지만 Test FPR 16.01%가 상한 10%를 넘었다. 평�
 
 완료 산출물은 `artifacts/operational_final_evaluation/v2/`, 보고서는 `reports/operational_final_evaluation.json/.md/.predictions.csv`다. `v1/`은 Test 전 수치 검사 실패 기록이다. 기존 결과를 덮어쓰지 않으며 실행 코드 0과 모델 승인 성공을 구분한다. 설명·범위·재실행 제한은 `docs/operational_final_evaluation.md`에서 확인한다.
 
-다음은 승인 보류의 원인인 정상 묶음 오탐을 개발 관점에서 분석하고 새 독립 holdout을 설계하는 작업이다. 현재 Test로 새 후보의 threshold를 고르지 않는다.
+이후 정상 묶음 오탐 진단과 새 독립 holdout 설계까지 완료했다. 현재 Test로 새 후보의 threshold를 고르지 않는다.
+
+## RF 정상 묶음 오탐 진단
+
+```powershell
+python -X utf8 .\evaluation\analyze_operational_rf_errors.py
+```
+
+기존 RF leaf=5·0.3을 고정하고 Train/Validation만 재예측한다. 기존 Validation 513행의 확률·지표를 대조하고 시나리오별 FP/FN, 첫 메시지와 짧은 파싱 간격, 같은 누적 수신량, prefix 평균·파싱 바이트 합과 입력 분포를 기록한다. Test는 기존 최종 JSON 보고서에서 승인 보류 근거만 인용하며 Test 원본·최종 예측 CSV는 열지 않는다.
+
+`data_collection/recovery_design.py`로 새로운 6개 캠페인의 역할·독립 seed·정상 묶음 9조합·로컬 안전 한도·제한된 후보를 검증한다. 새 데이터 수집·학습·threshold 탐색은 하지 않는다. 보정 효과가 확인됐다는 보고서가 아니다.
+
+결과는 `reports/operational_rf_diagnosis.json/.md/.predictions.csv/.errors.csv`와 `artifacts/operational_rf_diagnosis/v1/`에 저장한다. 기존 결과가 있으면 새 `--artifact-dir`와 `--report-prefix`를 지정한다. 설명과 다음 수집 단계는 `docs/operational_rf_diagnosis.md`에 있다.
 
 이후 추가할 스크립트:
 
