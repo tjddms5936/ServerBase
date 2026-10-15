@@ -1,0 +1,29 @@
+{
+  "config_version": "v1",
+  "experiment_id": "operational_recovery_cost_v1",
+  "dataset_id": "operational_message_recovery_campaign_v1",
+  "dataset_dir": "../data/processed/operational_message/recovery_v1",
+  "training_root": "../artifacts/operational_message/recovery_v1/validation_selection",
+  "training_report": "../reports/operational_recovery_validation.json",
+  "design_path": "operational_recovery_plan.json",
+  "artifact_dir": "../artifacts/operational_message/recovery_v1/cost_v1",
+  "report_prefix": "../reports/operational_recovery_cost",
+  "expected_train_rows": 7976,
+  "expected_validation_rows": 2737,
+  "expected_test_rows": 5407,
+  "candidate_id": "rf_raw7",
+  "input_transform_id": "raw7_v1",
+  "threshold": 0.7,
+  "benchmark": {
+    "process_repeats": 3,
+    "warmup_repeats": 20,
+    "single_request_repeats": 300,
+    "batch_repeats": 10,
+    "sampling_seed": 42,
+    "cpu_threads": 1,
+    "probability_absolute_tolerance": 0.00001,
+    "worker_timeout_seconds": 180
+  },
+  "test_rule": "confirm_selected_policy_without_reselection",
+  "scope": "local_advisory_integration_only"
+}

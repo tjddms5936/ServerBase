@@ -16,6 +16,7 @@ operational_message/random_forest_v1/
 operational_message/validation_selection_v1/
 operational_message/augmentation_v1/
 operational_message/recovery_v1/validation_selection/
+operational_message/recovery_v1/cost_v1/
 operational_sequence/lstm_v1/
 operational_final_evaluation/v2/
 operational_final_evaluation/holdout_usage/
@@ -37,6 +38,8 @@ operational_final_evaluation/holdout_usage/
 - `operational_sequence/lstm_v1/`: scaler fit 전 protocol lock, 원본 Train 1,538행 전용 scaler, 기본 feature·정답·시계열 schema, 두 후보의 최적 `model.pt`·epoch 기록·Validation 예측, LSTM 후보 내 선정 정책과 완료 manifest입니다. padding은 유효 길이로 제외하고 저장 가중치·입력 계약·재예측을 검증합니다. h16·0.5가 선정됐지만 RF보다 누락이 늘어 기존 RF를 교체하지 않았습니다. 최종 Test·비용 평가와 배포 승인은 별도입니다.
 - `operational_final_evaluation/v2/`: 최종 비교 전 protocol·Validation 비용 프로세스 기록·Test 전 후보 잠금·Test 창·완료 평가 manifest입니다. 고정 RF가 Test FPR 기준을 넘어서 현재 `deployment_bundle/`은 없습니다. 평가 완료와 모델 승인 보류를 구분합니다. `v1/`의 Test 전 수치 검사 실패 기록은 보존합니다.
 - `operational_final_evaluation/holdout_usage/`: Test 파일 해시별 접근 예약과 최초 잠금·정책 서명을 보관합니다. 동일 정책 재검사는 노출 이력으로 표시하고 모델·threshold·승인 기준을 바꾼 재사용을 거부합니다. 이 기록을 삭제해 사용된 Test를 새 독립 Test인 것처럼 취급하지 않습니다.
+
+- `operational_message/recovery_v1/cost_v1/`: 선정 원본 RF·0.7의 미승인 `candidate_bundle/`, 측정 전 protocol, Validation NPZ·동일 요청 목록·독립 프로세스 비용 기록, 조건부 Test 전 잠금과 완료 manifest입니다. 필수 후보 파일은 모델·원본 schema·모델 입력 schema·label map·선정 정책 5개입니다. `candidate_lock.json`은 비용 통과 때만 생성하며 독립 Test 확인·실제 모델 배포 승인과 구분합니다. 이전 학습 selection은 당시 상태를 보존하고 이번 상태는 새 비용 보고서에서 확인합니다. `deployment_bundle/`을 생성하거나 FastAPI를 교체하지 않습니다.
 
 평가 지표와 비교 보고서는 `reports/`에 저장합니다.
 

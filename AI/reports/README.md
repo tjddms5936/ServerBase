@@ -118,6 +118,7 @@ figures/
 - `operational_recovery_dataset.json/.md`: 새 Train 7,976건·Validation 2,737건·Test 5,407건의 사전 캠페인 분할, 정답 분포·식별자 비중복·동일 feature 값 반복·헤더 거부 제외·원본/출력 해시입니다. 정규화·모델 학습·독립 승인 결과가 아니며 새 Test는 품질 확인에만 사용했습니다.
 - `operational_recovery_validation.json/.md`: 새 Train 7,976건 전용 RF 후보 4개 학습·실제 트리·입력 변환 schema·protocol과 새 Validation 2,737건의 전체 20개 정책·탈락 근거·개발 선정입니다. rf_raw7·0.7의 FP 39·FN 275건을 기록하며 비용·새 Test·배포는 미확인입니다.
 - `operational_recovery_comparison.json/.md`: 같은 Validation에서 기존 RF·0.3과 새 원본 RF·0.3, 기본 0.5·후보별 최적·전체 선정 정책을 구분한 시나리오·첫 메시지·오분류 변경·burst prefix입니다. FP 266→39건과 FN 71→275건을 함께 해석하고 재학습/threshold 효과를 분리합니다. 실제 모델이나 threshold를 Test로 고른 결과가 아닙니다.
+- `operational_recovery_cost.json/.md`: 선정 원본 RF·0.7의 학습·입력 보호 해시, 동일 Validation의 별도 프로세스 3개 비용 원본·요약, 단일/배치 판단 일치, 계산 스레드·Torch 미로딩 확인, 사전 예산과 Test 전 후보 잠금입니다. 모델 재학습·정책 변경·Test 예측·접근 예약·실제 배포 승인은 하지 않습니다. HTTP·JSON·큐 비용은 별도 후속 검증이며 후보 묶음은 미승인입니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

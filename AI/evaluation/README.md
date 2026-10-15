@@ -191,6 +191,18 @@ python -X utf8 .\training\run_operational_recovery_experiment.py
 
 설명과 다음 비용 검증은 `docs/operational_recovery_experiment.md`에 있습니다.
 
+## 선정 보정 RF 비용 검증
+
+```powershell
+python -X utf8 .\evaluation\run_operational_recovery_cost.py
+```
+
+이미 선정한 원본 7개 RF·0.7만 재검증합니다. Validation 2,737건과 같은 요청 300개로 독립 프로세스 3회·워밍업 20회·배치 10회·계산 스레드 1개를 측정합니다. 기존 비용 worker와 고정 RF runtime은 변경 없이 재사용하며 모델·scaler fit, 추가 후보·threshold 탐색, Test CSV·수집 레코드 접근은 하지 않습니다.
+
+전체·정상 묶음 FPR과 Recall의 기존 Validation 결과, p95 25ms·peak RSS 512MiB·필수 파일 50MiB를 대조합니다. 비용 통과 때만 `candidate_lock.json`을 만들고 독립 Test 확인은 다음 단계로 남깁니다. 실패 때 다른 후보로 대체하지 않습니다. FastAPI는 아직 dummy이며 미승인 후보 묶음은 실제 배포 자료가 아닙니다.
+
+결과는 `reports/operational_recovery_cost.json/.md`, 산출물은 `artifacts/operational_message/recovery_v1/cost_v1/`입니다. 설명과 재측정 제한은 `docs/operational_recovery_cost.md`를 확인합니다.
+
 ## 향후 일반 평가 명령
 
 ```text

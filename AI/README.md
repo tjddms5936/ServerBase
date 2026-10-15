@@ -32,8 +32,17 @@
 - 고정 RF의 정상 묶음 오탐 진단, 과거·현재 입력 보정 후보와 새 독립 캠페인·승인 계획 검증
 - 보정 캠페인 6개·378개 run 실제 수집·품질 검증과 원본 v2 메시지 16,120건의 사전 캠페인 분할
 - 새 Train 7,976건 전용 RF 입력 표현 후보 4개 학습과 새 Validation 2,737건의 20개 정책 비교·개발 선정
+- 선정 원본 RF·0.7의 Validation 전용 비용 측정과 독립 Test 전 후보·판정 규칙 잠금
 
-최근 작업은 `docs/operational_recovery_experiment.md`와 `reports/operational_recovery_validation.md`에서 확인합니다. 새 Train 7,976건으로 RF 입력 표현 후보 4개를 학습하고 같은 새 Validation 2,737건에서 20개 조합을 비교했습니다. 원본 7개 입력 RF·threshold 0.7이 개발 선정됐습니다. 기존 RF 대비 FP 266→39건이지만 FN 71→275건으로 증가했습니다. 새 Test 성능·비용·배포 승인은 아직 확인하지 않았으며 큰 작업 묶음은 4개 남아 있습니다. 이전 수집은 `docs/operational_recovery_collection.md`, 오탐 단서와 사전 후보 설계는 `docs/operational_rf_diagnosis.md`에 있습니다.
+최근 작업은 `docs/operational_recovery_cost.md`와 `reports/operational_recovery_cost.md`에서 확인합니다. 이미 선정한 원본 7개 RF·threshold 0.7을 바꾸지 않고 Validation 전용 독립 프로세스 비용을 측정했습니다. 단일 요청 중앙값 4.3371ms·가장 높은 프로세스 p95 4.7538ms·프로세스 peak RSS 154.90MiB·필수 파일 759.05KiB로 사전 예산을 통과했습니다. 비용 통과는 Test 전 후보 잠금이지 배포 승인이 아닙니다. 전체 테스트 319개가 통과했으며 새 Test 모델 예측·실제 FastAPI 연결은 별도 단계입니다. 큰 작업 묶음은 4개 남아 있습니다. 앞선 직접 학습·선정은 `docs/operational_recovery_experiment.md`, 수집은 `docs/operational_recovery_collection.md`에 있습니다.
+
+선정 RF 비용 검증:
+
+```powershell
+python -X utf8 .\evaluation\run_operational_recovery_cost.py
+```
+
+기존 결과는 덮어쓰지 않습니다. 미승인 `candidate_bundle/`과 승인 배포 묶음을 구분하고, 원본 후보의 기본 0.5 정책은 유지합니다. raw7은 scaler·추가 Python 세션 prefix 없이 현재 수집 snapshot을 사용합니다. 다음 작업은 잠근 단일 정책의 새 Test 5,407건 독립 승인 확인입니다.
 
 학습 로드맵:
 
@@ -366,4 +375,4 @@ python -X utf8 .\evaluation\run_operational_final_evaluation.py
 
 설명은 `docs/operational_final_evaluation.md`, 이번 단계 커밋 제안은 `docs/operational_final_evaluation_commit.md`입니다. 기존 결과를 덮어쓰지 않으며 같은 holdout의 변경 정책 재평가는 사용 기록으로 거부합니다. 현재 Test는 이미 사용된 자료입니다.
 
-전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 최종 평가·승인 보류 판단은 완료했습니다. **기본 남은 3개에 오탐 보정·새 독립 검증 1개를 추가해 실제 남은 큰 묶음은 4개입니다.** 다음은 바로 FastAPI 연결이 아니라 정상 묶음 오탐 보정과 새로운 독립 평가 설계입니다.
+당시 전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 최종 평가·승인 보류 판단은 완료했습니다. **기본 남은 3개에 오탐 보정·새 독립 검증 1개를 추가해 남은 큰 묶음은 4개입니다.** 이후 새 수집·RF 재학습·Validation 선정·비용 검증을 진행했습니다. 최신 단계와 바로 다음 작업은 문서 상단을 확인합니다.
