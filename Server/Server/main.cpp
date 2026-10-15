@@ -1,14 +1,15 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "NetApp.h"
 #include "ServerSession.h"
 #include "../FeatureExtraction/FeatureCollector.h"
 #include "../FeatureExtraction/AsyncFeatureQueue.h"
 #include "../FeatureExtraction/AiInferenceWorker.h"
+#include "../FeatureExtraction/AiRuntimeSupport.h"
 // #include "IocpCore.h"
 // #include "Listener.h"
 // #include "IOCPWorkerPool.h"
 
-// ¼¼¼Ç ÆÑÅä¸®¿¡¼­ °üÂûÀÚ¸¦ ÁÖÀÔÇØ ³×Æ®¿öÅ© ÄÚ¾î¿Í Æ¯Â¡ ¼öÁı±â¸¦ ¿¬°á
+// ì„¸ì…˜ íŒ©í† ë¦¬ì—ì„œ ê´€ì°°ìë¥¼ ì£¼ì…í•´ ë„¤íŠ¸ì›Œí¬ ì½”ì–´ì™€ íŠ¹ì§• ìˆ˜ì§‘ê¸°ë¥¼ ì—°ê²°
 void SetupListener(shared_ptr<Listener> listener, shared_ptr<feature_extraction::INetworkEventObserver> observer)
 {
 	listener->SetSessionFactory(
@@ -20,18 +21,23 @@ void SetupListener(shared_ptr<Listener> listener, shared_ptr<feature_extraction:
 		});
 }
 
-int main()
+int wmain(int argc, wchar_t** argv)
 {
-	ServerApp app;
+    try
+    {
+    const auto options = feature_extraction::ParseAiRuntimeOptions(argc, argv);
 
 	shared_ptr<feature_extraction::FeatureCollector> featureCollector = make_shared<feature_extraction::FeatureCollector>();
-	shared_ptr<feature_extraction::AsyncFeatureQueue> featureQueue = make_shared<feature_extraction::AsyncFeatureQueue>(1024);
+	shared_ptr<feature_extraction::AsyncFeatureQueue> featureQueue = make_shared<feature_extraction::AsyncFeatureQueue>(options.queue_capacity);
 	featureCollector->SetFeatureQueue(featureQueue);
-	shared_ptr<feature_extraction::AiInferenceWorker> inferenceWorker = make_shared<feature_extraction::AiInferenceWorker>(featureQueue);
+	shared_ptr<feature_extraction::AiInferenceWorker> inferenceWorker = make_shared<feature_extraction::AiInferenceWorker>(featureQueue, options.worker);
 	if (!inferenceWorker->Start())
 		return -1;
 
-	// Listener ¼³Á¤ 
+    {
+    // ìƒì‚°ìì¸ TCP ìŠ¤ë ˆë“œë¥¼ ë¨¼ì € ì •ë¦¬í•œ ë‹¤ìŒ AI íë¥¼ ë‹«ì•„ ì¢…ë£Œ ì´í›„ ìœ ì…ì„ ë§‰ëŠ”ë‹¤.
+    ServerApp app;
+	// Listener ì„¤ì •
 	SetupListener(app.GetListener(), featureCollector);
 
 	if (!app.Initialize())
@@ -41,10 +47,18 @@ int main()
 	}
 
 	app.Run();
+    // accept ëŒ€ê¸°ìš© ë¯¸ì‹œì‘ ì„¸ì…˜ì˜ í•´ì œ ì´ë²¤íŠ¸ë¥¼ ìƒˆ ìˆ˜ì§‘ ë ˆì½”ë“œë¡œ ë³´ë‚´ì§€ ì•Šê³  ìƒì‚°ì„ ëŠëŠ”ë‹¤.
+    featureCollector->SetFeatureQueue(nullptr);
+    }
+    const auto stopStarted = std::chrono::steady_clock::now();
 	inferenceWorker->Stop();
+    const double stopMs = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - stopStarted).count();
+    feature_extraction::WriteAiRuntimeReport(options, *featureCollector, *featureQueue, *inferenceWorker, stopMs);
 	return 0;
+    }
+    catch (...) { std::cerr << "[Server] AI configuration or report failure.\n"; return 2; }
 	//int iResult = 0;
- //   // À©¼Ó ÃÊ±âÈ­
+ //   // ìœˆì† ì´ˆê¸°í™”
 	//WSADATA wsaData = {};
 	//iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	//if (iResult != 0)
@@ -53,13 +67,13 @@ int main()
 	//	return -1;
 	//}
 
-	//// ¼­¹ö ¼ÒÄÏ »ı¼º
-	//// ¼ÒÄÏ¿¡ ÁÖ¼Ò ÇÒ´ç 
-	//// ¿¬°á ¿äÃ» ´ë±â »óÅÂ
-	//// ¿¬°á ¿äÃ» ¼ö¶ô
-	//// µ¥ÀÌÅÍÀÇ ¼Û¼ö½Å
-	//// Å¬¶óÀÌ¾ğÆ® ¿¬°á Á¾·á
-	//// ¼­¹ö ¿¬°á Á¾·á
+	//// ì„œë²„ ì†Œì¼“ ìƒì„±
+	//// ì†Œì¼“ì— ì£¼ì†Œ í• ë‹¹
+	//// ì—°ê²° ìš”ì²­ ëŒ€ê¸° ìƒíƒœ
+	//// ì—°ê²° ìš”ì²­ ìˆ˜ë½
+	//// ë°ì´í„°ì˜ ì†¡ìˆ˜ì‹ 
+	//// í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ì¢…ë£Œ
+	//// ì„œë²„ ì—°ê²° ì¢…ë£Œ
 
 	//IocpCore core;
 	//if (!core.Initialize())
@@ -68,24 +82,24 @@ int main()
 	//	return -1;
 	//}
 
-	//// Å¬¶óÀÌ¾ğÆ® Á¢¼Ó ´ë±â + accept + Session»ı¼º ÈÄ IOCP Æ÷Æ® µî·Ï + ¼ö½Å ´ë±â
+	//// í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ëŒ€ê¸° + accept + Sessionìƒì„± í›„ IOCP í¬íŠ¸ ë“±ë¡ + ìˆ˜ì‹  ëŒ€ê¸°
 	//shared_ptr<Listener> listener = make_shared<Listener>();
 	//listener->StartAccept(4000, &core);
 
-	//// ÀÌº¥Æ® ´ë±â ¹× Ã³¸®. // ¼º´Éºñ±³ ´ë»ó
+	//// ì´ë²¤íŠ¸ ëŒ€ê¸° ë° ì²˜ë¦¬. // ì„±ëŠ¥ë¹„êµ ëŒ€ìƒ
 	///*while (true)
 	//{
 	//	core.Dispatch();
 	//}*/
 
-	//// ¿©±â¼­ workerPool.Stop() ÇØÁà¾ß ÇÏ³ª?
+	//// ì—¬ê¸°ì„œ workerPool.Stop() í•´ì¤˜ì•¼ í•˜ë‚˜?
 	//IOCPWorkerPool workerPool(&core, thread::hardware_concurrency());
 	//workerPool.Start();
 
 	//ServerControlLoop();
 
-	//workerPool.Stop(); // ÇØÁÖ¸é ÀåÁ¡ÀÌ ÀÖÀ½.
+	//workerPool.Stop(); // í•´ì£¼ë©´ ì¥ì ì´ ìˆìŒ.
 
-	//// À©µµ¿ì ¼ÒÄÏ ÇØÁ¦
+	//// ìœˆë„ìš° ì†Œì¼“ í•´ì œ
 	//WSACleanup();
 }

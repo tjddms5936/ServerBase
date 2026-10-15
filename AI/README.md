@@ -35,10 +35,17 @@
 - 선정 원본 RF·0.7의 Validation 전용 비용 측정과 독립 Test 전 후보·판정 규칙 잠금
 - 잠근 RF·0.7의 별도 Test 5,407건 확인·시나리오별 한계 공개·로컬 advisory 연동 승인 묶음 생성
 - 승인 묶음의 완료·해시·입력·정책·버전 검증과 실제 RF FastAPI 추론·준비/미지원/실패/동시성 처리
+- 실제 C++ TCP 메시지·RF 응답·세션 저장의 종단 확인과 장애·큐 포화·동시 부하·종료 검증
 
-최근 작업은 `docs/operational_rf_api.md`와 `reports/operational_rf_api.md`에서 확인합니다. 승인 묶음을 검증해 원본 7개 RF·threshold 0.7을 실제 FastAPI에 연결했습니다. 기동 검증 실패 때 dummy로 대체하지 않으며 message만 판단하고 session_summary는 명시적으로 미지원 처리합니다. 전체 테스트 357개와 실제 Uvicorn HTTP 검사 5개가 통과했습니다. 실제 점수·판단이 직접 RF 계산과 일치하고 검사 서버도 정상 종료했습니다. 남은 큰 작업 묶음은 **2개**이며 다음은 실제 C++ TCP 종단 통합·장애·부하 검증입니다. 이전 Test의 FN 531건·잘못된 길이 FN 71/72건은 그대로이며 실제 운영·자동 차단 승인은 아닙니다.
+최근 작업은 `docs/operational_rf_tcp_runtime.md`와 `reports/operational_rf_tcp_runtime_v2.md`에서 확인합니다. 실제 C++ TCP 메시지 28개의 입력·RF 직접 계산·세션 저장이 일치했고 12개 종단 시나리오가 통과했습니다. 8세션·120메시지에서는 누락이 없었고, 별도 큐 포화 검사에서는 유실과 종료 폐기를 명시적으로 기록했습니다. 잘못된 응답·503·과도한 지연은 기존 성공을 최신 판단으로 바꾸지 않습니다. Python 테스트 365개와 C++ 수집기·runtime 테스트가 통과했습니다. 남은 큰 작업 묶음은 **1개**이며 다음은 재현 절차·최종 보고서·GitHub README·면접 자료 정리입니다. 이전 Test의 FN 531건·잘못된 길이 FN 71/72건은 그대로이며 실제 운영·자동 차단 승인은 아닙니다.
 
 현재 실행 배치와 `scripts/run_inference_api.py`는 실제 RF를 사용합니다. `inference_api.main:app`은 기존 수집·회귀용 dummy로 보존했으므로 직접 uvicorn으로 실행할 때는 `inference_api.rf_main:app`을 사용합니다. `/health`의 `model_kind=random_forest`·`model_version=rf-raw7-recovery-v1-t0.7`로 확인합니다.
+
+Server 실행 배치는 `--ai-rf`로 승인 응답을 검사하고 세션 요약을 추론에서 제외합니다. 직접 실행할 때도 `Server.exe --ai-rf`를 사용합니다. 종료 보고서의 `has_successful_result`와 `covers_latest_message`는 마지막 성공과 최신 메시지 판단 여부를 구분합니다. 자동 종단 검사는 기존 API·서버를 켜지 않은 상태에서 새 출력 경로로 실행합니다.
+
+```powershell
+python -X utf8 .\evaluation\verify_rf_tcp_runtime.py --artifact-dir artifacts\inference_api\rf_v1\tcp_manual_01 --report-prefix reports\rf_tcp_manual_01
+```
 
 선정 RF 비용 검증:
 

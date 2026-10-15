@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "AsyncFeatureQueue.h"
 #include "InferenceResultStore.h"
@@ -13,14 +13,17 @@ namespace feature_extraction
 {
 struct AiInferenceWorkerConfig
 {
-    std::wstring host = L"127.0.0.1";       // FastAPI ¼­¹ö ÁÖ¼Ò
-    std::uint16_t port = 8000;              // FastAPI ¼­¹ö Æ÷Æ®
-    std::wstring path = L"/predict";        // Ãß·Ğ ¿äÃ» °æ·Î
-    bool use_tls = false;                   // ·ÎÄÃ ÃÖ¼Ò µ¿ÀÛ ¹öÀü¿¡¼­´Â HTTP¸¦ »ç¿ëÇÑ´Ù.
+    std::wstring host = L"127.0.0.1";       // FastAPI ì„œë²„ ì£¼ì†Œ
+    std::uint16_t port = 8000;              // FastAPI ì„œë²„ í¬íŠ¸
+    std::wstring path = L"/predict";        // ì¶”ë¡  ìš”ì²­ ê²½ë¡œ
+    bool use_tls = false;                   // ë¡œì»¬ ìµœì†Œ ë™ì‘ ë²„ì „ì—ì„œëŠ” HTTPë¥¼ ì‚¬ìš©í•œë‹¤.
 
-    int connect_timeout_ms = 1000;          // ¿¬°á Á¦ÇÑ ½Ã°£
-    int send_timeout_ms = 1000;             // ¼Û½Å Á¦ÇÑ ½Ã°£
-    int receive_timeout_ms = 1000;          // ÀÀ´ä ¼ö½Å Á¦ÇÑ ½Ã°£
+    int connect_timeout_ms = 1000;          // ì—°ê²° ì œí•œ ì‹œê°„
+    int send_timeout_ms = 1000;             // ì†¡ì‹  ì œí•œ ì‹œê°„
+    int receive_timeout_ms = 1000;          // ì‘ë‹µ ìˆ˜ì‹  ì œí•œ ì‹œê°„
+    bool message_only = false;             // ê¸°ì¡´ ìˆ˜ì§‘ ê²½ë¡œëŠ” ë³´ì¡´í•˜ê³  ì‹¤ì œ RF ì‹¤í–‰ì—ì„œë§Œ ìš”ì•½ì„ ì œì™¸í•œë‹¤.
+    std::string expected_model_version;     // ë¹„ì–´ ìˆì§€ ì•Šìœ¼ë©´ ìŠ¹ì¸ RFì˜ ì ìˆ˜Â·ì •ì±…ê¹Œì§€ ê²€ì‚¬í•œë‹¤.
+    int shutdown_drain_ms = 2000;           // ì¢…ë£Œ í›„ ë‚¨ì€ íë¥¼ ë°°ì¶œí•  ì˜ˆì‚°ì´ë©° ì§„í–‰ ì¤‘ HTTPì˜ ê°•ì œ ì·¨ì†Œ ì‹œê°„ì€ ì•„ë‹ˆë‹¤.
 };
 
 class AiInferenceWorker
@@ -43,6 +46,9 @@ public:
     std::uint64_t FailedCount() const;
     std::uint64_t StoredResultCount() const;
     std::uint64_t ParseFailedCount() const;
+    std::uint64_t SkippedSummaryCount() const;
+    std::uint64_t ShutdownDiscardedCount() const;
+    std::uint64_t LateResponseCount() const;
     std::shared_ptr<InferenceResultStore> GetResultStore() const;
 
 private:
@@ -53,7 +59,7 @@ private:
     std::string BuildMessageJson(const FeatureQueueItem& item) const;
     std::string BuildSessionJson(const FeatureQueueItem& item) const;
 
-    bool PostJson(const std::string& json, std::string& outResponse) const;
+    bool PostJson(const std::string& json, std::string& outResponse, unsigned long& statusCode) const;
     bool ParseInferenceResponse(
         const std::string& response,
         const FeatureQueueItem& item,
@@ -69,9 +75,15 @@ private:
 
     std::atomic<bool> m_running{ false };
     std::thread m_workerThread;
+    std::mutex m_lifecycleMutex;            // ì‹œì‘Â·ì¢…ë£ŒÂ·joinì˜ ë™ì‹œ í˜¸ì¶œì„ ì§ë ¬í™”í•œë‹¤.
     std::atomic<std::uint64_t> m_sentCount{ 0 };
     std::atomic<std::uint64_t> m_failedCount{ 0 };
     std::atomic<std::uint64_t> m_storedResultCount{ 0 };
     std::atomic<std::uint64_t> m_parseFailedCount{ 0 };
+    std::atomic<std::uint64_t> m_skippedSummaryCount{ 0 };
+    std::atomic<std::uint64_t> m_shutdownDiscardedCount{ 0 };
+    std::atomic<std::uint64_t> m_lateResponseCount{ 0 };
+    std::chrono::steady_clock::time_point m_stopDeadline{};
+    std::atomic<bool> m_stopRequested{ false };
 };
 }

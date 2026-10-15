@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <chrono>
 #include <cstdint>
@@ -8,30 +8,36 @@ namespace feature_extraction
 {
 struct AiInferenceResult
 {
-    std::uint64_t session_id = 0;           // Ãß·Ğ °á°ú°¡ ¼ÓÇÑ ¼¼¼Ç ID
-    std::uint64_t queue_sequence_id = 0;    // Å¥¿¡¼­ ºÎ¿©ÇÑ feature ¼ø¹ø
+    std::uint64_t session_id = 0;           // ì¶”ë¡  ê²°ê³¼ê°€ ì†í•œ ì„¸ì…˜ ID
+    std::uint64_t queue_sequence_id = 0;    // íì—ì„œ ë¶€ì—¬í•œ feature ìˆœë²ˆ
 
-    std::string request_id;                 // Python ¼­¹ö°¡ ÀÀ´äÇÑ ¿äÃ» ID
-    std::string event_type;                 // C++ ¼­¹ö°¡ º¸³½ feature Å¸ÀÔ
-    std::string received_event_type;        // Python ¼­¹ö°¡ È®ÀÎÇÑ feature Å¸ÀÔ
+    std::string request_id;                 // Python ì„œë²„ê°€ ì‘ë‹µí•œ ìš”ì²­ ID
+    std::string event_type;                 // C++ ì„œë²„ê°€ ë³´ë‚¸ feature íƒ€ì…
+    std::string received_event_type;        // Python ì„œë²„ê°€ í™•ì¸í•œ feature íƒ€ì…
 
-    std::string label;                      // Ãß·Ğ ¶óº§
-    bool is_attack = false;                 // °ø°İ ¿©ºÎ
-    double confidence = 0.0;                // Ãß·Ğ ½Å·Úµµ
-    std::string model_version;              // ÀÀ´äÇÑ ¸ğµ¨ ¹öÀü
+    std::string label;                      // ì¶”ë¡  ë¼ë²¨
+    bool is_attack = false;                 // ê³µê²© ì—¬ë¶€
+    double confidence = 0.0;                // ì¶”ë¡  ì‹ ë¢°ë„
+    std::string model_version;              // ì‘ë‹µí•œ ëª¨ë¸ ë²„ì „
+    bool has_anomaly_score = false;         // ê¸°ì¡´ dummy ì‘ë‹µê³¼ ì‹¤ì œ RF ì ìˆ˜ë¥¼ êµ¬ë¶„í•œë‹¤.
+    double anomaly_score = 0.0;
+    double decision_threshold = 0.0;
+    std::string decision_scope;
+    std::uint64_t request_index = 0;        // ë§ˆì§€ë§‰ ì„±ê³µ íŒë‹¨ì´ ì„¸ì…˜ì˜ ëª‡ ë²ˆì§¸ ë©”ì‹œì§€ì¸ì§€ ë³´ì¡´í•œë‹¤.
+    double http_round_trip_ms = 0.0;        // workerì˜ HTTP ì™•ë³µ ì‹œê°„ì´ë©° í ëŒ€ê¸°ëŠ” í¬í•¨í•˜ì§€ ì•ŠëŠ”ë‹¤.
 
-    std::string raw_response;               // µğ¹ö±ë¿ë ¿øº» ÀÀ´ä JSON
+    std::string raw_response;               // ë””ë²„ê¹…ìš© ì›ë³¸ ì‘ë‹µ JSON
     std::chrono::system_clock::time_point received_wall_time{};
 };
 
 struct SessionInferenceState
 {
-    std::uint64_t session_id = 0;           // ¼¼¼Ç ID
-    bool has_latest_result = false;         // ÃÖ½Å °á°ú Á¸Àç ¿©ºÎ
-    AiInferenceResult latest_result;        // ¼¼¼ÇÀÇ ÃÖ½Å Ãß·Ğ °á°ú
+    std::uint64_t session_id = 0;           // ì„¸ì…˜ ID
+    bool has_latest_result = false;         // ìµœì‹  ê²°ê³¼ ì¡´ì¬ ì—¬ë¶€
+    AiInferenceResult latest_result;        // ì„¸ì…˜ì˜ ìµœì‹  ì¶”ë¡  ê²°ê³¼
 
-    std::uint64_t total_result_count = 0;   // ¼¼¼Ç¿¡ ÀúÀåµÈ ÀüÃ¼ °á°ú ¼ö
-    std::uint64_t attack_result_count = 0;  // °ø°İÀ¸·Î ÆÇ´ÜµÈ °á°ú ¼ö
+    std::uint64_t total_result_count = 0;   // ì„¸ì…˜ì— ì €ì¥ëœ ì „ì²´ ê²°ê³¼ ìˆ˜
+    std::uint64_t attack_result_count = 0;  // ê³µê²©ìœ¼ë¡œ íŒë‹¨ëœ ê²°ê³¼ ìˆ˜
 
     std::chrono::system_clock::time_point first_result_wall_time{};
     std::chrono::system_clock::time_point last_result_wall_time{};

@@ -1,9 +1,12 @@
-#include "AiInferenceWorker.h"
+﻿#include "AiInferenceWorker.h"
 
 #include <Windows.h>
 #include <winhttp.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Data.Json.h>
 
 #include <cctype>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -13,6 +16,7 @@
 #include <vector>
 
 #pragma comment(lib, "winhttp.lib")
+#pragma comment(lib, "windowsapp.lib")
 
 namespace feature_extraction
 {
@@ -34,113 +38,6 @@ std::string GetFeatureEventType(const FeatureQueueItem& item)
     return "message";
 }
 
-void SkipWhitespace(const std::string& json, std::size_t& pos)
-{
-    while (pos < json.size() && std::isspace(static_cast<unsigned char>(json[pos])))
-        ++pos;
-}
-
-std::size_t FindJsonValueStart(const std::string& json, const std::string& key)
-{
-    const std::string quotedKey = "\"" + key + "\"";
-    const std::size_t keyPos = json.find(quotedKey);
-    if (keyPos == std::string::npos)
-        return std::string::npos;
-
-    const std::size_t colonPos = json.find(':', keyPos + quotedKey.size());
-    if (colonPos == std::string::npos)
-        return std::string::npos;
-
-    std::size_t valuePos = colonPos + 1;
-    SkipWhitespace(json, valuePos);
-    return valuePos;
-}
-
-bool TryExtractJsonString(const std::string& json, const std::string& key, std::string& outValue)
-{
-    std::size_t pos = FindJsonValueStart(json, key);
-    if (pos == std::string::npos || pos >= json.size() || json[pos] != '"')
-        return false;
-
-    ++pos;
-    outValue.clear();
-    while (pos < json.size())
-    {
-        const char ch = json[pos++];
-        if (ch == '"')
-            return true;
-
-        if (ch == '\\' && pos < json.size())
-        {
-            const char escaped = json[pos++];
-            switch (escaped)
-            {
-            case '"': outValue.push_back('"'); break;
-            case '\\': outValue.push_back('\\'); break;
-            case 'n': outValue.push_back('\n'); break;
-            case 'r': outValue.push_back('\r'); break;
-            case 't': outValue.push_back('\t'); break;
-            default: outValue.push_back(escaped); break;
-            }
-        }
-        else
-        {
-            outValue.push_back(ch);
-        }
-    }
-
-    return false;
-}
-
-bool TryExtractJsonBool(const std::string& json, const std::string& key, bool& outValue)
-{
-    const std::size_t pos = FindJsonValueStart(json, key);
-    if (pos == std::string::npos)
-        return false;
-
-    if (json.compare(pos, 4, "true") == 0)
-    {
-        outValue = true;
-        return true;
-    }
-
-    if (json.compare(pos, 5, "false") == 0)
-    {
-        outValue = false;
-        return true;
-    }
-
-    return false;
-}
-
-bool TryExtractJsonDouble(const std::string& json, const std::string& key, double& outValue)
-{
-    std::size_t pos = FindJsonValueStart(json, key);
-    if (pos == std::string::npos)
-        return false;
-
-    const std::size_t start = pos;
-    while (pos < json.size())
-    {
-        const char ch = json[pos];
-        if (!std::isdigit(static_cast<unsigned char>(ch)) && ch != '-' && ch != '+' && ch != '.' && ch != 'e' && ch != 'E')
-            break;
-        ++pos;
-    }
-
-    if (pos == start)
-        return false;
-
-    try
-    {
-        outValue = std::stod(json.substr(start, pos - start));
-        return true;
-    }
-    catch (...)
-    {
-        return false;
-    }
-}
 }
 AiInferenceWorker::AiInferenceWorker(
     std::shared_ptr<AsyncFeatureQueue> featureQueue,
@@ -152,6 +49,9 @@ AiInferenceWorker::AiInferenceWorker(
 {
     if (!m_featureQueue)
         throw std::invalid_argument("AiInferenceWorker featureQueue must not be null");
+    if (m_config.connect_timeout_ms <= 0 || m_config.send_timeout_ms <= 0 ||
+        m_config.receive_timeout_ms <= 0 || m_config.shutdown_drain_ms < 0)
+        throw std::invalid_argument("AiInferenceWorker timeouts must be positive and drain must be nonnegative");
 
     if (!m_resultStore)
         m_resultStore = std::make_shared<InferenceResultStore>();
@@ -164,22 +64,31 @@ AiInferenceWorker::~AiInferenceWorker()
 
 bool AiInferenceWorker::Start()
 {
-    if (m_workerThread.joinable())
+    std::lock_guard<std::mutex> lock(m_lifecycleMutex);
+    if (m_workerThread.joinable() || m_featureQueue->IsClosed())
         return false;
 
     bool expected = false;
     if (!m_running.compare_exchange_strong(expected, true))
         return false;
 
-    m_workerThread = std::thread([this]()
+    try { m_workerThread = std::thread([this]()
         {
             WorkerLoop();
-        });
+        }); }
+    catch (...) { m_running.store(false); return false; }
     return true;
 }
 
 void AiInferenceWorker::Stop()
 {
+    std::lock_guard<std::mutex> lock(m_lifecycleMutex);
+    // 마감 시각을 먼저 기록하고 원자 플래그로 공개해 worker와의 데이터 경합을 피한다.
+    if (!m_stopRequested.load())
+    {
+        m_stopDeadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(m_config.shutdown_drain_ms);
+        m_stopRequested.store(true);
+    }
     const bool wasRunning = m_running.exchange(false);
     if (wasRunning || m_workerThread.joinable())
         m_featureQueue->Close();
@@ -213,6 +122,10 @@ std::uint64_t AiInferenceWorker::ParseFailedCount() const
     return m_parseFailedCount.load();
 }
 
+std::uint64_t AiInferenceWorker::SkippedSummaryCount() const { return m_skippedSummaryCount.load(); }
+std::uint64_t AiInferenceWorker::ShutdownDiscardedCount() const { return m_shutdownDiscardedCount.load(); }
+std::uint64_t AiInferenceWorker::LateResponseCount() const { return m_lateResponseCount.load(); }
+
 std::shared_ptr<InferenceResultStore> AiInferenceWorker::GetResultStore() const
 {
     return m_resultStore;
@@ -220,30 +133,65 @@ std::shared_ptr<InferenceResultStore> AiInferenceWorker::GetResultStore() const
 
 void AiInferenceWorker::WorkerLoop()
 {
+    // Windows SDK의 구조화된 JSON 파서를 worker 스레드에서 사용한다.
+    try { winrt::init_apartment(winrt::apartment_type::multi_threaded); }
+    catch (...)
+    {
+        m_failedCount += 1;
+        m_featureQueue->Close();
+        m_running.store(false);
+        return;
+    }
     while (true)
     {
         FeatureQueueItem item;
         if (!m_featureQueue->WaitPop(item))
             break;
 
-        ProcessItem(item);
+        if (m_stopRequested.load() && std::chrono::steady_clock::now() >= m_stopDeadline)
+            m_shutdownDiscardedCount += 1;
+        else
+        {
+            try { ProcessItem(item); }
+            catch (...) { m_failedCount += 1; } // AI 부가 경로의 오류가 TCP 서버를 종료시키지 않게 한다.
+        }
     }
 
     m_running.store(false);
+    winrt::uninit_apartment();
 }
 
 void AiInferenceWorker::ProcessItem(const FeatureQueueItem& item)
 {
+    if (m_config.message_only && item.type == FeatureQueueItemType::SessionSummary)
+    {
+        m_skippedSummaryCount += 1;
+        return;
+    }
     const std::string json = BuildJson(item);
 
     std::string response;
-    if (PostJson(json, response))
+    unsigned long statusCode = 0;
+    const auto started = std::chrono::steady_clock::now();
+    const bool sent = PostJson(json, response, statusCode);
+    const double elapsed = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - started).count();
+    // OS의 timeout 통지가 늦어져도 예산을 넘긴 판단을 최신 성공으로 저장하지 않는다.
+    const double responseBudget = static_cast<double>(m_config.connect_timeout_ms) + m_config.send_timeout_ms + m_config.receive_timeout_ms;
+    if (sent && elapsed > responseBudget)
+    {
+        m_lateResponseCount += 1;
+        m_failedCount += 1;
+        return;
+    }
+    if (sent)
     {
         m_sentCount += 1;
 
         AiInferenceResult result;
         if (ParseInferenceResponse(response, item, result))
         {
+            result.request_index = item.message.request_index;
+            result.http_round_trip_ms = elapsed;
             m_resultStore->Update(result);
             m_storedResultCount += 1;
 
@@ -263,6 +211,20 @@ void AiInferenceWorker::ProcessItem(const FeatureQueueItem& item)
     }
     else
     {
+        // 호환 모드에서도 명시적인 요약 미지원만 장애와 분리한다.
+        if (statusCode == 422 && item.type == FeatureQueueItemType::SessionSummary)
+        {
+            try
+            {
+                const auto body = winrt::Windows::Data::Json::JsonObject::Parse(winrt::to_hstring(response));
+                if (body.GetNamedObject(L"detail").GetNamedString(L"code") == L"unsupported_event_type")
+                {
+                    m_skippedSummaryCount += 1;
+                    return;
+                }
+            }
+            catch (...) {}
+        }
         m_failedCount += 1;
         std::cerr << "[AiInferenceWorker] failed to send feature. seq="
             << item.queue_sequence_id << std::endl;
@@ -367,6 +329,8 @@ std::string AiInferenceWorker::BuildSessionJson(const FeatureQueueItem& item) co
 
 bool AiInferenceWorker::ParseInferenceResponse(const std::string& response, const FeatureQueueItem& item, AiInferenceResult& outResult) const
 {
+    try
+    {
     AiInferenceResult result;
     result.session_id = ExtractSessionId(item);
     result.queue_sequence_id = item.queue_sequence_id;
@@ -374,54 +338,72 @@ bool AiInferenceWorker::ParseInferenceResponse(const std::string& response, cons
     result.raw_response = response;
     result.received_wall_time = std::chrono::system_clock::now();
 
-    if (!TryExtractJsonString(response, "request_id", result.request_id))
+    const auto body = winrt::Windows::Data::Json::JsonObject::Parse(winrt::to_hstring(response));
+    result.request_id = winrt::to_string(body.GetNamedString(L"request_id"));
+    result.label = winrt::to_string(body.GetNamedString(L"label"));
+    result.is_attack = body.GetNamedBoolean(L"is_attack");
+    result.confidence = body.GetNamedNumber(L"confidence");
+    result.model_version = winrt::to_string(body.GetNamedString(L"model_version", L""));
+    result.received_event_type = winrt::to_string(body.GetNamedString(L"received_event_type", L""));
+    if (result.request_id != std::to_string(item.queue_sequence_id) || result.label.empty() ||
+        !std::isfinite(result.confidence) || result.confidence < 0 || result.confidence > 1 ||
+        (!result.received_event_type.empty() && result.received_event_type != result.event_type))
         return false;
-
-    if (!TryExtractJsonString(response, "label", result.label))
-        return false;
-
-    if (!TryExtractJsonBool(response, "is_attack", result.is_attack))
-        return false;
-
-    if (!TryExtractJsonDouble(response, "confidence", result.confidence))
-        return false;
-
-    TryExtractJsonString(response, "model_version", result.model_version);
-    TryExtractJsonString(response, "received_event_type", result.received_event_type);
+    if (!m_config.expected_model_version.empty())
+    {
+        result.anomaly_score = body.GetNamedNumber(L"anomaly_score");
+        result.decision_threshold = body.GetNamedNumber(L"decision_threshold");
+        result.decision_scope = winrt::to_string(body.GetNamedString(L"decision_scope"));
+        result.has_anomaly_score = true;
+        const double expectedConfidence = result.is_attack ? result.anomaly_score : 1 - result.anomaly_score;
+        if (result.model_version != m_config.expected_model_version || result.received_event_type != "message" ||
+            !std::isfinite(result.anomaly_score) || result.anomaly_score < 0 || result.anomaly_score > 1 ||
+            result.decision_threshold != 0.7 || result.decision_scope != "local_advisory" ||
+            result.is_attack != (result.anomaly_score >= 0.7) ||
+            result.label != (result.is_attack ? "controlled_anomaly" : "normal") ||
+            std::abs(result.confidence - expectedConfidence) > 1e-10)
+            return false;
+    }
 
     outResult = result;
     return true;
+    }
+    catch (...) { return false; }
 }
-bool AiInferenceWorker::PostJson(const std::string& json, std::string& outResponse) const
+bool AiInferenceWorker::PostJson(const std::string& json, std::string& outResponse, unsigned long& statusCode) const
 {
     /*
-        ���� ����
+        생성 순서
         session
-        ������ connection
-            ������ request
+        └── connection
+            └── request
 
-        ������ ����
+        해제는 역순
     */
 
-    // ������ ����
+    // 브라우저 실행
     HINTERNET session = ::WinHttpOpen(
         L"NetworkDetectionAI/0.1",
-        WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
+        WINHTTP_ACCESS_TYPE_NO_PROXY,
         WINHTTP_NO_PROXY_NAME,
         WINHTTP_NO_PROXY_BYPASS,
         0);
     if (!session)
         return false;
 
-    // Ÿ�Ӿƿ� ����
-    ::WinHttpSetTimeouts(
+    // 타임아웃 설정
+    if (!::WinHttpSetTimeouts(
         session,
         m_config.connect_timeout_ms,
         m_config.connect_timeout_ms,
         m_config.send_timeout_ms,
-        m_config.receive_timeout_ms);
+        m_config.receive_timeout_ms))
+    {
+        ::WinHttpCloseHandle(session);
+        return false;
+    }
 
-    // ����Ʈ �ּ� �Է�
+    // 사이트 주소 입력
     HINTERNET connection = ::WinHttpConnect(
         session,
         m_config.host.c_str(),
@@ -433,7 +415,7 @@ bool AiInferenceWorker::PostJson(const std::string& json, std::string& outRespon
         return false;
     }
 
-    // POST ��û �ۼ�â ����
+    // POST 요청 작성창 열기
     const DWORD flags = m_config.use_tls ? WINHTTP_FLAG_SECURE : 0;
     HINTERNET request = ::WinHttpOpenRequest(
         connection,
@@ -450,7 +432,21 @@ bool AiInferenceWorker::PostJson(const std::string& json, std::string& outRespon
         return false;
     }
 
-    // ���� ���� ��ư Ŭ��
+    // 응답 본문 읽기 제한과 전체 응답 헤더 대기 제한은 서로 달라 명시적으로 고정한다.
+    DWORD headerTimeout = static_cast<DWORD>(m_config.receive_timeout_ms);
+    DWORD redirectPolicy = WINHTTP_OPTION_REDIRECT_POLICY_NEVER;
+    if (!::WinHttpSetTimeouts(request, m_config.connect_timeout_ms, m_config.connect_timeout_ms,
+            m_config.send_timeout_ms, m_config.receive_timeout_ms) ||
+        !::WinHttpSetOption(request, WINHTTP_OPTION_RECEIVE_RESPONSE_TIMEOUT, &headerTimeout, sizeof(headerTimeout)) ||
+        !::WinHttpSetOption(request, WINHTTP_OPTION_REDIRECT_POLICY, &redirectPolicy, sizeof(redirectPolicy)))
+    {
+        ::WinHttpCloseHandle(request);
+        ::WinHttpCloseHandle(connection);
+        ::WinHttpCloseHandle(session);
+        return false;
+    }
+
+    // 실제 전송 버튼 클릭
     const std::wstring headers = L"Content-Type: application/json\r\nAccept: application/json\r\n";
     BOOL ok = ::WinHttpSendRequest(
         request,
@@ -461,11 +457,11 @@ bool AiInferenceWorker::PostJson(const std::string& json, std::string& outRespon
         static_cast<DWORD>(json.size()),
         0);
 
-    // FastAPI ���� ������ �� ������ ��ٸ�
+    // FastAPI 서버 응답이 올 때까지 기다림
     if (ok)
         ok = ::WinHttpReceiveResponse(request, nullptr);
 
-    DWORD statusCode = 0;
+    statusCode = 0;
     DWORD statusSize = sizeof(statusCode);
     if (ok)
     {
@@ -483,7 +479,7 @@ bool AiInferenceWorker::PostJson(const std::string& json, std::string& outRespon
         DWORD availableSize = 0;
         do
         {
-            // ���� body ũ�� Ȯ��
+            // 응답 body 크기 확인
             availableSize = 0;
             if (!::WinHttpQueryDataAvailable(request, &availableSize))
             {
@@ -491,11 +487,18 @@ bool AiInferenceWorker::PostJson(const std::string& json, std::string& outRespon
                 break;
             }
 
-            // ���� ������ ������ ����
+            // 읽을 데이터 없으면 종료
             if (availableSize == 0)
                 break;
 
-            // ���� ������ �б�
+            // 신뢰하지 못하는 응답이 worker 메모리를 계속 늘리지 못하게 제한한다.
+            if (availableSize > 65536 || outResponse.size() + availableSize > 65536)
+            {
+                ok = FALSE;
+                break;
+            }
+
+            // 응답 데이터 읽기
             std::vector<char> buffer(availableSize + 1);
             DWORD bytesRead = 0;
             if (!::WinHttpReadData(request, buffer.data(), availableSize, &bytesRead))
@@ -504,7 +507,7 @@ bool AiInferenceWorker::PostJson(const std::string& json, std::string& outRespon
                 break;
             }
 
-            // outResponse�� �߰�
+            // outResponse에 추가
             outResponse.append(buffer.data(), bytesRead);
         } while (availableSize > 0);
     }

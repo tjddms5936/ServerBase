@@ -1,0 +1,978 @@
+{
+  "status": "complete",
+  "generated_at_utc": "2026-10-15T05:42:45.151338+00:00",
+  "health": {
+    "status": "ok",
+    "timestamp": "2026-10-15T05:42:29.699931+00:00",
+    "model_version": "rf-raw7-recovery-v1-t0.7",
+    "feature_contract_ids": {
+      "message": "server_application_message_v2",
+      "session_summary": "server_application_session_summary_v2"
+    },
+    "ready": true,
+    "model_kind": "random_forest",
+    "supported_event_types": [
+      "message"
+    ],
+    "decision_threshold": 0.7,
+    "decision_scope": "local_advisory",
+    "model_sha256": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+    "automatic_blocking_allowed": false
+  },
+  "scenario_count": 12,
+  "scenarios": [
+    {
+      "name": "actual_rf_messages",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\actual_rf_messages.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "1000",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "process_stop_ms": 33.4183000959456,
+      "server": {
+        "sent": 28,
+        "failed": 0,
+        "stored": 28,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 1000,
+        "skipped_summary": 3,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.5028,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 6,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 6,
+            "queue_sequence_id": "6",
+            "http_round_trip_ms": 7.3758,
+            "received_unix_ms": 1792042950353,
+            "response": {
+              "request_id": "6",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 1,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "41",
+            "request_count": 20,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 20,
+            "queue_sequence_id": "27",
+            "http_round_trip_ms": 9.1067,
+            "received_unix_ms": 1792042950530,
+            "response": {
+              "request_id": "27",
+              "label": "controlled_anomaly",
+              "is_attack": true,
+              "confidence": 0.7678987281461102,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.7678987281461102,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "42",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 2,
+            "queue_sequence_id": "30",
+            "http_round_trip_ms": 7.9979,
+            "received_unix_ms": 1792042950546,
+            "response": {
+              "request_id": "30",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 1,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "message_count": 28,
+      "direct_rf_equal": true,
+      "tcp_transaction_latency": {
+        "count": 9,
+        "median_ms": 0.6503998301923275,
+        "p95_ms": 5.969060026109219,
+        "max_ms": 6.166299805045128
+      },
+      "api_compute_path_latency": {
+        "count": 28,
+        "median_ms": 6.0332000721246,
+        "p95_ms": 6.658085179515183,
+        "max_ms": 7.211699616163969
+      },
+      "worker_last_result_http_latency": {
+        "count": 3,
+        "median_ms": 7.9979,
+        "p95_ms": 8.99582,
+        "max_ms": 9.1067
+      }
+    },
+    {
+      "name": "fault_busy",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_busy.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 0.4368000663816929,
+      "process_stop_ms": 31.519100069999695,
+      "server": {
+        "sent": 1,
+        "failed": 1,
+        "stored": 1,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3512,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 15.8549,
+            "received_unix_ms": 1792042951291,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.5490498716119749,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.45095012838802506,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "fault_bad_json",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_bad_json.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 0.40720030665397644,
+      "process_stop_ms": 31.217300333082676,
+      "server": {
+        "sent": 2,
+        "failed": 0,
+        "stored": 1,
+        "parse_failed": 1,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.4529,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 16.844,
+            "received_unix_ms": 1792042951998,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.5674779813511461,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.43252201864885387,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "fault_wrong_id",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_wrong_id.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 0.46430015936493874,
+      "process_stop_ms": 28.113400097936392,
+      "server": {
+        "sent": 2,
+        "failed": 0,
+        "stored": 1,
+        "parse_failed": 1,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3576,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 16.4441,
+            "received_unix_ms": 1792042952688,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.592785341122044,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.40721465887795605,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "fault_wrong_model",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_wrong_model.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 1.863599754869938,
+      "process_stop_ms": 27.93519990518689,
+      "server": {
+        "sent": 2,
+        "failed": 0,
+        "stored": 1,
+        "parse_failed": 1,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.4769,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 16.5255,
+            "received_unix_ms": 1792042953377,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.7023572219845597,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.2976427780154403,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "fault_wrong_policy",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_wrong_policy.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 0.4414999857544899,
+      "process_stop_ms": 28.54229975491762,
+      "server": {
+        "sent": 2,
+        "failed": 0,
+        "stored": 1,
+        "parse_failed": 1,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3559,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 16.1756,
+            "received_unix_ms": 1792042954082,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.5674779813511461,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.43252201864885387,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "fault_oversized",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_oversized.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 1.8480001017451286,
+      "process_stop_ms": 27.171199675649405,
+      "server": {
+        "sent": 1,
+        "failed": 1,
+        "stored": 1,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3847,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 17.5037,
+            "received_unix_ms": 1792042954774,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.672341389777551,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.3276586102224491,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "fault_delay",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\fault_delay.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "fault_tcp_reply_ms": 0.36010006442666054,
+      "process_stop_ms": 30.704999808222055,
+      "server": {
+        "sent": 1,
+        "failed": 1,
+        "stored": 1,
+        "parse_failed": 0,
+        "late_response": 1,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3194,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 2,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 15.42,
+            "received_unix_ms": 1792042955461,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.6275312454756883,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.3724687545243117,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "old_success_preserved_not_fresh": true
+    },
+    {
+      "name": "api_unavailable",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64158",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\api_unavailable.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "200",
+        "--ai-drain-ms",
+        "300",
+        "--ai-rf"
+      ],
+      "process_stop_ms": 1658.8824996724725,
+      "server": {
+        "sent": 0,
+        "failed": 1,
+        "stored": 0,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 200,
+        "skipped_summary": 0,
+        "shutdown_discarded": 3,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 1634.8331,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 3,
+            "closed": true,
+            "has_successful_result": false,
+            "covers_latest_message": false
+          }
+        ],
+        "unstarted_session_count": 40
+      }
+    },
+    {
+      "name": "bounded_queue_shutdown",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\bounded_queue_shutdown.server.json",
+        "--ai-queue-capacity",
+        "4",
+        "--ai-timeout-ms",
+        "1500",
+        "--ai-drain-ms",
+        "100",
+        "--ai-rf"
+      ],
+      "tcp_100_replies_ms": 9.174499660730362,
+      "process_stop_ms": 687.7660998143256,
+      "server": {
+        "sent": 1,
+        "failed": 0,
+        "stored": 1,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 1500,
+        "skipped_summary": 0,
+        "shutdown_discarded": 4,
+        "queue_dropped": 96,
+        "queue_size": 0,
+        "queue_capacity": 4,
+        "worker_stop_ms": 668.9919,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 100,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": false,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 726.1472,
+            "received_unix_ms": 1792042962172,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.7052316311556269,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.2947683688443731,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      }
+    },
+    {
+      "name": "concurrent_load",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\concurrent_load.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "1000",
+        "--ai-drain-ms",
+        "2000",
+        "--ai-rf"
+      ],
+      "process_stop_ms": 23.65320036187768,
+      "server": {
+        "sent": 120,
+        "failed": 0,
+        "stored": 120,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 1000,
+        "skipped_summary": 8,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3855,
+        "sessions": [
+          {
+            "session_id": "37",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "119",
+            "http_round_trip_ms": 7.9289,
+            "received_unix_ms": 1792042963869,
+            "response": {
+              "request_id": "119",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "39",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "116",
+            "http_round_trip_ms": 7.7423,
+            "received_unix_ms": 1792042963837,
+            "response": {
+              "request_id": "116",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "40",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "118",
+            "http_round_trip_ms": 7.8381,
+            "received_unix_ms": 1792042963861,
+            "response": {
+              "request_id": "118",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "34",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "113",
+            "http_round_trip_ms": 7.2734,
+            "received_unix_ms": 1792042963812,
+            "response": {
+              "request_id": "113",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "36",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "120",
+            "http_round_trip_ms": 7.8417,
+            "received_unix_ms": 1792042963877,
+            "response": {
+              "request_id": "120",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "33",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "114",
+            "http_round_trip_ms": 8.4323,
+            "received_unix_ms": 1792042963821,
+            "response": {
+              "request_id": "114",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "38",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "117",
+            "http_round_trip_ms": 15.6324,
+            "received_unix_ms": 1792042963853,
+            "response": {
+              "request_id": "117",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          },
+          {
+            "session_id": "35",
+            "request_count": 15,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 15,
+            "queue_sequence_id": "115",
+            "http_round_trip_ms": 7.7489,
+            "received_unix_ms": 1792042963829,
+            "response": {
+              "request_id": "115",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.9975524475524475,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.0024475524475524478,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      },
+      "tcp_transaction_latency": {
+        "count": 120,
+        "median_ms": 0.4958000499755144,
+        "p95_ms": 1.0211548302322624,
+        "max_ms": 1.7383997328579426
+      },
+      "message_count": 120,
+      "concurrent_clients": 8
+    },
+    {
+      "name": "compatibility_summary",
+      "command": [
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe",
+        "--ai-port",
+        "64121",
+        "--ai-report",
+        "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\inference_api\\rf_v1\\tcp_runtime_attempt5\\compatibility_summary.server.json",
+        "--ai-queue-capacity",
+        "1024",
+        "--ai-timeout-ms",
+        "1000",
+        "--ai-drain-ms",
+        "2000"
+      ],
+      "process_stop_ms": 19.250200130045414,
+      "server": {
+        "sent": 1,
+        "failed": 0,
+        "stored": 1,
+        "parse_failed": 0,
+        "late_response": 0,
+        "receive_timeout_ms": 1000,
+        "skipped_summary": 1,
+        "shutdown_discarded": 0,
+        "queue_dropped": 0,
+        "queue_size": 0,
+        "queue_capacity": 1024,
+        "worker_stop_ms": 0.3369,
+        "sessions": [
+          {
+            "session_id": "40",
+            "request_count": 1,
+            "closed": true,
+            "has_successful_result": true,
+            "covers_latest_message": true,
+            "last_success_request_index": 1,
+            "queue_sequence_id": "1",
+            "http_round_trip_ms": 15.994,
+            "received_unix_ms": 1792042964465,
+            "response": {
+              "request_id": "1",
+              "label": "normal",
+              "is_attack": false,
+              "confidence": 0.5578561356094154,
+              "model_version": "rf-raw7-recovery-v1-t0.7",
+              "received_event_type": "message",
+              "anomaly_score": 0.4421438643905847,
+              "decision_threshold": 0.7,
+              "decision_scope": "local_advisory"
+            }
+          }
+        ],
+        "unstarted_session_count": 40
+      }
+    }
+  ],
+  "api_graceful_shutdown": true,
+  "api_stop_ms": 355.58570036664605,
+  "elapsed_seconds": 17.80544270016253,
+  "protected_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\evaluation_manifest.json": "2940c4ac6bcd28819f6f6e4c4319a8fd745267aa195cf7d77b62006fa10efdb6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\decision_policy.json": "982f74d6d2c80dbb22a7635c0bad2dda2b992e4d6aa738d873e4563f1b418caa",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\deployment_manifest.json": "257a43ba5045ae4a258931c9cbaab6899c627b825f72c18203c389e39546aad8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\feature_schema.json": "2a8a4b3c95711b3acc71bc42de94488ee3121e4689a72f8b772a3a7d3dd2f6ca",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\model_input_schema.json": "a8c9d787f6a1217844ad37734d8d921c52aedc4f9e16696822a1894342f67bef",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\pipeline.joblib": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\evaluation_protocol_lock.json": "aeae96b91ad52b4063172df5ad69d26a23941a5e1dfb967bfe4eef596025e183",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\test_verdict.json": "8f4d956fb8f918464ab484e47c5dbf2e921b51fa70f9425943bf128c280baa2b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_lock.json": "dd23efecbd9e906d1bcf3f26cb8a02887347d448ca2abd1ef40a955a87a90cbd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\verify_rf_tcp_runtime.py": "a1d5a8132f62815af801ef80744083aa1a7e6dc888f64b05a9c23a8064aefbd4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\tests\\rf_runtime_api.py": "44d8999bd58fa13682a523dd08e4d3f4b2c4effcdd5d9b63ca26d6d21cf82f5e",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\BIN\\Debug\\Server.exe": "61e5db995573017812930b8408533249416607a2a5c9aeb122420fcf26088de3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\Server\\main.cpp": "56283658c20010e3e1818bca4d5b867e3079fe5f8d9968761728a5c1f5395102",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\run_server.bat": "90b5880490f5307fb6145598f9986dcf59e349b09b145fb9af8d3d2c558a3e51",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\AiRuntimeSupport.h": "b19677e5e5cff9a2fce860d2c13ab3de15e014c0508bdc36110f068acfe0da80",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\AiInferenceWorker.h": "8884219b4b25db8e71178595d79ba68622839c19bbc57c399fc5cd14922d9222",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\AiInferenceWorker.cpp": "1689121350220197d0bb36f10b9e615980d48f4beeefe7f215bd666f6cba4a4c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\InferenceResult.h": "5880f8bb163976782d50a43290d1cf9d69f39ac4f97c9f26913d0d2f08fcf672",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\FeatureCollector.cpp": "4388a89602752fa40848607ed58e11a8e7ee73a1eacfce345c2034b13c534325",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\AsyncFeatureQueue.cpp": "ff40da83c0fd3019c9fc25288e8ab587e37f37a0f3c74179b7ae0cf0ac37aa26",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\main.py": "d77e5f6095e6069ca953bcab8826533020ba07b52a0ca6ce0a5eb8deadc02e20",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\rf_main.py": "b01e9aa4ad4c6bf8408f5ef8b2d66a2e757206401d3d5ac7e1c774a8f9c1d41d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\rf_service.py": "0c6a25674a5c5826f0a281c4a464a947591818f2dc9a526400e609e5f9ee9f31",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\approved_bundle.py": "fbdf29abf796eb9a09864063b04701779b14b617245f3fcc9ae511884a9fb031",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\schemas.py": "8761b7db44be9af2b8f2ef1664cd9c2dceea6be7d3cd836a6bc7c051892357c1"
+  },
+  "training_performed": false,
+  "dataset_files_read": false,
+  "test_reselected": false,
+  "automatic_blocking": false,
+  "remaining_major_stages": 1,
+  "limitations": [
+    "로컬 기능·유한 부하 검사이며 새로운 정확도 평가·운영 SLA·장시간 안정성 증명이 아니다.",
+    "성공 경로는 실제 승인 RF이고 장애 응답·지연은 검사 전용 앱에서 주입했다.",
+    "TCP 왕복에는 RF 완료를 기다리는 시간이 포함되지 않는다. API·worker HTTP 지연과 분리한다.",
+    "종료 예산은 대기 큐 배출 기준이다. 진행 중 WinHTTP의 단계별 timeout까지 추가로 기다릴 수 있다.",
+    "세션·결과 저장소의 보존 상한·TTL, 실행 중 관리자 조회 API, 자동 재시도는 구현하지 않았다.",
+    "종료 시 열린 클라이언트 연결의 모두 닫힘은 별도 보장이 아니다. 검사는 연결을 닫고 worker 진행·큐 적체 상태에서 종료했다."
+  ]
+}

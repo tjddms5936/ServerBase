@@ -251,3 +251,9 @@ benchmark_latency.py
 - FP와 TN의 숫자형 및 범주형 feature 차이
 - 분류 threshold 변화에 따른 Precision, Recall, FPR 변화
 - Logistic Regression 계수 분석
+
+## 실제 RF TCP 종단 검사
+
+`verify_rf_tcp_runtime.py`는 실제 C++ 서버·승인 RF API·테스트 클라이언트를 실행해 전달·판단·세션 저장·장애·큐 포화·동시 세션·종료를 확인합니다. 성공 경로는 실제 RF이며 오류 응답·지연은 `tests/rf_runtime_api.py`의 로컬 검사 전용 앱에서 주입합니다. 운영 API에는 제어 경로를 추가하지 않습니다.
+
+최종 완료 결과는 `reports/operational_rf_tcp_runtime_v2.json/.md`이며 12개 시나리오가 통과했습니다. 접미사 없는 보고서는 초기 성공 시도의 기록으로 보존합니다. 자세한 재실행·빌드·수동 조회는 `docs/operational_rf_tcp_runtime.md`를 확인합니다. 원본 CSV·공식 Test를 읽거나 모델을 재학습하지 않는 기능 검사이며 기존 출력은 덮어쓰지 않습니다. Python 전체 회귀 테스트의 합성 fixture 학습과 실제 모델 재학습도 구분합니다.

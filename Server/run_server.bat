@@ -10,5 +10,5 @@ if not exist "BIN\Debug\Server.exe" (
 
 echo [Server] Starting C++ TCP server.
 echo [Server] Type quit and press Enter to stop.
-BIN\Debug\Server.exe
+BIN\Debug\Server.exe --ai-rf
 pause

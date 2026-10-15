@@ -122,6 +122,7 @@ figures/
 - `operational_recovery_test.json/.md`: 잠근 RF·0.7의 별도 Test 5,407건 성능·coverage·시나리오/캠페인/첫 메시지·burst 진단과 로컬 advisory 승인 판단입니다. FP 68·FN 531, 전체 FPR 1.72%·정상 묶음 FPR 5.18%·Recall 63.20%로 통과했지만 잘못된 길이 FN 71/72건을 공개합니다. Test 접근 전 비용 완료·후보 잠금·평가 protocol·예약을 확인했고 모델·threshold·기준을 바꾸지 않았습니다. FastAPI 연결·실제 운영·자동 차단은 후속 또는 범위 밖입니다.
 - `operational_recovery_test.predictions.csv`: Test 전체 5,407건의 원본 식별자·입력·독립 정답·RF 확률·고정 0.7 판단·오분류 종류입니다. 같은 행의 추적·재현 자료이며 새 학습 데이터나 새로운 독립 평가 자료로 자동 재사용하지 않습니다. 원본 Test와 이 CSV는 이제 노출된 결과입니다.
 - `operational_rf_api.json/.md`: 승인 RF의 실제 Uvicorn 기동·health·수작업 snapshot 3개와 직접 RF 계산 일치·summary 미지원·입력 거부·수집 비활성·정상 종료·보호 파일 21개 해시 결과입니다. 새 탐지 성능이나 Test 평가가 아니고 C++ 종단 검증도 아직 하지 않았습니다. 이전 승인 manifest는 당시 상태를 보존하며 현재 실제 추론 연결 상태는 이 보고서와 API 문서에서 확인합니다.
+- `operational_rf_tcp_runtime_v2.json/.md`: 최종 빌드·구현·설정·검사 파일의 보호 해시 33개와 실제 C++ TCP 입력·RF 직접 계산·session별 저장, 7개 응답 장애·API 미실행·큐 포화·8세션 부하·종료·요약 호환의 12개 종단 시나리오입니다. 접미사 없는 `operational_rf_tcp_runtime.json/.md`는 초기 성공 시도이며 덮어쓰지 않고 보존합니다. 마지막 성공과 최신 메시지 포함 여부·유실·늦은 응답·종료 폐기를 구분합니다. 새 정확도·공식 Test 재평가·최대 처리량·운영 SLA·자동 차단 승인이 아닙니다.
 - `logistic_error_analysis.json`: 공격 유형별 Recall, FN, 정상 트래픽 FP 및 feature 차이를 저장한 정형 분석 결과입니다.
 - `logistic_error_analysis.md`: 오분류 원인과 다음 RandomForest 실험 가설을 설명하는 포트폴리오용 보고서입니다.
 - `model_comparison.md`: 현재 Logistic Regression과 RandomForest의 성능, 추론 시간, 저장 비용 및 주요 학습 배열 크기를 비교하는 한글 보고서입니다.

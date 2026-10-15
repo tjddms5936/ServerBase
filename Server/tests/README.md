@@ -21,3 +21,14 @@ msbuild .\tests\FeatureCollectorTests.vcxproj /p:Configuration=Debug /p:Platform
 - 메시지 0개 또는 1개 세션의 평균 간격이 0인지
 
 실제 서버와 FastAPI 연동 테스트는 AI 폴더의 `tests/run_runtime_e2e.py`로 수행한다.
+
+## 실제 RF runtime 검사
+
+`AiRuntimeTests.vcxproj`는 큐 포화·동시 생산자·닫힘으로 대기자 깨우기·worker 중복 시작/동시 종료·닫힌 큐 재시작 거부·요약의 무전송 제외·미판단과 정상 구분을 검사한다. 실제 모델이나 HTTP 서버가 필요 없다. 4개 검사 그룹이 통과했다.
+
+```powershell
+msbuild .\tests\AiRuntimeTests.vcxproj /p:Configuration=Debug /p:Platform=x64
+.\tests\bin\Debug\AiRuntimeTests.exe
+```
+
+실제 RF 종단 검사는 AI의 `evaluation/verify_rf_tcp_runtime.py`로 별도 실행한다. 기존 dummy 기반 8개 프로토콜 검사와 구분하며, 실행 방법·12개 시나리오·결과 저장 데모·한계는 AI의 `docs/operational_rf_tcp_runtime.md`에 정리했다. 검사 전용 제어 API는 운영 진입점에 포함하지 않는다.

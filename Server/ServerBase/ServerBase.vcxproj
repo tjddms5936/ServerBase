@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\FeatureExtraction\AiInferenceWorker.h" />
+    <ClInclude Include="..\FeatureExtraction\AiRuntimeSupport.h" />
     <ClInclude Include="..\FeatureExtraction\AsyncFeatureQueue.h" />
     <ClInclude Include="..\FeatureExtraction\FeatureCollector.h" />
     <ClInclude Include="..\FeatureExtraction\InferenceResult.h" />
@@ -183,6 +184,9 @@
   <ItemGroup>
     <ClCompile Include="..\FeatureExtraction\AiInferenceWorker.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <!-- 기존 Windows SDK의 C++/WinRT 지연 이름 탐색 호환성은 이 파일에만 적용한다. -->
+      <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <ClCompile Include="..\FeatureExtraction\AsyncFeatureQueue.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
