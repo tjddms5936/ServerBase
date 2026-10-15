@@ -1,0 +1,1431 @@
+{
+  "report_version": "v1",
+  "status": "complete",
+  "generated_at_utc": "2026-10-15T01:23:44.361544+00:00",
+  "experiment_id": "operational_recovery_test_v1",
+  "dataset_id": "operational_message_recovery_campaign_v1",
+  "selected_model_id": "selected_recovery_rf",
+  "candidate_id": "rf_raw7",
+  "threshold": 0.7,
+  "feature_order": [
+    "packet_size",
+    "payload_size",
+    "connection_duration_ms",
+    "message_interval_ms",
+    "bytes_received_total",
+    "bytes_sent_total",
+    "error_count_total"
+  ],
+  "descriptor": {
+    "id": "selected_recovery_rf",
+    "kind": "random_forest",
+    "candidate_id": "rf_raw7",
+    "threshold": 0.7,
+    "input_transform_id": "raw7_v1",
+    "requires_ordered_session_prefix": false,
+    "files": {
+      "model": {
+        "path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\pipeline.joblib",
+        "sha256": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+        "bytes": 773652
+      },
+      "feature_schema": {
+        "path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\feature_schema.json",
+        "sha256": "2a8a4b3c95711b3acc71bc42de94488ee3121e4689a72f8b772a3a7d3dd2f6ca",
+        "bytes": 1888
+      },
+      "model_input_schema": {
+        "path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\model_input_schema.json",
+        "sha256": "a8c9d787f6a1217844ad37734d8d921c52aedc4f9e16696822a1894342f67bef",
+        "bytes": 1376
+      },
+      "label_map": {
+        "path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\label_map.json",
+        "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+        "bytes": 49
+      },
+      "decision_policy": {
+        "path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\decision_policy.json",
+        "sha256": "eeac5d36d21804fe7fb98a2018d825df940cb39c8a32aacff41478a67e44f5a0",
+        "bytes": 298
+      }
+    },
+    "validation_metrics": {
+      "rows": 2737,
+      "accuracy": 0.8852758494702229,
+      "precision": 0.9259962049335864,
+      "recall": 0.6395806028833552,
+      "f1": 0.7565891472868217,
+      "roc_auc": 0.9676329637847723,
+      "average_precision": 0.9225972848142006,
+      "log_loss": 0.197527559418332,
+      "false_positive_rate": 0.019756838905775075,
+      "false_negative_rate": 0.36041939711664484,
+      "confusion_matrix": {
+        "label_order": [
+          0,
+          1
+        ],
+        "rows": "actual",
+        "columns": "predicted",
+        "values": [
+          [
+            1935,
+            39
+          ],
+          [
+            275,
+            488
+          ]
+        ],
+        "tn": 1935,
+        "fp": 39,
+        "fn": 275,
+        "tp": 488
+      }
+    }
+  },
+  "candidate_lock_sha256": "dd23efecbd9e906d1bcf3f26cb8a02887347d448ca2abd1ef40a955a87a90cbd",
+  "cost_manifest_sha256": "74962d56105f54944b07f32690e0684df7c9f8535d2eacda52e5554e0d057048",
+  "policy_signature": "e9be584afd5f7eac93b69737d0c0f741891c128670c1db5150d06c3612322b3f",
+  "evaluation_protocol_lock_sha256": "aeae96b91ad52b4063172df5ad69d26a23941a5e1dfb967bfe4eef596025e183",
+  "test": {
+    "metrics": {
+      "rows": 5407,
+      "accuracy": 0.8892176807841686,
+      "precision": 0.9306122448979591,
+      "recall": 0.632016632016632,
+      "f1": 0.752785802723896,
+      "roc_auc": 0.966644446588947,
+      "average_precision": 0.9131240477834263,
+      "log_loss": 0.2009507128918891,
+      "false_positive_rate": 0.017154389505549948,
+      "false_negative_rate": 0.367983367983368,
+      "confusion_matrix": {
+        "label_order": [
+          0,
+          1
+        ],
+        "rows": "actual",
+        "columns": "predicted",
+        "values": [
+          [
+            3896,
+            68
+          ],
+          [
+            531,
+            912
+          ]
+        ],
+        "tn": 3896,
+        "fp": 68,
+        "fn": 531,
+        "tp": 912
+      }
+    },
+    "by_scenario": {
+      "controlled_burst_chat": {
+        "rows": 1299,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 1299,
+        "fp": 0,
+        "fn": 460,
+        "recall": 0.6458814472671286,
+        "false_positive_rate": null
+      },
+      "malformed_chat_payload": {
+        "rows": 72,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 72,
+        "fp": 0,
+        "fn": 0,
+        "recall": 1.0,
+        "false_positive_rate": null
+      },
+      "malformed_length_chat": {
+        "rows": 72,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 72,
+        "fp": 0,
+        "fn": 71,
+        "recall": 0.013888888888888888,
+        "false_positive_rate": null
+      },
+      "normal_batched_chat": {
+        "rows": 1293,
+        "normal_rows": 1293,
+        "controlled_anomaly_rows": 0,
+        "fp": 67,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.051817478731631866
+      },
+      "normal_chat": {
+        "rows": 1321,
+        "normal_rows": 1321,
+        "controlled_anomaly_rows": 0,
+        "fp": 1,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.000757002271006813
+      },
+      "normal_fragmented_chat": {
+        "rows": 1350,
+        "normal_rows": 1350,
+        "controlled_anomaly_rows": 0,
+        "fp": 0,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.0
+      }
+    },
+    "by_message_position": {
+      "first_message": {
+        "rows": 432,
+        "normal": 216,
+        "anomaly": 216,
+        "fp": 8,
+        "fn": 136,
+        "fpr": 0.037037037037037035,
+        "recall": 0.37037037037037035
+      },
+      "later_messages": {
+        "rows": 4975,
+        "normal": 3748,
+        "anomaly": 1227,
+        "fp": 60,
+        "fn": 395,
+        "fpr": 0.016008537886873,
+        "recall": 0.6780766096169519
+      }
+    },
+    "by_campaign": {
+      "rec_261014_3878ea96_c4": {
+        "rows": 2703,
+        "normal": 1966,
+        "anomaly": 737,
+        "fp": 25,
+        "fn": 258,
+        "false_positive_rate": 0.01271617497456765,
+        "recall": 0.649932157394844
+      },
+      "rec_261014_3878ea96_c5": {
+        "rows": 2704,
+        "normal": 1998,
+        "anomaly": 706,
+        "fp": 43,
+        "fn": 273,
+        "false_positive_rate": 0.021521521521521522,
+        "recall": 0.613314447592068
+      }
+    },
+    "burst_prefix": {
+      "burst_sessions": [
+        {
+          "run_id": "rec_261014_3878ea96_c4_r00_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 15,
+          "fn": 2,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.3039999999999985
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r00_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 17,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 1.707
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r00_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 12,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.23099999999999987
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r00_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 14,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.16
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r01_controlled_burst_chat",
+          "session_id": "37",
+          "message_rows": 23,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.609
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r01_controlled_burst_chat",
+          "session_id": "38",
+          "message_rows": 20,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 2.1530000000000005
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r01_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 16,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 1.8979999999999997
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r01_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 19,
+          "fn": 3,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.9670000000000001
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r02_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 19,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 2.741
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r02_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 23,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.147
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r02_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 12,
+          "fn": 12,
+          "first_positive_request_index": null,
+          "first_positive_elapsed_from_first_message_ms": null
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r02_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 22,
+          "fn": 2,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.18799999999999883
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r03_controlled_burst_chat",
+          "session_id": "38",
+          "message_rows": 20,
+          "fn": 9,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 1.6860000000000004
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r03_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 19,
+          "fn": 7,
+          "first_positive_request_index": 6,
+          "first_positive_elapsed_from_first_message_ms": 2.2630000000000003
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r03_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 20,
+          "fn": 20,
+          "first_positive_request_index": null,
+          "first_positive_elapsed_from_first_message_ms": null
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r03_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 22,
+          "fn": 12,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 2.166
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r04_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 22,
+          "fn": 12,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 4.058
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r04_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 21,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.609
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r04_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 21,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.369
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r04_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 24,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.457
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r05_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 13,
+          "fn": 5,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 2.186
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r05_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 17,
+          "fn": 7,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 1.542
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r05_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 18,
+          "fn": 17,
+          "first_positive_request_index": 17,
+          "first_positive_elapsed_from_first_message_ms": 1.8670000000000009
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r05_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 20,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.508
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r06_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 17,
+          "fn": 8,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 2.9299999999999997
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r06_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 19,
+          "fn": 14,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 0.8309999999999995
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r06_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 15,
+          "fn": 8,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 0.809
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r06_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 18,
+          "fn": 11,
+          "first_positive_request_index": 4,
+          "first_positive_elapsed_from_first_message_ms": 0.23199999999999932
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r07_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 15,
+          "fn": 7,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 0.44899999999999995
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r07_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 16,
+          "fn": 8,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 1.619
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r07_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 18,
+          "fn": 8,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 1.028
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r07_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 23,
+          "fn": 8,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 1.124
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r08_controlled_burst_chat",
+          "session_id": "37",
+          "message_rows": 17,
+          "fn": 6,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 0.5979999999999999
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r08_controlled_burst_chat",
+          "session_id": "38",
+          "message_rows": 14,
+          "fn": 1,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r08_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 22,
+          "fn": 2,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c4_r08_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 22,
+          "fn": 5,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.25300000000000006
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r00_controlled_burst_chat",
+          "session_id": "37",
+          "message_rows": 12,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 1.915
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r00_controlled_burst_chat",
+          "session_id": "38",
+          "message_rows": 16,
+          "fn": 3,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 3.542
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r00_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 22,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 2.051
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r00_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 20,
+          "fn": 2,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 2.4369999999999994
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r01_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 22,
+          "fn": 20,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 3.003
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r01_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 18,
+          "fn": 8,
+          "first_positive_request_index": 8,
+          "first_positive_elapsed_from_first_message_ms": 0.9849999999999994
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r01_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 24,
+          "fn": 0,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r01_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 12,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.117
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r02_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 22,
+          "fn": 4,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.30600000000000094
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r02_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 14,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.5349999999999999
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r02_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 24,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.30799999999999983
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r02_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 12,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.126
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r03_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 24,
+          "fn": 24,
+          "first_positive_request_index": null,
+          "first_positive_elapsed_from_first_message_ms": null
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r03_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 21,
+          "fn": 18,
+          "first_positive_request_index": 13,
+          "first_positive_elapsed_from_first_message_ms": 1.3079999999999998
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r03_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 19,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.40099999999999997
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r03_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 12,
+          "fn": 10,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.4800000000000004
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r04_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 13,
+          "fn": 3,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 0.49400000000000005
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r04_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 22,
+          "fn": 1,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r04_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 14,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.813
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r04_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 23,
+          "fn": 4,
+          "first_positive_request_index": 5,
+          "first_positive_elapsed_from_first_message_ms": 0.726
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r05_controlled_burst_chat",
+          "session_id": "37",
+          "message_rows": 16,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.42600000000000005
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r05_controlled_burst_chat",
+          "session_id": "38",
+          "message_rows": 14,
+          "fn": 2,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r05_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 13,
+          "fn": 1,
+          "first_positive_request_index": 2,
+          "first_positive_elapsed_from_first_message_ms": 0.42200000000000004
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r05_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 20,
+          "fn": 3,
+          "first_positive_request_index": 3,
+          "first_positive_elapsed_from_first_message_ms": 0.49499999999999994
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r06_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 18,
+          "fn": 6,
+          "first_positive_request_index": 4,
+          "first_positive_elapsed_from_first_message_ms": 0.46900000000000003
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r06_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 13,
+          "fn": 7,
+          "first_positive_request_index": 8,
+          "first_positive_elapsed_from_first_message_ms": 0.643
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r06_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 14,
+          "fn": 1,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r06_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 12,
+          "fn": 8,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 0.912
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r07_controlled_burst_chat",
+          "session_id": "38",
+          "message_rows": 23,
+          "fn": 18,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 2.638
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r07_controlled_burst_chat",
+          "session_id": "39",
+          "message_rows": 17,
+          "fn": 15,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 5.977
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r07_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 16,
+          "fn": 11,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 2.7
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r07_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 19,
+          "fn": 6,
+          "first_positive_request_index": 6,
+          "first_positive_elapsed_from_first_message_ms": 0.356
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r08_controlled_burst_chat",
+          "session_id": "40",
+          "message_rows": 20,
+          "fn": 18,
+          "first_positive_request_index": 19,
+          "first_positive_elapsed_from_first_message_ms": 4.6240000000000006
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r08_controlled_burst_chat",
+          "session_id": "41",
+          "message_rows": 18,
+          "fn": 17,
+          "first_positive_request_index": 17,
+          "first_positive_elapsed_from_first_message_ms": 1.5970000000000013
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r08_controlled_burst_chat",
+          "session_id": "42",
+          "message_rows": 23,
+          "fn": 0,
+          "first_positive_request_index": 1,
+          "first_positive_elapsed_from_first_message_ms": 0.0
+        },
+        {
+          "run_id": "rec_261014_3878ea96_c5_r08_controlled_burst_chat",
+          "session_id": "43",
+          "message_rows": 12,
+          "fn": 11,
+          "first_positive_request_index": 9,
+          "first_positive_elapsed_from_first_message_ms": 0.6930000000000014
+        }
+      ],
+      "burst_by_request_index": [
+        {
+          "request_index": 1,
+          "observed_messages": 72,
+          "fn": 65
+        },
+        {
+          "request_index": 2,
+          "observed_messages": 72,
+          "fn": 51
+        },
+        {
+          "request_index": 3,
+          "observed_messages": 72,
+          "fn": 39
+        },
+        {
+          "request_index": 4,
+          "observed_messages": 72,
+          "fn": 43
+        },
+        {
+          "request_index": 5,
+          "observed_messages": 72,
+          "fn": 24
+        },
+        {
+          "request_index": 6,
+          "observed_messages": 72,
+          "fn": 28
+        },
+        {
+          "request_index": 7,
+          "observed_messages": 72,
+          "fn": 29
+        },
+        {
+          "request_index": 8,
+          "observed_messages": 72,
+          "fn": 26
+        },
+        {
+          "request_index": 9,
+          "observed_messages": 72,
+          "fn": 12
+        },
+        {
+          "request_index": 10,
+          "observed_messages": 72,
+          "fn": 14
+        },
+        {
+          "request_index": 11,
+          "observed_messages": 72,
+          "fn": 13
+        },
+        {
+          "request_index": 12,
+          "observed_messages": 72,
+          "fn": 17
+        },
+        {
+          "request_index": 13,
+          "observed_messages": 64,
+          "fn": 12
+        },
+        {
+          "request_index": 14,
+          "observed_messages": 60,
+          "fn": 13
+        },
+        {
+          "request_index": 15,
+          "observed_messages": 54,
+          "fn": 17
+        },
+        {
+          "request_index": 16,
+          "observed_messages": 51,
+          "fn": 16
+        },
+        {
+          "request_index": 17,
+          "observed_messages": 46,
+          "fn": 4
+        },
+        {
+          "request_index": 18,
+          "observed_messages": 41,
+          "fn": 10
+        },
+        {
+          "request_index": 19,
+          "observed_messages": 35,
+          "fn": 7
+        },
+        {
+          "request_index": 20,
+          "observed_messages": 29,
+          "fn": 7
+        },
+        {
+          "request_index": 21,
+          "observed_messages": 22,
+          "fn": 4
+        },
+        {
+          "request_index": 22,
+          "observed_messages": 19,
+          "fn": 6
+        },
+        {
+          "request_index": 23,
+          "observed_messages": 10,
+          "fn": 2
+        },
+        {
+          "request_index": 24,
+          "observed_messages": 4,
+          "fn": 1
+        }
+      ],
+      "interpretation": "뒤쪽 prefix의 분모는 그 길이까지 관측된 세션뿐이다. 한 번 탐지했다고 이전 누락을 정답으로 바꾸지 않는다."
+    }
+  },
+  "criteria": {
+    "max_false_positive_rate": 0.1,
+    "max_normal_batched_false_positive_rate": 0.1,
+    "min_recall": 0.5,
+    "max_single_request_p95_ms": 25.0,
+    "max_process_peak_rss_mib": 512.0,
+    "max_deployment_artifacts_mib": 50.0,
+    "scope": "local_advisory_integration_only",
+    "test_rule": "새 Validation·비용으로 잠근 후보 하나만 새 Test에서 승인 확인하며 다른 후보로 대체하지 않는다."
+  },
+  "cost_summary": {
+    "process_runs": 3,
+    "single_request_median_ms": 4.33705,
+    "single_request_worst_process_p95_ms": 4.7538,
+    "model_only_median_ms": 4.211550000000001,
+    "batch_median_ms": 12.550450000000001,
+    "batch_amortized_per_message_median_ms": 0.004585476799415419,
+    "maximum_native_process_peak_rss_bytes": 162426880,
+    "required_model_files_bytes": 777263,
+    "model_and_scaler_array_bytes": 2996816,
+    "memory_scope": "whole_isolated_process_including_framework_inputs_and_benchmark_caches"
+  },
+  "validation_reference": {
+    "candidate_id": "rf_raw7",
+    "input_transform_id": "raw7_v1",
+    "threshold": 0.7,
+    "metrics": {
+      "rows": 2737,
+      "accuracy": 0.8852758494702229,
+      "precision": 0.9259962049335864,
+      "recall": 0.6395806028833552,
+      "f1": 0.7565891472868217,
+      "roc_auc": 0.9676329637847723,
+      "average_precision": 0.9225972848142006,
+      "log_loss": 0.197527559418332,
+      "false_positive_rate": 0.019756838905775075,
+      "false_negative_rate": 0.36041939711664484,
+      "confusion_matrix": {
+        "label_order": [
+          0,
+          1
+        ],
+        "rows": "actual",
+        "columns": "predicted",
+        "values": [
+          [
+            1935,
+            39
+          ],
+          [
+            275,
+            488
+          ]
+        ],
+        "tn": 1935,
+        "fp": 39,
+        "fn": 275,
+        "tp": 488
+      }
+    },
+    "by_scenario": {
+      "controlled_burst_chat": {
+        "rows": 691,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 691,
+        "fp": 0,
+        "fn": 242,
+        "recall": 0.6497829232995659,
+        "false_positive_rate": null
+      },
+      "malformed_chat_payload": {
+        "rows": 36,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 36,
+        "fp": 0,
+        "fn": 0,
+        "recall": 1.0,
+        "false_positive_rate": null
+      },
+      "malformed_length_chat": {
+        "rows": 36,
+        "normal_rows": 0,
+        "controlled_anomaly_rows": 36,
+        "fp": 0,
+        "fn": 33,
+        "recall": 0.08333333333333333,
+        "false_positive_rate": null
+      },
+      "normal_batched_chat": {
+        "rows": 698,
+        "normal_rows": 698,
+        "controlled_anomaly_rows": 0,
+        "fp": 36,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.05157593123209169
+      },
+      "normal_chat": {
+        "rows": 651,
+        "normal_rows": 651,
+        "controlled_anomaly_rows": 0,
+        "fp": 3,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.004608294930875576
+      },
+      "normal_fragmented_chat": {
+        "rows": 625,
+        "normal_rows": 625,
+        "controlled_anomaly_rows": 0,
+        "fp": 0,
+        "fn": 0,
+        "recall": null,
+        "false_positive_rate": 0.0
+      }
+    },
+    "by_message_position": {
+      "first_message": {
+        "rows": 216,
+        "normal": 108,
+        "anomaly": 108,
+        "fp": 5,
+        "fn": 63,
+        "fpr": 0.046296296296296294,
+        "recall": 0.4166666666666667
+      },
+      "later_messages": {
+        "rows": 2521,
+        "normal": 1866,
+        "anomaly": 655,
+        "fp": 34,
+        "fn": 212,
+        "fpr": 0.01822079314040729,
+        "recall": 0.6763358778625954
+      }
+    },
+    "rejection_reasons": [],
+    "validation_feasible": true
+  },
+  "test_input_sha256": {
+    "X_test.csv": "76001bc12ed7a3c2d424281a14aa3a6da5cb5df8dfaf082e57ef8d3ed6fe30c9",
+    "y_test.csv": "71f8d9d12c17dd1c434091b65677277d6a0e16c37c746abed8c12299a834a0c8",
+    "metadata_test.csv": "99fab55c097a70e143a7b01dfcdfcf2900e7462dec0f7b45cda27602b60eecb4"
+  },
+  "coverage": {
+    "rows": 5407,
+    "campaigns": 2,
+    "runs": 108,
+    "sessions": 432,
+    "excluded_header_runs": 18,
+    "excluded_sources": [
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r00_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r01_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r02_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r03_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r04_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r05_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r06_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r07_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c4",
+        "run_id": "rec_261014_3878ea96_c4_r08_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r00_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r01_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r02_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r03_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r04_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r05_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r06_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r07_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      },
+      {
+        "campaign_id": "rec_261014_3878ea96_c5",
+        "run_id": "rec_261014_3878ea96_c5_r08_invalid_frame_size",
+        "scenario_id": "invalid_frame_size",
+        "reason": [
+          "헤더 거부 시나리오: 메시지 snapshot 0개가 정상 기대값이며 메시지 모델 학습에는 사용할 수 없습니다."
+        ]
+      }
+    ]
+  },
+  "approval": {
+    "status": "approved_for_local_advisory_integration",
+    "reasons": [],
+    "local_integration_approved": true,
+    "production_ready": false,
+    "automatic_blocking_allowed": false
+  },
+  "deployment_bundle": {
+    "directory": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle",
+    "manifest_sha256": "257a43ba5045ae4a258931c9cbaab6899c627b825f72c18203c389e39546aad8",
+    "required_files_bytes": 777289,
+    "total_directory_bytes": 779857,
+    "manifest": {
+      "manifest_version": "operational_rf_deployment_v1",
+      "status": "approved_for_local_advisory_integration",
+      "model_id": "selected_recovery_rf",
+      "kind": "random_forest",
+      "candidate_id": "rf_raw7",
+      "threshold": 0.7,
+      "positive_class": 1,
+      "comparison": ">=",
+      "dataset_id": "operational_message_recovery_campaign_v1",
+      "feature_contract_id": "server_application_message_v2",
+      "feature_order": [
+        "packet_size",
+        "payload_size",
+        "connection_duration_ms",
+        "message_interval_ms",
+        "bytes_received_total",
+        "bytes_sent_total",
+        "error_count_total"
+      ],
+      "input_transform_id": "raw7_v1",
+      "requires_ordered_session_prefix": false,
+      "preprocessing": "identity_no_scaler",
+      "files": {
+        "model": {
+          "path": "pipeline.joblib",
+          "sha256": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+          "bytes": 773652
+        },
+        "feature_schema": {
+          "path": "feature_schema.json",
+          "sha256": "2a8a4b3c95711b3acc71bc42de94488ee3121e4689a72f8b772a3a7d3dd2f6ca",
+          "bytes": 1888
+        },
+        "model_input_schema": {
+          "path": "model_input_schema.json",
+          "sha256": "a8c9d787f6a1217844ad37734d8d921c52aedc4f9e16696822a1894342f67bef",
+          "bytes": 1376
+        },
+        "label_map": {
+          "path": "label_map.json",
+          "sha256": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+          "bytes": 49
+        },
+        "decision_policy": {
+          "path": "decision_policy.json",
+          "sha256": "982f74d6d2c80dbb22a7635c0bad2dda2b992e4d6aa738d873e4563f1b418caa",
+          "bytes": 324
+        }
+      },
+      "required_files_bytes": 777289,
+      "candidate_lock_sha256": "dd23efecbd9e906d1bcf3f26cb8a02887347d448ca2abd1ef40a955a87a90cbd",
+      "policy_signature": "e9be584afd5f7eac93b69737d0c0f741891c128670c1db5150d06c3612322b3f",
+      "test_verdict_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\test_verdict.json",
+      "test_verdict_sha256": "8f4d956fb8f918464ab484e47c5dbf2e921b51fa70f9425943bf128c280baa2b",
+      "local_integration_approved": true,
+      "requires_complete_evaluation_manifest": true,
+      "evaluation_manifest_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\evaluation_manifest.json",
+      "fastapi_integration_implemented": false,
+      "production_ready": false,
+      "automatic_blocking_allowed": false,
+      "environment": {
+        "python": "3.12.4",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.8.0"
+      }
+    }
+  },
+  "holdout_receipt_path": "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_final_evaluation\\holdout_usage\\777036eee289452a07ecc939829781b7519d3a9e17fd67689539bfb04e4ba2da.json",
+  "holdout_previously_reserved": false,
+  "evaluation_kind": "first_locked_policy_confirmation",
+  "protected_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost_manifest.json": "74962d56105f54944b07f32690e0684df7c9f8535d2eacda52e5554e0d057048",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_lock.json": "dd23efecbd9e906d1bcf3f26cb8a02887347d448ca2abd1ef40a955a87a90cbd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\decision_policy.json": "eeac5d36d21804fe7fb98a2018d825df940cb39c8a32aacff41478a67e44f5a0",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\feature_schema.json": "2a8a4b3c95711b3acc71bc42de94488ee3121e4689a72f8b772a3a7d3dd2f6ca",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\model_input_schema.json": "a8c9d787f6a1217844ad37734d8d921c52aedc4f9e16696822a1894342f67bef",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_bundle\\pipeline.joblib": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost\\selected_recovery_rf\\job.json": "25cae85a330d99d467c1a580a321d2d0be566ebbda0610da6e6e2f9fc740ad7c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost\\selected_recovery_rf\\process_0.json": "79fffd26229b3a4f52675fd631da366f581f14469e88a30b8f6b7ddfeffff35c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost\\selected_recovery_rf\\process_1.json": "63f2ba8d54534295f360d698f660bb2c86c329476dd0cf54059f6e6ca4a24495",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost\\selected_recovery_rf\\process_2.json": "550f8f6cfa385f80c8e0210bf06c7e13ef1f2ae857a8aecbb9c7eee8a930d985",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost\\selected_recovery_rf\\validation_input.npz": "c033a94b01bebf91412d8c58b579bd92a41244c61b66cc441f1dea93cb0e2e89",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\cost_protocol_lock.json": "e239dddeb05fe6c3bea647d837428af8f637ad2e78cc5baf67daf49b34bac409",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_cost.json": "0c97954dd669c7b038c6d6f047a7c9007c8b947eecf6dbddd25d9ade4ae8933f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_cost.md": "0dc7dcdfaaac9da4fe4cf5727b4212e0d8f33ed59e75c9757826552a76dfc781",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\experiment_manifest.json": "a8baf41ec63d9b29ab32305eb4a6ecb87372d370c8b1d82f31a67c9e775973a5",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean5\\default_decision_policy.json": "aa897e656c63e58e42a8f6a48ad4d4c47d08438339d6c60250e48f8221c7b612",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean5\\model_input_schema.json": "fa950d9f7e1cb892547f3d92687e0be4665c3035ee453a5840371f99c1339bcd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean5\\pipeline.joblib": "3314684d6140b555c8c7b92bc5677d5d3d66e48f12605c4013063b11fad9cac2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean5\\training_summary.json": "b804a94d2cf84667d582bd730b87540f5a5a071145045c3cc299d9d19af702be",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean5\\validation_predictions.csv": "50f55c02db8649a5122b7f4f7565b4363a7ff6d868ca368f0de15de0bc4f8d58",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean_parsed6\\default_decision_policy.json": "aa897e656c63e58e42a8f6a48ad4d4c47d08438339d6c60250e48f8221c7b612",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean_parsed6\\model_input_schema.json": "2724f589ca9f95d0c535ce968e8919ca5d15ce51610bf83349cb2e17636cd0d3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean_parsed6\\pipeline.joblib": "60656f632c02f8e61e5c924a9c2cbb68e2cbc03cd751d6575ea217901f537ca5",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean_parsed6\\training_summary.json": "6fea58e4b6a172d96b2ecde2ab8d316d308c732edc0ced533e2aae10397667c4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_prefix_mean_parsed6\\validation_predictions.csv": "7146f215dd999f8d5ededb39afead636210fdc024ba0989de5e9ff27aebc019a",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_raw7\\default_decision_policy.json": "aa897e656c63e58e42a8f6a48ad4d4c47d08438339d6c60250e48f8221c7b612",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_raw7\\model_input_schema.json": "a8c9d787f6a1217844ad37734d8d921c52aedc4f9e16696822a1894342f67bef",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_raw7\\pipeline.joblib": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_raw7\\training_summary.json": "8c32a1ea5e92ae7ebfc323448543cbf2902073df1241d24c7270e2b137c32ea9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_raw7\\validation_predictions.csv": "cebe2e29e3cf2e98e7bfddb7d9d1613f5d9d2ea3db457fe51da5747761df3b97",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_without_io5\\default_decision_policy.json": "aa897e656c63e58e42a8f6a48ad4d4c47d08438339d6c60250e48f8221c7b612",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_without_io5\\model_input_schema.json": "7fc512584a7fb9d2566deb58040915204312383cc2abe43cd3e62823e580c9be",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_without_io5\\pipeline.joblib": "c881de20d719a48eba0eae2eba8b2b6ed8d6f3ae0acaaf685ba8455be3555905",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_without_io5\\training_summary.json": "4444da4b62659b8a7b1e0aac7e41c97e9748650b40bb02a62ea6bff4fafd9724",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\candidates\\rf_without_io5\\validation_predictions.csv": "6f67671fbc04f11c32281e3300f5df2cdc4022d87fad19d4d433219e34e42667",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\comparison_predictions.csv": "aecfd80d1d69b73bfe7e0b72fbda22379761e49c1a113bfa01b9956855f9ec1c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\protocol_lock.json": "17581b73d46a8f69c65ff8de9e46f88d9912cb6dd6547071acf0aafc7f395870",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\raw_feature_schema.json": "2a8a4b3c95711b3acc71bc42de94488ee3121e4689a72f8b772a3a7d3dd2f6ca",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\validation_selection\\selection.json": "2457aa87519ea94a476309f13cb7974e29329c48f31b870e1ed03702f1fe4667",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_validation.json": "25bb8b38d61f6c3e03fed8ad013c66103cc7b10002a535e69471cc4ea6c71188",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_validation.md": "0721a74908d17c0429f8d8fcec4ca5c76919a9a7602d428db0c7d77fde561cca",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_comparison.json": "25bb8b38d61f6c3e03fed8ad013c66103cc7b10002a535e69471cc4ea6c71188",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_comparison.md": "f1ad5f3ab587fb47889fd6a9108c6b40468c0efebe43b4f98312aafc64bda48d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_recovery_collection.json": "5f288a5a367c02ad6d5b73274fc0c6ca427a33e9e96b5d34413f3ccd279c1a33",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_recovery\\rec_261014_3878ea96\\assignment_manifest.json": "e8bc4a65609f0901b5be09b0646ead22f2057486e673368d32a28ff7b1c13dff",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\dataset_manifest.json": "7181fd2454a5f37a72ff04ff4b5f9b7b0ff309bbcb63fd9fbd14ffebcbd20021",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\raw\\operational_recovery\\rec_261014_3878ea96\\completion_manifest.json": "f1de79d09666d6b7ff90523519831e7f193f15af38d8930ef84abf71039675f1",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\feature_schema.json": "cf58b82fcd6525fcbf1e0990a60a22cc0400d1d8668853a9d8bf889f2ae9576c",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\split_manifest.json": "6a9773f58c8b17991753dbcc20c442fb3dc54e22cabadca45965a0fe0e4a80d7",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\X_train.csv": "67be74ad2353435c0471498bef4165723e3559948f73711a7b46ede9230665f1",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\y_train.csv": "40ce4e252f4d0d187e5262f9e850726572e176a4c10e3b63b18e829075e9a12d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\metadata_train.csv": "1168e86945accadfc89d19ae19cd1f117d5efee7bfd60eaea62bc66a3ad95d07",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\X_validation.csv": "e4d7ed8050d30af5993f7eccb7bf89ea4b87d0dd6dfe1af9e44a81ebd1b4fa0d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\y_validation.csv": "3e327a5bbcd65017ab203cb1a7f07eaf3fd34f07af06a990d2b9a3bc363fddef",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\metadata_validation.csv": "5d515dc9ef707e8093f6f91be11c00581f8bbfc5da11feb863edf5ad7182cc77",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_rf_diagnosis.json": "05d8ec991832c723f5467320eae06d5c3e7aaab3523273a0740d9dcec8f22bce",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_recovery_plan.json": "224cfe0331020d55f1ea2d507584997bd6b034322123487d0c5793aaac535f82",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_augmentation_plan.json": "628b477587559c99ac6259564bb7c412c9b5afc0ad7f8d43e3479ad4a8e0e755",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_augmentation_comparison.json": "3362136099700f9794b64e44c721e439fcee38ebc3d6685b76fc553a21528310",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_final_evaluation.json": "8f0a3d355806673819fcb6c2ec76df4cdfa57c5049e3837ab9965efe6b933efc",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\training_manifest.json": "8add4e79511eca50a866d61143f777ee942af51d739035ecf0ad24b76e2ebed6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidate_reports\\rf_leaf_5.json": "7ce8b9f6715d508d0c9693d305fc7ac58de08b553dafd6d2b6e1aa3093491d4d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\decision_policy.json": "93c169a547afe0c71f4f783ac74a43292074951bc6dcdce6e89c7310b39e1d4b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\feature_schema.json": "a2b5a25959d0a0257cc5fb8288979d15a4accfa19122e69dc9473dcf321e9f10",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\pipeline.joblib": "3756917286fb09b3791d7ce4fb207cc95191855d54480e4af1ac64af5f2e6529",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\augmentation_v1\\validation_selection\\candidates\\rf_leaf_5\\validation_predictions.csv": "294c542a59a9457faafd10f7ec23751016f30a1e86cb65141d3dd968f71dccb2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_collection\\recovery_design.py": "a6dfbad269ac6c5b072cc7e7af69eaae3e2d96e429b14fcd0c5d3d9579138e9f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data_preparation\\operational_prefix_features.py": "aabcf3a277647b200518c9ec98987ad6eff758ecf8f4272f59293d0c9d4fd98b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\analyze_operational_rf_errors.py": "57f403e0715edc3813f08c1f13f604ae1f86361b7184e5fec6b749dc5eadc11f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\ServerBase\\Session.cpp": "962102e1972ed393b9d2444c13a303e7821995dbe947668fe5220fac62fcd323",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\Server\\FeatureExtraction\\FeatureCollector.cpp": "4388a89602752fa40848607ed58e11a8e7ee73a1eacfce345c2034b13c534325",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\dataset_manifest.json": "c16fad4ba8f92e8993c7aa328eeea1fa55240f28429f09deaa36c2fe43c9594b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\feature_schema.json": "281d96d89722c567c6c0fe890b166a240bd6966bbd248cc39b207cc632c2fa89",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\label_map.json": "6c35e5113ce7be36f029673b4349c2eca67ae449c00251408a683f4350369cc4",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\split_manifest.json": "e6800677f7041407b3e149531b71aa69d9c75041f852c7b5c2816f6eb5f50678",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\X_train.csv": "c9d9fefe553be955830c5d63c5b94d5d0427af1a7dad7807890e07ca580310ff",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\y_train.csv": "88a203b41e1cda0d7344a919ba659aad14d704691cb3e7a9c9eb9bca8b6a3020",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\metadata_train.csv": "507fafe2e9b30a592338cf3e49a0e9a730eb4b96172f70b87d2448e5579a1996",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\X_validation.csv": "859c97e927541572dfdbc1c95961c4e83617573095525337f67e523d55f5f17b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\y_validation.csv": "e535977417f7f8cb50baea6699b5541d9e13abb701f4026ed7273a24bd07d81b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\v2_campaign_holdout\\metadata_validation.csv": "f6e9ff3e5c67d7a4ad2cd8a432deb29308f2b783054a50634e6ba29047afe0b5",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\reports\\operational_rf_diagnosis.json": "4d08310af56fb1399271dd2d64eae4092e54e7cd07214ca128a7dd983ef68c63",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\training\\run_operational_recovery_experiment.py": "42b480ac31e4beb02188e44ee6fe4b4cf78308e77b15afa275d437c24711ecf7",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\compare_operational_recovery.py": "605488dd387f9a3d0ddc255bd9ba910135d82ab1639c4887cd19fc1eec35930d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\compare_operational_baselines.py": "4dee81576e285ada290550fa6c194d3de998704b043211f8b2e3a2fc33a34463",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\compare_operational_augmentation.py": "52d7ec1c744d263c0a4fd1e013b6e9a637eb5d7877063b65ebbcb1ea6bae7390",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\training\\operational_data.py": "38ec4d5431cf17e81553d482f65be4133ef7486286746e2f8f3274754e1cc1a3",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\training\\train_operational_logistic_regression.py": "bf3495fd81a88cacc9bc0bd30d34e83060d9e3bf455f077698c9290ea8b18a24",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_recovery_experiment.json": "e88e063fb54dd395c170294282179aa5adb0e0a592f07c080f0e219151cbd804",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\run_operational_recovery_cost.py": "1bf77aaa71780c09ff8a0425e7389971de8c134ff20173c7cb86813744eef99e",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\operational_cost_worker.py": "c292b73a2c24213954482bcee0a170068ae3d280826814a37bce8f3623af0bbc",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\operational_final_models.py": "ba42f2c2c2f5f72ba2170d0d76daf4a813cf17dfcde3322f064d98543c946e96",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\run_operational_final_evaluation.py": "ed33fb100176baeef1dee2bf2c0c85c7a552a8e671daf6e5c87aa424fb1792bd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\operational_final_data.py": "301e25db5b7bcd0596923369841dbc992ef23437a06b0eeee91cc52446837181",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_recovery_cost.json": "0deef741b80560961564fe87be244d534d85346d6e80580596ff9490884a2e46",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\run_operational_recovery_test.py": "d5e1685354b2dac1c3638297854439d2e4faa19cfc8e6f25b5ad2959017bc90e",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\tests\\test_operational_recovery_test.py": "4d71af5edd0eaa7cfaf97d01fd0aa86d16bf06e14809f832c4f615ad1183a778",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_recovery_test.json": "9cc883f5bc0f36332ab943cf18157be4b97de9b31e5960ff49ab0b49b57a86f6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\evaluation_protocol_lock.json": "aeae96b91ad52b4063172df5ad69d26a23941a5e1dfb967bfe4eef596025e183",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_final_evaluation\\holdout_usage\\777036eee289452a07ecc939829781b7519d3a9e17fd67689539bfb04e4ba2da.json": "9edf1f8c7a35a3e78a4a3b11b0bd7dfe89a41c0a9c2fb23d11069613e025e483",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\X_test.csv": "76001bc12ed7a3c2d424281a14aa3a6da5cb5df8dfaf082e57ef8d3ed6fe30c9",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\y_test.csv": "71f8d9d12c17dd1c434091b65677277d6a0e16c37c746abed8c12299a834a0c8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\data\\processed\\operational_message\\recovery_v1\\metadata_test.csv": "99fab55c097a70e143a7b01dfcdfcf2900e7462dec0f7b45cda27602b60eecb4"
+  },
+  "test_evaluated": true,
+  "selection_used_test": false,
+  "thresholds_changed": false,
+  "model_training_performed": false,
+  "cost_remeasured": false,
+  "fastapi_still_dummy": true,
+  "remaining_major_stages": 3,
+  "limitations": [
+    "같은 생성기·장비의 별도 캠페인 2개를 평가했다. 메시지 5,407건을 독립 시행 5,407개로 해석하지 않는다.",
+    "통제된 애플리케이션 메시지 이상 실험이며 공개 UNSW 성능이나 실제 외부 침입 탐지 성능과 합치지 않는다.",
+    "첫 메시지와 malformed의 부족한 과거·본문 정보를 raw7이 복원하지 못한다. 시나리오별 누락을 전체 평균과 함께 확인한다.",
+    "Test 결과로 후보·threshold·성능 기준을 바꾸지 않았다. 같은 Test는 이제 노출된 자료이며 바뀐 정책에는 새 독립 평가가 필요하다.",
+    "비용은 이전 Validation의 오프라인 측정이며 JSON·HTTP·큐·FastAPI/TCP 종단 부하는 포함하지 않는다.",
+    "승인은 로컬 advisory 연동만 허용한다. FastAPI 교체·실제 운영·자동 차단은 이번 단계에서 수행하지 않는다."
+  ]
+}

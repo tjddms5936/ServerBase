@@ -33,8 +33,9 @@
 - 보정 캠페인 6개·378개 run 실제 수집·품질 검증과 원본 v2 메시지 16,120건의 사전 캠페인 분할
 - 새 Train 7,976건 전용 RF 입력 표현 후보 4개 학습과 새 Validation 2,737건의 20개 정책 비교·개발 선정
 - 선정 원본 RF·0.7의 Validation 전용 비용 측정과 독립 Test 전 후보·판정 규칙 잠금
+- 잠근 RF·0.7의 별도 Test 5,407건 확인·시나리오별 한계 공개·로컬 advisory 연동 승인 묶음 생성
 
-최근 작업은 `docs/operational_recovery_cost.md`와 `reports/operational_recovery_cost.md`에서 확인합니다. 이미 선정한 원본 7개 RF·threshold 0.7을 바꾸지 않고 Validation 전용 독립 프로세스 비용을 측정했습니다. 단일 요청 중앙값 4.3371ms·가장 높은 프로세스 p95 4.7538ms·프로세스 peak RSS 154.90MiB·필수 파일 759.05KiB로 사전 예산을 통과했습니다. 비용 통과는 Test 전 후보 잠금이지 배포 승인이 아닙니다. 전체 테스트 319개가 통과했으며 새 Test 모델 예측·실제 FastAPI 연결은 별도 단계입니다. 큰 작업 묶음은 4개 남아 있습니다. 앞선 직접 학습·선정은 `docs/operational_recovery_experiment.md`, 수집은 `docs/operational_recovery_collection.md`에 있습니다.
+최근 작업은 `docs/operational_recovery_test.md`와 `reports/operational_recovery_test.md`에서 확인합니다. 잠근 원본 7개 RF·threshold 0.7을 바꾸지 않고 별도 Test 5,407건을 평가했습니다. FP 68·FN 531, 전체 FPR 1.72%·정상 묶음 FPR 5.18%·Recall 63.20%로 사전 기준을 통과해 로컬 advisory 연동용 승인 묶음을 만들었습니다. 전체 테스트 337개가 통과했습니다. 다만 잘못된 길이 메시지 72건 중 71건을 놓쳤으므로 실제 보안 운영·자동 차단 성공을 뜻하지 않습니다. FastAPI는 아직 dummy이며 다음 작업은 승인 묶음의 실제 추론 연결입니다. 남은 큰 작업 묶음은 **3개**입니다. 비용은 `docs/operational_recovery_cost.md`, 학습·선정은 `docs/operational_recovery_experiment.md`에 있습니다.
 
 선정 RF 비용 검증:
 
@@ -42,7 +43,15 @@
 python -X utf8 .\evaluation\run_operational_recovery_cost.py
 ```
 
-기존 결과는 덮어쓰지 않습니다. 미승인 `candidate_bundle/`과 승인 배포 묶음을 구분하고, 원본 후보의 기본 0.5 정책은 유지합니다. raw7은 scaler·추가 Python 세션 prefix 없이 현재 수집 snapshot을 사용합니다. 다음 작업은 잠근 단일 정책의 새 Test 5,407건 독립 승인 확인입니다.
+기존 결과는 덮어쓰지 않습니다. 미승인 `candidate_bundle/`과 Test 통과 후 별도로 만든 승인 배포 묶음을 구분하고, 원본 후보의 기본 0.5 정책은 유지합니다. raw7은 scaler·추가 Python 세션 prefix 없이 현재 수집 snapshot을 사용합니다.
+
+고정 RF의 독립 Test 승인 확인:
+
+```powershell
+python -X utf8 .\evaluation\run_operational_recovery_test.py
+```
+
+평가 protocol·holdout 접근 예약 뒤에만 Test를 읽습니다. 결과와 승인 묶음은 `artifacts/operational_message/recovery_v1/test_v1/`, 전체 예측은 `reports/operational_recovery_test.predictions.csv`입니다. 현재 recovery Test는 이미 노출된 자료이며 변경 정책의 새 독립 평가로 재사용하지 않습니다. 같은 정책 재확인은 별도 출력 경로와 기존 공용 사용 기록을 유지하며 재현 검사로 표시합니다. 승인 묶음도 완료 평가 manifest와 해시를 검증한 뒤에만 사용해야 합니다.
 
 학습 로드맵:
 
@@ -375,4 +384,4 @@ python -X utf8 .\evaluation\run_operational_final_evaluation.py
 
 설명은 `docs/operational_final_evaluation.md`, 이번 단계 커밋 제안은 `docs/operational_final_evaluation_commit.md`입니다. 기존 결과를 덮어쓰지 않으며 같은 holdout의 변경 정책 재평가는 사용 기록으로 거부합니다. 현재 Test는 이미 사용된 자료입니다.
 
-당시 전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 최종 평가·승인 보류 판단은 완료했습니다. **기본 남은 3개에 오탐 보정·새 독립 검증 1개를 추가해 남은 큰 묶음은 4개입니다.** 이후 새 수집·RF 재학습·Validation 선정·비용 검증을 진행했습니다. 최신 단계와 바로 다음 작업은 문서 상단을 확인합니다.
+당시 전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 당시 최종 평가·승인 보류 뒤에는 기본 3개에 추가 보정·독립 검증 1개를 더해 4개가 남았습니다. 이후 새 수집·RF 재학습·Validation 선정·비용·새 Test 확인을 마쳤고 현재는 3개가 남았습니다. 최신 단계와 바로 다음 작업은 문서 상단을 확인합니다.

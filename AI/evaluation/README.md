@@ -203,6 +203,18 @@ python -X utf8 .\evaluation\run_operational_recovery_cost.py
 
 결과는 `reports/operational_recovery_cost.json/.md`, 산출물은 `artifacts/operational_message/recovery_v1/cost_v1/`입니다. 설명과 재측정 제한은 `docs/operational_recovery_cost.md`를 확인합니다.
 
+## 잠근 RF의 독립 Test 확인
+
+```powershell
+python -X utf8 .\evaluation\run_operational_recovery_test.py
+```
+
+비용 완료 manifest·후보 잠금의 예상 해시를 확인하고 기존 Validation을 재현한 뒤 평가 protocol·공용 holdout 접근 예약을 남깁니다. 그 뒤에만 새 Test 5,407건을 읽어 고정 RF·0.7 하나로 전체·정상 묶음 FPR·Recall과 시나리오·캠페인·첫 메시지·burst 진단을 계산합니다. 학습·추가 후보·threshold 탐색·비용 재측정은 하지 않습니다.
+
+실제 결과는 FP 68·FN 531, 전체 FPR 1.72%·정상 묶음 FPR 5.18%·Recall 63.20%로 로컬 advisory 연동 기준을 통과했습니다. 잘못된 길이 메시지 72건 중 71건을 놓친 한계를 함께 공개하며 운영·자동 차단 승인은 하지 않습니다. 통과 때만 별도 승인 묶음을 만들고 완료 manifest 없는 부분 산출물은 사용할 수 없습니다.
+
+`reports/operational_recovery_test.json/.md/.predictions.csv`와 `artifacts/operational_message/recovery_v1/test_v1/`에 저장합니다. 같은 정책 재실행은 노출된 Test 재현 검사로 표시하고 변경 정책의 같은 Test 재사용을 거부합니다. 상세 설명은 `docs/operational_recovery_test.md`입니다. 다음은 승인 모델 FastAPI 연결이며 남은 큰 단계는 3개입니다.
+
 ## 향후 일반 평가 명령
 
 ```text

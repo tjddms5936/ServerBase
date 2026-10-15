@@ -1,0 +1,18 @@
+{
+  "config_version": "v1",
+  "experiment_id": "operational_recovery_test_v1",
+  "dataset_id": "operational_message_recovery_campaign_v1",
+  "dataset_dir": "../data/processed/operational_message/recovery_v1",
+  "cost_root": "../artifacts/operational_message/recovery_v1/cost_v1",
+  "cost_report": "../reports/operational_recovery_cost.json",
+  "expected_cost_manifest_sha256": "74962d56105f54944b07f32690e0684df7c9f8535d2eacda52e5554e0d057048",
+  "expected_candidate_lock_sha256": "dd23efecbd9e906d1bcf3f26cb8a02887347d448ca2abd1ef40a955a87a90cbd",
+  "artifact_dir": "../artifacts/operational_message/recovery_v1/test_v1",
+  "report_prefix": "../reports/operational_recovery_test",
+  "holdout_registry_dir": "../artifacts/operational_final_evaluation/holdout_usage",
+  "expected_test_rows": 5407,
+  "candidate_id": "rf_raw7",
+  "threshold": 0.7,
+  "test_rule": "confirm_selected_policy_without_reselection",
+  "scope": "local_advisory_integration_only"
+}
