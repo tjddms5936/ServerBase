@@ -1,0 +1,10 @@
+{
+  "config_version": "v1",
+  "evaluation_root": "../artifacts/operational_message/recovery_v1/test_v1",
+  "candidate_lock_path": "../artifacts/operational_message/recovery_v1/cost_v1/candidate_lock.json",
+  "expected_evaluation_manifest_sha256": "2940c4ac6bcd28819f6f6e4c4319a8fd745267aa195cf7d77b62006fa10efdb6",
+  "expected_deployment_manifest_sha256": "257a43ba5045ae4a258931c9cbaab6899c627b825f72c18203c389e39546aad8",
+  "model_version": "rf-raw7-recovery-v1-t0.7",
+  "max_concurrent_predictions": 1,
+  "verbose_payload_logging": false
+}

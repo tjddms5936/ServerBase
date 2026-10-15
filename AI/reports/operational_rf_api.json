@@ -1,0 +1,223 @@
+{
+  "status": "complete",
+  "generated_at_utc": "2026-10-15T01:50:13.973661+00:00",
+  "model_version": "rf-raw7-recovery-v1-t0.7",
+  "health": {
+    "status": "ok",
+    "timestamp": "2026-10-15T01:50:13.599176+00:00",
+    "model_version": "rf-raw7-recovery-v1-t0.7",
+    "feature_contract_ids": {
+      "message": "server_application_message_v2",
+      "session_summary": "server_application_session_summary_v2"
+    },
+    "ready": true,
+    "model_kind": "random_forest",
+    "supported_event_types": [
+      "message"
+    ],
+    "decision_threshold": 0.7,
+    "decision_scope": "local_advisory",
+    "model_sha256": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+    "automatic_blocking_allowed": false
+  },
+  "checks": [
+    {
+      "name": "paced_snapshot",
+      "request": {
+        "schema_version": "v1",
+        "event_type": "message",
+        "feature_contract_id": "server_application_message_v2",
+        "queue_sequence_id": 101,
+        "timestamp": "2026-10-15T00:00:00Z",
+        "session": {
+          "session_id": 101,
+          "socket_handle": 100,
+          "logic_worker_id": 0,
+          "connection_duration_ms": 200.0,
+          "bytes_received_total": 80,
+          "bytes_sent_total": 40,
+          "error_count_total": 0
+        },
+        "message": {
+          "request_index": 3,
+          "packet_id": 1,
+          "packet_size": 24,
+          "payload_size": 16,
+          "message_interval_ms": 15.0
+        },
+        "features": {
+          "packet_size": 24,
+          "payload_size": 16,
+          "connection_duration_ms": 200.0,
+          "message_interval_ms": 15.0,
+          "bytes_received_total": 80,
+          "bytes_sent_total": 40,
+          "error_count_total": 0
+        }
+      },
+      "status_code": 200,
+      "response": {
+        "request_id": "101",
+        "label": "normal",
+        "is_attack": false,
+        "confidence": 1.0,
+        "model_version": "rf-raw7-recovery-v1-t0.7",
+        "received_event_type": "message",
+        "anomaly_score": 0.0,
+        "decision_threshold": 0.7,
+        "decision_scope": "local_advisory"
+      },
+      "direct_model_equal": true
+    },
+    {
+      "name": "rapid_snapshot",
+      "request": {
+        "schema_version": "v1",
+        "event_type": "message",
+        "feature_contract_id": "server_application_message_v2",
+        "queue_sequence_id": 102,
+        "timestamp": "2026-10-15T00:00:00Z",
+        "session": {
+          "session_id": 102,
+          "socket_handle": 100,
+          "logic_worker_id": 0,
+          "connection_duration_ms": 1.0,
+          "bytes_received_total": 480,
+          "bytes_sent_total": 40,
+          "error_count_total": 0
+        },
+        "message": {
+          "request_index": 3,
+          "packet_id": 1,
+          "packet_size": 24,
+          "payload_size": 16,
+          "message_interval_ms": 0.0
+        },
+        "features": {
+          "packet_size": 24,
+          "payload_size": 16,
+          "connection_duration_ms": 1.0,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 480,
+          "bytes_sent_total": 40,
+          "error_count_total": 0
+        }
+      },
+      "status_code": 200,
+      "response": {
+        "request_id": "102",
+        "label": "controlled_anomaly",
+        "is_attack": true,
+        "confidence": 0.8634681690815189,
+        "model_version": "rf-raw7-recovery-v1-t0.7",
+        "received_event_type": "message",
+        "anomaly_score": 0.8634681690815189,
+        "decision_threshold": 0.7,
+        "decision_scope": "local_advisory"
+      },
+      "direct_model_equal": true
+    },
+    {
+      "name": "first_snapshot",
+      "request": {
+        "schema_version": "v1",
+        "event_type": "message",
+        "feature_contract_id": "server_application_message_v2",
+        "queue_sequence_id": 103,
+        "timestamp": "2026-10-15T00:00:00Z",
+        "session": {
+          "session_id": 103,
+          "socket_handle": 100,
+          "logic_worker_id": 0,
+          "connection_duration_ms": 0.0,
+          "bytes_received_total": 24,
+          "bytes_sent_total": 0,
+          "error_count_total": 0
+        },
+        "message": {
+          "request_index": 1,
+          "packet_id": 1,
+          "packet_size": 24,
+          "payload_size": 16,
+          "message_interval_ms": 0.0
+        },
+        "features": {
+          "packet_size": 24,
+          "payload_size": 16,
+          "connection_duration_ms": 0.0,
+          "message_interval_ms": 0.0,
+          "bytes_received_total": 24,
+          "bytes_sent_total": 0,
+          "error_count_total": 0
+        }
+      },
+      "status_code": 200,
+      "response": {
+        "request_id": "103",
+        "label": "normal",
+        "is_attack": false,
+        "confidence": 0.36675372733864,
+        "model_version": "rf-raw7-recovery-v1-t0.7",
+        "received_event_type": "message",
+        "anomaly_score": 0.63324627266136,
+        "decision_threshold": 0.7,
+        "decision_scope": "local_advisory"
+      },
+      "direct_model_equal": true
+    },
+    {
+      "name": "unsupported_summary",
+      "status_code": 422,
+      "response": {
+        "detail": {
+          "code": "unsupported_event_type",
+          "supported_event_types": [
+            "message"
+          ]
+        }
+      }
+    },
+    {
+      "name": "invalid_input",
+      "status_code": 422
+    }
+  ],
+  "graceful_shutdown": true,
+  "process_exit_code": 0,
+  "local_http_port": 55165,
+  "elapsed_seconds": 2.7030000002123415,
+  "protected_sha256": {
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\evaluation_manifest.json": "2940c4ac6bcd28819f6f6e4c4319a8fd745267aa195cf7d77b62006fa10efdb6",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\decision_policy.json": "982f74d6d2c80dbb22a7635c0bad2dda2b992e4d6aa738d873e4563f1b418caa",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\deployment_manifest.json": "257a43ba5045ae4a258931c9cbaab6899c627b825f72c18203c389e39546aad8",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\feature_schema.json": "2a8a4b3c95711b3acc71bc42de94488ee3121e4689a72f8b772a3a7d3dd2f6ca",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\label_map.json": "ab2de544c11d89de293de9f562404dcb5ecbca78e3b0a9e0656eb7668e3442ee",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\model_input_schema.json": "a8c9d787f6a1217844ad37734d8d921c52aedc4f9e16696822a1894342f67bef",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\deployment_bundle\\pipeline.joblib": "c0200b9fa7a4d4bab0e038f633527f94bc90481ade1b6d76c06b6162ad03f9c2",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\evaluation_protocol_lock.json": "aeae96b91ad52b4063172df5ad69d26a23941a5e1dfb967bfe4eef596025e183",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\test_v1\\test_verdict.json": "8f4d956fb8f918464ab484e47c5dbf2e921b51fa70f9425943bf128c280baa2b",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\artifacts\\operational_message\\recovery_v1\\cost_v1\\candidate_lock.json": "dd23efecbd9e906d1bcf3f26cb8a02887347d448ca2abd1ef40a955a87a90cbd",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\configs\\operational_rf_serving.json": "b9afc4a5de9fa544012dfe5db1bd25262546991b24428cdbd046e5bae68bd6bf",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\evaluation\\verify_approved_rf_api.py": "cfe8e60db198e430deedc6616380cbf709ab29946900f665bd47c87a8b107ff0",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\scripts\\run_inference_api.py": "dd60e8044216d1b751b78fba553a56ad01eed257ecddbbb0b4082d8c95bea225",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\requirements-inference.txt": "738d5cfc83d6246f43b36ef6d4f7a45965a4083a245425f01ffbf0b78466f277",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\approved_bundle.py": "fbdf29abf796eb9a09864063b04701779b14b617245f3fcc9ae511884a9fb031",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\rf_service.py": "0c6a25674a5c5826f0a281c4a464a947591818f2dc9a526400e609e5f9ee9f31",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\rf_main.py": "b01e9aa4ad4c6bf8408f5ef8b2d66a2e757206401d3d5ac7e1c774a8f9c1d41d",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\main.py": "d77e5f6095e6069ca953bcab8826533020ba07b52a0ca6ce0a5eb8deadc02e20",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\schemas.py": "8761b7db44be9af2b8f2ef1664cd9c2dceea6be7d3cd836a6bc7c051892357c1",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\feature_transformer.py": "a609e40cb4410da323dc73648733849298082cbbb41baed74ce9f1f00fc9850f",
+    "C:\\Users\\mypc\\Desktop\\NetworkDetectionAI\\mymy\\AI\\inference_api\\payload_validation.py": "91a8c78befef22df30f32112fce5bab0858fa4588f8675dd1a1eafa942caf3e3"
+  },
+  "server_log_sha256": "435c66c69753c5b3b1ee02fdfc7e838e08625ef88af5f61542590b66f4d58c1f",
+  "dataset_files_read": false,
+  "test_reselected": false,
+  "model_training_performed": false,
+  "cpp_tcp_e2e_tested": false,
+  "remaining_major_stages": 2,
+  "limitations": [
+    "수작업 snapshot의 HTTP 기능 검사이며 새 데이터셋 성능이나 독립 Test 평가가 아니다.",
+    "C++ 송수신·큐·결과 저장·부하·장애는 다음 단계에서 별도로 검증한다.",
+    "승인은 로컬 참고용이며 자동 차단·실제 운영·malformed 탐지 보장을 뜻하지 않는다."
+  ]
+}

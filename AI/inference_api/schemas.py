@@ -22,6 +22,13 @@ class HealthResponse(BaseModel):
     timestamp: str
     model_version: str
     feature_contract_ids: dict[str, str]
+    ready: bool = True
+    model_kind: str | None = None
+    supported_event_types: list[str] | None = None
+    decision_threshold: float | None = None
+    decision_scope: str | None = None
+    model_sha256: str | None = None
+    automatic_blocking_allowed: bool = False
 
 
 class MessageSessionInfo(NetworkPayloadModel):
@@ -126,3 +133,7 @@ class InferenceResponse(BaseModel):
     confidence: float = Field(ge=0, le=1)
     model_version: str
     received_event_type: str
+    # 기존 C++ 필드는 유지하고 이상 클래스 점수와 고정 판정 기준을 별도로 제공한다.
+    anomaly_score: float | None = Field(default=None, ge=0, le=1)
+    decision_threshold: float | None = Field(default=None, ge=0, le=1)
+    decision_scope: str | None = None

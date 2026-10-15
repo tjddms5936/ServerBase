@@ -6,7 +6,7 @@
 
 - C++ 서버에서 전달되는 feature JSON 검증
 - message/session payload를 모델 입력용 feature vector로 변환
-- dummy model service 실행
+- 수집·회귀 전용 dummy model service 실행
 - C++ `AiInferenceWorker`가 파싱할 수 있는 고정 응답 schema 반환
 - UNSW-NB15 데이터셋 EDA 스크립트
 - UNSW-NB15 baseline 학습용 전처리 스크립트
@@ -34,8 +34,11 @@
 - 새 Train 7,976건 전용 RF 입력 표현 후보 4개 학습과 새 Validation 2,737건의 20개 정책 비교·개발 선정
 - 선정 원본 RF·0.7의 Validation 전용 비용 측정과 독립 Test 전 후보·판정 규칙 잠금
 - 잠근 RF·0.7의 별도 Test 5,407건 확인·시나리오별 한계 공개·로컬 advisory 연동 승인 묶음 생성
+- 승인 묶음의 완료·해시·입력·정책·버전 검증과 실제 RF FastAPI 추론·준비/미지원/실패/동시성 처리
 
-최근 작업은 `docs/operational_recovery_test.md`와 `reports/operational_recovery_test.md`에서 확인합니다. 잠근 원본 7개 RF·threshold 0.7을 바꾸지 않고 별도 Test 5,407건을 평가했습니다. FP 68·FN 531, 전체 FPR 1.72%·정상 묶음 FPR 5.18%·Recall 63.20%로 사전 기준을 통과해 로컬 advisory 연동용 승인 묶음을 만들었습니다. 전체 테스트 337개가 통과했습니다. 다만 잘못된 길이 메시지 72건 중 71건을 놓쳤으므로 실제 보안 운영·자동 차단 성공을 뜻하지 않습니다. FastAPI는 아직 dummy이며 다음 작업은 승인 묶음의 실제 추론 연결입니다. 남은 큰 작업 묶음은 **3개**입니다. 비용은 `docs/operational_recovery_cost.md`, 학습·선정은 `docs/operational_recovery_experiment.md`에 있습니다.
+최근 작업은 `docs/operational_rf_api.md`와 `reports/operational_rf_api.md`에서 확인합니다. 승인 묶음을 검증해 원본 7개 RF·threshold 0.7을 실제 FastAPI에 연결했습니다. 기동 검증 실패 때 dummy로 대체하지 않으며 message만 판단하고 session_summary는 명시적으로 미지원 처리합니다. 전체 테스트 357개와 실제 Uvicorn HTTP 검사 5개가 통과했습니다. 실제 점수·판단이 직접 RF 계산과 일치하고 검사 서버도 정상 종료했습니다. 남은 큰 작업 묶음은 **2개**이며 다음은 실제 C++ TCP 종단 통합·장애·부하 검증입니다. 이전 Test의 FN 531건·잘못된 길이 FN 71/72건은 그대로이며 실제 운영·자동 차단 승인은 아닙니다.
+
+현재 실행 배치와 `scripts/run_inference_api.py`는 실제 RF를 사용합니다. `inference_api.main:app`은 기존 수집·회귀용 dummy로 보존했으므로 직접 uvicorn으로 실행할 때는 `inference_api.rf_main:app`을 사용합니다. `/health`의 `model_kind=random_forest`·`model_version=rf-raw7-recovery-v1-t0.7`로 확인합니다.
 
 선정 RF 비용 검증:
 
@@ -51,7 +54,7 @@ python -X utf8 .\evaluation\run_operational_recovery_cost.py
 python -X utf8 .\evaluation\run_operational_recovery_test.py
 ```
 
-평가 protocol·holdout 접근 예약 뒤에만 Test를 읽습니다. 결과와 승인 묶음은 `artifacts/operational_message/recovery_v1/test_v1/`, 전체 예측은 `reports/operational_recovery_test.predictions.csv`입니다. 현재 recovery Test는 이미 노출된 자료이며 변경 정책의 새 독립 평가로 재사용하지 않습니다. 같은 정책 재확인은 별도 출력 경로와 기존 공용 사용 기록을 유지하며 재현 검사로 표시합니다. 승인 묶음도 완료 평가 manifest와 해시를 검증한 뒤에만 사용해야 합니다.
+평가 protocol·holdout 접근 예약 뒤에만 Test를 읽습니다. 결과와 승인 묶음은 `artifacts/operational_message/recovery_v1/test_v1/`, 전체 예측은 `reports/operational_recovery_test.predictions.csv`입니다. 현재 recovery Test는 이미 노출된 자료이며 변경 정책의 새 독립 평가로 재사용하지 않습니다. 같은 정책 재확인은 별도 출력 경로와 기존 공용 사용 기록을 유지하며 재현 검사로 표시합니다. 실제 RF API는 완료 평가 manifest·승인 묶음·후보 잠금·schema·0.7 정책을 시작할 때 검증합니다.
 
 학습 로드맵:
 
@@ -83,6 +86,10 @@ FastAPI 실행:
 ```powershell
 .\run_fastapi.bat
 ```
+
+배치 더블클릭 또는 `python -X utf8 .\scripts\run_inference_api.py`로 실제 RF를 실행합니다. 의존성 복구에는 `python -m pip install --upgrade --target .deps -r requirements-inference.txt`를 사용합니다. 승인 산출물은 Git 제외 대상이므로 파일이 없는 새 PC에서는 앞선 학습·승인 과정이 필요하며 dummy로 자동 대체하지 않습니다.
+
+기본 확인 주소는 `http://127.0.0.1:8000/health`, 요청 명세는 `http://127.0.0.1:8000/docs`입니다. 실제 RF의 summary 요청은 422이며 정상 판단을 반환하지 않습니다. RF 실패·포화는 503으로 명시합니다. 자동 HTTP 검사는 `python -X utf8 .\evaluation\verify_approved_rf_api.py`이며 검사용 서버는 검사 뒤 정상 종료합니다.
 
 추론 엔드포인트:
 
@@ -384,4 +391,4 @@ python -X utf8 .\evaluation\run_operational_final_evaluation.py
 
 설명은 `docs/operational_final_evaluation.md`, 이번 단계 커밋 제안은 `docs/operational_final_evaluation_commit.md`입니다. 기존 결과를 덮어쓰지 않으며 같은 holdout의 변경 정책 재평가는 사용 기록으로 거부합니다. 현재 Test는 이미 사용된 자료입니다.
 
-당시 전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 당시 최종 평가·승인 보류 뒤에는 기본 3개에 추가 보정·독립 검증 1개를 더해 4개가 남았습니다. 이후 새 수집·RF 재학습·Validation 선정·비용·새 Test 확인을 마쳤고 현재는 3개가 남았습니다. 최신 단계와 바로 다음 작업은 문서 상단을 확인합니다.
+당시 전체 테스트 262개가 통과했고 고정 모델 재로딩·같은 Test 재예측 지표·확률·CSV 판단과 산출물 19개의 해시도 검증했습니다. 당시 최종 평가·승인 보류 뒤에는 기본 3개에 추가 보정·독립 검증 1개를 더해 4개가 남았습니다. 이후 새 수집·RF 재학습·Validation 선정·비용·새 Test 확인·실제 FastAPI 연결까지 마쳐 현재는 2개가 남았습니다. 최신 단계와 바로 다음 작업은 문서 상단을 확인합니다.

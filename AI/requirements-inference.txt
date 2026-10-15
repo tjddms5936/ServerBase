@@ -1,0 +1,10 @@
+# 승인 RF의 numpy/scikit-learn 직렬화 환경과 부가 런타임 버전을 고정한다.
+-r requirements.txt
+numpy==2.4.6
+scikit-learn==1.8.0
+pandas==3.0.3
+joblib==1.5.3
+fastapi==0.136.1
+uvicorn[standard]==0.46.0
+anyio==4.13.0
+pydantic==2.13.4

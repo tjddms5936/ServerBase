@@ -145,3 +145,12 @@ python -X utf8 .\scripts\collect_operational_recovery.py
 포트 4000·8000은 비어 있어야 합니다. 사용자가 실행한 기존 서버를 강제로 종료하지 않습니다. `--prepare-only`는 송신 없이 기대값과 잠금 파일만 생성하고, `--prepared-batch`는 아직 수집을 시도하지 않은 준비 batch의 잠근 출력 경로로 실행합니다. 기존 데이터셋·보고서와 시도한 batch를 덮어쓰거나 재송신하지 않습니다.
 
 완료 자료는 `data/processed/operational_message/recovery_v1/`와 `reports/operational_recovery_collection.json/.md`, `reports/operational_recovery_dataset.json/.md`입니다. 실제 수집은 메시지 16,120건이며 모델 학습·예측·새 Test 성능 평가는 하지 않았습니다. 재수집 시 새 출력 경로와 필요한 이전 산출물은 `docs/operational_recovery_collection.md`에서 확인합니다.
+## 실제 승인 RF API 실행
+
+```powershell
+python -X utf8 .\scripts\run_inference_api.py
+```
+
+승인 설정의 완료 기록·묶음·모델·schema·정책을 검증해 127.0.0.1:8000에서 실제 RF 추론을 실행합니다. 기동 실패를 dummy로 대체하지 않습니다. `--config`와 `--port`를 지정할 수 있으며 자동 검사만 `--stdin-control`을 사용해 소유한 프로세스에 quit을 전달합니다. 일반 실행은 Ctrl+C로 종료합니다.
+
+마우스 실행은 AI 폴더의 `run_fastapi.bat`을 사용합니다. 기존 수집 실행기는 별도 dummy 경로를 유지합니다. 실제 HTTP 검사 명령과 범위는 `docs/operational_rf_api.md`에 있습니다.

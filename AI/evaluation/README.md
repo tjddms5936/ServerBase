@@ -215,6 +215,16 @@ python -X utf8 .\evaluation\run_operational_recovery_test.py
 
 `reports/operational_recovery_test.json/.md/.predictions.csv`와 `artifacts/operational_message/recovery_v1/test_v1/`에 저장합니다. 같은 정책 재실행은 노출된 Test 재현 검사로 표시하고 변경 정책의 같은 Test 재사용을 거부합니다. 상세 설명은 `docs/operational_recovery_test.md`입니다. 다음은 승인 모델 FastAPI 연결이며 남은 큰 단계는 3개입니다.
 
+## 실제 RF FastAPI HTTP 검사
+
+```powershell
+python -X utf8 .\evaluation\verify_approved_rf_api.py
+```
+
+승인 파일을 검증하고 실제 Uvicorn을 소유한 별도 프로세스로 실행합니다. 수작업 snapshot 3개의 HTTP 응답을 직접 RF 점수·0.7 판단과 대조하고 summary 미지원·잘못된 입력 거부·수집 비활성을 확인한 뒤 정상 종료합니다. 데이터셋·공식 Test를 사용하거나 모델을 학습하지 않습니다. 실제 검사는 성공했고 `reports/operational_rf_api.json/.md`와 `artifacts/inference_api/rf_v1/http_smoke_v1/`에 기록했습니다. 이는 탐지 성능 평가나 C++ 종단 부하 검사가 아닙니다.
+
+실제 서비스 실행은 `python -X utf8 .\scripts\run_inference_api.py` 또는 배치 더블클릭입니다. 승인 검증·실패 정책·기존 dummy 경로와의 구분은 `docs/operational_rf_api.md`를 확인합니다. 남은 큰 단계는 TCP 종단 검증과 포트폴리오 마무리 2개입니다.
+
 ## 향후 일반 평가 명령
 
 ```text

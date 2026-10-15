@@ -18,6 +18,7 @@ operational_message/augmentation_v1/
 operational_message/recovery_v1/validation_selection/
 operational_message/recovery_v1/cost_v1/
 operational_message/recovery_v1/test_v1/
+inference_api/rf_v1/http_smoke_v1/
 operational_sequence/lstm_v1/
 operational_final_evaluation/v2/
 operational_final_evaluation/holdout_usage/
@@ -43,6 +44,8 @@ operational_final_evaluation/holdout_usage/
 - `operational_message/recovery_v1/cost_v1/`: 선정 원본 RF·0.7의 미승인 `candidate_bundle/`, 측정 전 protocol, Validation NPZ·동일 요청 목록·독립 프로세스 비용 기록, 조건부 Test 전 잠금과 완료 manifest입니다. 필수 후보 파일은 모델·원본 schema·모델 입력 schema·label map·선정 정책 5개입니다. `candidate_lock.json`은 비용 통과 때만 생성하며 독립 Test 확인·실제 모델 배포 승인과 구분합니다. 이전 학습 selection은 당시 상태를 보존하고 이번 상태는 새 비용 보고서에서 확인합니다. `deployment_bundle/`을 생성하거나 FastAPI를 교체하지 않습니다.
 
 - `operational_message/recovery_v1/test_v1/`: Test 접근 전 평가 protocol, 고정 RF·0.7 판정 파일, 승인 시의 `deployment_bundle/`, 완료 평가 manifest입니다. 실제 새 Test는 전체 FPR 1.72%·정상 묶음 FPR 5.18%·Recall 63.20%로 통과했습니다. 승인 묶음의 모델·원본 schema·모델 입력 schema·label map·0.7 정책과 manifest는 로컬 advisory 연동용입니다. 원본 후보의 기본 0.5 정책·학습/비용 selection은 역사적 기록으로 유지합니다. 부분 생성 파일만으로 사용하지 말고 `requires_complete_evaluation_manifest`가 가리키는 완료 기록과 묶음 해시를 함께 검사합니다. FastAPI는 아직 dummy이며 잘못된 길이 FN 71/72건·첫 메시지 관측 한계가 남습니다. 공용 `operational_final_evaluation/holdout_usage/`의 새 Test 접근 기록은 지우지 않습니다.
+
+- `inference_api/rf_v1/http_smoke_v1/`: 실제 승인 RF Uvicorn을 로컬 포트에 실행한 로그와 정상 종료·보고서 해시를 기록한 HTTP 기능 검사 manifest입니다. 검사용 프로세스는 종료했으며 새 학습 모델·평가 데이터가 아닙니다. 실제 RF API는 기존 `recovery_v1/test_v1/deployment_bundle/`을 수정하지 않고 검증·로딩합니다. 당시 승인 manifest의 FastAPI 미구현 표시는 역사적 기록으로 유지하고 현재 구현은 새 API 보고서에서 확인합니다.
 
 평가 지표와 비교 보고서는 `reports/`에 저장합니다.
 
